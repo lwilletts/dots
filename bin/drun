@@ -1,0 +1,38 @@
+#!/bin/sh
+#
+# wildefyr - 2016 (c) CC
+# launch dmenu filled with program suggestions and geometry set
+
+CACHE="$HOME/.cache/drun"
+
+for configuration in \
+    ~/.zsh/environment.zsh \
+    ~/.zsh/fyre.zsh
+do
+    . $configuration
+done
+
+unset configuration
+
+printf '%s\n' "$EXECPATHS" | while read -r EXECPATH; do
+    find "$EXECPATH" -maxdepth 1 -type f -executable | rev | \
+        cut -d'/' -f 1 | rev >> $CACHE
+    find "$EXECPATH" -maxdepth 1 -type l -executable | rev | \
+        cut -d'/' -f 1 | rev >> $CACHE
+done
+
+. fyrerc
+
+bar_bg='#D7D7D7'
+barx=$((XGAP + BW))
+bary=$((0))
+barw=$((minW))
+barh=$((24 - BW))
+
+bar_font=$(awk '/lemon/ {print $3}' < ~/.Xresources | head -n 1 | cut -d',' -f 1)
+
+sort -u < $CACHE | dmenu -f -x $barx -y $bary -w $barw -h $barh -l 0 \
+-fn $bar_font -nf '#D7D7D7' -sf '#B23450' -nb '#03070B' -sb '#040404' | \
+${SHELL:-"/bin/zsh"}
+
+rm -f $CACHE

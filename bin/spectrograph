@@ -1,0 +1,29 @@
+#!/bin/sh
+#
+# wildefyr - 2016 (c) wtfpl
+
+file="$1"
+
+type sox 2>&1 > /dev/null || {
+    printf '%s\n' "sox was not found on your \$PATH."
+    exit 1
+}
+
+test -z "$2" && {
+    IMG="spectrum"
+} || {
+    IMG="$2"
+}
+
+test -e "${IMG}.png" && {
+    mpv --loop-file --really-quiet "${IMG}.png" &
+    exit 0
+}
+
+test -e "$file" && {
+    sox "$file" -n spectrogram -o "${IMG}.png"
+    mpv --loop-file --really-quiet "${IMG}.png" &
+} || {
+    printf '%s\n' "Not a valid file."
+    exit 2
+}

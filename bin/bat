@@ -1,0 +1,38 @@
+#!/bin/sh
+#
+# wildefyr - 2016 (c) CC
+# print battery info
+
+ARGS="$@"
+
+usage () {
+    cat >&2 << EOF
+p: Percentage of charge.
+EOF
+
+    test $# -eq 0 || exit $1
+}
+
+batperc() {
+    test -f $BATTERY/capacity && cat $BATTERY/capacity
+}
+
+BATTERY=$(find /sys/class/power_supply -maxdepth 1 -type l -name "BAT*")
+
+case "$(printf '%s\n' "$BATTERY" | wc -l)" in
+    0)
+        printf '%s\n' "No battery found."
+        exit
+        ;;
+    1)
+        case $1 in
+            p) batperc ;;
+            *) usage 0 ;;
+        esac
+        ;;
+    *)
+        echo $BATTERY
+        printf '%s\n' "Too many batteries found."
+        exit
+        ;;
+esac

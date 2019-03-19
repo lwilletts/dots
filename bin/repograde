@@ -1,0 +1,131 @@
+#!/bin/sh
+#
+# wildefyr - 2016 (c) wtfpl
+# update git packages if commit(s) are merged
+
+ARGS="$@"
+
+usage() {
+    cat >&2 << EOF
+Usage: $(basename $0) [port repository]
+EOF
+
+    test $# -eq 0 || exit $1
+}
+
+cleanRun() {
+    PORTSDIR=${PORTSDIR:-/usr/ports}
+    SOURCEDIR=${SOURCEDIR:-$(cat /etc/pkgmk.conf | grep SOURCE | cut -d\" -f 2)}
+
+    PACKAGELIST=${PACKAGELIST:-/tmp/packagelist}
+    test -f $PACKAGELIST && rm $PACKAGELIST
+
+    test -z $1 && usage 1
+    REPOSITORY=$1
+    test -d $PORTSDIR/$REPOSITORY || usage 1
+    REPOSITORY="$PORTSDIR/$REPOSITORY"
+
+    getGitPackages
+}
+
+getGitPackages() {
+    GITLIST=${GITLIST:-/tmp/gitlist}
+    test -f $GITLIST && rm $GITLIST
+
+    PACKAGES=$(find $REPOSITORY -not -path '*/\/*' | sed "1d")
+
+    for i in $PACKAGES; do
+        echo $PACKAGES | grep -q "Pkgfile" && {
+            grep -q "version=git" && {
+                printf '%s\n' $i >> $GITLIST
+            }
+        }
+    done
+}
+
+main() {
+    cleanRun $1
+    exit
+
+    for COUNTER in $(seq $PORTNUM); do
+        PORT=$(cat $REPOSITORY/.gitports | sed "$COUNTER!d" | cut -d\  -f 1)
+
+        if [ -d $SOURCEDIR/$PORT ]; then
+            cd $SOURCEDIR/$PORT
+
+            # add a post-merge hook to the git repo
+            # TODO: check $PACKAGELIST and if not equal to current $PACKAGELIST,
+            # update the post-merge hook
+            if [ ! -f ./.git/hooks/post-merge ]; then
+                printf '%s\n' "Adding post-merge hook for $PORT."
+                cat > ./.git/hooks/post-merge << EOTEMPLATE
+#!/bin/sh
+#
+# after a merge is succesful, add package to $PACKAGELIST
+
+printf '%s' "$PORT" >> $PACKAGELIST
+EOTEMPLATE
+                chmod +x ./.git/hooks/post-merge
+            fi
+
+            printf '%s\n' "$PORT:"
+            git pull
+
+            # TODO: clone the repository if not found
+        fi
+
+    done
+
+    if [ -f $PACKAGELIST ]; then
+        for COUNTER in $(seq $(cat $PACKAGELIST | wc -w)); do
+            PACKAGE=$(cat $PACKAGELIST | sed "$COUNTER!d")
+
+            cd $REPOSITORY/$PACKAGE
+
+            PACKAGEINSTALLED=0
+            while [ $PACKAGEINSTALLED -eq 0 ]; do
+                pkgmk -f
+
+                # if md5sum is mismatched, update md5sum
+                if [ $? -eq 6 ]; then
+                    pkgmk -um
+                    if [ $? -gt 1 ]; then
+                        continue
+                    fi
+
+                    git add .
+                    git commit -m "$PACKAGE: Update md5sum."
+                    if [ -z $GITPUSH ]; then
+                        GITPUSH=1
+                    fi
+                # if footprint is mismatched, update footprint
+                elif [ $? -eq 7 ]; then
+                    pkgmk -uf
+                    if [ $? -gt 1 ]; then
+                        continue
+                    fi
+
+                    git add .
+                    git commit -m "$PACKAGE: Update footprint."
+                    if [ -z $GITPUSH ]; then
+                        GITPUSH=1
+                    fi
+
+                    # install updated package with new footprint
+                    pkgmk
+                    if [ $? -eq 0 ]; then
+                        PACKAGEINSTALLED=1
+                    fi
+                fi
+            done
+        done
+
+        if [ ! -z $GITPUSH ]; then
+            cd $REPOSITORY
+            printf '%s\n' "Pushing new $REPOSITORY updates:"
+            git push
+        fi
+    fi
+}
+
+main $ARGS

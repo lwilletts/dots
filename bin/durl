@@ -1,0 +1,19 @@
+#!/bin/sh
+#
+# wildefyr - 2016 (c) CC
+# launch dmenu with urls from st as args
+
+CACHE="$HOME/.cache/durl"
+
+. fyrerc
+
+barx=$((0))
+bary=$((0))
+barw=$((SW))
+barh=$((25 - BW))
+
+bar_font=$(awk '/\.font/ {print $3}' < ~/.Xresources)
+
+sort -u < $CACHE | dmenu -f -x $barx -y $bary -w $barw -h $barh -l 0 \
+-fn $bar_font -nf '#D7D7D7' -sf '#B23450' -nb '#03070B' -sb '#03070B' | \
+${SHELL:-"/bin/zsh"}

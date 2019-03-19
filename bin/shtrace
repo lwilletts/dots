@@ -1,0 +1,13 @@
+#!/bin/sh
+#
+# wildefyr - 2016 (c) CC
+# perform a trace of a shell script and log the results
+
+test $# -eq 0 && {
+    printf '%s\n' "No script passed."
+    exit 1
+}
+
+sh -x "$@" 2> $PWD/.shtrace
+$EDITOR $PWD/.shtrace
+rm $PWD/.shtrace

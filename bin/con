@@ -1,0 +1,20 @@
+#!/bin/sh
+#
+# wildefyr - 2016 (c) MIT
+# fzf ssh menu using .ssh/config
+
+SSHCONFIG="${SSHCONFIG:-$HOME/.ssh/config}"
+
+type fzf 2>&1 > /dev/null && {
+    test -f "$SSHCONFIG" && {
+        host=$(grep -w "host" "$SSHCONFIG" | grep -v '\*\|github.com' | \
+        cut -d\  -f 2 | fzf -i --reverse)
+
+        # test if server has mosh
+        ssh "$host" type mosh 2>&1 > /dev/null && {
+            mosh "$host"
+        } || {
+            ssh "$host"
+        }
+    }
+}

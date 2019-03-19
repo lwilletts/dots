@@ -1,0 +1,3 @@
+source ~/.config/nvim/init.vim
+
+set colorcolumn=999

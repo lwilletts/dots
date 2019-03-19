@@ -1,0 +1,24 @@
+#!/bin/sh
+#
+# wildefyr - 2016 (c) CC
+# wrapper script around xscreenshot and ff2png
+
+SHOT=${SHOT:-./shot}
+
+test $# -eq 0 && {
+    xscreenshot | ff2png > "${SHOT}.png"
+} || {
+    case "$1" in
+        0x*)
+            wattr "$1" && xscreenshot "$1" | ff2png > "${SHOT}.png"
+            ;;
+        up)
+            alias xsel="xsel -l /dev/null"
+
+            xscreenshot | ff2png > "${SHOT}.png"
+            ioup $HOME/shot.png | xsel -i
+            xsel -o | xsel -bi
+            rm $HOME/shot.png
+            ;;
+    esac
+}

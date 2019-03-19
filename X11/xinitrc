@@ -1,0 +1,21 @@
+#!/bin/sh
+
+xset s off # no screensaver
+xset +dpms # powersaving
+xset +fp ~/.local/share/fonts # custom fonts directory
+
+xsetroot -name background
+xsetroot -cursor_name left_ptr
+
+unclutter &
+urxvtd -q -o -f &
+test -f ~/.Xresources && xrdb -load ~/.Xresources
+
+case "$(hostname)" in
+    "fyriousa")
+        xrandr --output HDMI-A-3 --auto --rotate right --right-of DisplayPort-2
+        xrandr --output DisplayPort-3 --auto --rotate right --right-of HDMI-A-3
+        ;;
+esac
+
+exec i3

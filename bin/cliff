@@ -1,0 +1,27 @@
+#!/bin/sh
+#
+# wildefyr && ywstd - 2016 (c) CC
+# color diff
+# thanks to: http://ywstd.fr/blog/2014/diffshawk-snippet.html
+
+f0='[30m'; f1='[31m'; f2='[32m'; f3='[33m'
+f4='[34m'; f5='[35m'; f6='[36m'; f7='[37m'
+R='[0m'
+
+while IFS='\n' read -r LINE; do
+
+    CHAR=$(printf '%s' "$LINE" | cut -c1)
+
+    test "$CHAR" -ne 0 2> /dev/null && {
+        printf '%s\n' "${f6}${LINE}${R}"
+        continue
+    }
+
+    case "$CHAR" in
+        '-'|'<') printf '%s\n' "${f5}${LINE}${R}" ;;
+        '+'|'>') printf '%s\n' "${f2}${LINE}${R}" ;;
+        '@')     printf '%s\n' "${f3}${LINE}${R}" ;;
+        *)       printf '%s\n' "${f7}${LINE}${R}" ;;
+    esac
+
+done

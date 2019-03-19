@@ -1,0 +1,27 @@
+#!/bin/sh
+#
+# fyr - 2016 (c) CC
+
+W='[37m'; R='[0m'
+
+prompt() {
+    $HOME/.dots/bin/sysinfo
+    printf '%s'"${W}>> ${R}"
+}
+
+prompt
+
+while read -r action; do
+    case "$action" in
+        e|exit)     exit                         ;;
+        t|todo)     zsh -c 'vim ~/.todo.md'      ;;
+        x|xinit)    xinit                        ;;
+        s|shell)    zsh                          ;;
+        m|music)    zsh -c 'cd D:/Music; zsh -i' ;;
+        d|dtach)    dtach -A /tmp/irc -z weechat ;;
+        r|reboot)   reboot 2>/dev/null           ;;
+        p|poweroff) poweroff 2>/dev/null         ;;
+    esac
+
+    prompt
+done

@@ -1,0 +1,84 @@
+#!/bin/sh
+#
+# wildefyr - 2016 (c) CC
+# link load with extra tweaks for wmutils
+
+# conversion layer to get the paste's raw location
+rawp() {
+    case "$URL" in
+        *pbin.in/*)
+            URL="http://pbin.in/raw/$(echo $URL | cut -d/ -f 4)"
+            ;;
+        *pastebin.com/*)
+            URL="http://pastebin.com/raw/$(echo $URL | cut -d/ -f 4)"
+            ;;
+        *paste.list.org/*)
+            URL="http://paste.lisp.org/display/$(echo $URL | cut -d/ -f 4)/raw"
+            ;;
+    esac
+}
+
+openBrowser() {
+    # chrome appears to have automatic focus on new tab
+    test ! -z $(wid chrome) && {
+        chwb -s $BW -c "$INACTIVE" $PFW
+        google-chrome $URL 2>&1 > /dev/null
+        chwb -s $BW -c "$ACTIVE" $(wid chrome)
+    } || {
+        windows -s 2
+        google-chrome $URL 2>&1 > /dev/null
+    }
+}
+
+. fyrerc
+
+for arg in "$@"; do
+    URL="$arg"
+
+    # sync clipboards
+    alias xsel="xsel -l /dev/null"
+    printf '%s\n' "$URL" | xsel -pi
+    printf '%s\n' "$URL" | xsel -si
+    printf '%s\n' "$URL" | xsel -bi
+
+    case "$URL" in
+        *imgur.com/*)
+            # fuck you imgur albums
+            URL=$(curl -s "$URL" | \
+                sed -nE 's/^.*<link rel="image_src"[[:space:]]+href="([^"]+)".*$/\1/p')
+
+            mpv "$URL" --really-quiet --loop-file
+            ;;
+        *.gifv|*.webm|*.jp*g|*.png|*.webm|*.gif)
+            mpv "$URL" --really-quiet --loop-file
+            ;;
+        *.mkv|*.mp4|*.ogv|*youtu.be/*|*youtube.com/watch*|\
+        *.googlevideo.com/videoplayback*)
+            mpv "$URL" --really-quiet
+            ;;
+        *twitch.tv/*)
+            type livestreamer 2>&1 > /dev/null && {
+                livestreamer "$URL" source -Q
+            } || {
+                mpv "$URL" --really-quiet
+            }
+            ;;
+        *.txt|*ix.io/*|*p.iotek.org/*|*sprunge.us/*|*bpaste.net/*|\
+        *pastebin.com/raw*|*pbin.in/raw*)
+            urxvt -e zsh -c "curl -s $URL | $EDITOR -"
+            ;;
+        *paste.lisp.org/*|*pastebin.com/*|*pbin.in/*)
+            rawp
+            urxvt -e zsh -c "curl -s $URL | $EDITOR -"
+            ;;
+        mailto:*)
+            urxvt -e mutt -- "$URL"
+            ;;
+        gopher://*)
+            urxvt -e cgo "$URL"
+            ;;
+        *)
+            openBrowser
+            ;;
+    esac
+done

@@ -1,0 +1,36 @@
+#!/bin/sh
+#
+# wildefyr - 2016 (c) CC
+# launch infobar
+
+runTaskbar() {
+    while :; do
+        pgrep eventually 2>&1 > /dev/null && {
+            infobardata
+            sleep 0.1
+        }
+    done
+}
+
+. fyrerc
+
+# set bar variables and launch backbar
+barx=$((XGAP))
+bary=$((0))
+barw=$((minW + 2*BW))
+barh=$((24))
+bar_bg='#D7D7D7'
+
+backbar $barx $bary $barw $barh $bar_bg &
+sleep 0.1
+
+barx=$((barx + BW))
+bary=$((bary - BW))
+barw=$((barw - 2*BW))
+barh=$((barh - BW))
+bar_bg='#040404'
+bar_fg='#D7D7D7'
+bar_font=$(awk '/lemon/ {print $3}' < ~/.Xresources | head -n 1 | cut -d',' -f 1)
+
+runTaskbar | lemonbar -d -g ${barw}x${barh}+${barx}+${bary} -B${bar_bg} \
+                      -F${bar_fg} -f${bar_font} -n "infobar" -a 15 | /bin/sh &

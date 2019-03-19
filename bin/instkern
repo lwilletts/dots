@@ -1,0 +1,26 @@
+#!/bin/sh
+#
+# wildefyr - 2016 (c) wtfpl
+# quick and dirty script to copy a kernel to /boot after build
+
+printf '%s\n\n' "Current kernel images:"
+find /boot -maxdepth 1 -type f -name "vmlinuz*" | sort -r
+printf '\n%s\n' "Name of new kernel image:"
+printf '%s' ">> "; while read -r kernalname; do
+    test -z $kernalname && {
+        printf '%s\n' "Name of new kernel image:"
+        printf '%s' ">> "
+    } || {
+        break
+    }
+done
+
+printf '%s' "Confirm operation? [Y/n]: "; read -r confirm
+
+test "$confirm" = "n" && {
+    printf '%s\n' "Kernel image not deployed."
+} || {
+    sudo cp ./arch/x86_64/boot/bzImage /boot/vmlinuz-$kernalname
+    sudo cp ./System.map /boot/System.map-$kernalname
+    printf '%s\n' "Kernel image deployed."
+}

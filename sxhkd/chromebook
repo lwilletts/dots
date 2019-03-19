@@ -1,0 +1,138 @@
+# mod1 = Alt_L
+# mod2 = Alt_R
+# mod3 = Hyper_L
+# mod4 = Super_L
+
+# reload sxhkd
+mod1 + shift + r
+    pkill -USR1 -x sxhkd
+
+# movement scripts
+mod1 + Tab
+    focus --prev
+mod4 + Tab
+    focus --next
+mod1 + {h,j,k,l}
+    closest {--left,--down,--up,--right}
+mod4 + {h,j,k,l}
+    snap {--left,--down,--up,--right}
+mod1 + shift + {h,j,k,l}
+    move {--left,--down,--up,--right}
+mod4 + shift + {h,j,k,l}
+    move {--left,--down,--up,--right}
+
+# resize window
+mod4 + {w,a,s,d}
+    sizesnap {--shrinkup,--shrinkleft,--growdown,--growright}
+
+# window stacking order
+mod1 + u
+    chwso -l $(pfw); closest --left
+mod1 + i
+    chwso -l $(pfw); closest --right
+mod1 + p
+    hover
+
+# manual window management
+mod1 + g
+    snap --middle
+mod1 + {q,w,e,r,a,s,b}
+    position {--left,--quartar,--right,--fuller,--restore,--extend,--bottom}
+mod1 + f
+    fullscreen
+
+# groups
+mod1 + {1,2,3,4,5,6,7,8,9,0}
+    windows -T {1,2,3,4,5,6,7,8,9,0}
+mod4 + {1,2,3,4,5,6,7,8,9,0}
+    windows -m {1,2,3,4,5,6,7,8,9,0}
+mod1 + shift + {1,2,3,4,5,6,7,8,9,0}
+    windows -a $(pfw) {1,2,3,4,5,6,7,8,9,0}
+mod1 + c
+    windows -c $(pfw)
+mod1 + shift + c
+    windows --reset
+
+# layouts
+mod2 + {1,2,3,4,5,6,7,8,9,0}
+    layouts -o {1,2,3,4,5,6,7,8,9,0}
+mod2 + shift + {1,2,3,4,5,6,7,8,9,0}
+    layouts -s {1,2,3,4,5,6,7,8,9,0}
+
+# terminals
+{mod1, mod2} + Return
+    urxvtc -cd "$HOME"
+
+# programs
+mod1 + d
+    drun
+mod2 + b
+    urxvtc -name "ssh" -e zsh -c "con"
+
+# it's a killin' time!
+mod1 + shift + q
+    winkill $(pfw)
+
+# system
+mod4 + e
+    power -l
+mod2 + {z,x,c}
+    power -{p,r,e}
+
+# mouse
+mod1 + @button1
+    focus; xmmv
+button2
+    focus
+mod1 + !button3
+    wrs -a %i %i $(pfw)
+mod1 + z
+    mouse --toggle
+
+# mpv
+mod1 + space
+    mpvc -p -q
+mod2 + u
+    mpvc --clear -q
+mod2 + y
+    mpvc -k -q
+mod2 + l
+    mpvc -j 1 -P -q
+mod2 + h
+    mpvc -j -1 -P -q
+mod2 + k
+    mpvc --seek +5 -q
+mod2 + j
+    mpvc --seek -5 -q
+mod2 + f
+    mpvc -l -q
+mod2 + r
+    mpvc -L -q
+mod2 + Up
+    mpvc --seek +1M -q
+mod2 + Down
+    mpvc --seek -1M -q
+
+# speed
+mod2 + q
+    mpvc -x -0.05 -q
+mod2 + w
+    mpvc -x +0.05 -q
+mod2 + e
+    mpvc -X 1.00 -q
+
+# volume
+mod2 + o
+    mpvc -v -5 -q
+mod2 + p
+    mpvc -v +5 -q
+
+# chrbook function keys
+{F6,F7}
+    xbacklight {-dec,-inc} 10
+F8
+    amixer -c 0 set Master togglemute
+{F9,F10}
+    amixer -c 0 set Master 2db{-,+} unmute
+
+# vim: set ft=sxhkdrc :

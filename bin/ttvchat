@@ -1,0 +1,13 @@
+#!/bin/sh
+#
+# wildefyr - 2016 (c) wtfpl
+# open twitch chat popout in google-chrome incase irc chat is disabled
+
+usage() {
+    printf '%s\n' "usage: $(basename $0) <channel>"
+}
+
+test -z $1 && usage
+channel=$1
+
+google-chrome --new-window "twitch.tv/$channel/chat?popout=" & 2>&1 > /dev/null

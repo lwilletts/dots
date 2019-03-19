@@ -1,0 +1,15 @@
+#!/bin/sh
+
+FONTS="/home/fyr/.dots/fonts"
+
+cd $FONTS
+
+test -f fonts.dir && rm -f fonts.dir
+test -f fonts.scale && rm -f fonts.scale
+
+mkfontdir
+mkfontscale
+fc-cache
+fc-cache -fv
+xset +fp $FONTS
+xset fp rehash

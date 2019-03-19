@@ -1,0 +1,25 @@
+#!/bin/sh
+
+BW=1
+ROWS=4
+COLS=4
+IGAP=12
+VGAP=12
+TGAP=36
+XGAP=12
+BGAP=12
+
+MOUSE="false"
+SLOPPY="false"
+
+ACTIVE="D7D7D7"
+WARNING="B23450"
+INACTIVE="040404"
+
+WORKFLOW="groups"
+
+BLUR=0
+WALL="$HOME/files/pictures/backs/rollingclouds.jpg"
+BACK="hsetroot -fill $WALL -gamma 0.5"
+
+SYNCONF=${SYNCONF:-$HOME/.synergy.conf}

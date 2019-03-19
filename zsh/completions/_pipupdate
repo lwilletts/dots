@@ -1,0 +1,5 @@
+#compdef pipupdate
+
+type pip 2>&1 > /dev/null && {
+    _arguments "1: :($(pip list | cut -d\  -f 1))"
+}

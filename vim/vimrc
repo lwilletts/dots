@@ -1,0 +1,530 @@
+" fyr <me@wildefyr.net>
+" ░░░▒▒▒▓▓██░██▓▓▒▒▒░░░
+
+    " vim-plug
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" auto install plug if not found
+if empty(glob('$HOME/.vim/autoload/plug.vim'))
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall
+endif
+
+nmap <Leader>Vu :PlugUpdate<CR>
+nmap <Leader>Vi :PlugUpgrade<CR>
+nmap <Leader>Vc :PlugClean<CR>
+nmap <Leader>Vs :PlugStatus<CR>
+let g:plug_retries = 0
+let g:plug_window = "tabnew"
+
+call plug#begin('$HOME/.vim/plugged')
+
+    " usability
+Plug 'tpope/vim-repeat'
+Plug 'wellle/targets.vim'
+Plug 'tpope/vim-commentary'
+
+Plug 'tpope/vim-surround'
+    nmap sl yss
+    nmap sw ysiw
+    nmap sW ysiW
+    nmap sap ysap
+    nmap sip ysip
+
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
+Plug 'junegunn/fzf.vim'
+    nmap <Leader>f :FZF -m <CR>
+    nmap <Leader>F :FZF -m ~/<CR>
+    nmap <Leader>b :FZF -m /builds/<CR>
+    nmap <Leader>l :Buffers<CR>
+
+Plug 'junegunn/vim-pseudocl'
+Plug 'junegunn/vim-oblique'
+    let g:oblique#clear_highlight = 1
+    let g:oblique#incsearch_highlight_all = 1
+    let g:oblique#prefix = ""
+
+Plug 'junegunn/vim-easy-align'
+    nmap ga <Plug>(EasyAlign)
+    xmap ga <Plug>(EasyAlign)
+    let g:easy_align_delimiters = {
+    \ '>': { 'pattern': '>>\|=>\|>' },
+    \ '/': {
+    \     'pattern':         '//\+\|/\*\|\*/',
+    \     'delimiter_align': 'l',
+    \     'ignore_groups':   ['!Comment'] },
+    \ ']': {
+    \     'pattern':       '[[\]]',
+    \     'left_margin':   0,
+    \     'right_margin':  0,
+    \     'stick_to_left': 0
+    \   },
+    \ ')': {
+    \     'pattern':       '[()]',
+    \     'left_margin':   0,
+    \     'right_margin':  0,
+    \     'stick_to_left': 0
+    \   },
+    \ 'd': {
+    \     'pattern':      ' \(\S\+\s*[;=]\)\@=',
+    \     'left_margin':  0,
+    \     'right_margin': 0
+    \   },
+    \ ';': {
+    \     'pattern':      ';',
+    \     'left_margin':  1,
+    \     'right_margin': 0
+    \   }
+    \ }
+
+    " build checkers
+Plug 'benekastah/neomake'
+    let g:neomake_open_list = 1
+    let g:neomake_place_signs = 1
+    let g:neomake_error_sign = {
+        \ 'text': 'E>',
+        \ 'texthl': 'Error',
+    \ }
+    let g:neomake_warning_sign = {
+        \ 'text': 'W>',
+        \ 'texthl': 'TermCursorNC',
+    \ }
+
+    " auto-complete
+Plug 'ervandew/supertab'
+    let g:SuperTabDefaultCompletionType = "<c-p>"
+    let g:SuperTabContextDefaultCompletionType = "<c-n>"
+
+if has('nvim')
+    if has('python3')
+        function! DoRemote(arg)
+          UpdateRemotePlugins
+        endfunction
+
+        Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
+
+        let g:deoplete#enable_at_startup = 1
+        let g:deoplete#enable_smart_case = 1
+        let g:deoplete#enable_ignore_case = 0
+        let g:deoplete#auto_complete_start_length = 1
+        inoremap <expr><C-h>
+        \ deoplete#mappings#smart_close_popup()."\<C-h>"
+    endif
+endif
+
+    " miscellaneous
+Plug 'dbmrq/vim-ditto'
+    au FileType markdown,text,tex DittoOn
+
+    nmap <Leader>di <Plug>ToggleDitto
+    nmap =d <Plug>DittoNext
+    nmap -d <Plug>DittoPrev
+    nmap +d <Plug>DittoGood
+    nmap _d <Plug>DittoBad
+    nmap ]d <Plug>DittoMore
+    nmap [d <Plug>DittoLess
+
+Plug 'rbgrouleff/bclose.vim'
+Plug 'Wildefyr/vim-fat-finger'
+
+Plug 'beloglazov/vim-online-thesaurus'
+    let g:online_thesaurus_map_keys = 0
+    nnoremap zT :OnlineThesaurusCurrentWord<CR>
+
+    " custom syntax
+Plug 'baskerville/vim-sxhkdrc'
+
+call plug#end()
+
+    " Remapping Keys
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+nnoremap K <nop>
+nnoremap <C-u> <nop>
+
+map <Space> <Leader>
+nmap <Leader>c :noh<CR>
+
+" edit and source vimrc on save
+nmap <silent> <Leader>E :next $MYVIMRC<CR>
+augroup VimReload
+    autocmd!
+    autocmd BufWritePost $MYVIMRC source $MYVIMRC
+augroup END
+
+" saving and closing
+nmap <Leader>w :w!<CR>
+nmap <Leader>W :wa!<CR>
+nmap <Leader>x :xa!<CR>
+nmap <Leader>q :Bclose!<CR>
+nmap <C-q> :qa!<CR>
+nmap <C-s> :silent w! !sudo tee % > /dev/null<CR>
+
+" motions
+nnoremap <C-j> }
+nnoremap <C-k> {
+nmap <Leader><Space> %
+vmap <Leader><Space> %
+
+" manipulating text in normal mode
+map <C-h> i<C-h><ESC>
+nnoremap <Tab> i<Tab><ESC>l
+nnoremap <CR> i<CR><ESC>
+
+" formatting options
+vmap Q gq
+nmap <Leader>gq vipgq
+nmap <Leader>gc vipgc
+
+" better pasting
+xnoremap p pgvy
+
+" swapping like for like keys
+nnoremap 0 ^
+nnoremap ^ 0
+nnoremap ` '
+nnoremap ' `
+nnoremap # *
+nnoremap * #
+
+" I actually like C-a and C-e from emacs, sue me
+imap <C-a> <esc>0i
+imap <C-e> <esc>$i<right>
+
+" clean whitespace
+nmap <Leader>z mz:%s/\s\+$<CR>'z:w<CR>:noh<CR>
+
+" toggles
+nmap <Leader>v :set spell!<CR>
+nmap <Leader>n :set number!<CR>
+
+" visual mappings
+nnoremap v <C-v>
+nnoremap <C-v> v
+vnoremap j gj
+vnoremap k gk
+vnoremap 0 g^
+vnoremap $ g$
+vnoremap < <gv
+vnoremap > >gv
+
+" buffers
+nnoremap <C-n> :bnext<CR>
+nnoremap <C-p> :bprev<CR>
+
+" tabs
+nmap <Leader>tn :tabnew %<CR>
+nmap <Leader>to :tabonly<CR>
+nmap <Leader>tc :tabclose<CR>
+nmap <Leader>ts :tab sball<CR>:tabnext<CR>
+nnoremap H :tabprevious<CR>
+nnoremap L :tabnext<CR>
+
+" reverse splits
+nnoremap <C-w>s <C-w>v
+nnoremap <C-w>v <C-w>s
+" more natural splitting
+set splitright
+set splitbelow
+
+" transcribing shortcuts
+nmap <Leader>a :read !mpvc -f \%time\%<CR>0i[<ESC>$xa]<ESC>
+nmap <Leader>s 1z=
+nmap sn ]s
+nmap sp [s
+
+" auto expansion
+inoremap (<C-j> (<CR>)<ESC>O<TAB>
+inoremap {<C-j> {<CR>}<ESC>O<TAB>
+inoremap [<C-j> [<CR>]<ESC>O<TAB>
+inoremap {; {<CR>};<ESC>O<TAB>
+inoremap {, {<CR>},<ESC>O<TAB>
+inoremap [; [<CR>];<ESC>O<TAB>
+inoremap [, [<CR>],<ESC>O<TAB>
+
+    " Mappings for Custom Functions
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" make current file executable
+nmap <silent> <Leader>C :Chmox<CR>
+
+" gotta get down tonight
+nnoremap <silent> <Plug>(RotateLines) :<C-u>call <SID>RotateLines()<CR>
+nmap <Leader>r <Plug>(RotateLines)
+
+" correct default help to custom help function
+cabbrev h H
+cabbrev help H
+
+nmap <Leader>I :call <SID>SynStack()<CR>
+
+    " Macros
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let @m="0ilet @a='A'"
+
+    " Visual Settings
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+set title
+set titlestring=vim:\ %t titlelen=50
+
+set shortmess+=I
+set equalalways
+set noshowcmd
+set noshowmode
+set laststatus=0
+
+" fuck the readonly warning
+au BufEnter * set noro
+
+syntax on
+
+try
+    colorscheme subtle
+catch
+endtry
+
+set colorcolumn=81
+
+" cursor always placed in middle
+set scrolloff=999
+" cursor allowed to exist where there is no character in visual block mode
+set virtualedit=block
+
+" blank character between splits
+set fillchars=vert:\ ,
+
+set hidden
+set showmatch
+set lazyredraw
+
+" use marker folding by default
+set foldmethod=marker
+
+    " General Settings
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" set zsh as our default shell
+let shell="/bin/zsh"
+
+" change $PWD to current file location
+set autochdir
+
+" enable annoying mouse
+set mouse+=a
+
+" autosave file on focus loss
+set autowrite
+autocmd FocusLost * silent! :wa
+
+" stop leader timeout
+set ttimeout
+set notimeout
+
+" stop wrapping
+set nowrap
+
+" sane backspace
+set backspace=indent,eol,start
+set whichwrap+=<,>,h,l
+
+" sane searching
+set incsearch ignorecase smartcase
+
+" better wildcard matching
+set wildmenu
+set wildmode=longest:full,full
+set wildignore+=*.o,*~,*.pyc,*/.git/*
+set wildignore+=*.gif,*.png,*.jp*
+
+" completion menu
+set completeopt=menu,preview
+
+" defaults
+set tw=80
+set ts=4 sw=4 sts=4
+set smarttab expandtab
+
+" turn filetype subsystem on
+filetype plugin indent on
+
+" disable annoying comment on newline
+autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+
+" time for the cool shit
+autocmd! FileType sh setlocal
+    \ makeprg=sh\ %\
+
+autocmd! BufNewFile,BufRead *.md setlocal
+    \ spell
+" autocmd! BufWritePost *.md silent!
+"     \ $BROWSER /tmp/%:r.html &
+
+autocmd! FileType c      setlocal ts=8 sw=8 sts=8 noexpandtab
+autocmd! FileType txt    setlocal tw=0 spell noexpandtab wrap linebreak
+autocmd! FileType css    setlocal ts=4 sw=4 sts=4
+autocmd! FileType html   setlocal ts=2 sw=2 sts=2
+autocmd! FileType ruby   setlocal ts=2 sw=2 sts=2
+autocmd! FileType python setlocal ts=4 sw=4 sts=4
+
+" filetype maps
+autocmd! BufNewFile,BufRead *fstab           setlocal filetype=fstab tw=0
+autocmd! BufNewFile,BufRead *Pkgfile         setlocal filetype=sh noet
+autocmd! BufNewFile,BufRead *.gitconfig      setlocal filetype=gitconfig noet
+autocmd! BufNewFile,BufRead *.zsh,*.zprofile setlocal filetype=sh
+
+set history=1000
+
+set backup
+set backupdir=~/.vim/backup
+if !isdirectory(expand(&backupdir))
+    call mkdir(expand(&backupdir), "p")
+endif
+
+if has('persistent_undo')
+    set undofile
+    set undoreload=5000
+    set undolevels=5000
+    set undodir=~/.vim/undo
+
+    if !isdirectory(expand(&undodir))
+        call mkdir(expand(&undodir), "p")
+    endif
+endif
+
+set noswapfile
+
+" always jump to the last known cursor position
+autocmd BufReadPost *
+\ if line("'\"") > 0 && line("'\"") <= line("$") |
+\ exe "normal! g`\"" |
+\ endif
+
+if has('nvim')
+    " settings
+    set list
+    set breakindent
+
+    " keybindings
+    nmap <Leader>dd :term<CR>
+    nmap <Leader>dv :split<CR>:term<CR>
+    nmap <Leader>ds :vsplit<CR>:term<CR>
+
+    tnoremap <C-e> <C-\><C-n>
+    tnoremap <m-j> <c-\><c-n><c-w>j
+    tnoremap <m-k> <c-\><c-n><c-w>k
+    tnoremap <m-h> <c-\><c-n><c-w>h
+    tnoremap <m-l> <c-\><c-n><c-w>l
+    nnoremap <m-j> <c-\><c-n><c-w>j
+    nnoremap <m-k> <c-\><c-n><c-w>k
+    nnoremap <m-h> <c-\><c-n><c-w>h
+    nnoremap <m-l> <c-\><c-n><c-w>l
+    vnoremap <m-j> <c-\><c-n><c-w>j
+    vnoremap <m-k> <c-\><c-n><c-w>k
+    vnoremap <m-h> <c-\><c-n><c-w>h
+    vnoremap <m-l> <c-\><c-n><c-w>l
+    inoremap <m-j> <c-\><c-n><c-w>j
+    inoremap <m-k> <c-\><c-n><c-w>k
+    inoremap <m-h> <c-\><c-n><c-w>h
+    inoremap <m-l> <c-\><c-n><c-w>l
+
+    " jump to insert mode automatically
+    autocmd BufEnter *
+    \ if &buftype == "terminal" |
+    \ startinsert |
+    \ endif
+
+    " close terminal buffer immediately
+    " autocmd TermClose * silent! bd!
+
+    function! QuickTerminal()
+        20new
+        terminal
+    endfunction
+
+    nnoremap <silent> <Leader>tt :call QuickTerminal()<CR>
+endif
+
+    " functions
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" open current file with <program>
+function! Openwith(program)
+    silent! execute "!" . a:program . " " . expand('%:p') . " &"
+endfunction
+
+command! -bang -nargs=* Openwith call Openwith(<q-args>)
+
+" chmod +x current file
+function! Chmox()
+    execute "!chmod +x " . expand('%:p')
+endfunction
+
+command! Chmox call Chmox()
+
+function! s:RotateString(string)
+    let split_string = split(a:string, '\zs')
+    return join(split_string[-1:] + split_string[:-2], '')
+endfunction
+
+function! s:RotateLine(line, leading_whitespace, trailing_whitespace)
+    return substitute(
+        \ a:line,
+        \ '^\(' . a:leading_whitespace . '\)\(.\{-}\)\(' . a:trailing_whitespace . '\)$',
+        \ '\=submatch(1) . <SID>RotateString(submatch(2)) . submatch(3)',
+        \ ''
+    \ )
+endfunction
+
+function! s:RotateLines()
+    set nolist
+    let saved_view = winsaveview()
+    let first_visible_line = line('w0')
+    let last_visible_line = line('w$')
+    let lines = getline(first_visible_line, last_visible_line)
+    let leading_whitespace = map(
+        \ range(len(lines)),
+        \ 'matchstr(lines[v:val], ''^\s*'')'
+    \ )
+    let trailing_whitespace = map(
+        \ range(len(lines)),
+        \ 'matchstr(lines[v:val], ''\s*$'')'
+    \ )
+    try
+        while 1 " <C-c> to exit
+            let lines = map(
+                \ range(len(lines)),
+                \ '<SID>RotateLine(lines[v:val], leading_whitespace[v:val], trailing_whitespace[v:val])'
+            \ )
+            call setline(first_visible_line, lines)
+            redraw
+            sleep 50m
+        endwhile
+    finally
+        set list
+        if &modified
+            silent undo
+        endif
+        call winrestview(saved_view)
+    endtry
+endfunction
+
+" open help in own buffer without split
+function! FullScreenHelp(helpfile)
+    enew
+    set bt=help
+    execute "help " . a:helpfile
+    set buflisted
+endfunction
+
+command! -nargs=1 -complete=help H call FullScreenHelp(<f-args>)
+
+" information about current highlighting
+function! <SID>SynStack()
+    if !exists("*synstack")
+        return
+    endif
+    echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunction

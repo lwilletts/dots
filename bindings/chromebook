@@ -1,0 +1,29 @@
+clear lock
+clear control
+clear mod1
+clear mod2
+clear mod3
+clear mod4
+clear mod5
+
+keycode 9   = Escape NoSymbol Escape
+
+keycode 34  = braceleft bracketleft braceleft bracketleft
+keycode 35  = braceright bracketright braceright bracketright
+
+keycode 49  = asciitilde grave asciitilde grave
+
+keycode 37  = Super_L
+keycode 64  = Alt_L
+keycode 105 = Hyper_L
+keycode 108 = Alt_R
+keycode 133 = Control_L
+
+keycode 255 = Escape NoSymbol Escape
+
+add control = Control_L
+add mod1    = Alt_L
+add mod2    = Alt_R
+add mod3    = Hyper_L
+add mod4    = Super_L
+add mod5    = Control_R

@@ -1,0 +1,47 @@
+#!/bin/sh
+#
+# wildefyr - 2016 (c) wtfpl
+# colour output script for irc usage mainly
+
+case $1 in
+    h|help|-h|--help) usage 0 ;;
+esac
+
+f0='[30m'; f1='[31m'; f2='[32m'; f3='[33m'
+f4='[34m'; f5='[35m'; f6='[36m'; f7='[37m'
+b0='[40m'; b1='[41m'; b2='[42m'; b4='[44m'
+b4='[44m'; b5='[45m'; b6='[46m'; b7='[47m'
+B='[1m'; R='[0m'; I='[7m'
+
+case $1 in
+    b) FG="$f0" ;;
+    r) FG="$f1" ;;
+    g) FG="$f2" ;;
+    m) FG="$f3" ;;
+    d) FG="$f4" ;;
+    p) FG="$f5" ;;
+    c) FG="$f6" ;;
+    w) FG="$f7" ;;
+    *) exit 1    ;;
+esac
+
+case $2 in
+    b) BG="$b0" ;;
+    r) BG="$b1" ;;
+    g) BG="$b2" ;;
+    m) BG="$b3" ;;
+    d) BG="$b4" ;;
+    p) BG="$b5" ;;
+    c) BG="$b6" ;;
+    w) BG="$b7" ;;
+esac
+
+test -z "$BG" && {
+    MESSAGE=$(echo "$@" | cut -d\  -f 2-)
+} || {
+    MESSAGE=$(echo "$@" | cut -d\  -f 3-)
+}
+
+cat << EOF
+$FG$B$BG$MESSAGE$R
+EOF

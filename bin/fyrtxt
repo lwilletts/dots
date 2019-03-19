@@ -1,0 +1,15 @@
+#!/bin/sh
+
+DOTS="$HOME/.dots"
+
+hash toilet 2> /dev/null && {
+    case $1 in
+        3d)  toilet -f term -w 200 -t --gay < $DOTS/ascii/fyr3d ;;
+        *)   toilet -f term -w 200 -t --gay < $DOTS/ascii/fyr   ;;
+    esac
+} || {
+    case $1 in
+        3d)  cat $DOTS/ascii/fyr3d ;;
+        *)   cat $DOTS/ascii/fyr   ;;
+    esac
+}

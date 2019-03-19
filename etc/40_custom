@@ -1,0 +1,9 @@
+#!/bin/sh
+exec tail -n +3 $0
+# Ez menuentry for detecting UEFI windows for autobuild kernels
+# Credit: https://ihaveabackup.net/artcile/grub2-entry-for-windows-10-uefi
+
+menuentry 'Windows' {
+	search --fs-uuid --no-floppy --set-root 183B-6B08                                           
+	chainloader (${root})/EFI/Microsoft/Boot/bootmgfw.efi
+}

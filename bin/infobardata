@@ -1,0 +1,58 @@
+#!/bin/sh
+#
+# wildefyr - 2016 (c) CC
+# produce my bar information
+
+. fyrerc
+
+test "$(hostname)" = "flame" && {
+    SIZE=${SIZE-35}
+} || {
+    SIZE=${SIZE-30}
+}
+
+FULL=${FULL-▪}
+EMPTY=${EMPTY-▬}
+ACTIVE="%{F#D7D7D7}"
+INACTIVE="%{F#737373}"
+
+draw() {
+    perc=$1
+    size=$2
+
+    inc=$((perc * size / 100))
+
+    for v in $(seq 0 $((size - 1))); do
+        test $v -le $inc && {
+            out="${out}${FULL}"
+        } || {
+            out="${out}${EMPTY}"
+        }
+    done
+
+    printf '%s' "$out"
+}
+
+dateFormat=$(date '+%d %b %T')
+cputemp=$(draw $(cpu t) $SIZE)
+
+ps a | grep -v grep | grep -wq "mpv\|.*$SOCKET" && {
+    volume=$(mpvc -f "%volume%")
+} || {
+    volume=$(amixer get Master 2> /dev/null | sed -n 's_^.*\[\([0-9]\+\)%.*$_\1_p')
+}
+
+volume=$(draw $volume $SIZE)
+
+string="${string}%{l}"
+string="${string}${ACTIVE}  ${dateFormat}"
+string="${string}%{r}"
+
+string="${string}${whiteSpace}${whiteSpace}${ACTIVE}\
+%{A1:drun:}\
+%{A4:amixer -c 0 set Master 2db+ unmute -q:}\
+%{A5:amixer -c 0 set Master 2db- unmute -q:}\
+${volume}  ${cputemp}\
+%{A}%{A}%{A}  "
+
+printf '%s\n' "${string}"

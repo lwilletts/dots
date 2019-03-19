@@ -1,0 +1,52 @@
+#!/bin/sh
+
+validateDeps() {
+    type w3mimgdisplay 2>&1 > /dev/null || {
+        W3MCMD="w3mimgdisplay"
+        return
+    }
+
+    test -x /usr/lib/w3m/w3mimgdisplay && {
+        W3MCMD="/usr/lib/w3m/w3mimgdisplay"
+        return
+    }
+
+    exit 1
+}
+
+main() {
+    validateDeps
+
+    test -e "$@" && FILENAME="$@" || exit 1
+
+    WH=$(printf "5;$FILENAME" | $W3MCMD)
+    W=$(printf '%s\n' "$WH" | cut -d\  -f 1)
+    H=$(printf '%s\n' "$WH" | cut -d\  -f 2)
+
+    unset -v WH
+
+    FW=5
+    FH=10
+    LINES=$(tput lines)
+    COLUMNS=$(tput cols)
+
+    MW=$((FW * $COLUMNS))
+    MH=$((FH * $(($LINES - 2))))
+
+    test $W -gt $MW && {
+        H=$(($H * $MW / $W))
+        W=$MW
+    }
+
+    test $H -gt $MH && {
+        W=$(($W * $MH / $H))
+        H=$MH
+    }
+
+    tput clear
+    tput cup $((H/FH)) 0
+
+    printf "0;1;0;0;$W;$H;;;;;$FILENAME\n4;\n3;" | $W3MCMD
+}
+
+main "$@"

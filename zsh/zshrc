@@ -1,0 +1,6 @@
+for configuration (~/.zsh/*.zsh) . $configuration
+unset configuration
+
+chpwd
+
+test -f ~/.fzf.zsh && . ~/.fzf.zsh
