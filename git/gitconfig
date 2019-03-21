@@ -1,0 +1,13 @@
+[user]
+	email = wildefur@gmail.com
+	name = lwilletts
+[core]
+	editor = nvim
+[color]
+	ui = true
+[alias]
+	c = clone
+	ci = commit
+	pl = pull
+	pu = push
+	a = add
