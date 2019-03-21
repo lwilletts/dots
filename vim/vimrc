@@ -1,9 +1,10 @@
-" fyr <me@wildefyr.net>
-" ░░░▒▒▒▓▓██░██▓▓▒▒▒░░░
+" fyr
+
 
     " vim-plug
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+"{{{
 " auto install plug if not found
 if empty(glob('$HOME/.vim/autoload/plug.vim'))
     silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
@@ -36,7 +37,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
     nmap <Leader>f :FZF -m <CR>
     nmap <Leader>F :FZF -m ~/<CR>
-    nmap <Leader>b :FZF -m /builds/<CR>
+    nmap <Leader>b :FZF -m ~/builds/<CR>
     nmap <Leader>l :Buffers<CR>
 
 Plug 'junegunn/vim-pseudocl'
@@ -136,10 +137,12 @@ Plug 'beloglazov/vim-online-thesaurus'
 Plug 'baskerville/vim-sxhkdrc'
 
 call plug#end()
+"}}}
 
     " Remapping Keys
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+"{{{
 nnoremap K <nop>
 nnoremap <C-u> <nop>
 
@@ -188,12 +191,11 @@ nnoremap ' `
 nnoremap # *
 nnoremap * #
 
-" I actually like C-a and C-e from emacs, sue me
-imap <C-a> <esc>0i
-imap <C-e> <esc>$i<right>
-
-" clean whitespace
+" remove trailing whitespace
 nmap <Leader>z mz:%s/\s\+$<CR>'z:w<CR>:noh<CR>
+
+" remove blank lines
+nmap <Leader>g g/^\s*$/d
 
 " toggles
 nmap <Leader>v :set spell!<CR>
@@ -228,11 +230,10 @@ nnoremap <C-w>v <C-w>s
 set splitright
 set splitbelow
 
-" transcribing shortcuts
-nmap <Leader>a :read !mpvc -f \%time\%<CR>0i[<ESC>$xa]<ESC>
-nmap <Leader>s 1z=
-nmap sn ]s
-nmap sp [s
+" spellcheck
+nmap <Leader>= 1z=
+nmap zn ]s
+nmap zp [s
 
 " auto expansion
 inoremap (<C-j> (<CR>)<ESC>O<TAB>
@@ -258,15 +259,12 @@ cabbrev h H
 cabbrev help H
 
 nmap <Leader>I :call <SID>SynStack()<CR>
-
-    " Macros
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-let @m="0ilet @a='A'"
+"}}}
 
     " Visual Settings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+"{{{
 set title
 set titlestring=vim:\ %t titlelen=50
 
@@ -302,10 +300,12 @@ set lazyredraw
 
 " use marker folding by default
 set foldmethod=marker
+"}}}
 
     " General Settings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+"{{{
 " set zsh as our default shell
 let shell="/bin/zsh"
 
@@ -446,10 +446,12 @@ if has('nvim')
 
     nnoremap <silent> <Leader>tt :call QuickTerminal()<CR>
 endif
+"}}}
 
     " functions
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+"{{{
 " open current file with <program>
 function! Openwith(program)
     silent! execute "!" . a:program . " " . expand('%:p') . " &"
@@ -528,3 +530,4 @@ function! <SID>SynStack()
     endif
     echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunction
+"}}}
