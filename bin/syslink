@@ -9,7 +9,7 @@ DOTFILEDIR="$(printf '%s\n' "$DOTFILEDIR" | rev | cut -d'/' -f 2- | rev)"
 
 usage() {
     cat << EOF
-Usage $(basename $0) <core|nvim|xorg|all>
+Usage $(basename $0) <core|xorg|all>
 EOF
 
     test -z $1 || exit $1
@@ -25,15 +25,16 @@ core() {
     ln $OPTIONS $DOTFILEDIR/zsh/zshrc $HOME/.zshrc
     ln $OPTIONS $DOTFILEDIR/zsh/zprofile $HOME/.zprofile
 
-    ln $OPTIONS $DOTFILEDIR/etc/tmux.conf $HOME/.tmux.conf
+    ln $OPTIONS $DOTFILEDIR/tmux/tmux.conf $HOME/.tmux.conf
+
+    test ! -d $HOME/.config/nvim && {
+        mkdir -p $HOME/.config/nvim
+        ln $OPTIONS $DOTFILEDIR/vim/vimrc $HOME/.config/nvim/init.vim
+        ln $OPTIONS $DOTFILEDIR/vim/colors $HOME/.config/nvim/colors
+        ln $OPTIONS $HOME/.vim/autoload $HOME/.config/nvim/autoload
+    }
 }
 
-nvim() {
-    test ! -d $HOME/.config/nvim && mkdir -p $HOME/.config/nvim
-    ln $OPTIONS $DOTFILEDIR/vim/vimrc $HOME/.config/nvim/init.vim
-    ln $OPTIONS $DOTFILEDIR/vim/colors $HOME/.config/nvim/colors
-    ln $OPTIONS $HOME/.vim/autoload $HOME/.config/nvim/autoload
-}
 
 xorg() {
     ln $OPTIONS $DOTFILEDIR/fonts $HOME/.local/share/fonts
@@ -41,18 +42,8 @@ xorg() {
     ln $OPTIONS $DOTFILEDIR/X11/colours $HOME/.colours
     ln $OPTIONS $DOTFILEDIR/X11/Xresources $HOME/.Xresources
 
-    ln $OPTIONS $DOTFILEDIR/synergy/synergy.conf $HOME/.synergy.conf
-
     test ! -d $HOME/.config/sxhkd && mkdir $HOME/.config/sxhkd
     test ! -d $HOME/.config/fyre && mkdir $HOME/.config/fyre
-
-    test "$(hostname)" = "feotus" && {
-        ln $OPTIONS $DOTFILEDIR/sxhkd/chromebook $HOME/.config/sxhkd/sxhkdrc
-        ln $OPTIONS $DOTFILEDIR/fyre/chromebook $HOME/.config/fyre/config
-    } || {
-        ln $OPTIONS $DOTFILEDIR/sxhkd/poker $HOME/.config/sxhkd/sxhkdrc
-        ln $OPTIONS $DOTFILEDIR/fyre/config $HOME/.config/fyre/config
-    }
 
     ln $OPTIONS $DOTFILEDIR/mpv $HOME/.config/mpv
     ln $OPTIONS $DOTFILEDIR/sxiv $HOME/.config/sxiv
@@ -63,14 +54,12 @@ xorg() {
 
 all() {
     core
-    nvim
     xorg
 }
 
 case $1 in
     a|all)  all     ;;
     c|core) core    ;;
-    n|nvim) nvim    ;;
     x|xorg) xorg    ;;
     *)      usage 0 ;;
 esac
