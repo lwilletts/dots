@@ -18,4 +18,6 @@ case "$(hostname)" in
         ;;
 esac
 
+hsetroot -tile ~/media/pictures/patterns/noisier_net.png
+
 exec i3

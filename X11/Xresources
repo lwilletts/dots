@@ -2,7 +2,7 @@
 #include ".colours/fyry"
 
 /* basics */
-*.modifier : mod3
+*.modifier : mod4
 
 /* fonts */
 

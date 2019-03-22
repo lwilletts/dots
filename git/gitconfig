@@ -6,8 +6,8 @@
 [color]
 	ui = true
 [alias]
+	a = add
 	c = clone
-	ci = commit
 	pl = pull
 	pu = push
-	a = add
+	ci = commit

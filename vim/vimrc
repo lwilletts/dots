@@ -115,20 +115,8 @@ if has('nvim')
 endif
 
     " miscellaneous
-Plug 'dbmrq/vim-ditto'
-    au FileType markdown,text,tex DittoOn
-
-    nmap <Leader>di <Plug>ToggleDitto
-    nmap =d <Plug>DittoNext
-    nmap -d <Plug>DittoPrev
-    nmap +d <Plug>DittoGood
-    nmap _d <Plug>DittoBad
-    nmap ]d <Plug>DittoMore
-    nmap [d <Plug>DittoLess
-
 Plug 'rbgrouleff/bclose.vim'
 Plug 'Wildefyr/vim-fat-finger'
-
 Plug 'beloglazov/vim-online-thesaurus'
     let g:online_thesaurus_map_keys = 0
     nnoremap zT :OnlineThesaurusCurrentWord<CR>
@@ -193,9 +181,6 @@ nnoremap * #
 
 " remove trailing whitespace
 nmap <Leader>z mz:%s/\s\+$<CR>'z:w<CR>:noh<CR>
-
-" remove blank lines
-nmap <Leader>g g/^\s*$/d
 
 " toggles
 nmap <Leader>v :set spell!<CR>
