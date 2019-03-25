@@ -15,9 +15,10 @@ case "$(hostname)" in
     "fyriousa")
         xrandr --output HDMI-A-3 --auto --rotate right --right-of DisplayPort-2
         xrandr --output DisplayPort-3 --auto --rotate right --right-of HDMI-A-3
+        xrandr --output DisplayPort-2 --pos 0x190
         ;;
 esac
 
-hsetroot -tile ~/media/pictures/patterns/noisier_net.png
+hsetroot -tile ~/media/images/patterns/noisier_net.png
 
 exec i3

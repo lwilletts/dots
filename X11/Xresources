@@ -35,7 +35,7 @@ URxvt.perl-ext-common        : default,clipboard,url-select
 URxvt.keysym.M-e             : perl:url-select:select_next
 URxvt.url-select.launcher    : load
 URxvt.url-select.underline   : true
-URxvt.keysym.M-y             : perl:clipboard:copy
+URxvt.keysym.M-y             : perl:primary:copy
 
 /* URxvt transparency */
 URxvt.transparent : False

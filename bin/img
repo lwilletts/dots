@@ -1,24 +1,17 @@
 #!/bin/sh
 
 validateDeps() {
-    type w3mimgdisplay 2>&1 > /dev/null || {
-        W3MCMD="w3mimgdisplay"
-        return
-    }
-
     test -x /usr/lib/w3m/w3mimgdisplay && {
         W3MCMD="/usr/lib/w3m/w3mimgdisplay"
         return
     }
 
+    printf '%s\n' "install w3m numpty"
+
     exit 1
 }
 
-main() {
-    validateDeps
-
-    test -e "$@" && FILENAME="$@" || exit 1
-
+img() {
     WH=$(printf "5;$FILENAME" | $W3MCMD)
     W=$(printf '%s\n' "$WH" | cut -d\  -f 1)
     H=$(printf '%s\n' "$WH" | cut -d\  -f 2)
@@ -47,6 +40,26 @@ main() {
     tput cup $((H/FH)) 0
 
     printf "0;1;0;0;$W;$H;;;;;$FILENAME\n4;\n3;" | $W3MCMD
+    printf '%s\n'
+}
+
+main() {
+    validateDeps
+
+    test -e "$@" && FILENAME="$@" || exit 1
+    mpvcmd="mpv --really-quiet --loop-file"
+
+    case "$FILENAME" in
+        *.gif)
+            $mpvcmd $FILENAME
+            ;;
+        *.webm)
+            $mpvcmd $FILENAME
+            ;;
+        *)
+            img
+            ;;
+    esac
 }
 
 main "$@"

@@ -3,7 +3,7 @@ unset TERMCAP
 unset MANPATH
 
 # remove terminal suspend
-stty -ixon
+stty -ixoz:
 stty start undef
 
 PATH=""
@@ -30,24 +30,23 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DESKTOP_DIR="/home/fyr"
 
 export BIN="$DOTS/bin"
-export MUS="$HOME/music"
+export MUS="$HOME/media/music"
 export BUL="$HOME/builds"
-export IMG="$HOME/pictures"
+export IMG="$HOME/media/images"
 export DWN="$HOME/downloads"
 
-export IMGVIEW="mpv --really-quiet --input-unix-socket=/tmp/imagesocket --loop-file"
 export VIDPLAY="mpv --really-quiet --input-unix-socket=/tmp/mpvsocket"
 export BROWSER="/usr/bin/firefox"
 
 # applications
-alias i="$IMGVIEW"
+alias i="img"
 alias mpvt="$VIDPLAY"
 alias mpvi="$VIDPLAY --idle &!"
 
 export VISUAL="nvim"
 export EDITOR="nvim"
 
-export PAGER="less"
+test -f "/usr/bin/nvimpager" && { export PAGER="nvimpager" } || { export PAGER="less" }
 export MANPAGER="$PAGER"
 
 alias vi="$VISUAL"

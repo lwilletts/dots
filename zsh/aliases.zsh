@@ -15,6 +15,7 @@ alias l="ls"
 alias mv="mv -f"
 alias cp="cp -rf"
 alias rm="rm -rf"
+alias cat="nvimpager"
 alias rsync="rsync -av"
 
 alias szsh="source ~/.zshrc"
@@ -24,28 +25,24 @@ alias reboot="sudo reboot"
 alias poweroff="sudo poweroff"
 
 # apps
-alias todo="$VISUAL ~/.todo.md"
+alias pu="pulsemixer"
+alias todo="$VISUAL ~/todo.md"
+alias glances="glances --hide-kernel-threads"
 
 # net
-alias hn="hostname"
 alias tn="transmission-remote-cli"
 alias yt="youtube-dl -x -o \"%(title)s.%(ext)s\""
-alias extip="curl -s icanhazip.com"
-alias intip="ip a | grep -w \"inet\" | awk '/192/ {print \$2}' | cut -d'/' -f 1"
+alias net="curl -s icanhazip.com"
 
 # x / dtach / tmux
 alias x="xinit"
 alias dz="dtach -A /tmp/zsh -z zsh"
 
-# fonts
-alias lemon="printf '\e]710;%s\007' \"-benis-lemon-*-*-*-*-*-*-*-*-*-*-*-*\""
-alias edges="printf '\e]710;%s\007' \"-artwiz-edges-*-*-*-*-*-*-*-*-*-*-*-*\""
-
 # ascii art
 alias tits="curl -sL z3bra.org/tits"
 alias unix="printf '%s\n' \"\$(curl -sL git.io/unix)\""
 alias taco="printf '%s\n' \"\$(curl -sL git.io/taco)\""
-alias pizza="printf '%s\n' \"\$(curl -sL git.io/pizza)\""
+alias bonsai="cat $HOME/.dots/ascii/bonsai"
 
 # misc.
 alias motd="cat /etc/motd"
