@@ -4,21 +4,19 @@ xset s off # no screensaver
 xset +dpms # powersaving
 xset +fp ~/.local/share/fonts # custom fonts directory
 
-xsetroot -name background
-xsetroot -cursor_name left_ptr
-
+infobar &
 unclutter &
 urxvtd -q -o -f &
 test -f ~/.Xresources && xrdb -load ~/.Xresources
 
 case "$(hostname)" in
     "fyriousa")
-        xrandr --output HDMI-A-3 --auto --rotate right --right-of DisplayPort-2
-        xrandr --output DisplayPort-3 --auto --rotate right --right-of HDMI-A-3
-        xrandr --output DisplayPort-2 --pos 0x190
+        xrandr --output HDMI-A-2 --auto --rotate right --right-of DisplayPort-1
+        xrandr --output DisplayPort-2 --auto --rotate right --right-of HDMI-A-2
+        xrandr --output DisplayPort-1 --pos 0x190
         ;;
 esac
 
-hsetroot -tile ~/media/images/patterns/noisier_net.png
+hsetroot -tile ~/media/images/patterns/real_cf.png
 
 exec i3

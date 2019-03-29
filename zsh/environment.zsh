@@ -3,7 +3,6 @@ unset TERMCAP
 unset MANPATH
 
 # remove terminal suspend
-stty -ixoz:
 stty start undef
 
 PATH=""

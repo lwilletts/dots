@@ -115,6 +115,7 @@ if has('nvim')
 endif
 
     " miscellaneous
+
 Plug 'rbgrouleff/bclose.vim'
 Plug 'Wildefyr/vim-fat-finger'
 Plug 'beloglazov/vim-online-thesaurus'
@@ -229,6 +230,8 @@ inoremap {, {<CR>},<ESC>O<TAB>
 inoremap [; [<CR>];<ESC>O<TAB>
 inoremap [, [<CR>],<ESC>O<TAB>
 
+" nmap <Leader>h :.!cat ~/.histfile | tail -1 | cut -d';' -f 2-
+
     " Mappings for Custom Functions
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -297,8 +300,8 @@ let shell="/bin/zsh"
 " change $PWD to current file location
 set autochdir
 
-" enable annoying mouse
-set mouse+=a
+" disable annoying mouse
+set mouse-=a
 
 " autosave file on focus loss
 set autowrite

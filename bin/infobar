@@ -1,36 +1,42 @@
 #!/bin/sh
-#
-# wildefyr - 2016 (c) CC
-# launch infobar
+
+ACTIVE="%{F#D7D7D7}"
+INACTIVE="%{F#737373}"
 
 runTaskbar() {
     while :; do
-        pgrep eventually 2>&1 > /dev/null && {
-            infobardata
-            sleep 0.1
-        }
+        leftJustify="%{l}%{A:drun:} ▷▷ %{A}"
+
+        dateFormat=$(date '+%d %b %H:%M')
+        calenderCMD="urxvtc --hold -e sh -c 'cal -3'"
+        rightJustify="%{r}%{A:${calenderCMD}:} ${dateFormat} %{A}"
+
+        outputString="$leftJustify $rightJustify"
+
+        printf '%s\n' "$outputString"
+        sleep 0.1
     done
 }
 
-. fyrerc
+BW=2
 
 # set bar variables and launch backbar
-barx=$((XGAP))
-bary=$((0))
-barw=$((minW + 2*BW))
-barh=$((24))
+barx=$((70 - BW))
+bary=$((10 - BW))
+barw=$((300 + BW))
+barh=$((20 + BW*2))
 bar_bg='#D7D7D7'
 
 backbar $barx $bary $barw $barh $bar_bg &
-sleep 0.1
+sleep 0.2
 
 barx=$((barx + BW))
-bary=$((bary - BW))
-barw=$((barw - 2*BW))
-barh=$((barh - BW))
+bary=$((bary + BW))
+barw=$((barw - BW*2))
+barh=$((barh - BW*2))
 bar_bg='#040404'
 bar_fg='#D7D7D7'
 bar_font=$(awk '/lemon/ {print $3}' < ~/.Xresources | head -n 1 | cut -d',' -f 1)
 
-runTaskbar | lemonbar -d -g ${barw}x${barh}+${barx}+${bary} -B${bar_bg} \
-                      -F${bar_fg} -f${bar_font} -n "infobar" -a 15 | /bin/sh &
+runTaskbar | lemonbar -g ${barw}x${barh}+${barx}+${bary} -B${bar_bg} \
+                      -F${bar_fg} -f${bar_font} -n "infobar" | /bin/sh &

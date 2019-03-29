@@ -4,7 +4,7 @@ alias se="sudo -e"
 
 # permissions
 alias chmox="chmod +x"
-alias mine="s chown $(echo $USER):users"
+alias mine="s chown $(echo $USER):fyr"
 alias all="mine -R *"
 
 # operations

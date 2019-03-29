@@ -9,14 +9,6 @@
 *.font     : -benis-lemon-*-*-*-*-*-*-*-*-*-*-*-*
 *.boldFont : -benis-lemon-*-*-*-*-*-*-*-*-*-*-*-*
 
-URxvt.font     : -benis-lemon-*-*-*-*-*-*-*-*-*-*-*-*, \
-                 -wuncon-siji-medium-r-normal--10-100-75-75-c-80-iso10646-1, \
-                 -lucy-tewi-*-*-*-*-*-*-*-*-*-*-*-*
-
-URxvt.boldFont : -benis-lemon-*-*-*-*-*-*-*-*-*-*-*-*, \
-                 -wuncon-siji-medium-r-normal--10-100-75-75-c-80-iso10646-1, \
-                 -lucy-tewi-*-*-*-*-*-*-*-*-*-*-*-*
-
 /* general settings */
 *.cursorBlink     : 0
 *.cursorUnderline : 0
