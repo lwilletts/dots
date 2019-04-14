@@ -25,7 +25,7 @@ cpunumb() {
 }
 
 cputemp() {
-    printf '%s\n' "$(sensors | cut -d':' -f 2 | sed '3!d;s/+//;s/\..*//;s/\ //g')"
+    printf '%s\n' "$(sensors | awk '/Package id 0:/ {print $4}')"
 }
 
 main() {

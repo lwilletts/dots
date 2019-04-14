@@ -6,28 +6,22 @@
 # conversion layer to get the paste's raw location
 rawp() {
     case "$URL" in
-        *pbin.in/*)
-            URL="http://pbin.in/raw/$(echo $URL | cut -d/ -f 4)"
-            ;;
-        *pastebin.com/*)
-            URL="http://pastebin.com/raw/$(echo $URL | cut -d/ -f 4)"
-            ;;
-        *paste.list.org/*)
-            URL="http://paste.lisp.org/display/$(echo $URL | cut -d/ -f 4)/raw"
-            ;;
+        *pbin.in/*)        URL="http://pbin.in/raw/$(echo $URL | cut -d/ -f 4)"                 ;;
+        *pastebin.com/*)   URL="http://pastebin.com/raw/$(echo $URL | cut -d/ -f 4)"            ;;
+        *paste.list.org/*) URL="http://paste.lisp.org/display/$(echo $URL | cut -d/ -f 4)/raw"  ;;
     esac
 }
 
 openBrowser() {
-    # chrome appears to have automatic focus on new tab
-    test ! -z $(wid chrome) && {
-        chwb -s $BW -c "$INACTIVE" $PFW
-        google-chrome $URL 2>&1 > /dev/null
-        chwb -s $BW -c "$ACTIVE" $(wid chrome)
-    } || {
-        windows -s 2
-        google-chrome $URL 2>&1 > /dev/null
-    }
+    firefox --new-tab "$URL"
+#     test ! -z $(wid chrome) && {
+#         chwb -s $BW -c "$INACTIVE" $PFW
+#         google-chrome $URL 2>&1 > /dev/null
+#         chwb -s $BW -c "$ACTIVE" $(wid chrome)
+#     } || {
+#         windows -s 2
+#         google-chrome $URL 2>&1 > /dev/null
+#     }
 }
 
 . fyrerc
@@ -57,11 +51,7 @@ for arg in "$@"; do
             mpv "$URL" --really-quiet
             ;;
         *twitch.tv/*)
-            type livestreamer 2>&1 > /dev/null && {
-                livestreamer "$URL" source -Q
-            } || {
-                mpv "$URL" --really-quiet
-            }
+            openBrowser
             ;;
         *.txt|*ix.io/*|*p.iotek.org/*|*sprunge.us/*|*bpaste.net/*|\
         *pastebin.com/raw*|*pbin.in/raw*)

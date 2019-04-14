@@ -5,11 +5,11 @@
 
 OPTIONS='-s -f -v -n'
 DOTFILEDIR="$(dirname $(readlink -f "$0"))"
-DOTFILEDIR="$(printf '%s\n' "$DOTFILEDIR" | rev | cut -d'/' -f 2- | rev)"
+DOTFILEDIR="$(printf '%s\n' "$DOTFILEDIR%/*")"
 
 usage() {
     cat << EOF
-Usage $(basename $0) <core|xorg|all>
+Usage $(basename $0) <core|nvim|xorg|all>
 EOF
 
     test -z $1 || exit $1
@@ -25,16 +25,21 @@ core() {
     ln $OPTIONS $DOTFILEDIR/zsh/zshrc $HOME/.zshrc
     ln $OPTIONS $DOTFILEDIR/zsh/zprofile $HOME/.zprofile
 
-    ln $OPTIONS $DOTFILEDIR/git/gitconfig $HOME/.gitconfig
-
     ln $OPTIONS $DOTFILEDIR/tmux/tmux.conf $HOME/.tmux.conf
 
-    test ! -d $HOME/.config/nvim && {
-        mkdir -p $HOME/.config/nvim
-        ln $OPTIONS $DOTFILEDIR/vim/vimrc $HOME/.config/nvim/init.vim
-        ln $OPTIONS $DOTFILEDIR/vim/colors $HOME/.config/nvim/colors
-        ln $OPTIONS $HOME/.vim/autoload $HOME/.config/nvim/autoload
-    }
+}
+
+nvim() {
+    test ! -d $HOME/.config/nvim && mkdir -p $HOME/.config/nvim
+    test ! -d $HOME/.conf/nvimpager && mkdir -p $HOME/.config/nvimpager
+
+    ln $OPTIONS $DOTFILEDIR/vim/vimrc $HOME/.config/nvim/init.vim
+    ln $OPTIONS $DOTFILEDIR/vim/colors $HOME/.config/nvim/colors
+    ln $OPTIONS $HOME/.vim/autoload $HOME/.config/nvim/autoload
+
+    ln $OPTIONS $DOTFILEDIR/vim/vimrc $HOME/.config/nvimpager/init.vim
+    ln $OPTIONS $DOTFILEDIR/vim/colors $HOME/.config/nvimpager/colors
+    ln $OPTIONS $HOME/.vim/autoload $HOME/.config/nvimpager/autoload
 }
 
 
@@ -62,6 +67,7 @@ all() {
 case $1 in
     a|all)  all     ;;
     c|core) core    ;;
+    n|nvim) nvim    ;;
     x|xorg) xorg    ;;
     *)      usage 0 ;;
 esac

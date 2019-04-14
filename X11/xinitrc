@@ -4,11 +4,6 @@ xset s off # no screensaver
 xset +dpms # powersaving
 xset +fp ~/.local/share/fonts # custom fonts directory
 
-infobar &
-unclutter &
-urxvtd -q -o -f &
-test -f ~/.Xresources && xrdb -load ~/.Xresources
-
 case "$(hostname)" in
     "fyriousa")
         xrandr --output HDMI-A-2 --auto --rotate right --right-of DisplayPort-1
@@ -17,6 +12,11 @@ case "$(hostname)" in
         ;;
 esac
 
-hsetroot -tile ~/media/images/patterns/real_cf.png
+infobar &
+unclutter &
+urxvtd -q -o -f &
+test -f ~/.Xresources && xrdb -load ~/.Xresources
+
+hsetroot -tile $HOME/media/images/patterns/vertical_cloth.png
 
 exec i3

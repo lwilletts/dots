@@ -14,15 +14,11 @@ alias umount="s umount"
 alias l="ls"
 alias mv="mv -f"
 alias cp="cp -rf"
-alias rm="rm -rf"
 alias cat="nvimpager"
 alias rsync="rsync -av"
 
 alias szsh="source ~/.zshrc"
 alias sxrdb="xrdb ~/.Xresources"
-
-alias reboot="sudo reboot"
-alias poweroff="sudo poweroff"
 
 # apps
 alias pu="pulsemixer"
@@ -30,6 +26,7 @@ alias todo="$VISUAL ~/todo.md"
 alias glances="glances --hide-kernel-threads"
 
 # net
+alias ix="curl -F 'f:1=<-' ix.io"
 alias tn="transmission-remote-cli"
 alias yt="youtube-dl -x -o \"%(title)s.%(ext)s\""
 alias net="curl -s icanhazip.com"

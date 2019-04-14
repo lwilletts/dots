@@ -25,7 +25,7 @@ barx=$((70 - BW))
 bary=$((10 - BW))
 barw=$((300 + BW))
 barh=$((20 + BW*2))
-bar_bg='#D7D7D7'
+bar_bg='#404552'
 
 backbar $barx $bary $barw $barh $bar_bg &
 sleep 0.2
@@ -38,5 +38,5 @@ bar_bg='#040404'
 bar_fg='#D7D7D7'
 bar_font=$(awk '/lemon/ {print $3}' < ~/.Xresources | head -n 1 | cut -d',' -f 1)
 
-runTaskbar | lemonbar -g ${barw}x${barh}+${barx}+${bary} -B${bar_bg} \
+runTaskbar | lemonbar -d -g ${barw}x${barh}+${barx}+${bary} -B${bar_bg} \
                       -F${bar_fg} -f${bar_font} -n "infobar" | /bin/sh &

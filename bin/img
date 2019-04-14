@@ -1,18 +1,22 @@
 #!/bin/sh
 
 validateDeps() {
-    test -x /usr/lib/w3m/w3mimgdisplay && {
-        W3MCMD="/usr/lib/w3m/w3mimgdisplay"
-        return
+    hash mpv 2> /dev/null || {
+        printf '%s\n' "install mpv numpty"
+        exit 1
     }
 
-    printf '%s\n' "install w3m numpty"
-
-    exit 1
+    W3MCMD="/usr/lib/w3m/w3mimgdisplay"
+    test -x $W3MCMD || {
+        printf '%s\n' "install w3m numpty"
+        exit 1
+    }
 }
 
 img() {
-    WH=$(printf "5;$FILENAME" | $W3MCMD)
+    FILENAME=$1
+
+    WH=$(printf '%s' "5;$FILENAME" | $W3MCMD)
     W=$(printf '%s\n' "$WH" | cut -d\  -f 1)
     H=$(printf '%s\n' "$WH" | cut -d\  -f 2)
 
@@ -23,16 +27,16 @@ img() {
     LINES=$(tput lines)
     COLUMNS=$(tput cols)
 
-    MW=$((FW * $COLUMNS))
-    MH=$((FH * $(($LINES - 2))))
+    MW=$((FW * COLUMNS))
+    MH=$((FH * (LINES - 3)))
 
     test $W -gt $MW && {
-        H=$(($H * $MW / $W))
+        H=$((H * MW / W))
         W=$MW
     }
 
     test $H -gt $MH && {
-        W=$(($W * $MH / $H))
+        W=$((W * MH / H))
         H=$MH
     }
 
@@ -40,26 +44,65 @@ img() {
     tput cup $((H/FH)) 0
 
     printf "0;1;0;0;$W;$H;;;;;$FILENAME\n4;\n3;" | $W3MCMD
-    printf '%s\n'
+    printf '%s\n' ""
 }
 
 main() {
     validateDeps
 
-    test -e "$@" && FILENAME="$@" || exit 1
     mpvcmd="mpv --really-quiet --loop-file"
 
-    case "$FILENAME" in
-        *.gif)
-            $mpvcmd $FILENAME
-            ;;
-        *.webm)
-            $mpvcmd $FILENAME
-            ;;
-        *)
-            img
-            ;;
-    esac
+    test $# -gt 1 && {
+        for file in "$@"; do
+            case "$file" in
+                *.mkv|*.mp4|*.gif|*.webm|*.avi)
+                    $mpvcmd "$file"
+                    ;;
+                *.tif|*.png|*.jpg|*.jpeg)
+                    img "$file"
+                    printf '%s\n' "$(basename "$file") | (n next img, p prev img, r reload img, q quit)"
+
+                    while true; do
+                        oldstty=$(stty -g)
+                        stty raw -echo; key="$(head -c 1)"; stty $oldstty
+                        case $key in
+                            n)
+                                break
+                                ;;
+                            r)
+                                img "$file"
+                                printf '%s\n' "$(basename "$file") | (n next img, p prev img, r reload img, q quit)"
+                                ;;
+                            q)
+                                exit
+                                ;;
+                        esac
+                    done
+                    ;;
+                *.pdf)
+                    mupdf "$file"
+                    ;;
+                # move on to the next valid image
+                *)
+                    continue
+                    ;;
+            esac
+        done
+    } || {
+        file="$@"
+        case "$file" in
+            *.mkv|*.mp4|*.gif|*.webm|*.avi)
+                $mpvcmd "$file"
+                ;;
+            *.tif|*.png|*.jpg|*.jpeg)
+                img "$file"
+                printf '%s\n' "$(basename "$file")"
+                ;;
+            *.pdf)
+                mupdf "$file"
+                ;;
+        esac
+    }
 }
 
 main "$@"
