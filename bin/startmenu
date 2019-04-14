@@ -14,7 +14,8 @@ prompt
 while read -r action; do
     case "$action" in
         e|exit)     exit                                       ;;
-        t|todo)     zsh -c 'vim ~/.todo.md'                    ;;
+        i|irc)      dtach -A /tmp/irc weechat                  ;;
+        t|tmux)     tmux attach                                ;;
         x|xinit)    startx                                     ;;
         s|shell)    zsh                                        ;;
         m|music)    zsh -c 'cd /home/fyr/media/music; zsh -i'  ;;

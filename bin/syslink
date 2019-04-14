@@ -5,7 +5,7 @@
 
 OPTIONS='-s -f -v -n'
 DOTFILEDIR="$(dirname $(readlink -f "$0"))"
-DOTFILEDIR="$(printf '%s\n' "$DOTFILEDIR%/*")"
+DOTFILEDIR="$(printf '%s\n' "$DOTFILEDIR" | rev | cut -d'/' -f 2- | rev)"
 
 usage() {
     cat << EOF
