@@ -3,7 +3,6 @@ alias s="sudo"
 alias se="sudo -e"
 
 # permissions
-alias chmox="chmod +x"
 alias mine="s chown $(echo $USER):fyr"
 alias all="mine -R *"
 
@@ -29,11 +28,13 @@ alias glances="glances --hide-kernel-threads"
 alias ix="curl -F 'f:1=<-' ix.io"
 alias tn="transmission-remote-cli"
 alias yt="youtube-dl -x -o \"%(title)s.%(ext)s\""
-alias net="curl -s icanhazip.com"
+alias net="curl -s ipv4.icanhazip.com"
+alias netflix="firefox -new-window 'https://netflix.com'"
 
 # x / dtach / tmux
 alias x="xinit"
 alias dz="dtach -A /tmp/zsh -z zsh"
+alias irc="dtach -A /tmp/irc weechat"
 
 # ascii art
 alias tits="curl -sL z3bra.org/tits"

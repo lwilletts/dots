@@ -9,6 +9,8 @@ URL="https://api.steampowered.com/IGameServersService/GetServerList/v1/?format=j
 OUTPUT=$(curl -sL "$URL" | jq -r '(.response.servers)')
 LENGTH=$(printf '%s' "$OUTPUT" | jq '. | length')
 
+FINAL=$(printf "#|Map|Name|IP")
+
 for i in $(seq 1 $LENGTH); do
     i=$((i - 1))
     SERVER=$(printf '%s' "$OUTPUT" | jq ".[$i]")
@@ -16,29 +18,15 @@ for i in $(seq 1 $LENGTH); do
     MAP=$(printf '%s' "$SERVER" | jq -r '.map')
     NAME=$(printf '%s' "$SERVER" | jq -r '.name')
     PLAYERS=$(printf '%s' "$SERVER" | jq -r '.players')
-    # IP=$(printf '%s' "$SERVER" | jq -r '.addr')
+    IP=$(printf '%s' "$SERVER" | jq -r '.addr')
 
-    test $PLAYERS -eq 0 && continue
+    # test $PLAYERS -eq 0 && continue
 
     TOTALPLAYERS=$(printf '%s' "$SERVER" | jq -r '.max_players')
     CURRENTPLAYERS=$((CURRENTPLAYERS + PLAYERS))
 
-    test -z "$FINAL" && { 
-        FINAL=$(printf "$PLAYERS/$TOTALPLAYERS|$MAP|$NAME|$IP")
-    } || {
-        FINAL=$(printf "$FINAL \n$PLAYERS/$TOTALPLAYERS|$MAP|$NAME|$IP \n")
-    }
-        
+    FINAL=$(printf "$FINAL \n$PLAYERS/$TOTALPLAYERS|$MAP|$NAME|$IP \n")
 done
 
 printf '%s' "$FINAL" | column -t -s "|"
 printf '\n'
-
-test $CURRENTPLAYERS -gt $MAXPLAYERS && {
-    printf '%s\n\n' "NEW RECORD!"
-    printf '%s' "$CURRENTPLAYERS" > ~/.maxplayers
-    MAXPLAYERS="$CURRENTPLAYERS"
-}
-
-printf '%s\n' "Max Players Recorded: $MAXPLAYERS"
-printf '%s\n' "Total Current Players: $CURRENTPLAYERS"
