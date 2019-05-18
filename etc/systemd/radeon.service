@@ -1,0 +1,8 @@
+[Unit]
+Description=Undervolt Radeon VII
+
+[Service]
+ExecStart=/home/fyr/.dots/bin/radeon undervolt
+
+[Install]
+WantedBy=multi-user.target

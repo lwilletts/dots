@@ -41,7 +41,7 @@ BW=2
 # set bar variables and launch backbar
 barx=$((70 - BW))
 bary=$((10 - BW))
-barw=$((600 + BW))
+barw=$((900 + BW))
 barh=$((20 + BW*2))
 bar_bg='#404552'
 

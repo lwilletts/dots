@@ -22,6 +22,7 @@ alias sxrdb="xrdb ~/.Xresources"
 # apps
 alias pu="pulsemixer"
 alias todo="$VISUAL ~/todo.md"
+alias ffmpeg="ffmpeg -hide_banner"
 alias glances="glances --hide-kernel-threads"
 
 # net
@@ -30,6 +31,9 @@ alias tn="transmission-remote-cli"
 alias yt="youtube-dl -x -o \"%(title)s.%(ext)s\""
 alias net="curl -s ipv4.icanhazip.com"
 alias netflix="firefox -new-window 'https://netflix.com'"
+
+# image
+alias scan="scanimage --device 'epson2:net:192.168.1.89' --mode=Color --format=png --resolution 300"
 
 # x / dtach / tmux
 alias x="xinit"

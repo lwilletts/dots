@@ -4,6 +4,9 @@ xset s off # no screensaver
 xset +dpms # powersaving
 xset +fp ~/.local/share/fonts # custom fonts directory
 
+xsetroot -name background
+xsetroot -cursor_name left_ptr # left pointer as cursor
+
 case "$(hostname)" in
     "fyriousa")
         xrandr --output HDMI-A-2 --auto --rotate right --right-of DisplayPort-1
@@ -18,5 +21,4 @@ urxvtd -q -o -f &
 test -f ~/.Xresources && xrdb -load ~/.Xresources
 
 hsetroot -tile $HOME/media/images/patterns/vertical_cloth.png
-
 exec i3

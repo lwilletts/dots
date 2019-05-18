@@ -1,25 +1,48 @@
 #!/bin/sh
+#
+# configuration variables for fyre
+# place in $HOME/.config/fyre/config by default
 
-BW=1
+    # REQUIRED
+################################################################################
+
+# set border colours for windows
+ACTIVE="D7D7D7"
+WARNING="B23450" # not currently used anywhere but might be in the future
+INACTIVE="404552"
+
+# border width
+BW=2
+
+# grid based snapping
 ROWS=4
 COLS=4
-IGAP=12
-VGAP=12
-TGAP=36
-XGAP=12
-BGAP=12
 
+# to get a pixel perfect gaps:
+# these variables need to be divisible by the values of ROWS and COLS
+IGAP=10
+VGAP=10
+TGAP=40
+XGAP=10
+BGAP=10
+
+# mouse automatically gets moved to the middle of the window
 MOUSE="false"
-SLOPPY="false"
 
-ACTIVE="D7D7D7"
-WARNING="B23450"
-INACTIVE="040404"
+# moving over windows automatically focuses them
+SLOPPY="true"
 
+# set to workspaces or groups
 WORKFLOW="groups"
 
-BLUR=0
-WALL="$HOME/files/pictures/backs/rollingclouds.jpg"
-BACK="hsetroot -fill $WALL -gamma 0.5"
+    # OPTIONAL
+################################################################################
 
-SYNCONF=${SYNCONF:-$HOME/.synergy.conf}
+# set path to your background - omit if you don't want fyre to manage your wall
+WALL="$HOME/media/images/patterns/vertical_cloth.png"
+
+# set integer factor to blur background by if wall program uses it
+BLUR=0
+
+# call your background program with arguments if WALL is used
+BACK="hsetroot -tile $WALL"
