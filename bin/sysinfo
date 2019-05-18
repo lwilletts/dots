@@ -61,7 +61,7 @@ getVars() {
     TIME="$(uptime -p)"
     pgrep mpv 2>&1 > /dev/null && test -S "/tmp/mpvsocket" && \
         MPV="Playing: $(mpvc -f '%artist% - %title%')"
-    lspci | grep "Vega 20" 2>&1 > /dev/null && hash sensors 2> /dev/null && gpu
+#    lspci | grep "Vega 20" 2>&1 > /dev/null && hash sensors 2> /dev/null && gpu
 }
 
 workOutLineSize() {
