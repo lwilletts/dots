@@ -1,9 +1,0 @@
-#!/bin/sh
-#
-# wildefyr - 2016 (c) CC
-# I'm lazy okay?
-
-IP="192.168.1.221"
-MAC="50:e5:49:3e:19:67"
-
-wol -i ${IP} ${MAC}

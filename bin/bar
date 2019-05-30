@@ -17,26 +17,28 @@ runTaskbar() {
     while :; do
         menu="drun"
         clock=$(date '+%d %b %H:%M')
-        calender="urxvtc --hold -e sh -c 'cal -3'"
+        calender="urxvtc -e sh -c '3cal'"
 
-        cava="urxvtc --hold -e sh -c 'cava'"
-        playing="$(mpvc -f '%artist% / %title% / %remaining%')"
-        test "$playing" = "No files added to /tmp/mpvsocket." && playing=""
+        cava="urxvtc -e sh -c 'cava'"
+
+        mus="$(mpvc -f '%artist% / %title% / %remaining%')"
+        vol="urxvtc -e sh -c 'pulsemixer'"
 
         buf=""
         buf="${buf} %{l}"
         buf="${buf} %{A:${menu}:}▷                                                       %{A}"
         buf="${buf} %{r}"
-        buf="${buf} %{A:${cava}:} ${playing} %{A}"
+        buf="${buf} %{A:${cava}:} ${mus} %{A}"
         buf="${buf} $(gpu)"
         buf="${buf} %{A:${calender}:} ${clock} %{A}"
+        buf="${buf} %{A:${vol}:}♪  %{A}"
 
         printf '%s\n' "$buf"
         sleep 1
     done
 }
 
-BW=2
+BW="$(grep borderwidth $HOME/.cwmrc | cut -d\  -f 2)"
 
 # set bar variables and launch backbar
 barx=$((70 - BW))

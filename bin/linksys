@@ -50,10 +50,10 @@ xorg() {
     ln $OPTIONS $DOTFILEDIR/X11/Xresources $HOME/.Xresources
 
     test ! -d $HOME/.config/sxhkd && mkdir $HOME/.config/sxhkd
-    test ! -d $HOME/.config/fyre && mkdir $HOME/.config/fyre
+    ln $OPTIONS $DOTFILEDIR/sxhkd/poker $HOME/.config/sxhkd/sxhkdrc
 
     ln $OPTIONS $DOTFILEDIR/mpv $HOME/.config/mpv
-    ln $OPTIONS $DOTFILEDIR/sxiv $HOME/.config/sxiv
+    ln $OPTIONS $DOTFILEDIR/cwm/cwmrc $HOME/.cwmrc
     ln $OPTIONS $DOTFILEDIR/bindings $HOME/.bindings
     ln $OPTIONS $DOTFILEDIR/alsa/asoundrc $HOME/.asoundrc
     ln $OPTIONS $DOTFILEDIR/youtube-dl $HOME/.config/youtube-dl
@@ -61,6 +61,7 @@ xorg() {
 
 all() {
     core
+    nvim
     xorg
 }
 

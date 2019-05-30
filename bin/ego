@@ -1,0 +1,11 @@
+#!/bin/sh
+#
+# ego
+
+DOTS="$HOME/.dots"
+
+hash toilet 2> /dev/null && {
+    toilet -f term -w 200 -t --rainbow < $DOTS/ascii/fyr
+} || {
+    cat $DOTS/ascii/fyr
+}

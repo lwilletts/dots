@@ -1,4 +1,6 @@
 #!/bin/sh
+#
+# headset
 
 bluetoothctl << EOF
 power on

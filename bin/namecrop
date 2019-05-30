@@ -7,5 +7,3 @@ test -n $artist && test -n $album && {
     find . -name '${artist}*.flac' -type f -exec bash -c \
     'mv "$1" "${1/\/${artist} - ${album} - //}"' -- {} \;
 }
-
-

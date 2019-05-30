@@ -14,17 +14,9 @@ rawp() {
 
 openBrowser() {
     firefox --new-tab "$URL"
-#     test ! -z $(wid chrome) && {
-#         chwb -s $BW -c "$INACTIVE" $PFW
-#         google-chrome $URL 2>&1 > /dev/null
-#         chwb -s $BW -c "$ACTIVE" $(wid chrome)
-#     } || {
-#         windows -s 2
-#         google-chrome $URL 2>&1 > /dev/null
-#     }
 }
 
-. fyrerc
+. fwmrc
 
 for arg in "$@"; do
     URL="$arg"

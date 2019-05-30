@@ -131,6 +131,7 @@ call plug#end()
     " Remapping Keys
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+
 "{{{
 nnoremap K <nop>
 nnoremap <C-u> <nop>
@@ -158,6 +159,9 @@ nnoremap <C-j> }
 nnoremap <C-k> {
 nmap <Leader><Space> %
 vmap <Leader><Space> %
+
+" replace word under cursor
+nnoremap <Leader>* :%s/\<<c-r><c-w>\>//g<left><left>
 
 " manipulating text in normal mode
 map <C-h> i<C-h><ESC>
@@ -229,8 +233,6 @@ inoremap {; {<CR>};<ESC>O<TAB>
 inoremap {, {<CR>},<ESC>O<TAB>
 inoremap [; [<CR>];<ESC>O<TAB>
 inoremap [, [<CR>],<ESC>O<TAB>
-
-" nmap <Leader>h :.!cat ~/.histfile | tail -1 | cut -d';' -f 2-
 
     " Mappings for Custom Functions
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -432,7 +434,7 @@ if has('nvim')
         terminal
     endfunction
 
-    nnoremap <silent> <Leader>tt :call QuickTerminal()<CR>
+    nnoremap <silent> <Leader>t :call QuickTerminal()<CR>
 endif
 "}}}
 

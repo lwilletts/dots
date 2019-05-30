@@ -20,7 +20,7 @@ case "$1" in
     "wine")
         # set powerlimit to 300W
         printf '%s\n' "300000000" > "$power"
-        # set to 1000mV at all points
+        # set to stock voltage at all points
         printf '%s\n' "vc 0 1801 1120" > "$odclk"
         printf '%s\n' "vc 1 1801 1120" > "$odclk"
         printf '%s\n' "vc 2 1801 1120" > "$odclk"
@@ -34,7 +34,7 @@ case "$1" in
         # set powerlimit to 300W
         printf '%s\n' "300000000" > "$power"
         # set to 1000mV at max load
-        printf '%s\n' "vc 2 1801 980" > "$odclk"
+        printf '%s\n' "vc 2 1801 1000" > "$odclk"
         # set memory clock to 1200mhz
         printf '%s\n' "m 1 1200" > "$odclk"
         printf '%s\n' "c" > "$odclk"
@@ -42,8 +42,14 @@ case "$1" in
         printf '%s\n' "undervolt applied"
         ;;
     "fan")
+        test -n "$2" && {
+            test "$2" -gt 255 && fan="255" || fan="$2"
+        } || {
+            fan="200"
+        }
+
         printf '%s\n' "1" > "$fanCtrl"
-        printf '%s\n' "200" > "$fanSpeed"
+        printf '%s\n' "$fan" > "$fanSpeed"
         ;;
     "auto")
         printf '%s\n' "2" > "$fanCtrl"

@@ -1,70 +1,31 @@
-# reload sxhkd
-mod1 + shift + r
-    pkill -USR1 -x sxhkd
-# kill window
-mod1 + shift + q
-    fwmclose
-# kill x
-mod1 + shift + e
-    pkill xinit
-
 # launch programs
 {mod1, mod2} + Return
     urxvtc
 mod1 + d
     drun
 
-# similar to windows alt-tab functionality
-mod1 + Tab
-    focus --next
-mod1 + shift + Tab
-    focus --prev
-# focus the closest window in a direction
 mod1 + {h,j,k,l}
-    closer {--left,--down,--up,--right}
-
-# move window in a direction
-mod1 + shift + {h,j,k,l}
-    move {--left,--down,--up,--right}
-
-# snap current window to an edge
-mod4 + {h,j,k,l}
-    snap {--left,--down,--up,--right}
-
-# fullscreen the current window on current screen
+    closer {left, down, up, right}
 mod1 + f
-    fullscr
+    full
+mod4 + l
+    lock
 
-# add current window to group
-mod1 + shift + {1,2,3,4,5,6,7,8,9,0}
-    windows -a $(pfw) {1,2,3,4,5,6,7,8,9,0}
-# group workflow
-mod1 + {1,2,3,4,5,6,7,8,9,0}
-    windows -t {1,2,3,4,5,6,7,8,9,0}
-# cycle through windows in group
-mod1 + z
-    windows -z
-# remove current window from group
-mod1 + c
-    windows -c $(pfw)
-# reset groups
-mod1 + shift + c
-    windows --reset
-
-# move window underneath cursor
-mod1 + @button1
-    focus; xmmv
-# resize the window underneath the cursor
-mod1 + ~button3
-     wrs -a %i %i $(pfw)
-
+mod1 + shift +  q
+    killw $(pfw)
+mod1 + shift + r
+    pkill -USR1 -x sxhkd
+mod1 + shift + e
+    pkill xinit
 
 # music
-mod4+{space,p,n,r,z,c}
+mod4 + {h,j,k,l}
+    mpvc seek {-5s,-1m,1m,5s} -q
+mod4 + {space,p,n,r,z,c}
     mpvc {toggle,prev,next,repeat,shuffle,clear} -q
-mod4+a
-    mpvc add ~/downloads/music -q
-mod4+{9,0}
+mod4 + a
+    mpvc add ~/media/music -q -Q
+mod4 + {9,0}
     mpvc volume {-5,+5} -q
 
 # volume
@@ -74,8 +35,10 @@ XF86AudioMute
     pulsemixer --change-volume {2,-2}
 
 # headphones
-{XF86AudioPause,XF86AudioPlay,XF86AudioNext,XF86AudioPrev}
-    mpvc {pause,play,next,prev} -q
+{XF86AudioPause,XF86AudioPlay,XF86AudioNext}
+    mpvc {toggle,toggle,next} -q
+XF86AudioPrev
+    mpvc add ~/media/music -q -Q
 
 # shots
 Print

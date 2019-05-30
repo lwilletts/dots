@@ -11,18 +11,17 @@ FILE=$1
 
 test -f $FILE && {
     case $FILE in
-        *.tar.bz2) tar xjf "$FILE"    ;;
-        *.tar.gz)  tar xf "$FILE"     ;;
-        *.tar.xz)  tar xf "$FILE"     ;;
-        *.bz2)     bzip2 "$FILE"      ;;
-        *.rar)     unrar e "$FILE"    ;;
-        *.gz)      gunzip "$FILE"     ;;
-        *.tar)     tar xf "$FILE"     ;;
-        *.tbz2)    tar xjf "$FILE"    ;;
-        *.tgz)     tar xzf "$FILE"    ;;
-        *.zip)     7z x "$FILE"       ;;
-        *.Z)       uncompress "$FILE" ;;
-        *.7z)      7z x "$FILE"       ;;
+        *.zip|*.7z) unzip "$FILE" -d $DIR ;;
+        *.tar.bz2)  tar xjf "$FILE"       ;;
+        *.tar.gz)   tar xf "$FILE"        ;;
+        *.tar.xz)   tar xf "$FILE"        ;;
+        *.tbz2)     tar xjf "$FILE"       ;;
+        *.bz2)      bzip2 "$FILE"         ;;
+        *.rar)      unrar e "$FILE"       ;;
+        *.tar)      tar xf "$FILE"        ;;
+        *.tgz)      tar xzf "$FILE"       ;;
+        *.gz)       gunzip "$FILE"        ;;
+        *.Z)        uncompress "$FILE"    ;;
         *)
             printf '%s\n' "Unrecognized archival format."
             exit 3

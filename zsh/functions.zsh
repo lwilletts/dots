@@ -52,20 +52,10 @@ editexec() {
     $EDITOR $(findexec) "$@"
 }
 
-:h() {
-    test ! -z "$1" && {
-        $VISUAL +"help $1" +only +'map q ZQ'
-    }
+usr() {
+    ps xgf "$@" | sed '1d; s/--type.*//' | \
+        cut -c1-$(stty size < /dev/tty | cut -d\  -f 2)
 }
 
-psusr() {
-    ps xgf "$@" | sed '1d; s/--type.*//' | width
-}
-
-alias xsel="xsel -l /dev/null"
-
-out() {
-    PASTE="/tmp/paste"
-    test -f "$PASTE" && cat "$PASTE"
-    unset -v PASTE
-}
+# name / class / process of window id
+hash fwmrc 2> /dev/null && . fwmrc

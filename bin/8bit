@@ -1,4 +1,6 @@
 #!/bin/sh
+#
+# 8bit
 
 test "$#" -eq 1 && {
     SAMPLE="$1"

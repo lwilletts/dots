@@ -1,4 +1,4 @@
-27
+28
 anorexia.bdf -artwiz-anorexia-medium-r-normal--11-110-75-75-p-90-iso8859-1
 aqui.bdf -artwiz-aqui-medium-r-bold--11-110-75-75-p-90-iso8859-1
 candy.bdf -shdw-candy-medium-r-normal--11-80-120-120-m-60-iso10646-1
@@ -11,7 +11,7 @@ gelly.bdf -artwiz-gelly-medium-r-normal--10-110-75-75-p-90-iso8859-1
 glisp-bold.bdf -artwiz-glispbold-bold-r-bold--11-110-75-75-p-100-iso8859-1
 glisp.bdf -artwiz-glisp-medium-r-normal--11-110-75-75-p-90-iso8859-1
 kates.bdf -artwiz-kates-medium-r-normal--14-140-75-75-m-70-iso8859-1
-lemon.pcf -benis-lemon-medium-r-normal--10-110-75-75-m-50-iso10646-1
+lemon.bdf -benis-lemon-medium-r-normal--10-110-75-75-m-50-iso10646-1
 lime.bdf -artwiz-lime-medium-r-normal--10-110-75-75-m-50-iso8859-1
 metis.bdf -kori-metis-normal-r-normal--11-90-75-75-p-58-iso10646-1
 miniwi-10.bdf -gbdfed-unknown-medium-r-normal--15-120-92-91-p-100-fontspecific-0
@@ -26,3 +26,4 @@ snap.bdf -artwiz-snap-normal-r-normal--10-100-75-75-p-90-iso8859-1
 tangerine.pcf -fuyuki-tangerine-medium-r-normal--10-110-75-75-m-50-iso8859-1
 tewi-medium-11.bdf -lucy-tewi-medium-r-normal--11-90-100-100-c-60-iso10646-1
 tinycandy.bdf -shdw-tinycandy-medium-r-normal--8-60-75-75-m-50-iso10646-1
+uushi.bdf -benis-uushi-medium-r-normal--11-90-75-75-p-58-iso10646-1

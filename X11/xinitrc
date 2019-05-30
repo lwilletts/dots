@@ -1,24 +1,31 @@
 #!/bin/sh
 
-xset s off # no screensaver
-xset +dpms # powersaving
-xset +fp ~/.local/share/fonts # custom fonts directory
-
-xsetroot -name background
-xsetroot -cursor_name left_ptr # left pointer as cursor
-
+# displays
 case "$(hostname)" in
     "fyriousa")
         xrandr --output HDMI-A-2 --auto --rotate right --right-of DisplayPort-1
         xrandr --output DisplayPort-2 --auto --rotate right --right-of HDMI-A-2
         xrandr --output DisplayPort-1 --pos 0x190
+
+        hsetroot -tile $HOME/media/img/patterns/fake_brick.png
         ;;
 esac
 
-infobar &
+# environment
+xset s off # no screensaver
+xset +dpms # powersaving
+xset +fp ~/.local/share/fonts # custom fonts directory
+xsetroot -name background
+xsetroot -cursor_name left_ptr # left pointer as cursor
+
+# programs
+bar &
 unclutter &
 urxvtd -q -o -f &
 test -f ~/.Xresources && xrdb -load ~/.Xresources
+sxhkd &
+cwm
 
-hsetroot -tile $HOME/media/images/patterns/vertical_cloth.png
-exec i3
+while :; do
+    sleep 99d
+done

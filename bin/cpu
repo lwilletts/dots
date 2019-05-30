@@ -1,14 +1,13 @@
 #!/bin/sh
 #
-# wildefyr - 2016 (c) CC
-# print cpu info
+# cpu
 
 ARGS="$@"
 
 usage () {
     cat >&2 << EOF
 p: Percentage of cpu used.
-t: Print tempreture of cpu.
+t: Print temperature of cpu.
 n: Number of running processes.
 EOF
 
