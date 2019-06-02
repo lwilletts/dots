@@ -9,6 +9,8 @@ case "$(hostname)" in
 
         hsetroot -tile $HOME/media/img/patterns/fake_brick.png
         ;;
+    "inferno")
+        hsetroot -tile $HOME/media/img/patterns/fake_brick.png
 esac
 
 # environment

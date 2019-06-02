@@ -15,23 +15,47 @@ gpu() {
 
 runTaskbar() {
     while :; do
-        menu="drun"
-        clock=$(date '+%d %b %H:%M')
-        calender="urxvtc -e sh -c '3cal'"
+        case "$(hostname)" in
+            "fyriousa")
+                menu="drun"
+                clock=$(date '+%d %b %H:%M')
+                calender="urxvtc -e sh -c '3cal'"
 
-        cava="urxvtc -e sh -c 'cava'"
+                cava="urxvtc -e sh -c 'cava'"
 
-        mus="$(mpvc -f '%artist% / %title% / %remaining%')"
-        vol="urxvtc -e sh -c 'pulsemixer'"
+                mus="$(mpvc -f '%artist% / %title% / %remaining%')"
+                test "$mus" = "No files added to /tmp/mpvsocket." && mus=""
+                vol="urxvtc -e sh -c 'pulsemixer'"
 
-        buf=""
-        buf="${buf} %{l}"
-        buf="${buf} %{A:${menu}:}▷                                                       %{A}"
-        buf="${buf} %{r}"
-        buf="${buf} %{A:${cava}:} ${mus} %{A}"
-        buf="${buf} $(gpu)"
-        buf="${buf} %{A:${calender}:} ${clock} %{A}"
-        buf="${buf} %{A:${vol}:}♪  %{A}"
+                buf=""
+                buf="${buf} %{l}"
+                buf="${buf} %{A:${menu}:}▷                                                       %{A}"
+                buf="${buf} %{r}"
+                buf="${buf} %{A:${cava}:} ${mus} %{A}"
+                buf="${buf} $(gpu)"
+                buf="${buf} %{A:${calender}:} ${clock} %{A}"
+                buf="${buf} %{A:${vol}:}♪  %{A}"
+                ;;
+            "inferno")
+                menu="drun"
+                clock=$(date '+%d %b %H:%M')
+                calender="urxvtc -e sh -c '3cal'"
+
+                cava="urxvtc -e sh -c 'cava'"
+
+                mus="$(mpvc -f '%artist% / %title% / %remaining%')"
+                test "$mus" = "No files added to /tmp/mpvsocket." && mus=""
+                vol="urxvtc -e sh -c 'pulsemixer'"
+
+                buf=""
+                buf="${buf} %{l}"
+                buf="${buf} %{A:${menu}:}▷                                                       %{A}"
+                buf="${buf} %{r}"
+                buf="${buf} %{A:${cava}:} ${mus} %{A}"
+                buf="${buf} %{A:${calender}:} ${clock} %{A}"
+                buf="${buf} %{A:${vol}:}♪  %{A}"
+                ;;
+        esac
 
         printf '%s\n' "$buf"
         sleep 1
