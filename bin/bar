@@ -23,8 +23,12 @@ runTaskbar() {
 
                 cava="urxvtc -e sh -c 'cava'"
 
-                mus="$(mpvc -f '%artist% / %title% / %remaining%')"
-                test "$mus" = "No files added to /tmp/mpvsocket." && mus=""
+                mpvc -q
+                test $? != 2 && {
+                    mus="$(mpvc -f '%artist% / %title% / %remaining%')"
+                    test "$mus" = "No files added to /tmp/mpvsocket." && mus=""
+                }
+
                 vol="urxvtc -e sh -c 'pulsemixer'"
 
                 buf=""
@@ -43,8 +47,12 @@ runTaskbar() {
 
                 cava="urxvtc -e sh -c 'cava'"
 
-                mus="$(mpvc -f '%artist% / %title% / %remaining%')"
-                test "$mus" = "No files added to /tmp/mpvsocket." && mus=""
+                mpvc -q
+                test $? != 2 && {
+                    mus="$(mpvc -f '%artist% / %title% / %remaining%')"
+                    test "$mus" = "No files added to /tmp/mpvsocket." && mus=""
+                }
+
                 vol="urxvtc -e sh -c 'pulsemixer'"
 
                 buf=""

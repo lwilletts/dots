@@ -71,4 +71,3 @@ command " obs-studio" "obs"
 command " telegram"   "telegram-desktop"
 command " pizero"     "urxvtc -e sh -c 'mosh pizero'"
 command " remote"     "urxvtc -e sh -c 'mosh remote'"
-

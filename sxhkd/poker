@@ -24,7 +24,7 @@ mod4 + {h,j,k,l}
 mod4 + {space,p,n,r,z,c}
     mpvc {toggle,prev,next,repeat,shuffle,clear} -q
 mod4 + a
-    mpvc add ~/media/music -q -Q
+    mpvc add ~/media/music -q -Q; mpvc shuffle -q; mpvc next -q
 mod4 + {9,0}
     mpvc volume {-5,+5} -q
 
@@ -38,7 +38,7 @@ XF86AudioMute
 {XF86AudioPause,XF86AudioPlay,XF86AudioNext}
     mpvc {toggle,toggle,next} -q
 XF86AudioPrev
-    mpvc add ~/media/music -q -Q
+    mpvc add ~/media/music -q -Q; mpvc shuffle -q; mpvc next -q
 
 # shots
 Print

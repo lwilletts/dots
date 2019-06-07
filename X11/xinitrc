@@ -3,14 +3,14 @@
 # displays
 case "$(hostname)" in
     "fyriousa")
-        xrandr --output HDMI-A-2 --auto --rotate right --right-of DisplayPort-1
-        xrandr --output DisplayPort-2 --auto --rotate right --right-of HDMI-A-2
-        xrandr --output DisplayPort-1 --pos 0x190
+        xrandr --output HDMI-A-0 --auto --rotate right --right-of DisplayPort-0
+        xrandr --output DisplayPort-1 --auto --rotate right --right-of HDMI-A-0
+        xrandr --output DisplayPort-0 --pos 0x190
 
-        hsetroot -tile $HOME/media/img/patterns/fake_brick.png
+        hsetroot -tile $HOME/media/img/patterns/noisier_net.png -gamma 1.3
         ;;
     "inferno")
-        hsetroot -tile $HOME/media/img/patterns/fake_brick.png
+        hsetroot -tile $HOME/media/img/patterns/noisier_net.png -gamma 1.3
 esac
 
 # environment
@@ -25,6 +25,7 @@ bar &
 unclutter &
 urxvtd -q -o -f &
 test -f ~/.Xresources && xrdb -load ~/.Xresources
+event &
 sxhkd &
 cwm
 
