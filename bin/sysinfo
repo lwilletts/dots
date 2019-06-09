@@ -166,8 +166,8 @@ printf '%s\n' "$f6█$b7$f0 $USER@$HOST $LINE1EXTRA$R"
 printf '%s\n' "$f6█$b7$f0 $SYS | $PACK Packages $LINE3EXTRA$R"
 printf '%s\n' "$f6█$b7$f0 $KERN | $TIME $LINE2EXTRA$R"
 
-test ! -z "$GPU" && printf '%s\n' "$f6█$b7$f0 $GPU $LINE5EXTRA$R"
-test ! -z "$MPV" && printf '%s\n' "$f6█$b7$f0 $MPV $LINE4EXTRA$R"
+# test ! -z "$GPU" && printf '%s\n' "$f6█$b7$f0 $GPU $LINE5EXTRA$R"
+# test ! -z "$MPV" && printf '%s\n' "$f6█$b7$f0 $MPV $LINE4EXTRA$R"
 
 printf '\n'
 

@@ -15,37 +15,11 @@ bind-key M-a window-vmaximize
 bind-key M-r menu-window
 bind-key M-t window-menu-label
 
-bind-key M-c  window-stick
-bind-key M-1  group-toggle-1
-bind-key M-2  group-toggle-2
-bind-key M-3  group-toggle-3
-bind-key M-4  group-toggle-4
-bind-key M-5  group-toggle-5
-bind-key M-6  group-toggle-6
-bind-key M-7  group-toggle-7
-bind-key M-8  group-toggle-8
-bind-key MS-1 window-movetogroup-1
-bind-key MS-2 window-movetogroup-2
-bind-key MS-3 window-movetogroup-3
-bind-key MS-4 window-movetogroup-4
-bind-key MS-5 window-movetogroup-5
-bind-key MS-6 window-movetogroup-6
-bind-key MS-7 window-movetogroup-7
-bind-key MS-8 window-movetogroup-8
-
 bind-mouse M-1 window-move
+unbind-mouse M-2
 bind-mouse M-3 window-resize
 bind-mouse M-4 window-raise
 bind-mouse M-5 window-lower
-
-# groups
-autogroup 1 "urxvt,URxvt"
-autogroup 2 "Navigation,Firefox"
-autogroup 3 "mpv"
-autogroup 4 "discord,discord"
-autogroup 5 "Steam,Steam"
-autogroup 5 "lutris,Lutris"
-autogroup 6 "midair-win64-test.exe,steam_app_439370"
 
 # style
 borderwidth 1
@@ -71,3 +45,7 @@ command " obs-studio" "obs"
 command " telegram"   "telegram-desktop"
 command " pizero"     "urxvtc -e sh -c 'mosh pizero'"
 command " remote"     "urxvtc -e sh -c 'mosh remote'"
+
+ignore Discord
+ignore Steam
+ignore Popup

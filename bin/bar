@@ -25,6 +25,7 @@ runTaskbar() {
 
                 mpvc -q
                 test $? != 2 && {
+                    sleep 0.2
                     mus="$(mpvc -f '%artist% / %title% / %remaining%')"
                     test "$mus" = "No files added to /tmp/mpvsocket." && mus=""
                 }

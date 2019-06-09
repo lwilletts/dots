@@ -37,8 +37,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
     nmap <Leader>f :FZF -m <CR>
     nmap <Leader>F :FZF -m ~/<CR>
-    nmap <Leader>b :FZF -m ~/builds/<CR>
-    nmap <Leader>l :Buffers<CR>
+    nmap <Leader>b :Buffers<CR>
 
 Plug 'junegunn/vim-pseudocl'
 Plug 'junegunn/vim-oblique'
@@ -333,7 +332,7 @@ set wildignore+=*.gif,*.png,*.jp*
 set completeopt=menu,preview
 
 " defaults
-set tw=80
+set tw=79
 set ts=4 sw=4 sts=4
 set smarttab expandtab
 
@@ -403,22 +402,10 @@ if has('nvim')
     nmap <Leader>ds :vsplit<CR>:term<CR>
 
     tnoremap <C-e> <C-\><C-n>
-    tnoremap <m-j> <c-\><c-n><c-w>j
-    tnoremap <m-k> <c-\><c-n><c-w>k
-    tnoremap <m-h> <c-\><c-n><c-w>h
-    tnoremap <m-l> <c-\><c-n><c-w>l
-    nnoremap <m-j> <c-\><c-n><c-w>j
-    nnoremap <m-k> <c-\><c-n><c-w>k
-    nnoremap <m-h> <c-\><c-n><c-w>h
-    nnoremap <m-l> <c-\><c-n><c-w>l
-    vnoremap <m-j> <c-\><c-n><c-w>j
-    vnoremap <m-k> <c-\><c-n><c-w>k
-    vnoremap <m-h> <c-\><c-n><c-w>h
-    vnoremap <m-l> <c-\><c-n><c-w>l
-    inoremap <m-j> <c-\><c-n><c-w>j
-    inoremap <m-k> <c-\><c-n><c-w>k
-    inoremap <m-h> <c-\><c-n><c-w>h
-    inoremap <m-l> <c-\><c-n><c-w>l
+    nnoremap <Leader>j <c-\><c-n><c-w>j
+    nnoremap <Leader>k <c-\><c-n><c-w>k
+    nnoremap <Leader>h <c-\><c-n><c-w>h
+    nnoremap <Leader>l <c-\><c-n><c-w>l
 
     " jump to insert mode automatically
     autocmd BufEnter *

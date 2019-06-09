@@ -7,16 +7,29 @@ mod1 + d
 mod1 + {h,j,k,l}
     closer {left, down, up, right}
 mod1 + f
-    full
+    full $(pfw)
+
+# groups
+mod1 + {1,2,3,4,5,6,7,8,9,0}
+    group toggle {1,2,3,4,5,6,7,8,9,0}
+mod1 + shift + {1,2,3,4,5,6,7,8,9,0}
+    group add {1,2,3,4,5,6,7,8,9,0} $(pfw)
+mod1 + c
+    group clean $(pfw)
+
+# system
 mod4 + l
     lock
-
 mod1 + shift +  q
-    killw $(pfw)
+    close $(pfw)
 mod1 + shift + r
     pkill -USR1 -x sxhkd
 mod1 + shift + e
     pkill xinit
+
+# mouse
+button10
+    thunar
 
 # music
 mod4 + {h,j,k,l}
