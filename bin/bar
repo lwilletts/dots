@@ -3,6 +3,19 @@
 ACTIVE="%{F#D7D7D7}"
 INACTIVE="%{F#737373}"
 
+bat() {
+    BAT="/sys/class/power_supply/BAT0"
+    CHR="$(cat "$BAT/charge_now")"
+    MAX="$(cat "$BAT/charge_full")"
+    PERCENT="$(printf '%.2f\n' "$(echo "$CHR/$MAX*100" | bc -l)")"
+
+    test "$BAT/status" = "Charging" && {
+        printf '%s\n' "$PERCENT% [CHARGING]"
+    } || {
+        printf '%s\n' "$PERCENT%"
+    }
+}
+
 gpu() {
     sensorOut="$(sensors)"
     VOLT=$(printf '%s\n' "$sensorOut"  | awk '/vddgfx/ {print $2,$3}')
@@ -50,6 +63,7 @@ runTaskbar() {
 
                 mpvc -q
                 test $? != 2 && {
+                    sleep 0.2
                     mus="$(mpvc -f '%artist% / %title% / %remaining%')"
                     test "$mus" = "No files added to /tmp/mpvsocket." && mus=""
                 }
@@ -61,6 +75,7 @@ runTaskbar() {
                 buf="${buf} %{A:${menu}:}▷                                                       %{A}"
                 buf="${buf} %{r}"
                 buf="${buf} %{A:${cava}:} ${mus} %{A}"
+                buf="${buf} $(bat)"
                 buf="${buf} %{A:${calender}:} ${clock} %{A}"
                 buf="${buf} %{A:${vol}:}♪  %{A}"
                 ;;
