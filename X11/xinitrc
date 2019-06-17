@@ -4,7 +4,7 @@
 case "$(hostname)" in
     "fyriousa")
         xrandr --output HDMI-A-2 --auto --rotate right --right-of DisplayPort-1
-        xrandr --output DisplayPort-2 --auto --rotate right --pos 3640+200
+        xrandr --output DisplayPort-2 --auto --rotate right --pos 3640x200
         xrandr --output DisplayPort-1 --pos 0x440
 
         hsetroot -tile $HOME/media/img/patterns/noisier_net.png -gamma 1.2
@@ -25,7 +25,7 @@ bar &
 unclutter &
 urxvtd -q -o -f &
 test -f ~/.Xresources && xrdb -load ~/.Xresources
-event &
+eventually &
 sxhkd &
 cwm
 

@@ -12,14 +12,19 @@ bind-key M-p window-rcycle-ingroup
 bind-key M-m window-maximize
 bind-key M-a window-vmaximize
 
-bind-key M-r menu-window
-bind-key M-t window-menu-label
+bind-key M-s menu-window
+bind-key M-g window-menu-label
 
 bind-mouse M-1 window-move
 unbind-mouse M-2
 bind-mouse M-3 window-resize
 bind-mouse M-4 window-raise
 bind-mouse M-5 window-lower
+
+# ignores
+ignore Discord
+ignore Steam
+ignore Popup
 
 # style
 borderwidth 1
@@ -36,16 +41,14 @@ color urgencyborder "#C0392B"
 color inactiveborder "#484b52"
 
 # app menu
-command " urxvt"      "urxvtc -e zsh"
-command " firefox"    "firefox"
-command " discord"    "sh -c 'discord'"
-command " lutris"     "lutris"
-command " steam"      "steam"
-command " obs-studio" "obs"
-command " telegram"   "telegram-desktop"
-command " pizero"     "urxvtc -e sh -c 'mosh pizero'"
-command " remote"     "urxvtc -e sh -c 'mosh remote'"
-
-ignore Discord
-ignore Steam
-ignore Popup
+command " urxvt "        "urxvtc -e zsh"
+command " pulsemixer "   "urxvtc -e pulsemixer"
+command " bluetoothctl " "urxvtc -e bluetoothctl"
+command " firefox "      "firefox"
+command " discord "      "sh -c 'discord'"
+command " lutris "       "lutris"
+command " steam "        "steam"
+command " obs-studio "   "obs"
+command " telegram "     "telegram-desktop"
+command " pizero "       "urxvtc -e sh -c 'mosh pizero'"
+command " remote "       "urxvtc -e sh -c 'mosh remote'"
