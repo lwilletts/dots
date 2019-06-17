@@ -6,7 +6,7 @@ unbind-key all
 bind-key 4S-r restart
 
 bind-key M-s menu-window
-bind-key M-r window-menu-label
+bind-key M-g window-menu-label
 bind-key M-t menu-ssh
 
 bind-key M-n window-cycle
@@ -65,6 +65,7 @@ color urgencyborder "#C0392B"
 color inactiveborder "#484b52"
 
 # app menu
+<<<<<<< HEAD
 command " urxvt"      "urxvtc -e zsh"
 command " firefox"    "firefox"
 command " discord"    "sh -c 'discord'"
@@ -81,3 +82,16 @@ autogroup 1 "urxvt,URxvt"
 autogroup 2 "Navigator,Firefox"
 autogroup 5 "gl,mpv"
 autogroup 9 "libreoffice,libreoffice-impress"
+=======
+command " urxvt "        "urxvtc -e zsh"
+command " pulsemixer "   "urxvtc -e pulsemixer"
+command " bluetoothctl " "urxvtc -e bluetoothctl"
+command " firefox "      "firefox"
+command " discord "      "sh -c 'discord'"
+command " lutris "       "lutris"
+command " steam "        "steam"
+command " obs-studio "   "obs"
+command " telegram "     "telegram-desktop"
+command " pizero "       "urxvtc -e sh -c 'mosh pizero'"
+command " remote "       "urxvtc -e sh -c 'mosh remote'"
+>>>>>>> 590f23996a7a959ae5fa3676a7f50782c6912b2f

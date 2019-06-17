@@ -1,0 +1,26 @@
+#!/bin/sh
+#
+# snip
+
+trackOld=""
+
+while :; do
+    trackNew="$(mpvc -f "%artist% - %title%                   ")"
+    test "$trackNew" = "No files added to /tmp/mpvsocket." && exit 1
+
+    test "$trackNew" = "$trackOld" && {
+        sleep 1
+        continue
+    } || {
+        trackOld="$trackNew"
+        printf '%s\n' "$trackOld" > "$HOME/.playingnow"
+
+        path="$(mpvc -f "%path%")"
+        ffmpeg -hide_banner -loglevel panic -y -i "$path" "$HOME/.cover.png" || {
+            coverpath="$(printf '%s\n' "$path" | rev | cut -d/ -f 2- | rev)"
+            test -e "$coverpath/cover.*" && {
+                cp "$coverpath/cover.*" "$HOME/.cover.png"
+            }
+        }
+    }
+done

@@ -1,0 +1,17 @@
+#!/bin/sh
+#
+# fffopen
+
+test -z "$1" && exit
+test -e "$1" || exit
+
+mime_type="$(file -biL "$1")"
+
+case "$mime_type" in
+    text/*|*/xml)                    "${EDITOR:-vi}" "$1" ;;
+    image/*)                         mpv --loop-file "$1" ;;
+    video/*)                         mpv "$1"             ;;
+    audio/*)                         mpvc add "$1"        ;;
+    application/pdf*)                mupdf "$1"           ;;
+    *opendocument*|*openxmlformats*) libreoffice "$1"     ;;
+esac

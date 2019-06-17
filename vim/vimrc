@@ -114,7 +114,6 @@ if has('nvim')
 endif
 
     " miscellaneous
-
 Plug 'rbgrouleff/bclose.vim'
 Plug 'Wildefyr/vim-fat-finger'
 Plug 'beloglazov/vim-online-thesaurus'
