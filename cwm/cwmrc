@@ -5,26 +5,55 @@ unbind-key all
 
 bind-key 4S-r restart
 
-bind-key M-Tab window-cycle
-bind-key MS-Tab window-rcycle
-bind-key M-n window-cycle-ingroup
-bind-key M-p window-rcycle-ingroup
+bind-key M-s menu-window
+bind-key M-r window-menu-label
+bind-key M-t menu-ssh
+
+bind-key M-n window-cycle
+bind-key M-p window-rcycle
+bind-key M-u window-lower
+bind-key M-i window-raise
 bind-key M-m window-maximize
 bind-key M-a window-vmaximize
+bind-key MS-q window-close
 
-bind-key M-r menu-window
-bind-key M-t window-menu-label
+bind-key M-c group-stick
+bind-key M-0 group-toggle-0
+bind-key M-1 group-toggle-1
+bind-key M-2 group-toggle-2
+bind-key M-3 group-toggle-3
+bind-key M-4 group-toggle-4
+bind-key M-5 group-toggle-5
+bind-key M-6 group-toggle-6
+bind-key M-7 group-toggle-7
+bind-key M-8 group-toggle-8
+bind-key M-9 group-toggle-9
+bind-key MS-0 window-movetogroup-0
+bind-key MS-1 window-movetogroup-1
+bind-key MS-2 window-movetogroup-2
+bind-key MS-3 window-movetogroup-3
+bind-key MS-4 window-movetogroup-4
+bind-key MS-5 window-movetogroup-5
+bind-key MS-6 window-movetogroup-6
+bind-key MS-7 window-movetogroup-7
+bind-key MS-8 window-movetogroup-8
+bind-key MS-9 window-movetogroup-9
 
+# mouse
 bind-mouse M-1 window-move
-unbind-mouse M-2
 bind-mouse M-3 window-resize
 bind-mouse M-4 window-raise
 bind-mouse M-5 window-lower
 
+# ignores
+ignore Discord
+ignore Steam
+ignore Popup
+
 # style
 borderwidth 1
 fontname "nu:pixelsize=12"
-gap 40 20 20 20 # T, B, L, R
+gap 40 20 20 20
 
 # colors
 color font "#040404"
@@ -46,6 +75,9 @@ command " telegram"   "telegram-desktop"
 command " pizero"     "urxvtc -e sh -c 'mosh pizero'"
 command " remote"     "urxvtc -e sh -c 'mosh remote'"
 
-ignore Discord
-ignore Steam
-ignore Popup
+# groups
+
+autogroup 1 "urxvt,URxvt"
+autogroup 2 "Navigator,Firefox"
+autogroup 5 "gl,mpv"
+autogroup 9 "libreoffice,libreoffice-impress"

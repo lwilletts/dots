@@ -301,8 +301,8 @@ let shell="/bin/zsh"
 " change $PWD to current file location
 set autochdir
 
-" disable annoying mouse
-set mouse-=a
+" enable annoying mouse
+set mouse+=a
 
 " autosave file on focus loss
 set autowrite

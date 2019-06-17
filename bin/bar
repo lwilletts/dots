@@ -5,11 +5,14 @@ INACTIVE="%{F#737373}"
 
 bat() {
     BAT="/sys/class/power_supply/BAT0"
+    test -d "$BAT" || return 0
+
     CHR="$(cat "$BAT/charge_now")"
     MAX="$(cat "$BAT/charge_full")"
+    STATUS="$(cat "$BAT/status")"
     PERCENT="$(printf '%.2f\n' "$(echo "$CHR/$MAX*100" | bc -l)")"
 
-    test "$BAT/status" = "Charging" && {
+    test "$STATUS" = "Charging" && {
         printf '%s\n' "$PERCENT% [CHARGING]"
     } || {
         printf '%s\n' "$PERCENT%"
