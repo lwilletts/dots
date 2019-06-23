@@ -42,6 +42,8 @@ alias midair="steam steam://rungameid/439370 > /dev/null 2>&1 "
 alias i="img"
 alias mpvi="mpv --really-quit --idle &!"
 alias scan="scanimage --device 'epson2:net:192.168.1.89' --mode=Color --format=png --resolution 300"
+alias shot="xscreenshot | ff2png > $HOME/$(date +%d-%m-%y-%H:%M:%S).png"
+alias shotwid="xscreenshot '$(pfw)' | ff2png > '$HOME/$(wname $(pfw)) $(date +%d-%m-%y-%H:%M:%S).png'"
 
 # x / dtach / tmux
 alias x="startx"

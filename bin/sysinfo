@@ -69,7 +69,7 @@ workOutLineSize() {
     LINE2=$(printf '%s\n' "  $KERN - $TIME" | wc -m)
     LINE3=$(printf '%s\n' "  $SYS - $PACK Packages" | wc -m)
     LINE4=$(printf '%s\n' "  $MPV" | wc -m)
-    LINE5=$(printf '%s\m' "  $GPU" | wc -m)
+    LINE5=$(printf '%s\m' "  $(gpu)" | wc -m)
 
     # find longest
     SIZE=${SIZE-0}
@@ -123,16 +123,6 @@ cpu() {
     printf "${f6}CPU${R} %s" "$(draw $cpu $SIZE $f3)"
 }
 
-gpu() {
-    sensorOut="$(sensors)"
-    VOLT=$(printf '%s\n' "$sensorOut"  | awk '/vddgfx/ {print $2,$3}')
-    TEMP=$(printf '%s\n' "$sensorOut"  | awk '/temp1/ && $3 == "(crit" {print $2}' | cut -c 2-)
-    POWER=$(printf '%s\n' "$sensorOut" | awk '/power1/ {print $2,$3}')
-    SPEED=$(printf '%s\n' "$sensorOut" | awk '/fan1/ {print $2,$3}')
-
-    GPU="Radeon VII: $VOLT | $TEMP | $POWER | $SPEED"
-}
-
 temperature() {
     TEMP=/sys/class/thermal/thermal_zone0/temp
     test -f $TEMP && {
@@ -165,8 +155,7 @@ printf '\n'
 printf '%s\n' "$f6█$b7$f0 $USER@$HOST $LINE1EXTRA$R"
 printf '%s\n' "$f6█$b7$f0 $SYS | $PACK Packages $LINE3EXTRA$R"
 printf '%s\n' "$f6█$b7$f0 $KERN | $TIME $LINE2EXTRA$R"
-
-# test ! -z "$GPU" && printf '%s\n' "$f6█$b7$f0 $GPU $LINE5EXTRA$R"
+test ! -z "$(gpu)" && printf '%s\n' "$f6█$b7$f0 $(gpu) $LINE5EXTRA$R"
 # test ! -z "$MPV" && printf '%s\n' "$f6█$b7$f0 $MPV $LINE4EXTRA$R"
 
 printf '\n'

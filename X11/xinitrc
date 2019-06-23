@@ -7,10 +7,10 @@ case "$(hostname)" in
         xrandr --output DisplayPort-2 --auto --rotate right --pos 3640x200
         xrandr --output DisplayPort-1 --pos 0x440
 
-        hsetroot -tile $HOME/media/img/patterns/noisier_net.png -gamma 1.2
+        hsetroot -tile $HOME/usr/img/patterns/noisier_net.png -gamma 1.2
         ;;
     "inferno")
-        hsetroot -tile $HOME/media/img/patterns/noisier_net.png -gamma 1.2
+        hsetroot -tile $HOME/usr/img/patterns/noisier_net.png -gamma 1.2
 esac
 
 # environment

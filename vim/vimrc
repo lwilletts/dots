@@ -96,6 +96,9 @@ Plug 'ervandew/supertab'
     let g:SuperTabDefaultCompletionType = "<c-p>"
     let g:SuperTabContextDefaultCompletionType = "<c-n>"
 
+    " latex
+Plug 'lervag/vimtex'
+
 if has('nvim')
     if has('python3')
         function! DoRemote(arg)
@@ -128,7 +131,6 @@ call plug#end()
 
     " Remapping Keys
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 
 "{{{
 nnoremap K <nop>

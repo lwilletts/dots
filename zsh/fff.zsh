@@ -6,14 +6,14 @@ export FFF_COL3=5
 export FFF_COL4=7
 
 # fav
-export FFF_FAV1=~/builds
-export FFF_FAV2=~/media/img
-export FFF_FAV3=~/media/music
-export FFF_FAV4=~/media/vid
-export FFF_FAV5=~/media/vid/rec
-export FFF_FAV6=~/dl
-export FFF_FAV7=
-export FFF_FAV8=
+export FFF_FAV1=~/tmp
+export FFF_FAV2=~/src
+export FFF_FAV3=~/usr/img
+export FFF_FAV4=~/usr/music
+export FFF_FAV5=~/usr/vid
+export FFF_FAV6=~/usr/vid/rec
+export FFF_FAV7=~/usr/torrents
+export FFF_FAV8=~/.dots
 export FFF_FAV9=
 
 # config

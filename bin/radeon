@@ -3,60 +3,66 @@
 # modify VEGA20 clocks
 # run as root
 
-# change to your path
-radeonPCI="/sys/class/drm/card1/device"
-
-odclk="$radeonPCI/pp_od_clk_voltage"
-power="$radeonPCI/hwmon/hwmon2/power1_cap"
-fanSpeed="$radeonPCI/hwmon/hwmon2/pwm1"
-fanCtrl="$radeonPCI/hwmon/hwmon2/pwm1_enable"
-
 usage() {
     printf '%s\n' "wine or undervolt accepted parameters"
     exit 1
 }
 
-case "$1" in
-    "wine")
-        # set powerlimit to 300W
-        printf '%s\n' "300000000" > "$power"
-        # set to stock voltage at all points
-        printf '%s\n' "vc 0 1801 1120" > "$odclk"
-        printf '%s\n' "vc 1 1801 1120" > "$odclk"
-        printf '%s\n' "vc 2 1801 1120" > "$odclk"
-        # set memory clock to 1200mhz
-        printf '%s\n' "m 1 1200" > "$odclk"
-        printf '%s\n' "c" > "$odclk"
+main() {
+    # change to your path
+    radeonPCI="/sys/class/drm/card1/device"
 
-        printf '%s\n' "wine tweaks applied"
-        ;;
-    "undervolt")
-        # set powerlimit to 300W
-        printf '%s\n' "300000000" > "$power"
-        # set to 1000mV at max load
-        printf '%s\n' "vc 2 1801 1000" > "$odclk"
-        # set memory clock to 1200mhz
-        printf '%s\n' "m 1 1200" > "$odclk"
-        printf '%s\n' "c" > "$odclk"
+    odclk="$radeonPCI/pp_od_clk_voltage"
+    power="$radeonPCI/hwmon/hwmon2/power1_cap"
+    fanSpeed="$radeonPCI/hwmon/hwmon2/pwm1"
+    fanCtrl="$radeonPCI/hwmon/hwmon2/pwm1_enable"
 
-        printf '%s\n' "undervolt applied"
-        ;;
-    "fan")
-        test -n "$2" && {
-            test "$2" -gt 255 && fan="255" || fan="$2"
-        } || {
-            fan="200"
-        }
+    case "$1" in
+        "wine")
+            # set powerlimit to 300W
+            printf '%s\n' "300000000" > "$power"
+            # set to stock voltage at all points
+            printf '%s\n' "vc 0 1801 1120" > "$odclk"
+            printf '%s\n' "vc 1 1801 1120" > "$odclk"
+            printf '%s\n' "vc 2 1801 1120" > "$odclk"
+            # set memory clock to 1200mhz
+            printf '%s\n' "m 1 1200" > "$odclk"
+            printf '%s\n' "c" > "$odclk"
 
-        printf '%s\n' "1" > "$fanCtrl"
-        printf '%s\n' "$fan" > "$fanSpeed"
-        ;;
-    "auto")
-        printf '%s\n' "2" > "$fanCtrl"
-        ;;
-    *)
-        usage
-        ;;
-esac
+            printf '%s\n' "wine tweaks applied"
+            ;;
+        "undervolt")
+            printf '%s\n' "300000000" > "$power"
+            printf '%s\n' "vc 2 1801 1050" > "$odclk"
+            printf '%s\n' "m 1 1200" > "$odclk"
+            printf '%s\n' "c" > "$odclk"
 
+            printf '%s\n' "undervolt applied"
+            ;;
+        "fan")
+            test -n "$2" && {
+                case "$2" in
+                    "auto")
+                        printf '%s\n' "2" > "$fanCtrl"
+                        return 0
+                        ;;
+                    [0-9]|1[0-9][0-9]|2[0-5][0-5])
+                        fan="$2"
+                        ;;
+                    *)
+                        fan="255"
+                esac
+            } || {
+                fan="150"
+            }
 
+            printf '%s\n' "1" > "$fanCtrl"
+            printf '%s\n' "$fan" > "$fanSpeed"
+            ;;
+        *)
+            usage
+            ;;
+    esac
+}
+
+main "$@"

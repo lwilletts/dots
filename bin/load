@@ -16,8 +16,6 @@ openBrowser() {
     firefox --new-tab "$URL"
 }
 
-. fwmrc
-
 for arg in "$@"; do
     URL="$arg"
 
@@ -36,9 +34,8 @@ for arg in "$@"; do
             mpv "$URL" --really-quiet --loop-file
             ;;
         *.gifv|*.webm|*.jp*g|*.png|*.webm|*.gif)
-            openBrowser
-            # curl -sL "$URL" > ~/.tmp
-            # mpv "~/.tmp" --really-quiet --loop-file
+            curl -sL "$URL" > ~/.tmp
+            mpv "~/.tmp" --really-quiet --loop-file
             ;;
         *.mkv|*.mp4|*.ogv|*youtu.be/*|*youtube.com/watch*|\
         *.googlevideo.com/videoplayback*)
@@ -56,7 +53,6 @@ for arg in "$@"; do
             urxvt -e zsh -c "curl -s $URL | $EDITOR -"
             ;;
         mailto:*)
-            urxvt -e mutt -- "$URL"
             ;;
         gopher://*)
             urxvt -e cgo "$URL"

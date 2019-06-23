@@ -5,8 +5,9 @@ unset MANPATH
 # remove terminal suspend
 stty start undef
 
-PATH=""
+SRC="$HOME/src"
 DOTS="$HOME/.dots"
+PATH=""
 
 EXECPATHS="\
 /bin
@@ -17,7 +18,7 @@ $DOTS/bin
 $HOME/.fzf/bin
 /usr/local/bin
 /usr/local/sbin
-$HOME/builds/fwm"
+/$SRC/fwm"
 
 printf '%s\n' "$EXECPATHS" | while read -r EXECPATH; do
     test -d "$EXECPATH" && export PATH="$PATH:$EXECPATH"
