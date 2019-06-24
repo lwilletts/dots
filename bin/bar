@@ -3,89 +3,54 @@
 ACTIVE="%{F#D7D7D7}"
 INACTIVE="%{F#737373}"
 
-bat() {
-    BAT="/sys/class/power_supply/BAT0"
-    test -d "$BAT" || return 0
-
-    CHR="$(cat "$BAT/charge_now")"
-    MAX="$(cat "$BAT/charge_full")"
-    STATUS="$(cat "$BAT/status")"
-    PERCENT="$(printf '%.2f\n' "$(echo "$CHR/$MAX*100" | bc -l)")"
-
-    test "$STATUS" = "Charging" && {
-        printf '%s\n' "$PERCENT% [CHARGING]"
-    } || {
-        printf '%s\n' "$PERCENT%"
-    }
-}
-
 runTaskbar() {
     while :; do
-        case "$(hostname)" in
-            "fyriousa")
-                menu="drun"
-                clock=$(date '+%d %b %H:%M')
-                calender="urxvtc -e sh -c '3cal'"
+        menu="drun"
+        clock=$(date '+%d %b %H:%M')
+        calender="urxvtc -e sh -c '3cal'"
 
-                cava="urxvtc -e sh -c 'cava'"
+        cava="urxvtc -e sh -c 'cava'"
 
-                mpvc -q
-                test $? != 2 && {
-                    sleep 0.2
-                    mus="$(mpvc -f '%artist% / %title% / %remaining%')"
-                    test "$mus" = "No files added to /tmp/mpvsocket." && mus=""
-                }
+        mpvc -q
+        test $? != 2 && {
+            sleep 0.2
+            mus="$(mpvc -f '%artist% / %title% / %remaining%')"
+            test "$mus" = "No files added to /tmp/mpvsocket." && mus=""
+        }
 
-                vol="urxvtc -e sh -c 'pulsemixer'"
+        vol="urxvtc -e sh -c 'pulsemixer'"
 
-                buf=""
-                buf="${buf} %{l}"
-                buf="${buf} %{A:${menu}:}▷                                                       %{A}"
-                buf="${buf} %{r}"
-                buf="${buf} %{A:${cava}:} ${mus} %{A}"
-                buf="${buf} $(gpu)"
-                buf="${buf} %{A:${calender}:} ${clock} %{A}"
-                buf="${buf} %{A:${vol}:}♪  %{A}"
-                ;;
-            "inferno")
-                menu="drun"
-                clock=$(date '+%d %b %H:%M')
-                calender="urxvtc -e sh -c '3cal'"
-
-                cava="urxvtc -e sh -c 'cava'"
-
-                mpvc -q
-                test $? != 2 && {
-                    sleep 0.2
-                    mus="$(mpvc -f '%artist% / %title% / %remaining%')"
-                    test "$mus" = "No files added to /tmp/mpvsocket." && mus=""
-                }
-
-                vol="urxvtc -e sh -c 'pulsemixer'"
-
-                buf=""
-                buf="${buf} %{l}"
-                buf="${buf} %{A:${menu}:}▷                                                       %{A}"
-                buf="${buf} %{r}"
-                buf="${buf} %{A:${cava}:} ${mus} %{A}"
-                buf="${buf} $(bat)"
-                buf="${buf} %{A:${calender}:} ${clock} %{A}"
-                buf="${buf} %{A:${vol}:}♪  %{A}"
-                ;;
-        esac
+        buf=""
+        buf="${buf} %{l}"
+        buf="${buf} %{A:${menu}:}▷                                                       %{A}"
+        buf="${buf} %{r}"
+        buf="${buf} %{A:${cava}:} ${mus} %{A}"
+        buf="${buf} $(gpu)"
+        buf="${buf} $(bat)"
+        buf="${buf} %{A:${calender}:} ${clock} %{A}"
+        buf="${buf} %{A:${vol}:}♪  %{A}"
 
         printf '%s\n' "$buf"
         sleep 1
     done
 }
 
-BW="$(grep borderwidth $HOME/.cwmrc | cut -d\  -f 2)"
+. fwmrc
+wmenv
+wmgaps
+wmcolours
+
+case "$(hostname)" in
+    "fyriousa") SW="$(mattr w DisplayPort-1)" ;;
+    "inferno")  SW="$(mattr w eDP1)"          ;;
+esac
+
 
 # set bar variables and launch backbar
+barw="$((SW / 3 + BW))"
+barh=$((20 + BW*2))
 barx=$((70 - BW))
 bary=$((10 - BW))
-barw=$((900 + BW))
-barh=$((20 + BW*2))
 bar_bg='#404552'
 
 backbar $barx $bary $barw $barh $bar_bg &

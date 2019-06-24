@@ -8,4 +8,6 @@ TEMP=$(printf '%s\n' "$sensorOut"  | awk '/temp1/ && $3 == "(crit" {print $2}' |
 POWER=$(printf '%s\n' "$sensorOut" | awk '/power1/ {print $2,$3}')
 SPEED=$(printf '%s\n' "$sensorOut" | awk '/fan1/ {print $2,$3}')
 
-printf '%s\n' "Radeon VII: $VOLT | $TEMP | $POWER | $SPEED"
+test -n "$VOLT" && {
+    printf '%s\n' "Radeon VII: $VOLT / $TEMP / $POWER / $SPEED"
+}
