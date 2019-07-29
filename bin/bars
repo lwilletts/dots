@@ -38,6 +38,22 @@ sysbar() {
                        -F ${bar_fg} -f ${bar_font} -n "sys" | /bin/sh &
 }
 
+batbar() {
+    backbar $backbarx $backbary $backbarw $backbarh $backbar_bg &
+    sleep 0.2
+
+    while :; do
+        buf=""
+        buf="${buf} %{c}"
+        buf="${buf} $(bat) "
+
+        printf '%s\n' "$buf"
+        sleep 2
+    done | lemonbar -d -g ${barw}x${barh}+${barx}+${bary} -B ${bar_bg} \
+                       -F ${bar_fg} -f ${bar_font} -n "bat" | /bin/sh &
+}
+
+
 gpubar() {
     backbar $backbarx $backbary $backbarw $backbarh $backbar_bg &
     sleep 0.2
@@ -112,18 +128,27 @@ main() {
     datebar
 
     backbarx=$((backbarx + backbarw + LGAP - BW))
-    backbarw=280
-    barx=$((backbarx + BW))
-    barw=$((backbarw - BW*2))
-
-    gpubar
-
-    backbarx=$((backbarx + backbarw + LGAP - BW))
     backbarw=500
     barx=$((backbarx + BW))
     barw=$((backbarw - BW*2))
 
     musbar
+
+    backbarx=$((backbarx + backbarw + LGAP - BW))
+    barx=$((backbarx + BW))
+
+    case "$(hostname)" in
+        fyriousa)
+            backbarw=280
+            barw=$((backbarw - BW*2))
+            gpubar
+            ;;
+        inferno)
+            backbarw=180
+            barw=$((backbarw - BW*2))
+            batbar
+            ;;
+    esac
 }
 
 main "$@"

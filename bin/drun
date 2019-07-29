@@ -6,5 +6,5 @@ wmcolours
 FONT=$(awk '/lemon/ {print $3}' < ~/.Xresources |  head -n 1 | cut -d',' -f 1)
 
 dmenu_run -fn "$FONT" \
--name "drun" -f -b -l 0 -s 0 -h 40 -p ">" \
+-name "drun" -f -b -l 0 -s 0 -h 30 -p ">" \
 -nf "#$ACTIVE" -sf "#$URGENT" -nb "#$BACK" -sb "#$BACK"
