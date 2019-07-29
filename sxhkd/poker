@@ -4,14 +4,16 @@
 mod1 + d
     drun
 
-mod1 + {shift + Tab, Tab}
-    focus {next, prev}
+mod1 + w
+    wmenu
+mod1 + {shift + Tab, Tab, n}
+    focus {next, prev, cycle}
 mod1 + {h,j,k,l}
     closer {left, down, up, right}
+mod1 + {button4, button5}
+    chwso {-r,-l} $(pfw)
 mod1 + f
     full $(pfw)
-
-# system
 mod4 + l
     lock
 mod1 + shift + r
@@ -29,7 +31,7 @@ mod4 + {h,j,k,l}
 mod4 + {space,p,n,r,z,c}
     mpvc {toggle,prev,next,repeat,shuffle,clear} -q
 mod4 + a
-    mpvc add ~/usr/music -q -Q
+    find ~/usr/mus/* -type f | sort -R | mpvc add -q -Q
 mod4 + {9,0}
     mpvc volume {-5,+5} -q
 
@@ -43,12 +45,12 @@ XF86AudioMute
 {XF86AudioPause,XF86AudioPlay,XF86AudioNext}
     mpvc {toggle,toggle,next} -q
 XF86AudioPrev
-    mpvc add ~/usr/music -q -Q; mpvc shuffle -q; mpvc next -q
+    find ~/usr/mus/* -type f | sort -R | mpvc add -q -Q
 
 # shot
 Print
-    xscreenshot | ff2png > "$HOME/$(date +%d-%m-%y-%H:%M:%S).png"
+    shot
 shift + Print
-    xscreenshot "$(pfw)" | ff2png > "$HOME/$(wname $(pfw)) $(date +%d-%m-%y-%H:%M:%S).png"
+    shot "$(pfw)"
 
 # vim: set ft=sxhkdrc :

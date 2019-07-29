@@ -1,0 +1,10 @@
+#!/bin/sh
+#
+# screens
+
+case "$(hostname)" in
+    "fyriousa")
+        xrandr --output HDMI-A-2 --auto --rotate right --pos 2560x0
+        xrandr --output DisplayPort-1 --pos 0x520
+        ;;
+esac

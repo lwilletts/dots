@@ -13,7 +13,7 @@ rawp() {
 }
 
 openBrowser() {
-    firefox --new-tab "$URL"
+    qutebrowser "$URL"
 }
 
 for arg in "$@"; do
@@ -34,8 +34,7 @@ for arg in "$@"; do
             mpv "$URL" --really-quiet --loop-file
             ;;
         *.gifv|*.webm|*.jp*g|*.png|*.webm|*.gif)
-            curl -sL "$URL" > ~/.tmp
-            mpv "~/.tmp" --really-quiet --loop-file
+            openBrowser
             ;;
         *.mkv|*.mp4|*.ogv|*youtu.be/*|*youtube.com/watch*|\
         *.googlevideo.com/videoplayback*)

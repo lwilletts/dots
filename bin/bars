@@ -1,0 +1,129 @@
+#!/bin/sh
+#
+# bars
+
+datebar() {
+    backbar $backbarx $backbary $backbarw $backbarh $backbar_bg &
+    sleep 0.2
+
+    while :; do
+        clock=$(date '+%a %d %b %H:%M')
+        calender="urxvtc -e sh -c '3cal'"
+
+        buf=""
+        buf="${buf} %{c}"
+        buf="${buf} %{A:${calender}:} ${clock} %{A}"
+
+        printf '%s\n' "$buf"
+        sleep 2
+    done | lemonbar -d -g ${barw}x${barh}+${barx}+${bary} -B ${bar_bg} \
+                       -F ${bar_fg} -f ${bar_font} -n "date" | /bin/sh &
+}
+
+sysbar() {
+    backbar $backbarx $backbary $backbarw $backbarh $backbar_bg &
+    sleep 0.2
+
+    while :; do
+        htop="urxvtc -e sh -c 'htop'"
+        mem="$(free -m | awk '/Mem:/ {print $3}')m/$(free -m | awk '/Mem:/ {print $2}')m"
+
+        buf=""
+        buf="${buf} %{c}"
+        buf="${buf} %{A:${htop}:} 8700k: $(cpu t) / ${mem} %{A}"
+
+        printf '%s\n' "$buf"
+        sleep 2
+    done | lemonbar -d -g ${barw}x${barh}+${barx}+${bary} -B ${bar_bg} \
+                       -F ${bar_fg} -f ${bar_font} -n "sys" | /bin/sh &
+}
+
+gpubar() {
+    backbar $backbarx $backbary $backbarw $backbarh $backbar_bg &
+    sleep 0.2
+
+    while :; do
+        gotop="urxvtc -e sh -c 'gotop'"
+
+        buf=""
+        buf="${buf} %{c}"
+        buf="${buf} %{A:${gotop}:} $(gpu) %{A}"
+
+        printf '%s\n' "$buf"
+        sleep 2
+    done | lemonbar -d -g ${barw}x${barh}+${barx}+${bary} -B ${bar_bg} \
+                       -F ${bar_fg} -f ${bar_font} -n "gpu" | /bin/sh &
+}
+
+musbar() {
+    backbar $backbarx $backbary $backbarw $backbarh $backbar_bg &
+    sleep 0.2
+
+    while :; do
+        mpvc -q
+        test $? = 2 && {
+            mus="quiet time"
+        } || {
+            mus="$(mpvc -f '%artist% / %title% / %remaining%')"
+            sleep 0.2
+        }
+
+        cava="urxvtc -e sh -c 'cava'"
+        pulse="urxvtc -e sh -c 'pulsemixer'"
+        vol="$(printf '%s\n' "$(pulsemixer --get-volume | cut -d\  -f 1)%")"
+
+        buf=""
+        buf="${buf} %{c}"
+        buf="${buf} %{A:${cava}:} ${mus} %{A}"
+        buf="${buf} %{r}"
+        buf="${buf} %{A:${pulse}:} ${vol} ♪  %{A}"
+
+        printf '%s\n' "$buf"
+        sleep 1
+    done | lemonbar -d -g ${barw}x${barh}+${barx}+${bary} -B ${bar_bg} \
+                       -F ${bar_fg} -f ${bar_font} -n "music" | /bin/sh &
+}
+
+main() {
+    . fwmrc
+    wmenv
+    wmgaps
+    wmcolours
+
+    # bar variables
+    bar_bg="#$BACK"
+    bar_fg="#$ACTIVE"
+    backbar_bg="#$INACTIVE"
+    bar_font=$(awk '/lemon/ {print $3}' < ~/.Xresources | \
+               head -n 1 | cut -d',' -f 1)
+
+    # bar geometry
+    SX="$(mattr x $PRI)"
+    SH="$(mattr h $PRI)"
+    backbarx=$((SX + LGAP))
+    backbary=$((SH - BGAP + BGAP/4))
+    backbarw=120
+    backbarh=$((18 + BW*2))
+    barx=$((backbarx + BW))
+    bary=$((backbary + BW))
+    barw=$((backbarw - BW*2))
+    barh=$((backbarh - BW*2))
+
+    datebar
+
+    backbarx=$((backbarx + backbarw + LGAP - BW))
+    backbarw=280
+    barx=$((backbarx + BW))
+    barw=$((backbarw - BW*2))
+
+    gpubar
+
+    backbarx=$((backbarx + backbarw + LGAP - BW))
+    backbarw=500
+    barx=$((backbarx + BW))
+    barw=$((backbarw - BW*2))
+
+    musbar
+}
+
+main "$@"

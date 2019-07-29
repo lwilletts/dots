@@ -33,7 +33,7 @@ main() {
             ;;
         "undervolt")
             printf '%s\n' "300000000" > "$power"
-            printf '%s\n' "vc 2 1801 1050" > "$odclk"
+            printf '%s\n' "vc 2 1801 1000" > "$odclk"
             printf '%s\n' "m 1 1200" > "$odclk"
             printf '%s\n' "c" > "$odclk"
 

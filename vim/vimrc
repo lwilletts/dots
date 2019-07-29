@@ -25,6 +25,11 @@ call plug#begin('$HOME/.vim/plugged')
 Plug 'tpope/vim-repeat'
 Plug 'wellle/targets.vim'
 Plug 'tpope/vim-commentary'
+Plug 'rbgrouleff/bclose.vim'
+Plug 'djoshea/vim-autoread'
+
+    " search highlight clear
+Plug 'pgdouyon/vim-evanesco'
 
 Plug 'tpope/vim-surround'
     nmap sl yss
@@ -33,17 +38,14 @@ Plug 'tpope/vim-surround'
     nmap sap ysap
     nmap sip ysip
 
+    " file opening
+Plug 'dylanaraps/fff.vim'
+    let g:fff#split = "8new"
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
     nmap <Leader>f :FZF -m <CR>
     nmap <Leader>F :FZF -m ~/<CR>
     nmap <Leader>b :Buffers<CR>
-
-Plug 'junegunn/vim-pseudocl'
-Plug 'junegunn/vim-oblique'
-    let g:oblique#clear_highlight = 1
-    let g:oblique#incsearch_highlight_all = 1
-    let g:oblique#prefix = ""
 
 Plug 'junegunn/vim-easy-align'
     nmap ga <Plug>(EasyAlign)
@@ -91,13 +93,24 @@ Plug 'benekastah/neomake'
         \ 'texthl': 'TermCursorNC',
     \ }
 
-    " auto-complete
-Plug 'ervandew/supertab'
-    let g:SuperTabDefaultCompletionType = "<c-p>"
-    let g:SuperTabContextDefaultCompletionType = "<c-n>"
+    " snips
+Plug 'SirVer/ultisnips'
+    let g:UltiSnipsUsePythonVersion = 3
+    let g:UltiSnipsSnippetsDirectories = ['~/.config/nvim/Ultisnips', 'Ultisnips']
+    let g:UltisnipsEditSplit = 'vertical'
 
     " latex
 Plug 'lervag/vimtex'
+    let g:tex_flavor='latex'
+    let g:vimtex_view_method='zathura'
+    let g:vimtex_quickfix_mode=0
+    set conceallevel=0
+    let g:tex_conceal='abdmg'
+
+    "  intelligent tab
+Plug 'ervandew/supertab'
+    let g:SuperTabDefaultCompletionType = "<c-n>"
+    let g:SuperTabContextDefaultCompletionType = "<c-p>"
 
 if has('nvim')
     if has('python3')
@@ -115,13 +128,6 @@ if has('nvim')
         \ deoplete#mappings#smart_close_popup()."\<C-h>"
     endif
 endif
-
-    " miscellaneous
-Plug 'rbgrouleff/bclose.vim'
-Plug 'Wildefyr/vim-fat-finger'
-Plug 'beloglazov/vim-online-thesaurus'
-    let g:online_thesaurus_map_keys = 0
-    nnoremap zT :OnlineThesaurusCurrentWord<CR>
 
     " custom syntax
 Plug 'baskerville/vim-sxhkdrc'
@@ -145,6 +151,9 @@ augroup VimReload
     autocmd!
     autocmd BufWritePost $MYVIMRC source $MYVIMRC
 augroup END
+
+" reload file automatically
+set autoread
 
 " saving and closing
 nmap <Leader>w :w!<CR>
@@ -342,15 +351,15 @@ filetype plugin indent on
 
 " disable annoying comment on newline
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
-
-" time for the cool shit
 autocmd! FileType sh setlocal
     \ makeprg=sh\ %\
 
 autocmd! BufNewFile,BufRead *.md setlocal
     \ spell
-" autocmd! BufWritePost *.md silent!
-"     \ $BROWSER /tmp/%:r.html &
+autocmd! BufNewFile,BufRead *.tex setlocal
+    \ spell
+" autocmd! BufWritePost *.tex setlocal
+"     \ spell
 
 autocmd! FileType c      setlocal ts=8 sw=8 sts=8 noexpandtab
 autocmd! FileType txt    setlocal tw=0 spell noexpandtab wrap linebreak
@@ -508,4 +517,4 @@ function! <SID>SynStack()
     endif
     echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunction
-"}}}
+    "}}}

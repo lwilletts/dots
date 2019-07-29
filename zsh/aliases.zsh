@@ -23,7 +23,7 @@ alias xsel="xsel -l /dev/null"
 
 # apps
 alias pu="pulsemixer"
-alias todo="$VISUAL $HOME/media/doc/todo.md"
+alias todo="$VISUAL $HOME/usr/doc/todo.md"
 alias ffmpeg="ffmpeg -hide_banner"
 alias glances="glances --hide-kernel-threads"
 
@@ -35,15 +35,15 @@ alias net="curl -s ipv4.icanhazip.com"
 alias netflix="firefox -new-window 'https://netflix.com'"
 
 # games
-alias pug="steam steam://rungameid/439370//208.100.45.123%3Fpassword=toxic%2027015 > /dev/null 2>&1 "
-alias midair="steam steam://rungameid/439370 > /dev/null 2>&1 "
+alias cfg="vi ~/.steam/steam/steamapps/common/Midair/Midair/Binaries/*.cfg"
+alias pug="steam steam://rungameid/439370//208.100.45.123%3Fpassword=toxic%2027015 > /dev/null 2>&1"
+alias aus="steam steam://rungameid/439370//112.213.32.53%3Fpassword=bittard%%2027019 > /dev/null 2>&1"
+alias midair="steam steam://rungameid/439370 > /dev/null 2>&1"
 
 # image
 alias i="img"
-alias mpvi="mpv --really-quit --idle &!"
+alias p="mupdf"
 alias scan="scanimage --device 'epson2:net:192.168.1.89' --mode=Color --format=png --resolution 300"
-alias shot="xscreenshot | ff2png > $HOME/$(date +%d-%m-%y-%H:%M:%S).png"
-alias shotwid="xscreenshot '$(pfw)' | ff2png > '$HOME/$(wname $(pfw)) $(date +%d-%m-%y-%H:%M:%S).png'"
 
 # x / dtach / tmux
 alias x="startx"

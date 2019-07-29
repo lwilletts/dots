@@ -1,9 +1,9 @@
-*background:  #101010
-*foreground:  #EFEFEF
+*background:  #EFEFEF
+*foreground:  #101010
 
-! black
-*color0:      #333333
-*color8:      #333333
+! white
+*color0:      #EFEFEF
+*color8:      #EFEFEF
 ! red
 *color1:      #336980
 *color9:      #336980
@@ -22,9 +22,9 @@
 ! cyan
 *color6:      #808080
 *color14:     #808080
-! white
-*color7:      #EFEFEF
-*color15:     #EFEFEF
+! black
+*color7:      #101010
+*color15:     #101010
 
-*cursorColor: #EFEFEF
+*cursorColor: #101010
 *colorUL:     #336980

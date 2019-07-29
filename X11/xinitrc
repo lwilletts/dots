@@ -1,17 +1,6 @@
 #!/bin/sh
 
-# displays
-case "$(hostname)" in
-    "fyriousa")
-        xrandr --output HDMI-A-2 --auto --rotate right --right-of DisplayPort-1
-        xrandr --output DisplayPort-2 --auto --rotate right --pos 3640x200
-        xrandr --output DisplayPort-1 --pos 0x440
-
-        hsetroot -tile $HOME/usr/img/patterns/noisier_net.png -gamma 1.2
-        ;;
-    "inferno")
-        hsetroot -tile $HOME/usr/img/patterns/noisier_net.png -gamma 1.2
-esac
+screens
 
 # environment
 xset s off # no screensaver
@@ -21,7 +10,8 @@ xsetroot -name background
 xsetroot -cursor_name left_ptr # left pointer as cursor
 
 # programs
-bar &
+back
+bars &
 unclutter &
 urxvtd -q -o -f &
 test -f ~/.Xresources && xrdb -load ~/.Xresources

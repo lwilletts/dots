@@ -1,4 +1,10 @@
 #!/bin/sh
 
-dmenu_run -fn "-benis-lemon-*-*-*-*-*-*-*-*-*-*-*-*" \
--s 0 -x 82 -y 14 -w 800 -nf '#D7D7D7' -sf '#B23450' -nb '#03070B' -sb '#040404'
+. fwmrc
+wmcolours
+
+FONT=$(awk '/lemon/ {print $3}' < ~/.Xresources |  head -n 1 | cut -d',' -f 1)
+
+dmenu_run -fn "$FONT" \
+-name "drun" -f -b -l 0 -s 0 -h 40 -p ">" \
+-nf "#$ACTIVE" -sf "#$URGENT" -nb "#$BACK" -sb "#$BACK"

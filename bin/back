@@ -1,0 +1,5 @@
+#!/bin/sh
+#
+# back
+
+hsetroot -tile $HOME/usr/img/backs/bluewater.jpg
