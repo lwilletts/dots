@@ -50,13 +50,12 @@ gap 10 40 10 10
 
 # colors
 color font "#101010"
-color menufg "#101010"
+color menufg "#808080"
 color menubg "#EFEFEF"
 color selfont "#EFEFEF"
-color groupborder "#7B8C57"
-color activeborder "#EFEFEF"
+color activeborder "#101010"
 color urgencyborder "#C0392B"
-color inactiveborder "#808080"
+color inactiveborder "#EFEFEF"
 
 # apps
 command "     urxvt    "        "urxvtc -e zsh"

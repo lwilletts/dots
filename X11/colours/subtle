@@ -5,8 +5,8 @@
 *color0:      #333333
 *color8:      #333333
 ! red
-*color1:      #336980
-*color9:      #336980
+*color1:      #B23450
+*color9:      #B23450
 ! green
 *color2:      #7B8C58
 *color10:     #7B8C58
@@ -17,8 +17,8 @@
 *color4:      #58698C
 *color12:     #58698C
 ! magenta
-*color5:      #B23450
-*color13:     #B23450
+*color5:      #336980
+*color13:     #336980
 ! cyan
 *color6:      #808080
 *color14:     #808080

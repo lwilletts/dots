@@ -1,5 +1,5 @@
 /* colours */
-#include ".colours/subtle"
+#include ".colours/lightish"
 
 /* basics */
 *.modifier : mod4

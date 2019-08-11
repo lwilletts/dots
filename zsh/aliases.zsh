@@ -13,7 +13,6 @@ alias umount="s umount"
 alias l="ls"
 alias mv="mv -f"
 alias cp="cp -rf"
-alias cat="nvimpager"
 alias rsync="rsync -av"
 
 alias szsh="source ~/.zshrc"

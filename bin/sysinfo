@@ -57,29 +57,23 @@ getSystem() {
 getVars() {
     USER="$USER"
     HOST="$(hostname)"
-    KERN="$(uname -sr)"
+    KERN="$(uname -r)"
     TIME="$(uptime -p)"
-    pgrep mpv 2>&1 > /dev/null && test -S "/tmp/mpvsocket" && \
-        MPV="Playing: $(mpvc -f '%artist% - %title%')"
     lspci | grep "Vega 20" 2>&1 > /dev/null && hash sensors 2> /dev/null && \
         GPU="$(gpu)"
 }
 
 workOutLineSize() {
-    LINE1=$(printf '%s\n' "  $USER@$HOST" | wc -m)
-    LINE2=$(printf '%s\n' "  $KERN - $TIME" | wc -m)
-    LINE3=$(printf '%s\n' "  $SYS - $PACK Packages" | wc -m)
-    LINE4=$(printf '%s\n' "  $MPV" | wc -m)
-    # LINE5=$(printf '%s\m' "  $GPU" | wc -m)
+    LINE1=$(printf '%s\n' "  $USER@$HOST | $SYS | $PACK Packages" | wc -m)
+    LINE2=$(printf '%s\n' "  $KERN | $TIME" | wc -m)
+    LINE3=$(printf '%s\m' "  $GPU" | wc -m)
 
     # find longest
-    SIZE=${SIZE-0}
-    for i in $LINE1 $LINE2 $LINE3 $LINE4 $LINE5; do
+    SIZE=0
+    for i in $LINE1 $LINE2 $LINE3; do
         test $i -gt $SIZE && SIZE=$i
     done
 
-    # add a space at the end
-    SIZE=$((SIZE + 1))
 
     TERMSIZE=$(stty size < /dev/tty | cut -d\  -f 2)
     test $SIZE -ge $TERMSIZE && SIZE=$((TERMSIZE - 2))
@@ -88,8 +82,6 @@ workOutLineSize() {
     LINE1EXTRA=$(printf '%*s' "$((SIZE - LINE1))" | sed 's/ / /')
     LINE2EXTRA=$(printf '%*s' "$((SIZE - LINE2))" | sed 's/ / /')
     LINE3EXTRA=$(printf '%*s' "$((SIZE - LINE3))" | sed 's/ / /')
-    LINE4EXTRA=$(printf '%*s' "$((SIZE - LINE4))" | sed 's/ / /')
-    LINE5EXTRA=$(printf '%*s' "$((SIZE - LINE5))" | sed 's/ /  /')
 }
 
 draw() {
@@ -111,25 +103,17 @@ draw() {
     printf '%s' "$out"
 }
 
-ram() {
-    ram="$(free | awk '/Mem:/ {print int($3/$2 * 100.0)}')"
-    printf "${f6}RAM${R} %s" "$(draw $ram $SIZE $f2)"
-}
-
 cpu() {
     cpu="$(grep 'cpu ' /proc/stat | \
         awk '{cpu=($2+$4)*100/($2+$4+$5)} END {print cpu}')"
     cpu=$(printf "%.0f" $cpu)
 
-    printf "${f6}CPU${R} %s" "$(draw $cpu $SIZE $f3)"
+    printf "${f7}CPU${R} %s" "$(draw $cpu $SIZE $f1)"
 }
 
-temperature() {
-    TEMP=/sys/class/thermal/thermal_zone0/temp
-    test -f $TEMP && {
-        temp="$(($(cat $TEMP) / 1000))"
-        printf "${f6}TMP${R} %s" "$(draw $temp $SIZE $f5)"
-    }
+ram() {
+    ram="$(free | awk '/Mem:/ {print int($3/$2 * 100.0)}')"
+    printf "${f7}RAM${R} %s" "$(draw $ram $SIZE $f4)"
 }
 
 battery() {
@@ -137,7 +121,7 @@ battery() {
     test -f /sys/class/power_supply && {
         BATTERY=$(find $BATTERYFILE -maxdepth 1 -type l -name "BAT*")
         charge=$(sed '1q' $BATTERY/capacity)
-        printf "${f6}BAT${R} %s" "$(draw $charge $SIZE $f4)"
+        printf "${f7}BAT${R} %s" "$(draw $charge $SIZE $f2)"
     }
 }
 
@@ -153,18 +137,16 @@ cat ~/.dots/ascii/bonsai
 
 printf '\n'
 
-printf '%s\n' "$f6█$b7$f0 $USER@$HOST $LINE1EXTRA$R"
-printf '%s\n' "$f6█$b7$f0 $SYS | $PACK Packages $LINE3EXTRA$R"
-printf '%s\n' "$f6█$b7$f0 $KERN | $TIME $LINE2EXTRA$R"
-# test ! -z "$GPU" && printf '%s\n' "$f6█$b7$f0 $GPU $LINE5EXTRA$R"
+printf '%s\n' "$f7█$b0$f7 $USER@$HOST | $SYS | $PACK Packages $LINE1EXTRA$R"
+printf '%s\n' "$f7█$b0$f7 $KERN | $TIME $LINE2EXTRA$R"
+test ! -z "$GPU" && printf '%s\n' "$f7█$b0$f7 $GPU  $LINE3EXTRA$R"
 
 printf '\n'
 
-SIZE=$((SIZE - 4))
+SIZE=$((SIZE - 6))
 
-printf '%s\n' "$(ram)"
 printf '%s\n' "$(cpu)"
-test -f "$TEMP" && printf '%s\n' "$(temperature)"
+printf '%s\n' "$(ram)"
 test -d "$BATTERY" && printf '%s\n' "$(battery)"
 
 printf '\n'

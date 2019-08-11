@@ -1,8 +1,8 @@
 # colour
 export FFF_LS_COLORS=1
 export FFF_COL1=2
-export FFF_COL2=7
-export FFF_COL3=5
+export FFF_COL2=0
+export FFF_COL3=1
 export FFF_COL4=7
 
 # fav
