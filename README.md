@@ -4,11 +4,11 @@ My configuration files for my systems.
 
 ### X11 Environment
 
-I use a combination of cwm and [wmutils scripts](https://github.com/lwilletts/fwm)
-to use my environment. I also use these programs to fill out other needs:
+I use [wmutils scripts](https://github.com/lwilletts/fwm) and combination of
+other programs and scripts to use my environment.
 
 - urxvt: terminal emulator
-- nnn: file browsing
+- fff: file browsing
 - sxhkd: wm agnostic hotkey binding
 - lemonbar: a nice bar with clickable support
 - dmenu: program launching, I use a patched version with geometry positioning
