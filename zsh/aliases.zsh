@@ -41,7 +41,8 @@ alias midair="steam steam://rungameid/439370 > /dev/null 2>&1"
 
 # image
 alias i="img"
-alias p="zathura"
+alias p="mupdf"
+alias z="zathura"
 alias scan="scanimage --device 'epson2:net:192.168.1.89' --mode=Color --format=png --resolution 300"
 
 # x / dtach / tmux

@@ -1,0 +1,2 @@
+-f bestvideo+bestaudio
+-o /mnt/pool/mtv/%(title)s.%(ext)s

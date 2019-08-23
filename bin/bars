@@ -81,6 +81,8 @@ musbar() {
             mus="quiet time"
         } || {
             mus="$(mpvc -f '%artist% / %title% / %remaining%')"
+            test "$mus" = "No files added to /tmp/mpvsocket." &&
+                mus="quiet time"
             sleep 0.2
         }
 
@@ -107,9 +109,9 @@ main() {
     wmcolours
 
     # bar variables
-    bar_bg="#$BACK"
+    bar_bg="#$INACTIVE"
     bar_fg="#$ACTIVE"
-    backbar_bg="#$INACTIVE"
+    backbar_bg="#808080"
     bar_font=$(awk '/lemon/ {print $3}' < ~/.Xresources | \
                head -n 1 | cut -d',' -f 1)
 
@@ -117,7 +119,7 @@ main() {
     SX="$(mattr x $PRI)"
     SH="$(mattr h $PRI)"
     backbarx=$((SX + LGAP))
-    backbary=$((SH - BGAP + BGAP/4))
+    backbary=$((SH - BGAP + BGAP/4 + 10))
     backbarw=120
     backbarh=$((18 + BW*2))
     barx=$((backbarx + BW))

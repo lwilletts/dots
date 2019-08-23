@@ -12,12 +12,12 @@ xsetroot -cursor_name left_ptr # left pointer as cursor
 # programs
 back
 bars &
+compton &
 unclutter &
 urxvtd -q -o -f &
 test -f ~/.Xresources && xrdb -load ~/.Xresources
-eventually &
+(sleep 1 && eventually &)
 sxhkd &
-cwm
 
 while :; do
     sleep 99d

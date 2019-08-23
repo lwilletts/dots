@@ -137,9 +137,9 @@ cat ~/.dots/ascii/bonsai
 
 printf '\n'
 
-printf '%s\n' "$f7█$b0$f7 $USER@$HOST | $SYS | $PACK Packages $LINE1EXTRA$R"
-printf '%s\n' "$f7█$b0$f7 $KERN | $TIME $LINE2EXTRA$R"
-test ! -z "$GPU" && printf '%s\n' "$f7█$b0$f7 $GPU  $LINE3EXTRA$R"
+printf '%s\n' "$f7█$f7 $USER@$HOST | $SYS | $PACK Packages $LINE1EXTRA$R"
+printf '%s\n' "$f7█$f7 $KERN | $TIME $LINE2EXTRA$R"
+test ! -z "$GPU" && printf '%s\n' "$f7█$f7 $GPU  $LINE3EXTRA$R"
 
 printf '\n'
 

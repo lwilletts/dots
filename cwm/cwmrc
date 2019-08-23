@@ -7,29 +7,6 @@ bind-key 4S-r restart
 
 bind-key M-m window-maximize
 bind-key M-a window-vmaximize
-bind-key MS-q window-close
-
-bind-key M-c window-stick
-bind-key M-x window-freeze
-bind-key M-1 group-toggle-1
-bind-key M-2 group-toggle-2
-bind-key M-3 group-toggle-3
-bind-key M-4 group-toggle-4
-bind-key M-5 group-toggle-5
-bind-key M-6 group-toggle-6
-bind-key M-7 group-toggle-7
-bind-key M-8 group-toggle-8
-bind-key M-9 group-toggle-9
-bind-key M-0 group-toggle-all
-bind-key MS-1 window-movetogroup-1
-bind-key MS-2 window-movetogroup-2
-bind-key MS-3 window-movetogroup-3
-bind-key MS-4 window-movetogroup-4
-bind-key MS-5 window-movetogroup-5
-bind-key MS-6 window-movetogroup-6
-bind-key MS-7 window-movetogroup-7
-bind-key MS-8 window-movetogroup-8
-bind-key MS-9 window-movetogroup-9
 
 # mouse
 bind-mouse M-1 window-move
@@ -59,16 +36,9 @@ color inactiveborder "#EFEFEF"
 
 # apps
 command "     urxvt    "        "urxvtc -e zsh"
-command "     pulsemixer    "   "urxvtc -e pulsemixer"
-command "     bluetoothctl    " "urxvtc -e bluetoothctl"
 command "     qutebrowser    "  "qutebrowser"
-command "     discord    "      "sh -c 'discord'"
-command "     lutris    "       "lutris"
 command "     steam    "        "steam"
-command "     obs-studio    "   "obs"
 command "     telegram    "     "telegram-desktop"
-command "     pizero    "       "urxvtc -e sh -c 'mosh pizero'"
-command "     remote    "       "urxvtc -e sh -c 'mosh remote'"
 
 # groups
 autogroup 2 "Navigator,Firefox"

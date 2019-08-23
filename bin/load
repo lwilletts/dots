@@ -1,7 +1,6 @@
 #!/bin/sh
 #
-# wildefyr - 2016 (c) CC
-# link load with extra tweaks for wmutils
+# load
 
 # conversion layer to get the paste's raw location
 rawp() {
@@ -33,12 +32,15 @@ for arg in "$@"; do
 
             mpv "$URL" --really-quiet --loop-file
             ;;
-        *.gifv|*.webm|*.jp*g|*.png|*.webm|*.gif)
-            openBrowser
+        *.jp*g|*.png)
+            mpv "$URL" --really-quiet --loop-file
             ;;
         *.mkv|*.mp4|*.ogv|*youtu.be/*|*youtube.com/watch*|\
         *.googlevideo.com/videoplayback*)
             mpv "$URL" --really-quiet
+            ;;
+        *.gifv|*.webm|*.gif)
+            openBrowser
             ;;
         *twitch.tv/*)
             openBrowser

@@ -2,6 +2,14 @@
 #
 # screens
 
+case "$1" in
+    default)
+        xrandr --output HDMI-A-2 --auto --rotate right --pos 2560x0
+        xrandr --output DisplayPort-1 --pos 0x0
+        exit
+        ;;
+esac
+
 case "$(hostname)" in
     "fyriousa")
         xrandr --output HDMI-A-2 --auto --rotate right --pos 2560x0

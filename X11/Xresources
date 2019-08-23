@@ -3,9 +3,6 @@
 
 /* basics */
 *.modifier : mod4
-
-/* fonts */
-
 *.font     : -benis-lemon-*-*-*-*-*-*-*-*-*-*-*-*
 *.boldFont : -benis-lemon-*-*-*-*-*-*-*-*-*-*-*-*
 

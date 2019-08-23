@@ -1,22 +1,14 @@
-# launch programs
+# menus
 {mod1, mod2} + Return
     urxvtc
-mod1 + d
-    drun
-mod1 + w
-    wmenu
-mod1 + shift + s
-    urxvtc -e sh -c 'sshmenu'
+mod1 + {d, w, shift + s}
+    {drun, wmenu, smenu}
+{~button1, ~button3}
+    under {drun, wmenu}
+mod1 + @button1
+    xmmv $(pfw)
 
-# manipulation
-mod1 + {shift + Tab, Tab, n}
-    focus {next, prev, cycle}
-mod1 + {h,j,k,l}
-    closer {left, down, up, right}
-mod1 + {button4, button5}
-    chwso {-r,-l} $(pfw)
-mod1 + f
-    full $(pfw)
+# sys
 mod4 + shift + l
     lock
 mod1 + shift + r
@@ -24,13 +16,37 @@ mod1 + shift + r
 mod1 + shift + e
     pkill xinit
 
+# manipulation
+mod1 + {shift + Tab, Tab, n}
+    focus {next, prev, cycle}
+mod1 + {h,j,k,l}
+    closer {left, down, up, right}
+mod1 + shift + {h,j,k,l}
+    adjust {left, down, up, right}
+mod1 + {button4, button5}
+    chwso {-r,-l} $(pfw)
+mod1 + f
+    full $(pfw)
+mod1 + {a,m}
+    move {vmaximise,maximise}
+mod1 + shift + q
+    killw $(pfw)
+
+# groups
+mod1 + {1,2,3,4,5,6,7,8,9,0}
+    group toggle {1,2,3,4,5,6,7,8,9,0}
+mod1 + shift + {1,2,3,4,5,6,7,8,9,0}
+    group add {1,2,3,4,5,6,7,8,9,0} $(pfw)
+mod1 + c
+    group clean
+
 # music
 mod4 + {h,j,k,l}
     mpvc seek {-5s,-1m,1m,5s} -q
-mod4 + {space,p,n,r,z,c}
-    mpvc {toggle,prev,next,repeat,shuffle,clear} -q
+mod4 + {space,n,p,z,x,shift + c}
+    mpvc {toggle,next,prev,shuffle,play $,clear} -q
 mod4 + a
-    find ~/usr/mus/* -type f | sort -R | mpvc add -q -Q
+    find ~/usr/mus/* -type f | sort -R | mpvc add -q
 mod4 + {9,0}
     mpvc volume {-5,+5} -q
 {XF86AudioPause,XF86AudioPlay,XF86AudioNext,XF86AudioPrev}
