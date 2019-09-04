@@ -1,7 +1,12 @@
 #!/bin/zsh
 
 . fwmrc
+wmgaps
 wmcolours
+
+# CWM-like right click
+X=$(($(wmp | cut -d\  -f 1) - $(mattr x $PRI) - 10))
+Y=$(($(wmp | cut -d\  -f 2) - $(mattr y $PRI) - 10))
 
 FONT=$(awk '/font/ {print $3}' < ~/.Xresources | cut -d',' -f 1)
 
@@ -10,6 +15,6 @@ printf '%s\n' "$PATH" | sed 's/:/\n/g' | while read -r dir; do
         rev | cut -d/ -f 1 | rev
 done | sort -u | \
 dmenu -name "drun" -f -l 10 -s 0 -fn "$FONT" -p "Run >" \
--nf "#$ACTIVE" -sf "#$URGENT" -nb "#$INACTIVE" -sb "#$INACTIVE" \
--x -10000 -y -10000 -w 120 \
+-nf "#$ACTIVE" -sf "#$URGENT" -nb "#$INACTIVE" -sb "#$INACTIVE" -bc "#$ACTIVE" \
+-x $X -y $Y -w 120 -bw 1 \
 | ${SHELL:-"/bin/sh"} &

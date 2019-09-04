@@ -1,7 +1,5 @@
 #!/bin/sh
 
-screens
-
 # environment
 xset s off # no screensaver
 xset +dpms # powersaving
@@ -9,15 +7,19 @@ xset +fp ~/.local/share/fonts # custom fonts directory
 xsetroot -name background
 xsetroot -cursor_name left_ptr # left pointer as cursor
 
-# programs
+# wall
+screens
 back
+
+# fwm
+cwm &
 bars &
+sxhkd &
 compton &
+watcher &
 unclutter &
 urxvtd -q -o -f &
 test -f ~/.Xresources && xrdb -load ~/.Xresources
-(sleep 1 && eventually &)
-sxhkd &
 
 while :; do
     sleep 99d

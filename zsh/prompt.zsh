@@ -24,7 +24,7 @@ zle-keymap-select() {
     PROMPT="%{$fg[white]%}|%{$reset_color%} "
 
     test "$KEYMAP" = "vicmd" && {
-        PROMPT="%{$fg[magenta]%}|%{$reset_color%} "
+        PROMPT="%{$fg[red]%}|%{$reset_color%} "
     }
 
     zle reset-prompt

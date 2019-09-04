@@ -47,6 +47,22 @@ Plug 'junegunn/fzf.vim'
     nmap <Leader>F :FZF -m ~/<CR>
     nmap <Leader>b :Buffers<CR>
 
+    let g:fzf_layout = { 'down': '~40%' }
+    let g:fzf_colors =
+    \ { 'fg':      ['fg', 'Normal'],
+      \ 'bg':      ['bg', 'Normal'],
+      \ 'hl':      ['fg', 'Comment'],
+      \ 'fg+':     ['fg', 'Normal', 'CursorColumn', 'Normal'],
+      \ 'bg+':     ['bg', 'ErrorMsg', 'CursorColumn'],
+      \ 'hl+':     ['fg', 'Statement'],
+      \ 'info':    ['fg', 'PreProc'],
+      \ 'border':  ['fg', 'Ignore'],
+      \ 'prompt':  ['fg', 'Conditional'],
+      \ 'pointer': ['fg', 'ErrorMsg'],
+      \ 'marker':  ['fg', 'Keyword'],
+      \ 'spinner': ['fg', 'Label'],
+      \ 'header':  ['fg', 'Comment'] }
+
 Plug 'junegunn/vim-easy-align'
     nmap ga <Plug>(EasyAlign)
     xmap ga <Plug>(EasyAlign)
@@ -361,7 +377,7 @@ autocmd! BufNewFile,BufRead *.tex setlocal
 " autocmd! BufWritePost *.tex setlocal
 "     \ spell
 
-autocmd! FileType c      setlocal ts=8 sw=8 sts=8 noexpandtab
+autocmd! FileType c      setlocal ts=4 sw=4 sts=4
 autocmd! FileType txt    setlocal tw=0 spell noexpandtab wrap linebreak
 autocmd! FileType css    setlocal ts=4 sw=4 sts=4
 autocmd! FileType html   setlocal ts=2 sw=2 sts=2
@@ -424,7 +440,7 @@ if has('nvim')
     \ endif
 
     " close terminal buffer immediately
-    " autocmd TermClose * silent! bd!
+    autocmd TermClose * silent! bd!
 
     function! QuickTerminal()
         20new

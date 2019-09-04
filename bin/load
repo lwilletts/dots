@@ -27,8 +27,8 @@ for arg in "$@"; do
     case "$URL" in
         *imgur.com/*)
             # fuck you imgur albums
-            URL=$(curl -s "$URL" | \
-                sed -nE 's/^.*<link rel="image_src"[[:space:]]+href="([^"]+)".*$/\1/p')
+            # URL=$(curl -s "$URL" | \
+            #     sed -nE 's/^.*<link rel="image_src"[[:space:]]+href="([^"]+)".*$/\1/p')
 
             mpv "$URL" --really-quiet --loop-file
             ;;

@@ -3,9 +3,6 @@
 # bars
 
 datebar() {
-    backbar $backbarx $backbary $backbarw $backbarh $backbar_bg &
-    sleep 0.2
-
     while :; do
         clock=$(date '+%a %d %b %H:%M')
         calender="urxvtc -e sh -c '3cal'"
@@ -17,13 +14,11 @@ datebar() {
         printf '%s\n' "$buf"
         sleep 2
     done | lemonbar -d -g ${barw}x${barh}+${barx}+${bary} -B ${bar_bg} \
-                       -F ${bar_fg} -f ${bar_font} -n "date" | /bin/sh &
+                    -F ${bar_fg} -R ${bar_border} -r $BW -f ${bar_font} \
+                    -n "date" | /bin/sh &
 }
 
 sysbar() {
-    backbar $backbarx $backbary $backbarw $backbarh $backbar_bg &
-    sleep 0.2
-
     while :; do
         htop="urxvtc -e sh -c 'htop'"
         mem="$(free -m | awk '/Mem:/ {print $3}')m/$(free -m | awk '/Mem:/ {print $2}')m"
@@ -35,13 +30,11 @@ sysbar() {
         printf '%s\n' "$buf"
         sleep 2
     done | lemonbar -d -g ${barw}x${barh}+${barx}+${bary} -B ${bar_bg} \
-                       -F ${bar_fg} -f ${bar_font} -n "sys" | /bin/sh &
+                    -F ${bar_fg} -R ${bar_border} -r $BW -f ${bar_font} \
+                    -n "sys" | /bin/sh &
 }
 
 batbar() {
-    backbar $backbarx $backbary $backbarw $backbarh $backbar_bg &
-    sleep 0.2
-
     while :; do
         buf=""
         buf="${buf} %{c}"
@@ -50,14 +43,12 @@ batbar() {
         printf '%s\n' "$buf"
         sleep 2
     done | lemonbar -d -g ${barw}x${barh}+${barx}+${bary} -B ${bar_bg} \
-                       -F ${bar_fg} -f ${bar_font} -n "bat" | /bin/sh &
+                    -F ${bar_fg} -R ${bar_border} -r $BW -f ${bar_font} \
+                    -n "bat" | /bin/sh &
 }
 
 
 gpubar() {
-    backbar $backbarx $backbary $backbarw $backbarh $backbar_bg &
-    sleep 0.2
-
     while :; do
         gotop="urxvtc -e sh -c 'gotop'"
 
@@ -68,19 +59,17 @@ gpubar() {
         printf '%s\n' "$buf"
         sleep 2
     done | lemonbar -d -g ${barw}x${barh}+${barx}+${bary} -B ${bar_bg} \
-                       -F ${bar_fg} -f ${bar_font} -n "gpu" | /bin/sh &
+                    -F ${bar_fg} -R ${bar_border} -r $BW -f ${bar_font} \
+                    -n "gpu" | /bin/sh &
 }
 
 musbar() {
-    backbar $backbarx $backbary $backbarw $backbarh $backbar_bg &
-    sleep 0.2
-
     while :; do
         mpvc -q
         test $? = 2 && {
             mus="quiet time"
         } || {
-            mus="$(mpvc -f '%artist% / %title% / %remaining%')"
+            mus="$(mpvc -f '%artist% / %title% / %remaining% / %volume%%')"
             test "$mus" = "No files added to /tmp/mpvsocket." &&
                 mus="quiet time"
             sleep 0.2
@@ -99,7 +88,8 @@ musbar() {
         printf '%s\n' "$buf"
         sleep 1
     done | lemonbar -d -g ${barw}x${barh}+${barx}+${bary} -B ${bar_bg} \
-                       -F ${bar_fg} -f ${bar_font} -n "music" | /bin/sh &
+                    -F ${bar_fg} -R ${bar_border} -r $BW -f ${bar_font} \
+                    -n "music" | /bin/sh &
 }
 
 main() {
@@ -111,47 +101,37 @@ main() {
     # bar variables
     bar_bg="#$INACTIVE"
     bar_fg="#$ACTIVE"
-    backbar_bg="#808080"
+    bar_border="#808080"
     bar_font=$(awk '/lemon/ {print $3}' < ~/.Xresources | \
                head -n 1 | cut -d',' -f 1)
 
     # bar geometry
     SX="$(mattr x $PRI)"
     SH="$(mattr h $PRI)"
-    backbarx=$((SX + LGAP))
-    backbary=$((SH - BGAP + BGAP/4 + 10))
-    backbarw=120
-    backbarh=$((18 + BW*2))
-    barx=$((backbarx + BW))
-    bary=$((backbary + BW))
-    barw=$((backbarw - BW*2))
-    barh=$((backbarh - BW*2))
+    barx=$((SX + LGAP))
+    bary=$((SH - BGAP + BGAP/4 + 10))
+    barw=120
+    barh=$((18 + BW*2))
 
     datebar
 
-    backbarx=$((backbarx + backbarw + LGAP - BW))
-    barx=$((backbarx + BW))
+    barx=$((barx + barw + LGAP))
 
     case "$(hostname)" in
         fyriousa)
-            backbarw=280
-            barw=$((backbarw - BW*2))
+            barw=280
             gpubar
             ;;
         inferno)
-            backbarw=180
-            barw=$((backbarw - BW*2))
+            barw=180
             batbar
             ;;
     esac
 
-    backbarx=$((backbarx + backbarw + LGAP - BW))
-    backbarw=500
-    barx=$((backbarx + BW))
-    barw=$((backbarw - BW*2))
+    barx=$((barx + barw + LGAP))
+    barw=500
 
     musbar
-
 }
 
 main "$@"

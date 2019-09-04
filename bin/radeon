@@ -3,10 +3,22 @@
 # modify VEGA20 clocks
 # run as root
 
+ARGS="$@"
+
 usage() {
-    printf '%s\n' "wine or undervolt accepted parameters"
-    exit 1
+    base=$(basename $0)
+
+    cat >&2 << EOF
+Usage:
+    $base stock     : Set stock voltages.
+    $base undervolt : Set undervolt.
+    $base fan       : Set fan speed to value [0 - 255] or auto.
+    $base help      : Show this help.
+EOF
+
+    test $# -eq 0 || exit $1
 }
+
 
 main() {
     # change to your path
@@ -18,7 +30,7 @@ main() {
     fanCtrl="$radeonPCI/hwmon/hwmon2/pwm1_enable"
 
     case "$1" in
-        "wine")
+        "stock")
             # set powerlimit to 300W
             printf '%s\n' "300000000" > "$power"
             # set to stock voltage at all points
@@ -65,4 +77,4 @@ main() {
     esac
 }
 
-main "$@"
+main $ARGS

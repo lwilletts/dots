@@ -22,7 +22,7 @@ alias xsel="xsel -l /dev/null"
 
 # apps
 alias pu="pulsemixer"
-alias todo="$VISUAL $HOME/usr/doc/todo.md"
+alias todo="$EDITOR $HOME/usr/notes/todo.md"
 alias ffmpeg="ffmpeg -hide_banner"
 alias glances="glances --hide-kernel-threads"
 
