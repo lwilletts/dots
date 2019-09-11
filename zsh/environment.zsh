@@ -27,6 +27,7 @@ export PATH=$(printf '%s\n' "$PATH" | cut -c 2-)
 unset EXECPATH
 
 # global shell vars.
+export QT_QPA_PLATFORMTHEME="qt5ct"
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DESKTOP_DIR="/home/fyr"
 export BROWSER="/usr/bin/qutebrowser"

@@ -1,6 +1,0 @@
-#!/bin/sh
-#
-# back
-
-hsetroot -tile $HOME/usr/img/patterns/light/furley_bg/furley_bg.png \
-          -brightness -0.5 -contrast 2

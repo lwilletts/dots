@@ -86,7 +86,7 @@ musbar() {
         buf="${buf} %{A:${pulse}:} ${vol} ♪  %{A}"
 
         printf '%s\n' "$buf"
-        sleep 1
+        sleep 0.05
     done | lemonbar -d -g ${barw}x${barh}+${barx}+${bary} -B ${bar_bg} \
                     -F ${bar_fg} -R ${bar_border} -r $BW -f ${bar_font} \
                     -n "music" | /bin/sh &
@@ -99,6 +99,7 @@ main() {
     wmcolours
 
     # bar variables
+    BW=1
     bar_bg="#$INACTIVE"
     bar_fg="#$ACTIVE"
     bar_border="#808080"
@@ -106,10 +107,13 @@ main() {
                head -n 1 | cut -d',' -f 1)
 
     # bar geometry
-    SX="$(mattr x $PRI)"
-    SH="$(mattr h $PRI)"
-    barx=$((SX + LGAP))
-    bary=$((SH - BGAP + BGAP/4 + 10))
+    PX="$(mattr x $PRI)"
+    PW="$(mattr w $PRI)"
+    PH="$(mattr h $PRI)"
+    SH="$(mattr h $SEC)"
+
+    barx=$((PX + LGAP))
+    bary=$((PH - BGAP + BGAP/4 + 10))
     barw=120
     barh=$((18 + BW*2))
 
@@ -119,8 +123,14 @@ main() {
 
     case "$(hostname)" in
         fyriousa)
-            barw=280
+            prevbarx=$barx
+            prevbary=$bary
+            barx=$((PX + PW + LGAP))
+            bary=$((SH - BGAP + BGAP/4 + 10))
+            barw=320
             gpubar
+            barx=$((prevbarx - barw - LGAP))
+            bary=$prevbary
             ;;
         inferno)
             barw=180

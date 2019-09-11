@@ -6,9 +6,9 @@ mod1 + {d, w, shift + w}
 {~button1, ~button3}
     under {pmenu, wmenu}
 mod1 + @button1
-    xmmv $(pfw)
+    chwso -r $(pfw); xmmv $(pfw)
 mod1 + @button3
-    xmrs $(pfw)
+    chwso -r $(pfw); xmrs $(pfw)
 
 # sys
 mod4 + shift + l
@@ -17,38 +17,38 @@ mod1 + shift + r
     pkill -USR1 -x sxhkd
 mod1 + shift + e
     pkill xinit
-mod1 + {o,p}
-    {screens hdmi off, screens hdmi on}
+mod1 + v
+    screens sec toggle
 
 # manipulation
-mod1 + {shift + Tab, Tab, n}
-    focus {next, prev, cycle}
+{button2, button8}
+    focus {prev, cycle}
+mod1 + {n,p,Tab}
+    focus {cycle, prev, prev}
 mod1 + {h,j,k,l}
     closer {left, down, up, right}
 mod1 + shift + {h,j,k,l}
     adjust {left, down, up, right}
-mod1 + {button4, button5}
+mod1 + {button4, button5
     chwso {-r,-l} $(pfw)
 mod1 + f
     full $(pfw)
-mod1 + {a,m}
-    move {vmaximise,maximise}
+mod1 + {g,a,m}
+    move {center,vmaximise,maximise}
 
 # music
-mod4 + {h,j,k,l}
-    mpvc seek {-5s,-1m,1m,5s} -q
-mod4 + {space,n,p,z,x,shift + c}
-    mpvc {toggle,next,prev,shuffle,play $,clear} -q
-mod4 + a
-    find ~/usr/mus/* -type f | sort -R | mpvc add -q
-mod4 + {s,d}
-    mpvc volume {-5,+5} -q
-{XF86AudioPause,XF86AudioPlay,XF86AudioNext,XF86AudioPrev}
-    mpvc {toggle,toggle,next,prev} -q
 XF86AudioMute
     pulsemixer --toggle-mute
 {XF86AudioLowerVolume, XF86AudioRaiseVolume}
     pulsemixer --change-volume {-5,+5}
+mod4 + {s,d,9,0}
+    mpvc volume {-5,+5,-5,+5} -q
+mod4 + {h,j,k,l}
+    mpvc seek {-5s,-1m,1m,5s} -q
+mod4 + {space,n,p,z,x,c}
+    mpvc {toggle,next,prev,shuffle,play $,clear} -q
+mod4 + a
+    find ~/usr/mus/* -type f | sort -R | mpvc add -q
 
 # shot
 Print

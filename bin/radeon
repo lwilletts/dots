@@ -3,15 +3,14 @@
 # modify VEGA20 clocks
 # run as root
 
-ARGS="$@"
-
 usage() {
     base=$(basename $0)
 
     cat >&2 << EOF
 Usage:
-    $base stock     : Set stock voltages.
+    $base wine      : Set lowest powerstate to max clocks.
     $base undervolt : Set undervolt.
+    $base info      : Show current clocks.
     $base fan       : Set fan speed to value [0 - 255] or auto.
     $base help      : Show this help.
 EOF
@@ -28,28 +27,24 @@ main() {
     power="$radeonPCI/hwmon/hwmon2/power1_cap"
     fanSpeed="$radeonPCI/hwmon/hwmon2/pwm1"
     fanCtrl="$radeonPCI/hwmon/hwmon2/pwm1_enable"
+    powerDRM="$radeonPCI/power_dpm_force_performance_level"
 
     case "$1" in
-        "stock")
-            # set powerlimit to 300W
+        "wine")
+            printf '%s\n' "manual" > "$powerDRM"
             printf '%s\n' "300000000" > "$power"
-            # set to stock voltage at all points
-            printf '%s\n' "vc 0 1801 1120" > "$odclk"
-            printf '%s\n' "vc 1 1801 1120" > "$odclk"
-            printf '%s\n' "vc 2 1801 1120" > "$odclk"
-            # set memory clock to 1200mhz
-            printf '%s\n' "m 1 1200" > "$odclk"
+            printf '%s\n' "s 0 1800" > "$odclk"
+            printf '%s\n' "s 1 1800" > "$odclk"
             printf '%s\n' "c" > "$odclk"
-
-            printf '%s\n' "wine tweaks applied"
             ;;
         "undervolt")
+            printf '%s\n' "manual" > "$powerDRM"
             printf '%s\n' "300000000" > "$power"
-            printf '%s\n' "vc 2 1801 1000" > "$odclk"
+            printf '%s\n' "s 0 808" > "$odclk"
+            printf '%s\n' "s 1 1800" > "$odclk"
             printf '%s\n' "m 1 1200" > "$odclk"
+            printf '%s\n' "vc 2 1900 1050" > "$odclk"
             printf '%s\n' "c" > "$odclk"
-
-            printf '%s\n' "undervolt applied"
             ;;
         "fan")
             test -n "$2" && {
@@ -71,10 +66,13 @@ main() {
             printf '%s\n' "1" > "$fanCtrl"
             printf '%s\n' "$fan" > "$fanSpeed"
             ;;
+        info)
+            cat "$odclk"
+            ;;
         *)
             usage
             ;;
     esac
 }
 
-main $ARGS
+main "$@"

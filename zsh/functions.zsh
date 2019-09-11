@@ -22,7 +22,10 @@ chpwd() {
     }
 
     # set window title to path name
-    print -Pn "\e]0;%~\a"
+    case $TERM in
+        rxvt*) preexec () { print -Pn "\e]0;$1\a" } ;;
+        *)     print -Pn "\e]0;%~\a"                ;;
+    esac
 
     unset -v f0 41 f2 f3 f4 f5 f6 f7 R
 }

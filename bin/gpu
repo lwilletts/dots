@@ -6,8 +6,9 @@ sensorOut="$(sensors)"
 VOLT=$(printf '%s\n' "$sensorOut"  | awk '/vddgfx/ {print $2,$3}' | cut -c 2-)
 TEMP=$(printf '%s\n' "$sensorOut"  | awk '/temp1/ && $3 == "(crit" {print $2}' | cut -c 2-)
 POWER=$(printf '%s\n' "$sensorOut" | awk '/power1/ {print $2,$3}')
-SPEED=$(printf '%s\n' "$sensorOut" | awk '/fan1/ {print $2,$3}')
+FAN=$(printf '%s\n' "$sensorOut" | awk '/fan1/ {print $2,$3}')
+CLOCK=$(cat /sys/class/drm/card1/device/pp_dpm_sclk | grep '*' | cut -d\  -f 2)
 
 test -n "$VOLT" && {
-    printf '%s\n' "Radeon VII: $VOLT / $TEMP / $POWER / $SPEED"
+    printf '%s\n' "Radeon VII: $VOLT / $CLOCK / $TEMP / $POWER / $FAN"
 }

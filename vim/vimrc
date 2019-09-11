@@ -202,8 +202,6 @@ nmap <Leader>gc vipgc
 xnoremap p pgvy
 
 " swapping like for like keys
-nnoremap 0 ^
-nnoremap ^ 0
 nnoremap ` '
 nnoremap ' `
 nnoremap # *

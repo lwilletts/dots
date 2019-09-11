@@ -8,20 +8,48 @@ case "$1" in
         xrandr --output DisplayPort-1 --pos 0x0
         exit
         ;;
-    light)
-        xrandr --output HDMI-A-2 --brightness 1
-        xrandr --output DisplayPort-1 --brightness 1
-        exit
-        ;;
-    dark)
-        xrandr --output HDMI-A-2 --brightness 0.5
-        xrandr --output DisplayPort-1 --brightness 0.5
-        exit
-        ;;
-    hdmi)
+    pri|primary)
         case "$2" in
-            on) xrandr --output HDMI-A-2 --brightness 1 ;;
-            off) xrandr --output HDMI-A-2 --brightness 0 ;;
+            on)
+                xrandr --output DisplayPort-1 --brightness 1
+                ;;
+            off)
+                xrandr --output DisplayPort-1 --brightness 0
+                ;;
+            *)
+                xrandr --output DisplayPort-1 --brightness "$2"
+                ;;
+        esac
+        exit
+        ;;
+    sec|secondary)
+        case "$2" in
+            on)
+                xrandr --output HDMI-A-2 --brightness 1
+                ;;
+            off)
+                xrandr --output HDMI-A-2 --brightness 0
+                ;;
+            *)
+                xrandr --output HDMI-A-2 --brightness "$2"
+                ;;
+        esac
+        exit
+        ;;
+    all)
+        case "$2" in
+            on)
+                xrandr --output DisplayPort-1 --brightness 1
+                xrandr --output HDMI-A-2 --brightness 1
+                ;;
+            off)
+                xrandr --output DisplayPort-1 --brightness 0
+                xrandr --output HDMI-A-2 --brightness 0
+                ;;
+            *)
+                xrandr --output DisplayPort-1 --brightness "$2"
+                xrandr --output HDMI-A-2 --brightness "$2"
+                ;;
         esac
         exit
         ;;
@@ -29,7 +57,7 @@ esac
 
 case "$(hostname)" in
     "fyriousa")
-        xrandr --output HDMI-A-2 --auto --rotate right --pos 2560x0
-        xrandr --output DisplayPort-1 --pos 0x520
+        xrandr --output HDMI-A-2 --auto --rotate right --pos 2560x0 --brightness 1
+        xrandr --output DisplayPort-1 --pos 0x480 --brightness 1
         ;;
 esac

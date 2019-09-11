@@ -1,15 +1,16 @@
 #!/bin/sh
 
-# environment
-xset s off # no screensaver
+# x11 environment
 xset +dpms # powersaving
+xset s off # no screensaver
+xset r rate 250 40 # better responsiveness
 xset +fp ~/.local/share/fonts # custom fonts directory
-xsetroot -name background
 xsetroot -cursor_name left_ptr # left pointer as cursor
+xsetroot -name background
 
 # wall
 screens
-back
+hsetroot -solid "#DBDFE4"
 
 # fwm
 cwm &
@@ -20,6 +21,10 @@ watcher &
 unclutter &
 urxvtd -q -o -f &
 test -f ~/.Xresources && xrdb -load ~/.Xresources
+
+PRI="$(lsm -p)"
+wmp "$(($(mattr x "$PRI") + $(mattr w "$PRI") / 2))" \
+    "$(($(mattr y "$PRI") + $(mattr h "$PRI") / 2))"
 
 while :; do
     sleep 99d
