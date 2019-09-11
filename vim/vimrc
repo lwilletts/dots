@@ -391,9 +391,13 @@ autocmd! BufNewFile,BufRead *.zsh,*.zprofile setlocal filetype=sh
 set history=1000
 
 set backup
+set directory=~/.vim/swap
 set backupdir=~/.vim/backup
 if !isdirectory(expand(&backupdir))
     call mkdir(expand(&backupdir), "p")
+endif
+if !isdirectory(expand(&directory))
+    call mkdir(expand(&directory), "p")
 endif
 
 if has('persistent_undo')
@@ -406,8 +410,6 @@ if has('persistent_undo')
         call mkdir(expand(&undodir), "p")
     endif
 endif
-
-set noswapfile
 
 " always jump to the last known cursor position
 autocmd BufReadPost *
