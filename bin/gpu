@@ -2,13 +2,18 @@
 #
 # gpu
 
-sensorOut="$(sensors)"
-VOLT=$(printf '%s\n' "$sensorOut"  | awk '/vddgfx/ {print $2,$3}' | cut -c 2-)
-TEMP=$(printf '%s\n' "$sensorOut"  | awk '/temp1/ && $3 == "(crit" {print $2}' | cut -c 2-)
-POWER=$(printf '%s\n' "$sensorOut" | awk '/power1/ {print $2,$3}')
-FAN=$(printf '%s\n' "$sensorOut" | awk '/fan1/ {print $2,$3}')
-CLOCK=$(cat /sys/class/drm/card1/device/pp_dpm_sclk | grep '*' | cut -d\  -f 2)
+# find correct card
+for i in $(seq 0 4); do
+    test -e "/sys/class/drm/card$i/device/pp_dpm_sclk" && number=$i
+done
 
-test -n "$VOLT" && {
-    printf '%s\n' "Radeon VII: $VOLT / $CLOCK / $TEMP / $POWER / $FAN"
-}
+sclk="/sys/class/drm/card$number/device/pp_dpm_sclk"
+
+sensorOut="$(sensors)"
+VOLT=$(printf '%s\n' "$sensorOut" | awk '/vddgfx/ {print $2,$3}' | cut -c 2-)
+TEMP=$(printf '%s\n' "$sensorOut" | awk '/temp1/ && $3 == "(crit" {print $2}' | cut -c 2-)
+POWR=$(printf '%s\n' "$sensorOut" | awk '/power1/ {print $2,$3}')
+FANS=$(printf '%s\n' "$sensorOut" | awk '/fan1/ {print $2,$3}')
+CLOCK=$(cat "$sclk" | grep '*' | cut -d\  -f 2)
+
+printf '%s\n' "Radeon VII: $VOLT / $CLOCK / $TEMP / $POWR / $FANS"

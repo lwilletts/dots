@@ -139,7 +139,7 @@ main() {
     esac
 
     barx=$((barx + barw + LGAP))
-    barw=500
+    barw=600
 
     musbar
 }

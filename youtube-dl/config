@@ -1,2 +1,2 @@
 -f bestvideo+bestaudio
--o /mnt/pool/mtv/%(title)s.%(ext)s
+-o /mnt/pool/yt/%(title)s.%(ext)s

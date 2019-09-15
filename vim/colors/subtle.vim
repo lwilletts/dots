@@ -33,7 +33,7 @@ hi Search       ctermfg=0    ctermbg=4    cterm=NONE
 hi IncSearch    ctermfg=0    ctermbg=4    cterm=NONE
 
 hi VertSplit    ctermfg=NONE ctermbg=0    cterm=NONE
-hi ColorColumn  ctermfg=NONE ctermbg=0    cterm=NONE
+hi ColorColumn  ctermfg=0    ctermbg=6    cterm=NONE
 hi StatusLine   ctermfg=6    ctermbg=NONE cterm=NONE
 hi StatusLineNC ctermfg=0    ctermbg=NONE cterm=NONE
 

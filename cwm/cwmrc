@@ -6,8 +6,9 @@ unbind-mouse all
 
 bind-key 4S-r restart
 bind-key MS-q window-delete
+bind-key M-z menu-window
 
-bind-key M-c group-toggle-0
+bind-key M-c window-stick
 bind-key M-1 group-toggle-1
 bind-key M-2 group-toggle-2
 bind-key M-3 group-toggle-3
@@ -38,7 +39,7 @@ ignore Popup
 
 # style
 sticky no
-moveamount 10
+moveamount 20
 borderwidth 2
 gap 10 50 10 20
 
@@ -47,12 +48,18 @@ color activeborder "#101010"
 color urgencyborder "#B23450"
 color inactiveborder "#EFEFEF"
 
-# groups
+# groups apps
 autogroup 2 "qutebrowser,qutebrowser"
 autogroup 3 "discord,discord"
 autogroup 4 "Steam,Steam"
+autogroup 4 "lutris,Lutris"
+autogroup 8 "gl,mpv"
+autogroup 9 "obs,obs"
+autogroup 9 "pavucontrol,Pavucontrol"
+
+# groups games
 autogroup 5 "midair-win64-test.exe,steam_app_439370"
 autogroup 5 "doomx64vk.exe,steam_app_379720"
 autogroup 5 "skyrimse.exe,steam_app_489830"
-autogroup 9 "obs,obs"
-autogroup 9 "pavucontrol,Pavucontrol"
+
+

@@ -1,0 +1,41 @@
+#!/bin/sh
+#
+# yts
+
+usage() {
+    base=$(basename $0)
+
+    cat >&2 << EOF
+Usage:
+    $base "search"
+
+Specify amount of results using 'amount' (default=5):
+    amount=10 $base "search"
+EOF
+
+    test $# -eq 0 || exit $1
+}
+
+intCheck() {
+    test "$1" -ne 0 2> /dev/null
+    test $? -ne 2 || {
+         printf '%s\n' "'$1' is not an integer." >&2
+         exit 1
+    }
+}
+
+
+main() {
+    test -z "$1" && usage 1
+
+    amount=${amount:-5}
+    intCheck "$amount" || exit 1
+
+    youtube-dl -j ytsearch$amount:"$@" | \
+        jq -r '"-----------\n" +
+        .uploader + ", Date: " + .upload_date + ", Views: " +
+        (.view_count|tostring) + ", Duration: " + (.duration|tostring), .title,
+        .webpage_url'
+}
+
+main "$@"

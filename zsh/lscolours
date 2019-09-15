@@ -148,20 +148,20 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 # mpiled {{{2
 #
 #   assembly language
-.asm                  38;5;81
+.asm                  38;5;12
 #   LISP
-.cl                   38;5;81
-.lisp                 38;5;81
+.cl                   38;5;12
+.lisp                 38;5;12
 #   lua
-.lua                  38;5;81
+.lua                  38;5;12
 #   C
-.c                    38;5;81
-.C                    38;5;81
+.c                    38;5;12
+.C                    38;5;12
 .h                    38;5;110
 .H                    38;5;110
 .tcc                  38;5;110
 #   C++
-.c++                  38;5;81
+.c++                  38;5;12
 .h++                  38;5;110
 .hpp                  38;5;110
 .hxx                  38;5;110
@@ -170,24 +170,24 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .M                    38;5;110
 .m                    38;5;110
 #   Csharp
-.cc                   38;5;81
-.cs                   38;5;81
-.cp                   38;5;81
-.cpp                  38;5;81
-.cxx                  38;5;81
+.cc                   38;5;12
+.cs                   38;5;12
+.cp                   38;5;12
+.cpp                  38;5;12
+.cxx                  38;5;12
 #   fortran
-.f                    38;5;81
-.for                  38;5;81
-.ftn                  38;5;81
+.f                    38;5;12
+.for                  38;5;12
+.ftn                  38;5;12
 #   pascal
 .s                    38;5;110
 .S                    38;5;110
 #   ?
-.sx                   38;5;81
+.sx                   38;5;12
 #   interface file in GHC - https://github.com/trapd00r/LS_COLORS/pull/9
 .hi                   38;5;110
 #   haskell
-.hs                   38;5;81
+.hs                   38;5;12
 
 
 # binaries {{{2
@@ -217,16 +217,16 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .jsp                  38;5;074;1
 # }}}
 # php {{{2
-.php                  38;5;81
+.php                  38;5;12
 #   CakePHP view scripts and helpers
-.ctp                  38;5;81
+.ctp                  38;5;12
 #   Twig template engine
-.twig                 38;5;81
+.twig                 38;5;12
 # }}}
 # vb/a {{{2
-.vb                   38;5;81
-.vba                  38;5;81
-.vbs                  38;5;81
+.vb                   38;5;12
+.vba                  38;5;12
+.vbs                  38;5;12
 # 2}}}
 # Build stuff {{{2
 *Makefile             38;5;28
@@ -312,6 +312,7 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .ogg                  38;5;1
 .s3m                  38;5;1
 .sid                  38;5;1
+.opus                  38;5;1
 # lossless
 .ape                  38;5;1
 .flac                 38;5;1

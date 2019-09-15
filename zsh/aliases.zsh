@@ -12,13 +12,13 @@ alias umount="s umount"
 
 alias l="ls"
 alias mv="mv -f"
+alias df="df -h"
 alias cp="cp -rf"
 alias rsync="rsync -av"
 
+alias xsel="xsel -l /dev/null"
 alias szsh="source ~/.zshrc"
 alias sxrdb="xrdb ~/.Xresources"
-
-alias xsel="xsel -l /dev/null"
 
 # apps
 alias vol="pulsemixer"
@@ -29,15 +29,15 @@ alias glances="glances --hide-kernel-threads"
 # net
 alias ix="curl -F 'f:1=<-' ix.io"
 alias tn="transmission-remote-cli"
-alias yt="youtube-dl -x -o \"%(title)s.%(ext)s\""
+alias ytd="youtube-dl"
+alias ytm="youtube-dl \"$(mpvc -f '%path%')\""
+alias rss="newsboat -q"
 alias net="curl -s ipv4.icanhazip.com"
-alias netflix="firefox -new-window 'https://netflix.com'"
 
 # games
 alias cfg="vi ~/.steam/steam/steamapps/common/Midair/Midair/Binaries/*.cfg"
-alias pug="steam steam://rungameid/439370//208.100.45.123%3Fpassword=toxic%2027015 > /dev/null 2>&1"
-alias aus="steam steam://rungameid/439370//112.213.32.53%3Fpassword=bittard%%2027019 > /dev/null 2>&1"
-alias midair="steam steam://rungameid/439370 > /dev/null 2>&1"
+alias game1="cd ~/.steam/steam/steamapps/common"
+alias game2="cd /mnt/speed/steamapps/common"
 
 # image
 alias i="img"

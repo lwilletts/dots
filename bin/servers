@@ -3,7 +3,6 @@
 # fyr 2017 (c) MIT
 
 test -f ~/.ssh/steamkey && KEY="$(cat ~/.ssh/steamkey)"
-test -f ~/.maxplayers && MAXPLAYERS="$(cat ~/.maxplayers)" || printf '%s' "0" > ~/.maxplayers
 URL="https://api.steampowered.com/IGameServersService/GetServerList/v1/?format=json&filter=\gamedir\midair&key=$KEY"
 
 OUTPUT=$(curl -sL "$URL" | jq -r '(.response.servers)')
@@ -19,8 +18,6 @@ for i in $(seq 1 $LENGTH); do
     NAME=$(printf '%s' "$SERVER" | jq -r '.name')
     PLAYERS=$(printf '%s' "$SERVER" | jq -r '.players')
     IP=$(printf '%s' "$SERVER" | jq -r '.addr')
-
-    # test $PLAYERS -eq 0 && continue
 
     TOTALPLAYERS=$(printf '%s' "$SERVER" | jq -r '.max_players')
     CURRENTPLAYERS=$((CURRENTPLAYERS + PLAYERS))

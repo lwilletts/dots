@@ -55,11 +55,5 @@ usr() {
         cut -c1-$(stty size < /dev/tty | cut -d\  -f 2)
 }
 
-exesh() {
-    test -n "$1" && printf '%s\n\n' "#!/bin/sh" > "$1"
-    chmod +x "$1"
-    $EDITOR "$1"
-}
-
 # name / class / process of window id
 hash fwmrc 2> /dev/null && . fwmrc
