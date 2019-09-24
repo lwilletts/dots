@@ -57,6 +57,7 @@ xorg() {
     ln $OPTIONS $DOTFILEDIR/bindings $HOME/.bindings
     ln $OPTIONS $DOTFILEDIR/alsa/asoundrc $HOME/.asoundrc
     ln $OPTIONS $DOTFILEDIR/youtube-dl $HOME/.config/youtube-dl
+    ln $OPTIONS $DOTFILEDIR/compton/compton.conf $HOME/.compton.conf
 }
 
 all() {
