@@ -14,7 +14,11 @@ case "$mime_type" in
     image/*)
         mpv --loop-file --really-quiet "$1"
         ;;
-    video/*|audio/*)
+    video/*)
+        mpvc pause
+        mpv "$1"
+        ;;
+    audio/*)
         mpvc add "$1"
         mpvc move $(mpvc -f "%playlistlength% %position%")
         mpvc next

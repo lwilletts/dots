@@ -3,8 +3,8 @@
     urxvtc
 {mod1, mod2} + shift + Return
     urxvtc -cd "$(mpvc -f "%dir%")"
-mod1 + {d, w, shift + w}
-    {drun, wmenu, wmenu -u}
+mod1 + {d, w}
+    {drun, wmenu -b}
 {~button1, ~button3}
     under {pmenu, wmenu}
 
@@ -39,6 +39,8 @@ mod1 + f
     full $(pfw)
 mod1 + {g,a,m}
     move {center,vmaximise,maximise}
+mod1 + shift + {g,m}
+    move {center,maximise} $(pfw) DisplayPort-1
 mod1 + {Left,Down,Up,Right}
     move {left,bottom,top,right}
 
@@ -50,7 +52,7 @@ XF86AudioMute
 mod4 + {s,d,9,0}
     mpvc volume {-5,+5,-5,+5} -q
 mod4 + {h,j,k,l}
-    mpvc seek {-5s,-1m,1m,5s} -q
+    mpvc seek {-5s,-30s,30s,5s} -q
 mod4 + {space,Tab,n,p,z,c}
     mpvc {toggle,next,next,prev,shuffle,clear} -q
 mod4 + {button3,button8,button9}

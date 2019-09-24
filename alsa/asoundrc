@@ -3,8 +3,3 @@ pcm.!default {
     slave.pcm hw
     hint.description "Default Audio Device"
 }
-
-ctl.!default {
-    type pulse
-}
-

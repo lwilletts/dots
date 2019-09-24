@@ -18,6 +18,7 @@ bars &
 sxhkd &
 compton &
 watcher &
+audiosinks
 unclutter &
 urxvtd -q -o -f &
 test -f ~/.Xresources && xrdb -load ~/.Xresources

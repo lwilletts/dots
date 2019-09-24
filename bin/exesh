@@ -2,6 +2,8 @@
 #
 # exesh
 
+test -e "$1" && ${EDITOR:-vi} "$1"
+
 test -n "$1" && {
     printf '%s' "#!/bin/sh
 #
@@ -25,6 +27,5 @@ main() {
 main \"\$@\"
 " > "$1"
 
-    chmod +x "$1"
-    $EDITOR "$1"
-}
+chmod +x "$1"
+$EDITOR "$1"

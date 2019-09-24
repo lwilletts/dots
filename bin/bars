@@ -113,7 +113,7 @@ main() {
     SH="$(mattr h $SEC)"
 
     barx=$((PX + LGAP))
-    bary=$((PH - BGAP + BGAP/4 + 10))
+    bary=$((PH - BGAP + BGAP/2 - BGAP/5))
     barw=120
     barh=$((18 + BW*2))
 
@@ -126,7 +126,7 @@ main() {
             prevbarx=$barx
             prevbary=$bary
             barx=$((PX + PW + LGAP))
-            bary=$((SH - BGAP + BGAP/4 + 10))
+            bary=$((SH - BGAP + BGAP/2 - BGAP/5))
             barw=320
             gpubar
             barx=$((prevbarx - barw - LGAP))

@@ -25,6 +25,7 @@ alias vol="pulsemixer"
 alias todo="$EDITOR $HOME/usr/notes/todo.md"
 alias ffmpeg="ffmpeg -hide_banner"
 alias glances="glances --hide-kernel-threads"
+alias midair="steam steam://rungameid/439370 > /dev/null 2>&1"
 
 # net
 alias ix="curl -F 'f:1=<-' ix.io"

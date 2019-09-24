@@ -73,11 +73,11 @@ fanCurve() {
     printf '%s\n' "1" > "$fanCtrl"
 
     while :; do
-        TEMP="$(($(cat "$radeonPCI/hwmon/hwmon2/temp1_input") / 1000))"
+        TEMP="$(($(cat "$radeonPCI/hwmon/hwmon2/temp2_input") / 1000))"
 
         case $TEMP in
             [0-3][0-9])  printf '%s\n' "0" > "$fanSpeed"   ;;
-            4[0-9])      printf '%s\n' "80" > "$fanSpeed"  ;;
+            4[0-9])      printf '%s\n' "0" > "$fanSpeed"  ;;
             5[0-9])      printf '%s\n' "100" > "$fanSpeed" ;;
             6[0-9])      printf '%s\n' "120" > "$fanSpeed" ;;
             7[0-9])      printf '%s\n' "140" > "$fanSpeed" ;;

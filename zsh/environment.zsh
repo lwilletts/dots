@@ -16,7 +16,8 @@ EXECPATHS="/bin
 $DOTS/bin
 $HOME/.fzf/bin
 /usr/local/bin
-$SRC/fwm"
+$SRC/fwm
+$HOME/.gem/ruby/2.6.0/bin"
 
 printf '%s\n' "$EXECPATHS" | while read -r EXECPATH; do
     test -d "$EXECPATH" && PATH="$PATH:$EXECPATH"
