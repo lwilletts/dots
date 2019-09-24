@@ -5,8 +5,8 @@
     urxvtc -cd "$(mpvc -f "%dir%")"
 mod1 + {d, w}
     {drun, wmenu -b}
-{~button1, ~button3}
-    under {pmenu, wmenu}
+{~button1, ~button3, button10}
+    under {pmenu, wmenu, wmenu}
 
 # sys
 mod4 + shift + l
@@ -25,14 +25,12 @@ mod1 + @button1
     chwso -r $(pfw); xmmv $(pfw)
 mod1 + @button3
     chwso -r $(pfw); xmrs $(pfw)
-button8
-    focus prev
 mod1 + {Tab,p,n,button8}
     focus {prev,prev,cycle,cycle}
 mod1 + {h,j,k,l}
     closer {left,down,up,right}
 mod1 + shift + {h,j,k,l}
-    adjust {left,down,up,right}
+    adjust {left,down,up,right} $(pfw)
 mod1 + {button4, button5}
     chwso {-r,-l} $(pfw)
 mod1 + f

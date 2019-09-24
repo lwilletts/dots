@@ -39,7 +39,7 @@ ignore Popup
 
 # style
 sticky no
-moveamount 10
+moveamount 20
 borderwidth 2
 gap 10 40 10 20
 
