@@ -74,6 +74,9 @@ Plug 'benekastah/neomake'
         \ 'texthl': 'TermCursorNC',
     \ }
 
+    " async
+Plug 'skywind3000/asyncrun.vim'
+
     " snips
 Plug 'SirVer/ultisnips'
     let g:UltiSnipsUsePythonVersion = 3
@@ -215,8 +218,7 @@ inoremap [; [<CR>];<ESC>O<TAB>
 inoremap [, [<CR>],<ESC>O<TAB>
 
 " external program launching
-nmap <Leader>op :exe ':silent !zathura %:r.pdf'<CR> | redraw!
-nmap <Leader>om :exe ':silent !zathura %:r.pdf'<CR> | redraw!
+nmap <Leader>op :AsyncRun! zathura %:r.pdf<CR>
 
     " Mappings for Custom Functions
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -328,8 +330,8 @@ autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 autocmd! FileType c      setlocal ts=4 sw=4 sts=4
 autocmd! FileType md     setlocal spell
-autocmd! FileType sh     setlocal makeprg=sh\ %
-autocmd! FileType tex    setlocal spell makeprg=pdflatex\ %
+autocmd! FileType sh     setlocal makeprg=sh\ %\
+autocmd! FileType tex    setlocal spell makeprg=pdflatex\ %\
 autocmd! FileType txt    setlocal tw=0 spell noexpandtab wrap linebreak
 autocmd! FileType css    setlocal ts=4 sw=4 sts=4
 autocmd! FileType html   setlocal ts=2 sw=2 sts=2
