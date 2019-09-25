@@ -21,6 +21,8 @@ alias sxrdb="xrdb ~/.Xresources"
 
 # apps
 alias vol="pulsemixer"
+alias grep="grep --color=auto"
+alias diff="diff --color=auto"
 alias todo="$EDITOR $HOME/usr/notes/todo.md"
 alias ffmpeg="ffmpeg -hide_banner"
 alias glances="glances --hide-kernel-threads"

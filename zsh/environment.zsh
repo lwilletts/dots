@@ -38,13 +38,7 @@ export EDITOR="nvim"
 alias vi="$VISUAL"
 alias vim="$VISUAL"
 
-test -f "/usr/bin/nvimpager" && {
-    export PAGER="nvimpager"
-} || {
-    export PAGER="less"
-}
-
-export MANPAGER="$PAGER"
+export PAGER="less"
 export FZF_DEFAULT_OPTS='--color=bw'
 
 alias white="sed 's/\x1B\[[0-9;]*[JKmsu]//g'"
