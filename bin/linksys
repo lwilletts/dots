@@ -60,7 +60,7 @@ xorg() {
     ln $OPTIONS $DOTFILEDIR/compton/compton.conf $HOME/.compton.conf
 
     ln $OPTIONS $DOTFILEDIR/qutebrowser/config.py \
-    $HOME/.config/qutebrowser/config
+    $HOME/.config/qutebrowser/config.py
 }
 
 all() {
