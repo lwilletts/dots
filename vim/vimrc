@@ -26,10 +26,8 @@ Plug 'tpope/vim-repeat'
 Plug 'wellle/targets.vim'
 Plug 'tpope/vim-commentary'
 Plug 'rbgrouleff/bclose.vim'
-Plug 'djoshea/vim-autoread'
-
-    " search highlight clear
 Plug 'pgdouyon/vim-evanesco'
+Plug 'lwilletts/autoswap.vim'
 
 Plug 'tpope/vim-surround'
     nmap sl yss
@@ -63,39 +61,6 @@ Plug 'junegunn/fzf.vim'
       \ 'spinner': ['fg', 'Label'],
       \ 'header':  ['fg', 'Comment'] }
 
-Plug 'junegunn/vim-easy-align'
-    nmap ga <Plug>(EasyAlign)
-    xmap ga <Plug>(EasyAlign)
-    let g:easy_align_delimiters = {
-    \ '>': { 'pattern': '>>\|=>\|>' },
-    \ '/': {
-    \     'pattern':         '//\+\|/\*\|\*/',
-    \     'delimiter_align': 'l',
-    \     'ignore_groups':   ['!Comment'] },
-    \ ']': {
-    \     'pattern':       '[[\]]',
-    \     'left_margin':   0,
-    \     'right_margin':  0,
-    \     'stick_to_left': 0
-    \   },
-    \ ')': {
-    \     'pattern':       '[()]',
-    \     'left_margin':   0,
-    \     'right_margin':  0,
-    \     'stick_to_left': 0
-    \   },
-    \ 'd': {
-    \     'pattern':      ' \(\S\+\s*[;=]\)\@=',
-    \     'left_margin':  0,
-    \     'right_margin': 0
-    \   },
-    \ ';': {
-    \     'pattern':      ';',
-    \     'left_margin':  1,
-    \     'right_margin': 0
-    \   }
-    \ }
-
     " build checkers
 Plug 'benekastah/neomake'
     let g:neomake_open_list = 1
@@ -109,19 +74,14 @@ Plug 'benekastah/neomake'
         \ 'texthl': 'TermCursorNC',
     \ }
 
+    " async
+Plug 'skywind3000/asyncrun.vim'
+
     " snips
 Plug 'SirVer/ultisnips'
     let g:UltiSnipsUsePythonVersion = 3
     let g:UltiSnipsSnippetsDirectories = ['~/.config/nvim/Ultisnips', 'Ultisnips']
     let g:UltisnipsEditSplit = 'vertical'
-
-    " latex
-Plug 'lervag/vimtex'
-    let g:tex_flavor='latex'
-    let g:vimtex_view_method='zathura'
-    let g:vimtex_quickfix_mode=0
-    set conceallevel=0
-    let g:tex_conceal='abdmg'
 
     "  intelligent tab
 Plug 'ervandew/supertab'
@@ -249,13 +209,16 @@ nmap zn ]s
 nmap zp [s
 
 " auto expansion
-inoremap (<C-j> (<CR>)<ESC>O<TAB>
-inoremap {<C-j> {<CR>}<ESC>O<TAB>
-inoremap [<C-j> [<CR>]<ESC>O<TAB>
+inoremap (j (<CR>)<ESC>O<TAB>
+inoremap {j {<CR>}<ESC>O<TAB>
+inoremap [j [<CR>]<ESC>O<TAB>
 inoremap {; {<CR>};<ESC>O<TAB>
 inoremap {, {<CR>},<ESC>O<TAB>
 inoremap [; [<CR>];<ESC>O<TAB>
 inoremap [, [<CR>],<ESC>O<TAB>
+
+" external program launching
+nmap <Leader>op :AsyncRun! zathura %:r.pdf<CR>
 
     " Mappings for Custom Functions
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -363,41 +326,35 @@ set smarttab expandtab
 " turn filetype subsystem on
 filetype plugin indent on
 
-" disable annoying comment on newline
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
-autocmd! FileType sh setlocal
-    \ makeprg=sh\ %\
-
-autocmd! BufNewFile,BufRead *.md setlocal
-    \ spell
-autocmd! BufNewFile,BufRead *.tex setlocal
-    \ spell
-" autocmd! BufWritePost *.tex setlocal
-"     \ spell
 
 autocmd! FileType c      setlocal ts=4 sw=4 sts=4
+autocmd! FileType md     setlocal spell
+autocmd! FileType sh     setlocal makeprg=sh\ %\
+autocmd! FileType tex    setlocal spell makeprg=pdflatex\ %\
 autocmd! FileType txt    setlocal tw=0 spell noexpandtab wrap linebreak
 autocmd! FileType css    setlocal ts=4 sw=4 sts=4
 autocmd! FileType html   setlocal ts=2 sw=2 sts=2
 autocmd! FileType ruby   setlocal ts=2 sw=2 sts=2
 autocmd! FileType python setlocal ts=4 sw=4 sts=4
 
-" filetype maps
+" filetype event map
 autocmd! BufNewFile,BufRead *fstab           setlocal filetype=fstab tw=0
 autocmd! BufNewFile,BufRead *Pkgfile         setlocal filetype=sh noet
 autocmd! BufNewFile,BufRead *.gitconfig      setlocal filetype=gitconfig noet
 autocmd! BufNewFile,BufRead *.zsh,*.zprofile setlocal filetype=sh
+autocmd! BufWritePost *.tex silent! make % | redraw!
 
 set history=1000
 
 set backup
 set directory=~/.vim/swap
+if !isdirectory(expand(&directory))
+    call mkdir(expand(&directory), "p")
+endif
 set backupdir=~/.vim/backup
 if !isdirectory(expand(&backupdir))
     call mkdir(expand(&backupdir), "p")
-endif
-if !isdirectory(expand(&directory))
-    call mkdir(expand(&directory), "p")
 endif
 
 if has('persistent_undo')

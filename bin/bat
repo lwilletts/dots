@@ -11,7 +11,9 @@ STATUS="$(cat "$BAT/status")"
 PERCENT="$(printf '%.2f\n' "$(echo "$CHR/$MAX*100" | bc -l)")"
 
 test "$STATUS" = "Charging" && {
-    printf '%s\n' "$PERCENT% [CHARGING]"
+    printf '%s\n' "$PERCENT% ⮒"
 } || {
-    printf '%s\n' "$PERCENT%"
+    test "$(echo "$PERCENT >= 80" | bc)" -eq 1 && printf '%s\n' "$PERCENT% ⮎"
+    test "$(echo "$PERCENT >= 60" | bc)" -eq 1 && printf '%s\n' "$PERCENT% ⮏"
+    test "$(echo "$PERCENT >= 40" | bc)" -eq 1 && printf '%s\n' "$PERCENT% ⮐"
 }
