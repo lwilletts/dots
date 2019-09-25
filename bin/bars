@@ -67,11 +67,11 @@ musbar() {
     while :; do
         mpvc -q
         test $? = 2 && {
-            mus="quiet time"
+            mus=""
         } || {
             mus="$(mpvc -f '%artist% / %title% / %remaining% / %volume%%')"
             test "$mus" = "No files added to /tmp/mpvsocket." &&
-                mus="quiet time"
+                mus=""
             sleep 0.2
         }
 
@@ -80,10 +80,10 @@ musbar() {
         vol="$(printf '%s\n' "$(pulsemixer --get-volume | cut -d\  -f 1)%")"
 
         buf=""
+        buf="${buf} %{l}"
+        buf="${buf} %{A:${pulse}:} ${vol} ♪  %{A}"
         buf="${buf} %{c}"
         buf="${buf} %{A:${cava}:} ${mus} %{A}"
-        buf="${buf} %{r}"
-        buf="${buf} %{A:${pulse}:} ${vol} ♪  %{A}"
 
         printf '%s\n' "$buf"
         sleep 0.05
@@ -133,7 +133,7 @@ main() {
             bary=$prevbary
             ;;
         inferno)
-            barw=180
+            barw=70
             batbar
             ;;
     esac

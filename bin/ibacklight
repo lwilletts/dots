@@ -1,0 +1,36 @@
+#!/bin/sh
+#
+# ibacklight
+
+usage() {
+    base=$(basename $0)
+
+    cat >&2 << EOF
+Usage:
+    $base [0-100]
+EOF
+
+    test $# -eq 0 || exit $1
+}
+
+main() {
+    case "$1" in
+        [0-9]|[0-9][0-9]|100) continue ;;
+        -h|--help|help)       usage 0 ;;
+        *)                    usage 1 ;;
+    esac
+
+    backlight="/sys/class/backlight/intel_backlight"
+    maxBright="$backlight/max_brightness"
+    maxBrightVal="$(cat $maxBright)"
+
+    nowBright="$backlight/brightness"
+    nowBrightVal="$(cat $nowBright)"
+
+    test "$maxBrightVal" -eq "$1" || {
+        percent=$(echo "scale=3; $1 / 100" | bc -l)
+        echo "$(cat $maxBright) * $percent/1" | bc > "$nowBright"
+    }
+}
+
+main "$@"
