@@ -1,4 +1,6 @@
 #!/bin/sh
+#
+# backbar
 
 barx=$1
 bary=$2

@@ -1,0 +1,5 @@
+#!/bin/sh
+#
+# autoirc
+
+@reboot sleep 60 && tmux new-session -s auto dtach -A /tmp/irc weechat

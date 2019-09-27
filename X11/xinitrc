@@ -1,24 +1,32 @@
 #!/bin/sh
 
-xset s off # no screensaver
+# x11 environment
 xset +dpms # powersaving
+xset s off # no screensaver
+xset r rate 250 40 # better responsiveness
 xset +fp ~/.local/share/fonts # custom fonts directory
-
-xsetroot -name background
 xsetroot -cursor_name left_ptr # left pointer as cursor
+xsetroot -name background
 
-case "$(hostname)" in
-    "fyriousa")
-        xrandr --output HDMI-A-2 --auto --rotate right --right-of DisplayPort-1
-        xrandr --output DisplayPort-2 --auto --rotate right --right-of HDMI-A-2
-        xrandr --output DisplayPort-1 --pos 0x190
-        ;;
-esac
+# wall
+screens
+hsetroot -solid "#DBDFE4"
 
-infobar &
+# fwm
+cwm &
+bars &
+sxhkd &
+compton &
+watcher &
+audiosinks
 unclutter &
 urxvtd -q -o -f &
 test -f ~/.Xresources && xrdb -load ~/.Xresources
 
-hsetroot -tile $HOME/media/images/patterns/vertical_cloth.png
-exec i3
+PRI="$(lsm -p)"
+wmp "$(($(mattr x "$PRI") + $(mattr w "$PRI") / 2))" \
+    "$(($(mattr y "$PRI") + $(mattr h "$PRI") / 2))"
+
+while :; do
+    sleep 99d
+done

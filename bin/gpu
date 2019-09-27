@@ -1,0 +1,20 @@
+#!/bin/sh
+#
+# gpu
+
+# find correct card
+for i in $(seq 0 4); do
+    test -e "/sys/class/drm/card$i/device/pp_dpm_sclk" && number=$i
+done
+
+sclk="/sys/class/drm/card$number/device/pp_dpm_sclk"
+
+sensorOut="$(sensors)"
+VOLT=$(printf '%s\n' "$sensorOut" | awk '/vddgfx/ {print $2,$3}' | cut -c 2-)
+EDGE=$(printf '%s\n' "$sensorOut" | awk '/edge/ && $3 == "(crit" {print $2}' | cut -c 2-)
+JUNC=$(printf '%s\n' "$sensorOut" | awk '/junction/ && $3 == "(crit" {print $2}' | cut -c 2-)
+POWR=$(printf '%s\n' "$sensorOut" | awk '/power1/ {print $2,$3}')
+FANS=$(printf '%s\n' "$sensorOut" | awk '/fan1/ {print $2,$3}')
+CLOCK=$(cat "$sclk" | grep '*' | cut -d\  -f 2)
+
+printf '%s\n' "Radeon VII: $VOLT / $CLOCK / $JUNC / $POWR / $FANS"

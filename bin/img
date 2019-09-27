@@ -1,4 +1,6 @@
 #!/bin/sh
+#
+# img
 
 validateDeps() {
     hash mpv 2> /dev/null || {
@@ -52,6 +54,7 @@ main() {
 
     mpvcmd="mpv --really-quiet --loop-file"
 
+    # single fire if only one image is found
     test $# -gt 1 && {
         for file in "$@"; do
             case "$file" in

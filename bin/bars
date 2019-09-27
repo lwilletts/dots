@@ -1,0 +1,147 @@
+#!/bin/sh
+#
+# bars
+
+datebar() {
+    while :; do
+        clock=$(date '+%a %d %b %H:%M')
+        calender="urxvtc -e sh -c '3cal'"
+
+        buf=""
+        buf="${buf} %{c}"
+        buf="${buf} %{A:${calender}:} ${clock} %{A}"
+
+        printf '%s\n' "$buf"
+        sleep 2
+    done | lemonbar -d -g ${barw}x${barh}+${barx}+${bary} -B ${bar_bg} \
+                    -F ${bar_fg} -R ${bar_border} -r $BW -f ${bar_font} \
+                    -n "date" | /bin/sh &
+}
+
+sysbar() {
+    while :; do
+        htop="urxvtc -e sh -c 'htop'"
+        mem="$(free -m | awk '/Mem:/ {print $3}')m/$(free -m | awk '/Mem:/ {print $2}')m"
+
+        buf=""
+        buf="${buf} %{c}"
+        buf="${buf} %{A:${htop}:} 8700k: $(cpu t) / ${mem} %{A}"
+
+        printf '%s\n' "$buf"
+        sleep 2
+    done | lemonbar -d -g ${barw}x${barh}+${barx}+${bary} -B ${bar_bg} \
+                    -F ${bar_fg} -R ${bar_border} -r $BW -f ${bar_font} \
+                    -n "sys" | /bin/sh &
+}
+
+batbar() {
+    while :; do
+        buf=""
+        buf="${buf} %{c}"
+        buf="${buf} $(bat) "
+
+        printf '%s\n' "$buf"
+        sleep 2
+    done | lemonbar -d -g ${barw}x${barh}+${barx}+${bary} -B ${bar_bg} \
+                    -F ${bar_fg} -R ${bar_border} -r $BW -f ${bar_font} \
+                    -n "bat" | /bin/sh &
+}
+
+
+gpubar() {
+    while :; do
+        gotop="urxvtc -e sh -c 'gotop'"
+
+        buf=""
+        buf="${buf} %{c}"
+        buf="${buf} %{A:${gotop}:} $(gpu) %{A}"
+
+        printf '%s\n' "$buf"
+        sleep 2
+    done | lemonbar -d -g ${barw}x${barh}+${barx}+${bary} -B ${bar_bg} \
+                    -F ${bar_fg} -R ${bar_border} -r $BW -f ${bar_font} \
+                    -n "gpu" | /bin/sh &
+}
+
+musbar() {
+    while :; do
+        mpvc -q
+        test $? = 2 && {
+            mus=""
+        } || {
+            mus="$(mpvc -f '%artist% / %title% / %remaining% / %volume%%')"
+            test "$mus" = "No files added to /tmp/mpvsocket." &&
+                mus=""
+            sleep 0.2
+        }
+
+        cava="urxvtc -e sh -c 'cava'"
+        pulse="urxvtc -e sh -c 'pulsemixer'"
+        vol="$(printf '%s\n' "$(pulsemixer --get-volume | cut -d\  -f 1)%")"
+
+        buf=""
+        buf="${buf} %{l}"
+        buf="${buf} %{A:${pulse}:} ${vol} ♪  %{A}"
+        buf="${buf} %{c}"
+        buf="${buf} %{A:${cava}:} ${mus} %{A}"
+
+        printf '%s\n' "$buf"
+        sleep 0.05
+    done | lemonbar -d -g ${barw}x${barh}+${barx}+${bary} -B ${bar_bg} \
+                    -F ${bar_fg} -R ${bar_border} -r $BW -f ${bar_font} \
+                    -n "music" | /bin/sh &
+}
+
+main() {
+    . fwmrc
+    wmenv
+    wmgaps
+    wmcolours
+
+    # bar variables
+    BW=1
+    bar_bg="#$INACTIVE"
+    bar_fg="#$ACTIVE"
+    bar_border="#808080"
+    bar_font=$(awk '/lemon/ {print $3}' < ~/.Xresources | \
+               head -n 1 | cut -d',' -f 1)
+
+    # bar geometry
+    PX="$(mattr x $PRI)"
+    PW="$(mattr w $PRI)"
+    PH="$(mattr h $PRI)"
+    SH="$(mattr h $SEC)"
+
+    barx=$((PX + LGAP))
+    bary=$((PH - BGAP + BGAP/2 - BGAP/5))
+    barw=120
+    barh=$((18 + BW*2))
+
+    datebar
+
+    barx=$((barx + barw + LGAP))
+
+    case "$(hostname)" in
+        fyriousa)
+            prevbarx=$barx
+            prevbary=$bary
+            barx=$((PX + PW + LGAP))
+            bary=$((SH - BGAP + BGAP/2 - BGAP/5))
+            barw=320
+            gpubar
+            barx=$((prevbarx - barw - LGAP))
+            bary=$prevbary
+            ;;
+        inferno)
+            barw=70
+            batbar
+            ;;
+    esac
+
+    barx=$((barx + barw + LGAP))
+    barw=600
+
+    musbar
+}
+
+main "$@"

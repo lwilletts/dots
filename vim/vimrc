@@ -25,6 +25,9 @@ call plug#begin('$HOME/.vim/plugged')
 Plug 'tpope/vim-repeat'
 Plug 'wellle/targets.vim'
 Plug 'tpope/vim-commentary'
+Plug 'rbgrouleff/bclose.vim'
+Plug 'pgdouyon/vim-evanesco'
+Plug 'lwilletts/autoswap.vim'
 
 Plug 'tpope/vim-surround'
     nmap sl yss
@@ -33,51 +36,30 @@ Plug 'tpope/vim-surround'
     nmap sap ysap
     nmap sip ysip
 
+    " file opening
+Plug 'dylanaraps/fff.vim'
+    let g:fff#split = "8new"
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
     nmap <Leader>f :FZF -m <CR>
     nmap <Leader>F :FZF -m ~/<CR>
-    nmap <Leader>b :FZF -m ~/builds/<CR>
-    nmap <Leader>l :Buffers<CR>
+    nmap <Leader>b :Buffers<CR>
 
-Plug 'junegunn/vim-pseudocl'
-Plug 'junegunn/vim-oblique'
-    let g:oblique#clear_highlight = 1
-    let g:oblique#incsearch_highlight_all = 1
-    let g:oblique#prefix = ""
-
-Plug 'junegunn/vim-easy-align'
-    nmap ga <Plug>(EasyAlign)
-    xmap ga <Plug>(EasyAlign)
-    let g:easy_align_delimiters = {
-    \ '>': { 'pattern': '>>\|=>\|>' },
-    \ '/': {
-    \     'pattern':         '//\+\|/\*\|\*/',
-    \     'delimiter_align': 'l',
-    \     'ignore_groups':   ['!Comment'] },
-    \ ']': {
-    \     'pattern':       '[[\]]',
-    \     'left_margin':   0,
-    \     'right_margin':  0,
-    \     'stick_to_left': 0
-    \   },
-    \ ')': {
-    \     'pattern':       '[()]',
-    \     'left_margin':   0,
-    \     'right_margin':  0,
-    \     'stick_to_left': 0
-    \   },
-    \ 'd': {
-    \     'pattern':      ' \(\S\+\s*[;=]\)\@=',
-    \     'left_margin':  0,
-    \     'right_margin': 0
-    \   },
-    \ ';': {
-    \     'pattern':      ';',
-    \     'left_margin':  1,
-    \     'right_margin': 0
-    \   }
-    \ }
+    let g:fzf_layout = { 'down': '~40%' }
+    let g:fzf_colors =
+    \ { 'fg':      ['fg', 'Normal'],
+      \ 'bg':      ['bg', 'Normal'],
+      \ 'hl':      ['fg', 'Comment'],
+      \ 'fg+':     ['fg', 'Normal', 'CursorColumn', 'Normal'],
+      \ 'bg+':     ['bg', 'ErrorMsg', 'CursorColumn'],
+      \ 'hl+':     ['fg', 'Statement'],
+      \ 'info':    ['fg', 'PreProc'],
+      \ 'border':  ['fg', 'Ignore'],
+      \ 'prompt':  ['fg', 'Conditional'],
+      \ 'pointer': ['fg', 'ErrorMsg'],
+      \ 'marker':  ['fg', 'Keyword'],
+      \ 'spinner': ['fg', 'Label'],
+      \ 'header':  ['fg', 'Comment'] }
 
     " build checkers
 Plug 'benekastah/neomake'
@@ -92,10 +74,19 @@ Plug 'benekastah/neomake'
         \ 'texthl': 'TermCursorNC',
     \ }
 
-    " auto-complete
+    " async
+Plug 'skywind3000/asyncrun.vim'
+
+    " snips
+Plug 'SirVer/ultisnips'
+    let g:UltiSnipsUsePythonVersion = 3
+    let g:UltiSnipsSnippetsDirectories = ['~/.config/nvim/Ultisnips', 'Ultisnips']
+    let g:UltisnipsEditSplit = 'vertical'
+
+    "  intelligent tab
 Plug 'ervandew/supertab'
-    let g:SuperTabDefaultCompletionType = "<c-p>"
-    let g:SuperTabContextDefaultCompletionType = "<c-n>"
+    let g:SuperTabDefaultCompletionType = "<c-n>"
+    let g:SuperTabContextDefaultCompletionType = "<c-p>"
 
 if has('nvim')
     if has('python3')
@@ -113,14 +104,6 @@ if has('nvim')
         \ deoplete#mappings#smart_close_popup()."\<C-h>"
     endif
 endif
-
-    " miscellaneous
-
-Plug 'rbgrouleff/bclose.vim'
-Plug 'Wildefyr/vim-fat-finger'
-Plug 'beloglazov/vim-online-thesaurus'
-    let g:online_thesaurus_map_keys = 0
-    nnoremap zT :OnlineThesaurusCurrentWord<CR>
 
     " custom syntax
 Plug 'baskerville/vim-sxhkdrc'
@@ -145,6 +128,9 @@ augroup VimReload
     autocmd BufWritePost $MYVIMRC source $MYVIMRC
 augroup END
 
+" reload file automatically
+set autoread
+
 " saving and closing
 nmap <Leader>w :w!<CR>
 nmap <Leader>W :wa!<CR>
@@ -158,6 +144,9 @@ nnoremap <C-j> }
 nnoremap <C-k> {
 nmap <Leader><Space> %
 vmap <Leader><Space> %
+
+" replace word under cursor
+nnoremap <Leader>* :%s/\<<c-r><c-w>\>//g<left><left>
 
 " manipulating text in normal mode
 map <C-h> i<C-h><ESC>
@@ -173,8 +162,6 @@ nmap <Leader>gc vipgc
 xnoremap p pgvy
 
 " swapping like for like keys
-nnoremap 0 ^
-nnoremap ^ 0
 nnoremap ` '
 nnoremap ' `
 nnoremap # *
@@ -222,15 +209,16 @@ nmap zn ]s
 nmap zp [s
 
 " auto expansion
-inoremap (<C-j> (<CR>)<ESC>O<TAB>
-inoremap {<C-j> {<CR>}<ESC>O<TAB>
-inoremap [<C-j> [<CR>]<ESC>O<TAB>
+inoremap (j (<CR>)<ESC>O<TAB>
+inoremap {j {<CR>}<ESC>O<TAB>
+inoremap [j [<CR>]<ESC>O<TAB>
 inoremap {; {<CR>};<ESC>O<TAB>
 inoremap {, {<CR>},<ESC>O<TAB>
 inoremap [; [<CR>];<ESC>O<TAB>
 inoremap [, [<CR>],<ESC>O<TAB>
 
-" nmap <Leader>h :.!cat ~/.histfile | tail -1 | cut -d';' -f 2-
+" external program launching
+nmap <Leader>op :AsyncRun! zathura %:r.pdf<CR>
 
     " Mappings for Custom Functions
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -300,8 +288,8 @@ let shell="/bin/zsh"
 " change $PWD to current file location
 set autochdir
 
-" disable annoying mouse
-set mouse-=a
+" enable annoying mouse
+set mouse+=a
 
 " autosave file on focus loss
 set autowrite
@@ -331,41 +319,39 @@ set wildignore+=*.gif,*.png,*.jp*
 set completeopt=menu,preview
 
 " defaults
-set tw=80
+set tw=79
 set ts=4 sw=4 sts=4
 set smarttab expandtab
 
 " turn filetype subsystem on
 filetype plugin indent on
 
-" disable annoying comment on newline
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
-" time for the cool shit
-autocmd! FileType sh setlocal
-    \ makeprg=sh\ %\
-
-autocmd! BufNewFile,BufRead *.md setlocal
-    \ spell
-" autocmd! BufWritePost *.md silent!
-"     \ $BROWSER /tmp/%:r.html &
-
-autocmd! FileType c      setlocal ts=8 sw=8 sts=8 noexpandtab
+autocmd! FileType c      setlocal ts=4 sw=4 sts=4
+autocmd! FileType md     setlocal spell
+autocmd! FileType sh     setlocal makeprg=sh\ %\
+autocmd! FileType tex    setlocal spell makeprg=pdflatex\ %\
 autocmd! FileType txt    setlocal tw=0 spell noexpandtab wrap linebreak
 autocmd! FileType css    setlocal ts=4 sw=4 sts=4
 autocmd! FileType html   setlocal ts=2 sw=2 sts=2
 autocmd! FileType ruby   setlocal ts=2 sw=2 sts=2
 autocmd! FileType python setlocal ts=4 sw=4 sts=4
 
-" filetype maps
+" filetype event map
 autocmd! BufNewFile,BufRead *fstab           setlocal filetype=fstab tw=0
 autocmd! BufNewFile,BufRead *Pkgfile         setlocal filetype=sh noet
 autocmd! BufNewFile,BufRead *.gitconfig      setlocal filetype=gitconfig noet
 autocmd! BufNewFile,BufRead *.zsh,*.zprofile setlocal filetype=sh
+autocmd! BufWritePost *.tex silent! make % | redraw!
 
 set history=1000
 
 set backup
+set directory=~/.vim/swap
+if !isdirectory(expand(&directory))
+    call mkdir(expand(&directory), "p")
+endif
 set backupdir=~/.vim/backup
 if !isdirectory(expand(&backupdir))
     call mkdir(expand(&backupdir), "p")
@@ -381,8 +367,6 @@ if has('persistent_undo')
         call mkdir(expand(&undodir), "p")
     endif
 endif
-
-set noswapfile
 
 " always jump to the last known cursor position
 autocmd BufReadPost *
@@ -401,22 +385,10 @@ if has('nvim')
     nmap <Leader>ds :vsplit<CR>:term<CR>
 
     tnoremap <C-e> <C-\><C-n>
-    tnoremap <m-j> <c-\><c-n><c-w>j
-    tnoremap <m-k> <c-\><c-n><c-w>k
-    tnoremap <m-h> <c-\><c-n><c-w>h
-    tnoremap <m-l> <c-\><c-n><c-w>l
-    nnoremap <m-j> <c-\><c-n><c-w>j
-    nnoremap <m-k> <c-\><c-n><c-w>k
-    nnoremap <m-h> <c-\><c-n><c-w>h
-    nnoremap <m-l> <c-\><c-n><c-w>l
-    vnoremap <m-j> <c-\><c-n><c-w>j
-    vnoremap <m-k> <c-\><c-n><c-w>k
-    vnoremap <m-h> <c-\><c-n><c-w>h
-    vnoremap <m-l> <c-\><c-n><c-w>l
-    inoremap <m-j> <c-\><c-n><c-w>j
-    inoremap <m-k> <c-\><c-n><c-w>k
-    inoremap <m-h> <c-\><c-n><c-w>h
-    inoremap <m-l> <c-\><c-n><c-w>l
+    nnoremap <Leader>j <c-\><c-n><c-w>j
+    nnoremap <Leader>k <c-\><c-n><c-w>k
+    nnoremap <Leader>h <c-\><c-n><c-w>h
+    nnoremap <Leader>l <c-\><c-n><c-w>l
 
     " jump to insert mode automatically
     autocmd BufEnter *
@@ -425,14 +397,14 @@ if has('nvim')
     \ endif
 
     " close terminal buffer immediately
-    " autocmd TermClose * silent! bd!
+    autocmd TermClose * silent! bd!
 
     function! QuickTerminal()
         20new
         terminal
     endfunction
 
-    nnoremap <silent> <Leader>tt :call QuickTerminal()<CR>
+    nnoremap <silent> <Leader>t :call QuickTerminal()<CR>
 endif
 "}}}
 
@@ -518,4 +490,4 @@ function! <SID>SynStack()
     endif
     echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunction
-"}}}
+    "}}}

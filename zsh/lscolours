@@ -1,13 +1,13 @@
 # core {{{1
 
 BLK                   38;5;68
-CAPABILITY            38;5;1
+CAPABILITY            38;5;7
 CHR                   38;5;2
-DIR                   38;5;6
-DOOR                  38;5;127
+DIR                   38;5;7
+DOOR                  38;5;126
 EXEC                  38;5;5
 FIFO                  38;5;126
-FILE                  38;5;255
+FILE                  38;5;7
 LINK                  target
 MULTIHARDLINK         38;5;88
 #NORMAL                38;5;254
@@ -15,59 +15,58 @@ ORPHAN                48;5;196;38;5;232;1
 OTHER_WRITABLE        38;5;220;1
 SETGID                48;5;3;38;5;0
 SETUID                38;5;220;1;3;100;1
-SOCK                  38;5;197
+SOCK                  38;5;160
 STICKY                38;5;86;48;5;234
 STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 
-*LS_COLORS 48;5;89;38;5;197;1;3;4;7
 # }}}
 # documents {{{1
 
-*README               38;5;220;1
-*LICENSE              38;5;220;1
-*COPYING              38;5;220;1
-*INSTALL              38;5;220;1
-*COPYRIGHT            38;5;220;1
-*AUTHORS              38;5;220;1
-*HISTORY              38;5;220;1
-.log                  38;5;190
+*README               38;5;3
+*LICENSE              38;5;3
+*COPYING              38;5;3
+*INSTALL              38;5;3
+*COPYRIGHT            38;5;3
+*AUTHORS              38;5;3
+*HISTORY              38;5;3
+.log                  38;5;135
 
 # plain-text {{{2
 
-.txt                  38;5;253
+.txt                  38;5;7
 
 # markup {{{2
 
-.etx                  38;5;184
-.info                 38;5;184
-.markdown             38;5;184
-.md                   38;5;184
-.mkd                  38;5;184
-.nfo                  38;5;184
-.pod                  38;5;184
-.tex                  38;5;184
-.textile              38;5;184
+.etx                  38;5;3
+.info                 38;5;3
+.markdown             38;5;3
+.md                   38;5;3
+.mkd                  38;5;3
+.nfo                  38;5;3
+.pod                  38;5;3
+.tex                  38;5;3
+.textile              38;5;3
 # key-value, non-relational data {{{2
 
-.json                 38;5;178
-.msg                  38;5;178
-.pgn                  38;5;178
-.rss                  38;5;178
-.xml                  38;5;178
-.yml                  38;5;178
+.json                 38;5;3
+.msg                  38;5;3
+.pgn                  38;5;3
+.rss                  38;5;3
+.xml                  38;5;3
+.yml                  38;5;3
 # }}}
 
 # binary {{{2
 
-.cbr                  38;5;141
-.cbz                  38;5;141
-.chm                  38;5;141
-.djvu                 38;5;141
-.pdf                  38;5;141
-.PDF                  38;5;141
+.cbr                  38;5;25
+.cbz                  38;5;25
+.chm                  38;5;25
+.djvu                 38;5;25
+.pdf                  38;5;25
+.PDF                  38;5;25
 
 # words {{{3
-.docm                 38;5;111;4
+.docm                 38;5;111
 .doc                  38;5;111
 .docx                 38;5;111
 .eps                  38;5;111
@@ -75,22 +74,19 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .odt                  38;5;111
 
 # presentation {{{3
-.odp                  38;5;166
-.pps                  38;5;166
-.ppt                  38;5;166
+.odp                  38;5;12
+.pps                  38;5;12
+.ppt                  38;5;12
 
 # spreadsheet {{{3
-.csv                  38;5;78
-#   Open document spreadsheet
-.ods                  38;5;112
-.xla                  38;5;76
+.csv                  38;5;73
+.ods                  38;5;73
+.xla                  38;5;73
 #   Excel spreadsheet
-.xls                  38;5;112
-.xlsx                 38;5;112
-#   Excel spreadsheet with macros
-.xlsxm                38;5;112;4
-#   Excel module
-.xltm                 38;5;73;4
+.xls                  38;5;73
+.xlsx                 38;5;73
+.xlsxm                38;5;73
+.xltm                 38;5;73
 .xltx                 38;5;73
 # }}}
 # }}}
@@ -152,20 +148,20 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 # mpiled {{{2
 #
 #   assembly language
-.asm                  38;5;81
+.asm                  38;5;12
 #   LISP
-.cl                   38;5;81
-.lisp                 38;5;81
+.cl                   38;5;12
+.lisp                 38;5;12
 #   lua
-.lua                  38;5;81
+.lua                  38;5;12
 #   C
-.c                    38;5;81
-.C                    38;5;81
+.c                    38;5;12
+.C                    38;5;12
 .h                    38;5;110
 .H                    38;5;110
 .tcc                  38;5;110
 #   C++
-.c++                  38;5;81
+.c++                  38;5;12
 .h++                  38;5;110
 .hpp                  38;5;110
 .hxx                  38;5;110
@@ -174,24 +170,24 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .M                    38;5;110
 .m                    38;5;110
 #   Csharp
-.cc                   38;5;81
-.cs                   38;5;81
-.cp                   38;5;81
-.cpp                  38;5;81
-.cxx                  38;5;81
+.cc                   38;5;12
+.cs                   38;5;12
+.cp                   38;5;12
+.cpp                  38;5;12
+.cxx                  38;5;12
 #   fortran
-.f                    38;5;81
-.for                  38;5;81
-.ftn                  38;5;81
+.f                    38;5;12
+.for                  38;5;12
+.ftn                  38;5;12
 #   pascal
 .s                    38;5;110
 .S                    38;5;110
 #   ?
-.sx                   38;5;81
+.sx                   38;5;12
 #   interface file in GHC - https://github.com/trapd00r/LS_COLORS/pull/9
 .hi                   38;5;110
 #   haskell
-.hs                   38;5;81
+.hs                   38;5;12
 
 
 # binaries {{{2
@@ -201,16 +197,16 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 # }}}
 
 # html {{{2
-.css                  38;5;125;1
-.less                 38;5;125;1
-.sass                 38;5;125;1
-.scss                 38;5;125;1
-.htm                  38;5;125;1
-.html                 38;5;125;1
-.jhtm                 38;5;125;1
-.mht                  38;5;125;1
-.eml                  38;5;125;1
-.mustache             38;5;125;1
+.css                  38;5;65
+.less                 38;5;65
+.sass                 38;5;65
+.scss                 38;5;65
+.htm                  38;5;65
+.html                 38;5;65
+.jhtm                 38;5;65
+.mht                  38;5;65
+.eml                  38;5;65
+.mustache             38;5;65
 # }}}
 # java {{{2
 .coffee               38;5;074;1
@@ -221,19 +217,19 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .jsp                  38;5;074;1
 # }}}
 # php {{{2
-.php                  38;5;81
+.php                  38;5;12
 #   CakePHP view scripts and helpers
-.ctp                  38;5;81
+.ctp                  38;5;12
 #   Twig template engine
-.twig                 38;5;81
+.twig                 38;5;12
 # }}}
 # vb/a {{{2
-.vb                   38;5;81
-.vba                  38;5;81
-.vbs                  38;5;81
+.vb                   38;5;12
+.vba                  38;5;12
+.vbs                  38;5;12
 # 2}}}
 # Build stuff {{{2
-*Makefile             38;5;155
+*Makefile             38;5;28
 *MANIFEST             38;5;243
 *pm_to_blib           38;5;240
 # automake
@@ -249,79 +245,81 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 #}}}
 
 # graphics {{{1
-.bmp                  38;5;97
-.tiff                 38;5;97
-.TIFF                 38;5;97
-.cdr                  38;5;97
-.gif                  38;5;97
-.go                   38;5;97
-.ico                  38;5;97
-.jpeg                 38;5;97
-.JPG                  38;5;97
-.jpg                  38;5;97
-.nth                  38;5;97
-.png                  38;5;97
-.svg                  38;5;97
-.xpm                  38;5;97
+.bmp                  38;5;4
+.tiff                 38;5;4
+.TIFF                 38;5;4
+.cdr                  38;5;4
+.gif                  38;5;4
+.go                   38;5;4
+.ico                  38;5;4
+.jpeg                 38;5;4
+.JPG                  38;5;4
+.jpg                  38;5;4
+.nth                  38;5;4
+.png                  38;5;4
+.svg                  38;5;4
+.xpm                  38;5;4
 # }}}
 # video {{{1
-.avi                  38;5;114
-.divx                 38;5;114
-.IFO                  38;5;114
-.m2v                  38;5;114
-.m4v                  38;5;114
-.mkv                  38;5;114
-.MOV                  38;5;114
-.mov                  38;5;114
-.mp4                  38;5;114
-.mpeg                 38;5;114
-.mpg                  38;5;114
-.ogm                  38;5;114
-.rmvb                 38;5;114
-.sample               38;5;114
-.wmv                  38;5;114
-  
+.avi                  38;5;2
+.divx                 38;5;2
+.IFO                  38;5;2
+.m2v                  38;5;2
+.m4v                  38;5;2
+.mkv                  38;5;2
+.MOV                  38;5;2
+.mov                  38;5;2
+.mp4                  38;5;2
+.mpeg                 38;5;2
+.mpg                  38;5;2
+.ogm                  38;5;2
+.rmvb                 38;5;2
+.sample               38;5;2
+.wmv                  38;5;2
+.m2ts                 38;5;2
+
 # mobile/streaming {{{2
-.3g2                  38;5;115
-.3gp                  38;5;115
-.gp3                  38;5;115
-.webm                 38;5;115
-.gp4                  38;5;115
-.asf                  38;5;115
-.flv                  38;5;115
-.ts                   38;5;115
-.ogv                  38;5;115
-.f4v                  38;5;115
+.3g2                  38;5;2
+.3gp                  38;5;2
+.gp3                  38;5;2
+.webm                 38;5;2
+.gp4                  38;5;2
+.asf                  38;5;2
+.flv                  38;5;2
+.ts                   38;5;2
+.ogv                  38;5;2
+.f4v                  38;5;2
   # }}}
-  
+
 # lossless {{{2
-.VOB                  38;5;115;1
-.vob                  38;5;115;1
+.VOB                  38;5;2
+.vob                  38;5;2
 # }}}
 
 # audio {{{1
-.3ga                  38;5;137;1
-.S3M                  38;5;137;1
-.aac                  38;5;137;1
-.dat                  38;5;137;1
-.dts                  38;5;137;1
-.fcm                  38;5;137;1
-.m4a                  38;5;137;1
-.mid                  38;5;137;1
-.midi                 38;5;137;1
-.mod                  38;5;137;1
-.mp3                  38;5;137;1
-.oga                  38;5;137;1
-.ogg                  38;5;137;1
-.s3m                  38;5;137;1
-.sid                  38;5;137;1
+.3ga                  38;5;1
+.S3M                  38;5;1
+.aac                  38;5;1
+.dat                  38;5;1
+.dts                  38;5;1
+.fcm                  38;5;1
+.m4a                  38;5;1
+.mid                  38;5;1
+.midi                 38;5;1
+.mod                  38;5;1
+.mp3                  38;5;1
+.oga                  38;5;1
+.ogg                  38;5;1
+.s3m                  38;5;1
+.sid                  38;5;1
+.opus                  38;5;1
 # lossless
-.ape                  38;5;136;1
-.flac                 38;5;136;1
-.alac                 38;5;136;1
-.wav                  38;5;136;1
-.wv                   38;5;136;1
-.wvc                  38;5;136;1
+.ape                  38;5;1
+.flac                 38;5;1
+.alac                 38;5;1
+.wav                  38;5;1
+.wv                   38;5;1
+.wvc                  38;5;1
 
 # }}}
 # fonts {{{1
@@ -335,28 +333,28 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .pfa                  38;5;66
 # }}}
 # archives {{{1
-.7z                   38;5;40
-.a                    38;5;40
-.arj                  38;5;40
-.bz2                  38;5;40
-.gz                   38;5;40
-.rar                  38;5;40
-.tar                  38;5;40
-.tgz                  38;5;40
-.xz                   38;5;40
-.zip                  38;5;40
+.7z                   38;5;13
+.a                    38;5;13
+.arj                  38;5;13
+.bz2                  38;5;13
+.gz                   38;5;13
+.rar                  38;5;13
+.tar                  38;5;13
+.tgz                  38;5;13
+.xz                   38;5;13
+.zip                  38;5;13
   # packaged apps {{{2
-.apk                  38;5;215
-.deb                  38;5;215
-.jad                  38;5;215
-.jar                  38;5;215
-.cab                  38;5;215
-.pak                  38;5;215
-.pk3                  38;5;215
-.vdf                  38;5;215
-.vpk                  38;5;215
-.bsp                  38;5;215
-.dmg                  38;5;215
+.apk                  38;5;13
+.deb                  38;5;13
+.jad                  38;5;13
+.jar                  38;5;13
+.cab                  38;5;13
+.pak                  38;5;13
+.pk3                  38;5;13
+.vdf                  38;5;13
+.vpk                  38;5;13
+.bsp                  38;5;13
+.dmg                  38;5;13
   # }}}
   # segments {{{2
 .r00                  38;5;239

@@ -3,54 +3,122 @@
 # modify VEGA20 clocks
 # run as root
 
-# change to your path
-radeonPCI="/sys/class/drm/card1/device"
-
-odclk="$radeonPCI/pp_od_clk_voltage"
-power="$radeonPCI/hwmon/hwmon2/power1_cap"
-fanSpeed="$radeonPCI/hwmon/hwmon2/pwm1"
-fanCtrl="$radeonPCI/hwmon/hwmon2/pwm1_enable"
-
 usage() {
-    printf '%s\n' "wine or undervolt accepted parameters"
-    exit 1
+    base=$(basename $0)
+
+    cat >&2 << EOF
+Usage:
+    $base low               : Set lowest powerstate to default clocks.
+    $base high              : Set lowest powerstate to max clocks.
+    $base undervolt <value> : Manually set clockspeed in Mhz.
+    $base info              : Show current clocks.
+    $base fan               : Manually set fan speed to value [0 - 255] or auto.
+    $base temp              : Auto fan control.
+    $base help              : Show this help.
+EOF
+
+    test $# -eq 0 || exit $1
 }
 
-case "$1" in
-    "wine")
-        # set powerlimit to 300W
-        printf '%s\n' "300000000" > "$power"
-        # set to 1000mV at all points
-        printf '%s\n' "vc 0 1801 1120" > "$odclk"
-        printf '%s\n' "vc 1 1801 1120" > "$odclk"
-        printf '%s\n' "vc 2 1801 1120" > "$odclk"
-        # set memory clock to 1200mhz
-        printf '%s\n' "m 1 1200" > "$odclk"
-        printf '%s\n' "c" > "$odclk"
+intCheck() {
+    # check if empty
+    test -z "$1" && return 1
 
-        printf '%s\n' "wine tweaks applied"
-        ;;
-    "undervolt")
-        # set powerlimit to 300W
-        printf '%s\n' "300000000" > "$power"
-        # set to 1000mV at max load
-        printf '%s\n' "vc 2 1801 980" > "$odclk"
-        # set memory clock to 1200mhz
-        printf '%s\n' "m 1 1200" > "$odclk"
-        printf '%s\n' "c" > "$odclk"
+    test "$1" -ne 0 2> /dev/null
+    test $? -ne 2 || {
+         printf '%s\n' "'$1' is not an integer." >&2
+         return 1
+    }
+}
 
-        printf '%s\n' "undervolt applied"
-        ;;
-    "fan")
-        printf '%s\n' "1" > "$fanCtrl"
-        printf '%s\n' "200" > "$fanSpeed"
-        ;;
-    "auto")
-        printf '%s\n' "2" > "$fanCtrl"
-        ;;
-    *)
-        usage
-        ;;
-esac
+baseclock() {
+    case $1 in
+        0) Mhz=808  ;;
+        1) Mhz=1800 ;;
+    esac
+
+    printf '%s\n' "s 0 $Mhz" > "$odclk"
+    printf '%s\n' "s 1 1800" > "$odclk"
+    printf '%s\n' "c" > "$odclk"
+}
+
+undervolt() {
+    intCheck "$1"
+
+    printf '%s\n' "manual" > "$powerDRM"
+    printf '%s\n' "300000000" > "$power"
+    printf '%s\n' "s 0 808" > "$odclk"
+    printf '%s\n' "s 1 1800" > "$odclk"
+    printf '%s\n' "m 1 1200" > "$odclk"
+    printf '%s\n' "vc 2 1900 "$1"" > "$odclk"
+    printf '%s\n' "c" > "$odclk"
+}
+
+fanCtrl() {
+    systemctl stop radeon.service
+
+    case "$1" in
+        [0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-5][0-5])
+            printf '%s\n' "1" > "$fanCtrl"
+            printf '%s\n' "$1" > "$fanSpeed"
+            ;;
+        auto|*)
+            printf '%s\n' "2" > "$fanCtrl"
+            ;;
+    esac
+}
 
 
+fanCurve() {
+    printf '%s\n' "1" > "$fanCtrl"
+
+    while :; do
+        TEMP="$(($(cat "$radeonPCI/hwmon/hwmon2/temp2_input") / 1000))"
+
+        case $TEMP in
+            [0-3][0-9])  printf '%s\n' "0" > "$fanSpeed"   ;;
+            4[0-9])      printf '%s\n' "0" > "$fanSpeed"  ;;
+            5[0-9])      printf '%s\n' "100" > "$fanSpeed" ;;
+            6[0-9])      printf '%s\n' "120" > "$fanSpeed" ;;
+            7[0-9])      printf '%s\n' "140" > "$fanSpeed" ;;
+            8[0-9])      printf '%s\n' "160" > "$fanSpeed" ;;
+            9[0-9])      printf '%s\n' "180" > "$fanSpeed" ;;
+            1[0-9][0-9]) printf '%s\n' "200" > "$fanSpeed" ;;
+        esac
+
+        sleep 1
+    done
+}
+
+info() {
+    cat $radeonPCI/pp_dpm_sclk
+    printf '%s\n'
+    cat "$odclk"
+}
+
+main() {
+    # find correct card
+    for i in $(seq 0 4); do
+        radeonPCI="/sys/class/drm/card$i/device"
+        odclk="$radeonPCI/pp_od_clk_voltage"
+
+        test -e "$odclk" && break
+    done
+
+    power="$radeonPCI/hwmon/hwmon2/power1_cap"
+    fanSpeed="$radeonPCI/hwmon/hwmon2/pwm1"
+    fanCtrl="$radeonPCI/hwmon/hwmon2/pwm1_enable"
+    powerDRM="$radeonPCI/power_dpm_force_performance_level"
+
+    case "$1" in
+        low)       baseclock 0    ;;
+        high)      baseclock 1    ;;
+        undervolt) undervolt "$2" ;;
+        fan)       fanCtrl  "$2"  ;;
+        temp)      fanCurve       ;;
+        info)      info           ;;
+        *)         usage          ;;
+    esac
+}
+
+main "$@"

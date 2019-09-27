@@ -1,0 +1,51 @@
+#!/bin/sh
+#
+# snip
+
+generateInfo() {
+    trackOld="$trackNew"
+    printf '%s\n' "$trackOld" > "$HOME/.playingnow"
+
+    path="$(mpvc -f "%path%")"
+
+    # extract image directly out of audio file
+    ffmpeg -hide_banner -loglevel panic -y -i "$path" \
+           -vf scale=350:-1 "$snipdir/cover.png" && return 0
+
+    # fallback to image within folder
+    coverpath="$(printf '%s\n' "$path" | rev | cut -d/ -f 2- | rev)"
+    test -e "$coverpath/?over.*" && {
+        convert "$coverpath/?over.*" -resize 350x350 "$snipdir/cover.png"
+        return
+    }
+
+    test -e "$coverpath/folder.*" && {
+        convert "$coverpath/?over.*" -resize 350x350 "$snipdir/cover.png"
+        return
+    }
+
+    # delete image if there is no stream
+    test -e "$snapdir/cover.png" && rm "$snipdir/cover.png"
+}
+
+main() {
+    snipdir=${snipdir:-/tmp/snip}
+    test ! -d "$snipdir" && mkdir -p "$snipdir"
+
+    trackOld=""
+    trackNew="$(mpvc -f "%artist% - %title%                   ")"
+
+    while :; do
+        test "$trackNew" != "$trackOld" && generateInfo
+
+        trackNew="$(mpvc -f "%artist% - %title%                   ")"
+        test "$trackNew" = "No files added to /tmp/mpvsocket." && {
+            printf '%s\n' "" > "$HOME/.playingnow"
+            test -e "$snipdir/cover.png" && rm "$snipdir/cover.png"
+        }
+
+        sleep 1
+    done
+}
+
+main

@@ -1,7 +1,6 @@
 #!/bin/sh
 #
-# wildefyr - 2016 (c) CC
-# link load with extra tweaks for wmutils
+# load
 
 # conversion layer to get the paste's raw location
 rawp() {
@@ -13,18 +12,8 @@ rawp() {
 }
 
 openBrowser() {
-    firefox --new-tab "$URL"
-#     test ! -z $(wid chrome) && {
-#         chwb -s $BW -c "$INACTIVE" $PFW
-#         google-chrome $URL 2>&1 > /dev/null
-#         chwb -s $BW -c "$ACTIVE" $(wid chrome)
-#     } || {
-#         windows -s 2
-#         google-chrome $URL 2>&1 > /dev/null
-#     }
+    qutebrowser "$URL"
 }
-
-. fyrerc
 
 for arg in "$@"; do
     URL="$arg"
@@ -38,19 +27,22 @@ for arg in "$@"; do
     case "$URL" in
         *imgur.com/*)
             # fuck you imgur albums
-            URL=$(curl -s "$URL" | \
-                sed -nE 's/^.*<link rel="image_src"[[:space:]]+href="([^"]+)".*$/\1/p')
+            # URL=$(curl -s "$URL" | \
+            #     sed -nE 's/^.*<link rel="image_src"[[:space:]]+href="([^"]+)".*$/\1/p')
 
             mpv "$URL" --really-quiet --loop-file
             ;;
-        *.gifv|*.webm|*.jp*g|*.png|*.webm|*.gif)
-            openBrowser
-            # curl -sL "$URL" > ~/.tmp
-            # mpv "~/.tmp" --really-quiet --loop-file
+        *.jp*g|*.png)
+            mpv "$URL" --really-quiet --loop-file
             ;;
         *.mkv|*.mp4|*.ogv|*youtu.be/*|*youtube.com/watch*|\
         *.googlevideo.com/videoplayback*)
-            mpv "$URL" --really-quiet
+            mpvc add "$1"
+            mpvc move $(mpvc -f "%playlistlength% %position%")
+            mpvc next
+            ;;
+        *.gifv|*.webm|*.gif)
+            openBrowser
             ;;
         *twitch.tv/*)
             openBrowser
@@ -64,7 +56,6 @@ for arg in "$@"; do
             urxvt -e zsh -c "curl -s $URL | $EDITOR -"
             ;;
         mailto:*)
-            urxvt -e mutt -- "$URL"
             ;;
         gopher://*)
             urxvt -e cgo "$URL"

@@ -1,0 +1,2 @@
+-f bestvideo+bestaudio
+-o /mnt/pool/yt/%(title)s.%(ext)s

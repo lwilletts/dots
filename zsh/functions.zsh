@@ -1,6 +1,3 @@
-    # zsh/dots
-################################################################################
-
 chpwd() {
     clear
 
@@ -20,12 +17,15 @@ chpwd() {
     test -z "$(ls -1)" && {
         printf '%s\n\n' "${f5}Directory is empty!${R}"
     } || {
-        ls -F --color=auto
+        ls -F --color=auto --group-directories-first
         printf '\n'
     }
 
     # set window title to path name
-    print -Pn "\e]0;%~\a"
+    case $TERM in
+        rxvt*) preexec () { print -Pn "\e]0;$1\a" } ;;
+        *)     print -Pn "\e]0;%~\a"                ;;
+    esac
 
     unset -v f0 41 f2 f3 f4 f5 f6 f7 R
 }
@@ -41,8 +41,6 @@ zshrc() {
 
     unset -v RWD
 }
-    # user functions
-################################################################################
 
 findexec() {
     find . -maxdepth 1 -type f -executable | sort
@@ -52,20 +50,20 @@ editexec() {
     $EDITOR $(findexec) "$@"
 }
 
-:h() {
-    test ! -z "$1" && {
-        $VISUAL +"help $1" +only +'map q ZQ'
-    }
+usr() {
+    ps xgf "$@" | sed '1d; s/--type.*//' | \
+        cut -c1-$(stty size < /dev/tty | cut -d\  -f 2)
 }
 
-psusr() {
-    ps xgf "$@" | sed '1d; s/--type.*//' | width
+man() {
+    LESS_TERMCAP_md=$'\e[01;31m' \
+    LESS_TERMCAP_me=$'\e[0m' \
+    LESS_TERMCAP_se=$'\e[0m' \
+    LESS_TERMCAP_so=$'\e[01;44;33m' \
+    LESS_TERMCAP_ue=$'\e[0m' \
+    LESS_TERMCAP_us=$'\e[01;32m' \
+    command man "$@"
 }
 
-alias xsel="xsel -l /dev/null"
-
-out() {
-    PASTE="/tmp/paste"
-    test -f "$PASTE" && cat "$PASTE"
-    unset -v PASTE
-}
+# name / class / process of window id
+hash fwmrc 2> /dev/null && . fwmrc

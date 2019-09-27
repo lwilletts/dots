@@ -1,0 +1,55 @@
+#!/bin/sh
+#
+# fcut
+
+usage() {
+    base=$(basename $0)
+
+    cat >&2 << EOF
+Usage:
+    $base
+
+$base requires mpv open in a ipc socket, ab-loop points set and exist locally.
+EOF
+
+    test $# -eq 0 || exit $1
+}
+
+cutfile() {
+    input="$1"
+
+    path="$(printf '%s\n' "$input" | cut -d\| -f 1)"
+    pointA="$(printf '%s\n' "$input" | cut -d\| -f 2 | rev | cut -c 4- | rev)"
+    pointB="$(printf '%s\n' "$input" | cut -d\| -f 3 | rev | cut -c 4- | rev)"
+
+    case "$path" in
+        *youtu*|watch*) usage 1 ;;
+    esac
+
+    fileExt=$(printf '%s\n' "$path" | rev | cut -d\. -f 1 | rev)
+    fileName=$(printf '%s\n' "$path" | rev | cut -d\. -f 2- | rev)
+
+    test "$precise" = "true" && {
+        # encode
+        ffmpeg -hide_banner -loglevel panic -i "$path" -ss "$pointA" \
+               -to "$pointB" -c:v libx264 -preset medium -crf 12 \
+               "$fileName-$pointA-$pointB.$fileExt"
+    } || {
+        ffmpeg -hide_banner -loglevel panic -i "$path" -ss "$pointA" \
+               -to "$pointB" -c copy "$fileName-$pointA-$pointB.$fileExt"
+    }
+}
+
+main() {
+    mpvc > /dev/null
+    test $? -eq 3 && usage 1
+    test -z "$(mpvc -f "%ab-loop-b%")" && usage 1
+
+    case "$1" in
+        -p|--precise) precise=true ;;
+    esac
+
+    cutfile "$(mpvc -f "%path%|%ab-loop-a%|%ab-loop-b%")"
+}
+
+main "$@"

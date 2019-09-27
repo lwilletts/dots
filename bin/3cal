@@ -1,0 +1,19 @@
+#!/bin/sh
+#
+# 3cal
+
+main() {
+    cal -3
+
+    while :; do
+        oldstty=$(stty -g)
+        stty raw -echo; key="$(head -c 1)"; stty $oldstty
+        case $key in
+            *)
+                exit
+                ;;
+        esac
+    done
+}
+
+main "$@"

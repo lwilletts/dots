@@ -1,0 +1,90 @@
+#!/bin/sh
+#
+# screens
+
+filter() {
+    xrandr --output $1 --brightness $2
+}
+
+brightness() {
+    . fwmrc
+    wmgaps
+
+    case "$1" in
+        default)
+            xrandr --output HDMI-A-2 --auto --rotate right --pos 2560x0
+            xrandr --output DisplayPort-1 --pos 0x0
+            ;;
+        pri|primary)
+            case "$2" in
+                on)  filter $PRI 1 ;;
+                off) filter $PRI 0 ;;
+                toggle)
+                    bright="$(xrandr --verbose | \
+                              sed -n "/$SCREEN/,/Clones:/p/Clones:/q" | \
+                              awk '/Brightness/ {print $2}')"
+                    test "$bright" -gt 0 && {
+                        filter $SCREEN 0
+                    } || {
+                        filter $SCREEN 1
+                    }
+                    ;;
+                *)
+                    filter $PRI "$2"
+                    ;;
+            esac
+            ;;
+        sec|secondary)
+            printf '%s\n' "$SEC" | while read -r SCREEN; do
+                case "$2" in
+                    on)  filter $SCREEN 1 ;;
+                    off) filter $SCREEN 0 ;;
+                    toggle)
+                        bright="$(xrandr --verbose | \
+                                  sed -n "/$SCREEN/,/Clones:/p" | \
+                                  awk '/Brightness/ {print $2}')"
+                        test "$(echo $bright '>' 0 | bc -l)" -eq 1 && {
+                            filter $SCREEN 0
+                        } || {
+                            filter $SCREEN 1
+                        }
+                        ;;
+                    *)
+                        filter $SCREEN "$2"
+                        ;;
+                esac
+            done
+            ;;
+        all)
+            lsm | while read -r SCREEN; do
+                case "$2" in
+                    on)  filter $SCREEN 1 ;;
+                    off) filter $SCREEN 0 ;;
+                    toggle)
+                        bright="$(xrandr --verbose | \
+                                  sed -n "/$SCREEN/,/Clones:/p" | \
+                                  awk '/Brightness/ {print $2}')"
+                        test "$(echo $bright '>' 0 | bc -l)" -eq 1 && {
+                            filter $SCREEN 0
+                        } || {
+                            filter $SCREEN 1
+                        }
+                        ;;
+                    *)
+                        filter $SCREEN "$2"
+                        ;;
+                esac
+            done
+            ;;
+        *)
+            case "$(hostname)" in
+                "fyriousa")
+                    xrandr --output HDMI-A-2 --auto --rotate right --pos 2560x0 --brightness 1
+                    xrandr --output DisplayPort-1 --pos 0x480 --brightness 1
+                    ;;
+            esac
+            ;;
+esac
+}
+
+brightness "$@"

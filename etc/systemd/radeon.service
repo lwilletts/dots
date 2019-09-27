@@ -1,8 +1,10 @@
 [Unit]
-Description=Undervolt Radeon VII
+Description=radeon
 
 [Service]
-ExecStart=/home/fyr/.dots/bin/radeon undervolt
+Type=simple
+ExecStartPre=/home/fyr/.dots/bin/radeon undervolt 1050
+ExecStart=/home/fyr/.dots/bin/radeon temp
 
 [Install]
 WantedBy=multi-user.target

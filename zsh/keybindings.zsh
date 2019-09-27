@@ -75,15 +75,6 @@ killFzf() {
 zle -N killFzf
 bindboth "^y" killFzf
 
-goHome() {
-    clear
-    cd $HOME
-    zle redisplay
-}
-
-zle -N goHome
-bindboth "^o" goHome
-
 goBack() {
     clear
     cd -

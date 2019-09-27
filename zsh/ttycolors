@@ -3,20 +3,20 @@
 # set colours for framebuffer
 
 test "$TERM" = "linux" && {
-    echo -en "\e]P014161A"
-    echo -en "\e]P814161A"
-    echo -en "\e]P18C5760"
-    echo -en "\e]P98C5760"
-    echo -en "\e]P27B8C58"
-    echo -en "\e]PA7B8C58"
-    echo -en "\e]P3B28C55"
-    echo -en "\e]PBB28C55"
-    echo -en "\e]P458698C"
-    echo -en "\e]PC58698C"
-    echo -en "\e]P5B23450"
-    echo -en "\e]PDB23450"
-    echo -en "\e]P6737373"
-    echo -en "\e]PE737373"
-    echo -en "\e]P7D7D7D7"
-    echo -en "\e]PFD7D7D7"
+    echo -en "\e]P0EFEFEF"
+    echo -en "\e]P8EFEFEF"
+    echo -en "\e]P1B23450"
+    echo -en "\e]P9B23450"
+    echo -en "\e]P2657348"
+    echo -en "\e]PA657348"
+    echo -en "\e]P3997849"
+    echo -en "\e]PB997849"
+    echo -en "\e]P47086B3"
+    echo -en "\e]PC7086B3"
+    echo -en "\e]P59870B3
+    echo -en "\e]PD9870B3
+    echo -en "\e]P6808080"
+    echo -en "\e]PE808080"
+    echo -en "\e]P7333333"
+    echo -en "\e]PF333333"
 }
