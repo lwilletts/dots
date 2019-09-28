@@ -50,6 +50,9 @@ bindboth '^[[Z' reverse-menu-complete
 # Arrow Keys along with highlight
 zstyle ':completion:*' menu select
 
+# Ctrl-Backspace
+bindkey '^H' backward-kill-word
+
 # C-k ../
 cdParentKey() {
     pushd ..

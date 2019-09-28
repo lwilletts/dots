@@ -4,7 +4,7 @@
 
 datebar() {
     while :; do
-        clock=$(date '+%a %d %b %H:%M')
+        clock="$(dat)"
         calender="urxvtc -e sh -c '3cal'"
 
         buf=""

@@ -1,0 +1,20 @@
+#!/bin/sh
+#
+# dat
+
+usage() {
+    base=$(basename $0)
+
+    cat >&2 << EOF
+Usage:
+    $base
+EOF
+
+    test $# -eq 0 || exit $1
+}
+
+main() {
+    printf '%s\n' "$(date '+%a %d %b %H:%M')"
+}
+
+main "$@"

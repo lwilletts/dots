@@ -100,8 +100,6 @@ if has('nvim')
         let g:deoplete#enable_smart_case = 1
         let g:deoplete#enable_ignore_case = 0
         let g:deoplete#auto_complete_start_length = 1
-        inoremap <expr><C-h>
-        \ deoplete#mappings#smart_close_popup()."\<C-h>"
     endif
 endif
 
@@ -166,6 +164,9 @@ nnoremap ` '
 nnoremap ' `
 nnoremap # *
 nnoremap * #
+
+" ctrl-backspace
+" inoremap C-h BdWx
 
 " remove trailing whitespace
 nmap <Leader>z mz:%s/\s\+$<CR>'z:w<CR>:noh<CR>

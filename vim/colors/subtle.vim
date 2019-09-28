@@ -17,20 +17,20 @@ hi Title        ctermfg=1    ctermbg=NONE cterm=NONE
 hi Error        ctermfg=0    ctermbg=1    cterm=NONE
 hi Normal       ctermfg=7    ctermbg=NONE cterm=NONE
 hi NonText      ctermfg=7    ctermbg=NONE cterm=NONE
-hi LineNr       ctermfg=6    ctermbg=NONE cterm=NONE
+hi LineNr       ctermfg=7    ctermbg=NONE cterm=NONE
 hi Folded       ctermfg=7    ctermbg=0    cterm=NONE
-hi Visual       ctermfg=0    ctermbg=6    cterm=NONE
+hi Visual       ctermfg=7    ctermbg=6    cterm=NONE
 hi ErrorMsg     ctermfg=1    ctermbg=0    cterm=NONE
 hi Directory    ctermfg=3    ctermbg=0    cterm=NONE
 hi Underlined   ctermfg=7    ctermbg=NONE cterm=UNDERLINE
-hi WarningMsg   ctermfg=3    ctermbg=NONE cterm=NONE
+hi WarningMsg   ctermfg=1    ctermbg=NONE cterm=NONE
 hi FoldColumn   ctermfg=4    ctermbg=NONE cterm=NONE
 
 hi Cursor       ctermfg=7    ctermbg=NONE cterm=NONE
 hi CursorLine   ctermfg=NONE ctermbg=NONE cterm=NONE
 
-hi Search       ctermfg=0    ctermbg=4    cterm=NONE
-hi IncSearch    ctermfg=0    ctermbg=4    cterm=NONE
+hi Search       ctermfg=7    ctermbg=6    cterm=NONE
+hi IncSearch    ctermfg=7    ctermbg=6    cterm=NONE
 
 hi VertSplit    ctermfg=NONE ctermbg=0    cterm=NONE
 hi ColorColumn  ctermfg=0    ctermbg=6    cterm=NONE
@@ -60,11 +60,11 @@ hi Comment      ctermfg=6    ctermbg=NONE cterm=NONE
 hi PreProc      ctermfg=4    ctermbg=NONE cterm=NONE
 hi Boolean      ctermfg=3    ctermbg=NONE cterm=NONE
 hi Constant     ctermfg=2    ctermbg=NONE cterm=NONE
-hi Function     ctermfg=6    ctermbg=NONE cterm=NONE
+hi Function     ctermfg=7    ctermbg=NONE cterm=NONE
 hi Statement    ctermfg=3    ctermbg=NONE cterm=NONE
 " tabs whitespace
-hi SpecialKey   ctermfg=6    ctermbg=NONE cterm=NONE
-hi Identifier   ctermfg=6    ctermbg=NONE cterm=NONE
+hi SpecialKey   ctermfg=7    ctermbg=NONE cterm=NONE
+hi Identifier   ctermfg=7    ctermbg=NONE cterm=NONE
 hi MatchParen   ctermfg=1    ctermbg=NONE cterm=NONE
 
     " diffs
