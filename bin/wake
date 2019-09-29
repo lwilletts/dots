@@ -3,7 +3,7 @@
 # wake
 
 GPIO="/sys/class/gpio"
-pin=23
+pin=16
 
 test ! -d "$GPIO" && {
     printf '%s\n' "No gpio directory found."
