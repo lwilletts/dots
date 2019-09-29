@@ -81,9 +81,9 @@ musbar() {
 
         buf=""
         buf="${buf} %{l}"
-        buf="${buf} %{A:${pulse}:} ${vol} ♪  %{A}"
-        buf="${buf} %{c}"
         buf="${buf} %{A:${cava}:} ${mus} %{A}"
+        buf="${buf} %{r}"
+        buf="${buf} %{A:${pulse}:} ${vol} ♪  %{A}"
 
         printf '%s\n' "$buf"
         sleep 0.05
