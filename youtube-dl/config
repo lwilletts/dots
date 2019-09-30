@@ -1,2 +1,2 @@
 -f bestvideo+bestaudio
--o /mnt/pool/yt/%(title)s.%(ext)s
+-o $HOME/usr/vid/yt/%(title)s.%(ext)s

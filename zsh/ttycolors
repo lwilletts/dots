@@ -13,8 +13,8 @@ test "$TERM" = "linux" && {
     echo -en "\e]PB997849"
     echo -en "\e]P47086B3"
     echo -en "\e]PC7086B3"
-    echo -en "\e]P59870B3
-    echo -en "\e]PD9870B3
+    echo -en "\e]P59870B3"
+    echo -en "\e]PD9870B3"
     echo -en "\e]P6808080"
     echo -en "\e]PE808080"
     echo -en "\e]P7333333"
