@@ -1,10 +1,10 @@
 # colour
 export FFF_LS_COLORS=1
 export FFF_COL1=2
-export FFF_COL2=6
+export FFF_COL2=7
 export FFF_COL3=1
 export FFF_COL4=7
-export FFF_COL5=7
+export FFF_COL5=0
 
 # fav
 export FFF_FAV1=~/usr/vid

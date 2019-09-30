@@ -147,9 +147,8 @@ vmap <Leader><Space> %
 nnoremap <Leader>* :%s/\<<c-r><c-w>\>//g<left><left>
 
 " manipulating text in normal mode
-map <C-h> i<C-h><ESC>
-nnoremap <Tab> i<Tab><ESC>l
 nnoremap <CR> i<CR><ESC>
+nnoremap <Tab> i<Tab><ESC>l
 
 " formatting options
 vmap Q gq
@@ -210,13 +209,13 @@ nmap zn ]s
 nmap zp [s
 
 " auto expansion
-inoremap (j (<CR>)<ESC>O<TAB>
-inoremap {j {<CR>}<ESC>O<TAB>
-inoremap [j [<CR>]<ESC>O<TAB>
-inoremap {; {<CR>};<ESC>O<TAB>
-inoremap {, {<CR>},<ESC>O<TAB>
-inoremap [; [<CR>];<ESC>O<TAB>
-inoremap [, [<CR>],<ESC>O<TAB>
+inoremap (<CR> (<CR>)<ESC>O
+inoremap {<CR> {<CR>}<ESC>O
+inoremap [<CR> [<CR>]<ESC>O
+inoremap {; {<CR>};<ESC>O
+inoremap {, {<CR>},<ESC>O
+inoremap [; [<CR>];<ESC>O
+inoremap [, [<CR>],<ESC>O
 
 " external program launching
 nmap <Leader>op :AsyncRun! zathura %:r.pdf<CR>
@@ -294,7 +293,7 @@ set mouse+=a
 
 " autosave file on focus loss
 set autowrite
-autocmd FocusLost * silent! :wa
+autocmd! FocusLost * silent! :wa
 
 " stop leader timeout
 set ttimeout
