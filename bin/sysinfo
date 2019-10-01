@@ -66,11 +66,10 @@ getVars() {
 workOutLineSize() {
     LINE1=$(printf '%s\n' "  $USER@$HOST | $SYS | $PACK Packages" | wc -m)
     LINE2=$(printf '%s\n' "  $KERN | $TIME" | wc -m)
-    LINE3=$(printf '%s\m' "  $GPU" | wc -m)
 
     # find longest
     SIZE=0
-    for i in $LINE1 $LINE2 $LINE3; do
+    for i in $LINE1 $LINE2; do
         test $i -gt $SIZE && SIZE=$i
     done
 
@@ -81,7 +80,6 @@ workOutLineSize() {
     # get the extra characters each line needs
     LINE1EXTRA=$(printf '%*s' "$((SIZE - LINE1))" | sed 's/ / /')
     LINE2EXTRA=$(printf '%*s' "$((SIZE - LINE2))" | sed 's/ / /')
-    LINE3EXTRA=$(printf '%*s' "$((SIZE - LINE3))" | sed 's/ / /')
 }
 
 draw() {
@@ -108,7 +106,12 @@ cpu() {
         awk '{cpu=($2+$4)*100/($2+$4+$5)} END {print cpu}')"
     cpu=$(printf "%.0f" $cpu)
 
-    printf "${f7}CPU${R} %s" "$(draw $cpu $SIZE $f1)"
+    printf "${f7}CPU${R} %s" "$(draw $cpu $SIZE $f2)"
+}
+
+gpubar() {
+    TEMP="$(($(printf '%s\n' "$GPU" | cut -d\  -f 8 | cut -d\. -f1) - 35))"
+    printf "${f7}GPU${R} %s" "$(draw $TEMP $SIZE $f1)"
 }
 
 ram() {
@@ -117,11 +120,10 @@ ram() {
 }
 
 battery() {
-    BATTERYFILE=/sys/class/power_supply
     test -f /sys/class/power_supply && {
-        BATTERY=$(find $BATTERYFILE -maxdepth 1 -type l -name "BAT*")
+        BATTERY=$(find /sys/class/power_supply -maxdepth 1 -type l -name "BAT*")
         charge=$(sed '1q' $BATTERY/capacity)
-        printf "${f7}BAT${R} %s" "$(draw $charge $SIZE $f2)"
+        printf "${f7}BAT${R} %s" "$(draw $charge $SIZE $f3)"
     }
 }
 
@@ -137,16 +139,16 @@ cat ~/.dots/ascii/bonsai
 
 printf '\n'
 
-printf '%s\n' "$f7█$f7 $USER@$HOST | $SYS | $PACK Packages $LINE1EXTRA$R"
+printf '%s\n' "$f7█$f7 $USER@$HOST | $PACK Packages $LINE1EXTRA$R"
 printf '%s\n' "$f7█$f7 $KERN | $TIME $LINE2EXTRA$R"
-test ! -z "$GPU" && printf '%s\n' "$f7█$f7 $GPU  $LINE3EXTRA$R"
 
 printf '\n'
 
-SIZE=$((SIZE - 6))
+SIZE=$((SIZE - 5))
 
 printf '%s\n' "$(cpu)"
+test ! -z "$GPU" && printf '%s\n' "$(gpubar)"
 printf '%s\n' "$(ram)"
-test -d "$BATTERY" && printf '%s\n' "$(battery)"
+test ! -z "$BATTERY" && printf '%s\n' "$(battery)"
 
 printf '\n'

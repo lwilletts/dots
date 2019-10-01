@@ -75,8 +75,6 @@ c.statusbar.position = 'bottom'
 c.statusbar.padding = {'top': 5, 'bottom': 5, 'left': 5, 'right': 5}
 
 # List of widgets displayed in the statusbar.
-# Type: List of String
-# Valid values:
 #   - url: Current page URL.
 #   - scroll: Percentage of the current page position like `10%`.
 #   - scroll_raw: Raw percentage of the current page position like `10`.
@@ -84,8 +82,7 @@ c.statusbar.padding = {'top': 5, 'bottom': 5, 'left': 5, 'right': 5}
 #   - tabs: Current active tab, e.g. `2`.
 #   - keypress: Display pressed keys when composing a vi command.
 #   - progress: Progress bar for the current page loading.
-
-c.statusbar.widgets = ['keypress', 'url', 'scroll', 'history', 'tabs', 'progress']
+c.statusbar.widgets = ['url', 'scroll']
 
 c.completion.delay = 0
 c.completion.height = '10%'
@@ -221,23 +218,32 @@ c.colors.webpage.bg = xresources['*background']
 # command bar
 c.colors.statusbar.command.bg = xresources['*color0']
 c.colors.statusbar.command.fg = xresources['*color7']
-c.colors.statusbar.command.private.bg = xresources['*color7']
-c.colors.statusbar.command.private.fg = xresources['*color0']
+c.colors.statusbar.command.private.bg = xresources['*color0']
+c.colors.statusbar.command.private.fg = xresources['*color7']
 # status bar
-c.colors.statusbar.normal.bg = xresources['*background']
-c.colors.statusbar.private.bg = xresources['*background']
-c.colors.statusbar.normal.fg = xresources['*foreground']
-c.colors.statusbar.private.fg = xresources['*foreground']
+c.colors.statusbar.normal.bg = xresources['*color0']
+c.colors.statusbar.normal.fg = xresources['*color7']
+c.colors.statusbar.private.bg = xresources['*color0']
+c.colors.statusbar.private.fg = xresources['*color7']
 # statusbar insert mode
 c.colors.statusbar.insert.bg = xresources['*color2']
-c.colors.statusbar.insert.fg = xresources['*color0']
+c.colors.statusbar.insert.fg = xresources['*color7']
+# Default foreground color of the URL in the statusbar.
+c.colors.statusbar.url.fg = xresources['*color7']
+c.colors.statusbar.url.success.http.fg = xresources['*color7']
+c.colors.statusbar.url.success.https.fg = xresources['*color7']
+# Background color of the progress bar.
+c.colors.statusbar.progress.bg = xresources['*color0']
+# Foreground color of the URL in the statusbar when there's a warning.
+c.colors.statusbar.url.warn.fg = xresources['*color1']
+c.colors.statusbar.url.error.fg = xresources['*color2']
 
 # hints
-c.colors.hints.bg = xresources['*background']
-c.colors.hints.fg = xresources['*color6']
+c.colors.hints.bg = xresources['*color7']
+c.colors.hints.fg = xresources['*color0']
 # c.colors.hints.match.bg = xresources['*color1']
-c.colors.hints.match.fg = xresources['*color7']
-c.hints.border = '2px solid' + str(xresources['*background'])
+c.colors.hints.match.fg = xresources['*color1']
+c.hints.border = '2px solid' + str(xresources['*color7'])
 
 # Background color of an error message
 c.colors.messages.error.bg = xresources['*color1']
@@ -261,40 +267,25 @@ c.colors.downloads.stop.fg = xresources['*color0']
 # c.colors.downloads.system.bg = 'rgb'
 # c.colors.downloads.system.fg = 'rgb'
 
-# Background color of the completion widget category headers.
-# c.colors.completion.category.bg = 'qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #888888, stop:1 #505050)'
-
-# Bottom border color of the completion widget category headers.
-# c.colors.completion.category.border.bottom = 'black'
-
-# Top border color of the completion widget category headers.
-# c.colors.completion.category.border.top = 'black'
-
-# Foreground color of completion widget category headers.
-# c.colors.completion.category.fg = 'white'
-
-# Text color of the completion widget. May be a single color to use for
-# all columns or a list of three colors, one for each column.
-# Type: List of QtColor, or QtColor
+# completion
+c.colors.completion.category.bg = xresources['*color7']
+c.colors.completion.category.fg = xresources['*color0']
+c.colors.completion.category.border.top = xresources['*color7']
+c.colors.completion.category.border.bottom = xresources['*color0']
+# Text color of the completion widget.
 c.colors.completion.fg = xresources['*color7']
-
 # Background color of the selected completion item.
-c.colors.completion.item.selected.bg = xresources['*foreground']
-c.colors.completion.item.selected.border.top = xresources['*foreground']
-c.colors.completion.item.selected.border.bottom = xresources['*foreground']
-c.colors.completion.item.selected.fg = xresources['*background']
-
+c.colors.completion.item.selected.bg = xresources['*color7']
+c.colors.completion.item.selected.fg = xresources['*color0']
+c.colors.completion.item.selected.border.top = xresources['*color0']
+c.colors.completion.item.selected.border.bottom = xresources['*color0']
 # Foreground color of the matched text in the completion.
 c.colors.completion.match.fg = xresources['*color1']
-
-c.colors.completion.odd.bg = xresources['*background']
-c.colors.completion.even.bg = xresources['*background']
-
+c.colors.completion.odd.bg = xresources['*color0']
+c.colors.completion.even.bg = xresources['*color0']
 # Color of the scrollbar in the completion view.
-c.colors.completion.scrollbar.bg = xresources['*background']
-# Color of the scrollbar handle in the completion view.
-c.colors.completion.scrollbar.fg = xresources['*foreground']
-
+c.colors.completion.scrollbar.bg = xresources['*color7']
+c.colors.completion.scrollbar.fg = xresources['*color0']
 
 # Background color of the keyhint widget.
 # c.colors.keyhint.bg = 'rgba(0, 0, 0, 80%)'
@@ -305,9 +296,8 @@ c.colors.completion.scrollbar.fg = xresources['*foreground']
 # c.colors.keyhint.suffix.fg = '#FFFF00'
 
 # Foreground color of an error message.
-c.colors.messages.error.fg = xresources['*foreground']
-# Border color of an error message.
-c.colors.messages.error.border = xresources['*color0']
+c.colors.messages.error.fg = xresources['*color0']
+c.colors.messages.error.border = xresources['*color1']
 
 # Background color of an info message.
 c.colors.messages.info.bg = xresources['*color0']
@@ -348,22 +338,7 @@ c.colors.messages.warning.fg = xresources['*color7']
 # Foreground color of the statusbar in passthrough mode.
 # c.colors.statusbar.passthrough.fg = 'white'
 
-# Background color of the progress bar.
-c.colors.statusbar.progress.bg = xresources['*color0']
 
-# Foreground color of the URL in the statusbar on error.
-# c.colors.statusbar.url.error.fg = 'orange'
-
-# Default foreground color of the URL in the statusbar.
-c.colors.statusbar.url.fg = xresources['*color7']
-# Foreground color of the URL in the statusbar for hovered links.
-c.colors.statusbar.url.fg = xresources['*color3']
-
-c.colors.statusbar.url.success.http.fg = xresources['*color7']
-c.colors.statusbar.url.success.https.fg = xresources['*color7']
-
-# Foreground color of the URL in the statusbar when there's a warning.
-c.colors.statusbar.url.warn.fg = xresources['*color5']
 
 # Background color of the tab bar.
 c.colors.tabs.bar.bg = xresources['*color0']
@@ -373,10 +348,10 @@ c.colors.tabs.odd.bg = xresources['*background']
 c.colors.tabs.even.fg = xresources['*foreground']
 c.colors.tabs.even.bg = xresources['*background']
 
-c.colors.tabs.selected.odd.bg = xresources['*color4']
-c.colors.tabs.selected.odd.fg = xresources['*color7']
-c.colors.tabs.selected.even.bg = xresources['*color4']
-c.colors.tabs.selected.even.fg = xresources['*color7']
+c.colors.tabs.selected.odd.bg = xresources['*color7']
+c.colors.tabs.selected.odd.fg = xresources['*color0']
+c.colors.tabs.selected.even.bg = xresources['*color7']
+c.colors.tabs.selected.even.fg = xresources['*color0']
 
 # Color for the tab indicator on errors.
 c.colors.tabs.indicator.error = xresources['*color1']

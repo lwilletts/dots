@@ -17,7 +17,7 @@ mod1 + ctrl + BackSpace
     pkill xinit
 mod1 + v
     screens sec toggle
-mod1 + b
+mod1 + shift + b
     screens all 0.7
 
 # manipulation
@@ -36,11 +36,13 @@ mod1 + {button4, button5}
 mod1 + f
     full $(pfw)
 mod1 + {g,a,m}
-    move {center,vmaximise,maximise}
+    move {center,vmaximise,maximise} $(pfw)
 mod1 + shift + {g,m}
-    move {center,maximise} $(pfw) DisplayPort-1
+    move {center,maximise} $(pfw) $(lsm -p)
 mod1 + {Left,Down,Up,Right}
     move {left,bottom,top,right}
+mod1 + {s,v,e}
+    tile {-s,-v,-f}
 
 # music
 XF86AudioMute
