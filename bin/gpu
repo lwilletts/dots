@@ -3,11 +3,12 @@
 # gpu
 
 # find correct card
-for i in $(seq 0 4); do
+for i in 0 1 2 3 4; do
     test -e "/sys/class/drm/card$i/device/pp_dpm_sclk" && number=$i
 done
 
 sclk="/sys/class/drm/card$number/device/pp_dpm_sclk"
+test ! -z "$sclk" && exit 1
 
 sensorOut="$(sensors)"
 VOLT=$(printf '%s\n' "$sensorOut" | awk '/vddgfx/ {print $2,$3}' | cut -c 2-)
@@ -17,4 +18,4 @@ POWR=$(printf '%s\n' "$sensorOut" | awk '/power1/ {print $2,$3}')
 FANS=$(printf '%s\n' "$sensorOut" | awk '/fan1/ {print $2,$3}')
 CLOCK=$(cat "$sclk" | grep '*' | cut -d\  -f 2)
 
-printf '%s\n' "Radeon VII: $VOLT / $CLOCK / $JUNC / $POWR / $FANS"
+printf '%s\n' "Vega | $VOLT / $CLOCK / $JUNC / $POWR / $FANS"

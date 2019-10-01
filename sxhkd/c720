@@ -5,8 +5,8 @@
     urxvtc -cd "$(mpvc -f "%dir%")"
 mod1 + {d, w}
     {drun, wmenu -b}
-{~button1, ~button3, button10}
-    under {pmenu, wmenu, wmenu}
+{~button3, button10}
+    under wmenu
 
 # sys
 mod4 + shift + l
@@ -55,16 +55,16 @@ mod4 + {s,d,9,0}
     mpvc volume {-5,+5,-5,+5} -q
 mod4 + {h,j,k,l}
     mpvc seek {-5s,-30s,30s,5s} -q
-mod4 + {space,Tab,n,p,z,c}
-    mpvc {toggle,next,next,prev,shuffle,clear} -q
+mod4 + {space,Tab,n,p,z,c,BackSpace}
+    mpvc {toggle,next,next,prev,shuffle,clear,remove current} -q
 mod4 + {button3,button8,button9}
     mpvc {toggle, prev, next} -q
 mod4 + a
     find ~/usr/mus/* -type f | sort -R | mpvc add -q
-mod4 + BackSpace
-    mpvc remove current -q
-{F8,F9,F10}
-    mpvc {--mute, volume -5, volume +5}
+{F8,F9}
+    pulsemixer --change-volume {-5,+5}
+F10
+    pulsemixer --toggle-mute
 
 # shot
 Print

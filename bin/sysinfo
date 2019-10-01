@@ -93,7 +93,7 @@ draw() {
         test $i -le $inc && {
             out="${out}${FULL}"
         } || {
-            out="${color}${out}${R}${f7}${EMPTY}${R}"
+            out="${color}${out}${R}${f6}${EMPTY}${R}"
         }
     done
 
@@ -106,7 +106,7 @@ cpu() {
         awk '{cpu=($2+$4)*100/($2+$4+$5)} END {print cpu}')"
     cpu=$(printf "%.0f" $cpu)
 
-    printf "${f7}CPU${R} %s" "$(draw $cpu $SIZE $f2)"
+    printf "${f7}CPU${R} %s" "$(draw $cpu $SIZE $f4)"
 }
 
 gpubar() {
@@ -116,15 +116,13 @@ gpubar() {
 
 ram() {
     ram="$(free | awk '/Mem:/ {print int($3/$2 * 100.0)}')"
-    printf "${f7}RAM${R} %s" "$(draw $ram $SIZE $f4)"
+    printf "${f7}RAM${R} %s" "$(draw $ram $SIZE $f2)"
 }
 
 battery() {
-    test -f /sys/class/power_supply && {
-        BATTERY=$(find /sys/class/power_supply -maxdepth 1 -type l -name "BAT*")
-        charge=$(sed '1q' $BATTERY/capacity)
-        printf "${f7}BAT${R} %s" "$(draw $charge $SIZE $f3)"
-    }
+    BATTERY=$(find /sys/class/power_supply -maxdepth 1 -type l -name "BAT*")
+    charge=$(sed '1q' $BATTERY/capacity)
+    printf "${f7}BAT${R} %s" "$(draw $charge $SIZE $f7)"
 }
 
 getSystem
@@ -139,16 +137,16 @@ cat ~/.dots/ascii/bonsai
 
 printf '\n'
 
-printf '%s\n' "$f7█$f7 $USER@$HOST | $PACK Packages $LINE1EXTRA$R"
-printf '%s\n' "$f7█$f7 $KERN | $TIME $LINE2EXTRA$R"
+printf '%s\n' "$f6▐$f7 $USER@$HOST | $PACK Packages $LINE1EXTRA$R"
+printf '%s\n' "$f6▐$f7 $KERN | $TIME $LINE2EXTRA$R"
 
 printf '\n'
 
 SIZE=$((SIZE - 5))
 
+printf '%s\n' "$(ram)"
 printf '%s\n' "$(cpu)"
 test ! -z "$GPU" && printf '%s\n' "$(gpubar)"
-printf '%s\n' "$(ram)"
-test ! -z "$BATTERY" && printf '%s\n' "$(battery)"
+test -d "/sys/class/power_supply/BAT0" && printf '%s\n' "$(battery)"
 
 printf '\n'
