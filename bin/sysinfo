@@ -110,7 +110,7 @@ cpu() {
 }
 
 gpubar() {
-    TEMP="$(($(printf '%s\n' "$GPU" | cut -d\  -f 8 | cut -d\. -f1) - 35))"
+    TEMP="$(($(printf '%s\n' "$GPU" | cut -d\  -f 4 | cut -d\. -f1) - 35))"
     printf "${f7}GPU${R} %s" "$(draw $TEMP $SIZE $f1)"
 }
 

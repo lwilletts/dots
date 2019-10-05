@@ -6,20 +6,24 @@
 import subprocess
 
 config.load_autoconfig()
-c.aliases = {'w': 'session-save', 'q': 'close', 'qa': 'quit', 'wq': 'quit --save', 'wqa': 'quit --save'}
+c.aliases = {'h': 'help', 'q': 'close', 'x': 'quit --save'}
 
     # sane defaults
 c.backend = 'webengine'
 c.auto_save.interval = 20000
 c.auto_save.session = True
-c.completion.cmd_history_max_items = -1
 c.editor.command = ['urxvtc', '-e', 'nvim', '{}']
 c.spellcheck.languages = ['en-GB']
 c.session.lazy_restore = True
+c.confirm_quit = ['downloads']
 c.input.escape_quits_reporter = True
 c.input.forward_unbound_keys = 'auto'
 c.content.geolocation = False
+c.session.default_name = None
+
 c.url.start_pages = ['https://start.duckduckgo.com']
+c.url.default_page = 'https://start.duckduckgo.com'
+c.window.title_format = '{current_title}'
 
     # custom binds
 config.bind('j', 'scroll-px 0 100')
@@ -61,9 +65,6 @@ c.hints.auto_follow_timeout = 0
 # Type: List of String
 # c.url.yank_ignored_parameters = ['ref', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content']
 
-# Format to use for the window title. The same placeholders like for `tabs.title.format` are defined.
-# c.window.title_format = '{perc}{title}{title_sep}'
-
     # zoom
 c.zoom.default = '90%'
 c.zoom.levels = ['25%', '33%', '50%', '67%', '75%', '90%', '100%', '110%', '125%', '150%', '175%', '200%', '250%', '300%', '400%', '500%']
@@ -72,78 +73,65 @@ c.zoom.mouse_divider = 512
     # statusbar
 c.statusbar.hide = False
 c.statusbar.position = 'bottom'
+c.statusbar.widgets = ['url', 'scroll']
 c.statusbar.padding = {'top': 5, 'bottom': 5, 'left': 5, 'right': 5}
 
-# List of widgets displayed in the statusbar.
-#   - url: Current page URL.
-#   - scroll: Percentage of the current page position like `10%`.
-#   - scroll_raw: Raw percentage of the current page position like `10`.
-#   - history: Display an arrow when possible to go back/forward in history.
-#   - tabs: Current active tab, e.g. `2`.
-#   - keypress: Display pressed keys when composing a vi command.
-#   - progress: Progress bar for the current page loading.
-c.statusbar.widgets = ['url', 'scroll']
-
+    # completion
 c.completion.delay = 0
 c.completion.height = '10%'
 c.completion.min_chars = 1
+c.completion.cmd_history_max_items = -1
+c.completion.scrollbar.padding = 10
+c.completion.scrollbar.width = 12
 
-# tabs
+    # tabs
+# position
 c.tabs.position = 'top'
-c.tabs.indicator.width = 0
-c.tabs.indicator.padding = {'top': 5, 'bottom': 10, 'left': 10, 'right': 10}
-c.tabs.favicons.show = 'never'
+c.tabs.width = '15%'
 c.tabs.max_width = 200
 c.tabs.min_width = 200
+c.tabs.padding = {'top': 5, 'bottom': 5, 'left': 10, 'right': 10}
+c.tabs.title.alignment = 'left'
+c.tabs.title.format_pinned = '{index}'
+c.tabs.title.format = '{current_title}'
 
-c.tabs.last_close = 'close'
+# indicator
+c.tabs.favicons.show = 'never'
+c.tabs.indicator.width = 0
+c.tabs.indicator.padding = {'top': 5, 'bottom': 10, 'left': 10, 'right': 10}
+
+# behaviour
+c.tabs.wrap = False
 c.tabs.background = False
+c.tabs.last_close = 'close'
 c.tabs.close_mouse_button = 'right'
 c.tabs.close_mouse_button_on_bar = 'new-tab'
 c.tabs.mode_on_change = 'normal'
 c.tabs.mousewheel_switching = True
 c.tabs.new_position.related = 'next'
-
-# Stack related tabs on top of each other when opened consecutively.
-c.tabs.new_position.stacking = True
-c.tabs.new_position.unrelated = 'last'
-
-# Padding (in pixels) around text for tabs.
-c.tabs.padding = {'top': 5, 'bottom': 5, 'left': 10, 'right': 10}
-
-# Force pinned tabs to stay at fixed URL.
+c.tabs.select_on_remove = 'next'
 c.tabs.pinned.frozen = True
 c.tabs.pinned.shrink = True
-
-c.tabs.select_on_remove = 'next'
+c.tabs.new_position.stacking = True
+c.tabs.new_position.unrelated = 'last'
+c.tabs.tabs_are_windows = False
 c.tabs.show = 'multiple'
 c.tabs.show_switching_delay = 1000
-
-c.tabs.tabs_are_windows = False
-
-c.tabs.title.alignment = 'left'
-
-c.downloads.position = 'bottom'
-
-c.completion.scrollbar.padding = 10
-c.completion.scrollbar.width = 12
+c.new_instance_open_target_window = 'last-focused'
 
     # downloads
+c.downloads.position = 'bottom'
 c.downloads.remove_finished = -1
 c.downloads.location.prompt = False
 c.downloads.location.remember = True
-c.downloads.location.directory = '/home/fyr/tmp'
 c.downloads.location.suggestion = 'both'
+c.downloads.location.directory = '/home/fyr/tmp'
 
 # Show a filebrowser in upload/download prompts.
 c.prompt.filebrowser = True
-
-# Default program used to open downloads. If null, the default internal
-# handler is used. Any `{}` in the string will be expanded to the
-# filename, else the filename will be appended.
 c.downloads.open_dispatcher = None
 
-    # privacy
+    # privacy & content
 c.content.headers.do_not_track = True
 # c.content.headers.user_agent = 'Mozilla/5.0 (Windows NT 6.1; rv:52.0) Gecko/20100101 Firefox/52.0'
 
@@ -153,10 +141,10 @@ c.content.headers.do_not_track = True
 #   - never: Don't accept cookies at all.
 c.content.cookies.accept = 'all'
 c.content.cookies.store = True
+c.content.autoplay = False
 
     # fonts
-
-# monospace fonts.
+# monospace fonts
 c.fonts.monospace = 'lemon'
 c.fonts.tabs = '8pt monospace'
 c.fonts.hints = '8pt monospace'
@@ -169,38 +157,21 @@ c.fonts.debug_console = '8pt monospace'
 c.fonts.completion.entry = '8pt monospace'
 c.fonts.completion.category = '8pt monospace'
 
-# Font family for cursive fonts.
 # c.fonts.web.family.cursive
-
-# Font family for fantasy fonts.
 # c.fonts.web.family.fantasy
-
-# Font family for fixed fonts.
 # c.fonts.web.family.fixed
-
-# Font family for sans-serif fonts.
 # c.fonts.web.family.sans_serif
-
-# Font family for serif fonts.
 # c.fonts.web.family.serif
-
-# Font family for standard fonts.
 # c.fonts.web.family.standard
-
-# Default font size (in pixels) for regular text.
 # c.fonts.web.size.default
-
-# Default font size (in pixels) for fixed-pitch text.
 # c.fonts.web.size.default_fixed
 
 # Hard minimum font size (in pixels).
 # c.fonts.web.size.minimum
-
 # Minimum logical font size (in pixels) that is applied when zooming out.
 # c.fonts.web.size.minimum_logical
 
     # colours
-
 def read_xresources(prefix):
     props = {}
     x = subprocess.run(['xrdb', '-query'], stdout=subprocess.PIPE)
@@ -213,7 +184,7 @@ def read_xresources(prefix):
 xresources = read_xresources('*')
 
 # background color for webpages if unset
-c.colors.webpage.bg = xresources['*background']
+c.colors.webpage.bg = xresources['*color0']
 
 # command bar
 c.colors.statusbar.command.bg = xresources['*color0']
@@ -227,7 +198,7 @@ c.colors.statusbar.private.bg = xresources['*color0']
 c.colors.statusbar.private.fg = xresources['*color7']
 # statusbar insert mode
 c.colors.statusbar.insert.bg = xresources['*color2']
-c.colors.statusbar.insert.fg = xresources['*color7']
+c.colors.statusbar.insert.fg = xresources['*color0']
 # Default foreground color of the URL in the statusbar.
 c.colors.statusbar.url.fg = xresources['*color7']
 c.colors.statusbar.url.success.http.fg = xresources['*color7']
@@ -241,11 +212,10 @@ c.colors.statusbar.url.error.fg = xresources['*color2']
 # hints
 c.colors.hints.bg = xresources['*color7']
 c.colors.hints.fg = xresources['*color0']
-# c.colors.hints.match.bg = xresources['*color1']
 c.colors.hints.match.fg = xresources['*color1']
 c.hints.border = '2px solid' + str(xresources['*color7'])
 
-# Background color of an error message
+# background color of an error message
 c.colors.messages.error.bg = xresources['*color1']
 c.colors.messages.error.fg = xresources['*color0']
 # downloads with errors
@@ -272,27 +242,26 @@ c.colors.completion.category.bg = xresources['*color7']
 c.colors.completion.category.fg = xresources['*color0']
 c.colors.completion.category.border.top = xresources['*color7']
 c.colors.completion.category.border.bottom = xresources['*color0']
-# Text color of the completion widget.
+
+# text color of the completion widget.
 c.colors.completion.fg = xresources['*color7']
-# Background color of the selected completion item.
 c.colors.completion.item.selected.bg = xresources['*color7']
 c.colors.completion.item.selected.fg = xresources['*color0']
 c.colors.completion.item.selected.border.top = xresources['*color0']
 c.colors.completion.item.selected.border.bottom = xresources['*color0']
-# Foreground color of the matched text in the completion.
+
+# foreground color of the matched text in the completion.
 c.colors.completion.match.fg = xresources['*color1']
 c.colors.completion.odd.bg = xresources['*color0']
 c.colors.completion.even.bg = xresources['*color0']
-# Color of the scrollbar in the completion view.
+# color of the scrollbar in the completion view.
 c.colors.completion.scrollbar.bg = xresources['*color7']
 c.colors.completion.scrollbar.fg = xresources['*color0']
 
 # Background color of the keyhint widget.
 # c.colors.keyhint.bg = 'rgba(0, 0, 0, 80%)'
-
 # Text color for the keyhint widget.
 # c.colors.keyhint.fg = '#FFFFFF'
-
 # c.colors.keyhint.suffix.fg = '#FFFF00'
 
 # Foreground color of an error message.
@@ -301,14 +270,12 @@ c.colors.messages.error.border = xresources['*color1']
 
 # Background color of an info message.
 c.colors.messages.info.bg = xresources['*color0']
-# Border color of an info message.
 c.colors.messages.info.border = xresources['*color7']
-# Foreground color of an info message.
 c.colors.messages.info.fg = xresources['*color7']
 
 c.colors.messages.warning.bg = xresources['*color5']
 c.colors.messages.warning.border = xresources['*color5']
-c.colors.messages.warning.fg = xresources['*color7']
+c.colors.messages.warning.fg = xresources['*color1']
 
 # Background color for prompts.
 # c.colors.prompts.bg = '#444444'
@@ -326,62 +293,35 @@ c.colors.messages.warning.fg = xresources['*color7']
 # Foreground color of the statusbar in caret mode.
 # c.colors.statusbar.caret.fg = 'white'
 
-# Background color of the statusbar in caret mode with a selection.
-# c.colors.statusbar.caret.selection.bg = '#a12dff'
-
-# Foreground color of the statusbar in caret mode with a selection.
-# c.colors.statusbar.caret.selection.fg = 'white'
+# color of the statusbar in caret mode with a selection.
+c.colors.statusbar.caret.selection.bg = xresources['*color7']
+c.colors.statusbar.caret.selection.fg = xresources['*color0']
 
 # Background color of the statusbar in passthrough mode.
 # c.colors.statusbar.passthrough.bg = 'darkblue'
-
 # Foreground color of the statusbar in passthrough mode.
 # c.colors.statusbar.passthrough.fg = 'white'
 
-
-
 # Background color of the tab bar.
 c.colors.tabs.bar.bg = xresources['*color0']
-
 c.colors.tabs.odd.fg = xresources['*foreground']
 c.colors.tabs.odd.bg = xresources['*background']
 c.colors.tabs.even.fg = xresources['*foreground']
 c.colors.tabs.even.bg = xresources['*background']
-
 c.colors.tabs.selected.odd.bg = xresources['*color7']
 c.colors.tabs.selected.odd.fg = xresources['*color0']
 c.colors.tabs.selected.even.bg = xresources['*color7']
 c.colors.tabs.selected.even.fg = xresources['*color0']
-
-# Color for the tab indicator on errors.
 c.colors.tabs.indicator.error = xresources['*color1']
 
-## Which categories to show (in which order) in the :open completion.
-## Type: FlagList
-## Valid values:
-##   - searchengines
-##   - quickmarks
-##   - bookmarks
-##   - history
-# c.completion.open_categories = ['searchengines', 'quickmarks', 'bookmarks', 'history']
+c.completion.quick = True
+c.completion.show = 'always'
+c.completion.open_categories = ['quickmarks', 'bookmarks', 'history']
 
-# Move on to the next part when there's only one possible completion
-# c.completion.quick = True
-
-## When to show the autocompletion window.
-## Type: String
-## Valid values:
-##   - always: Whenever a completion is available.
-##   - auto: Whenever a completion is requested.
-##   - never: Never.
-# c.completion.show = 'always'
 
 c.completion.shrink = True
-
 c.completion.timestamp_format = '%d-%m-%Y-%H:%M:%S'
-
-# Execute the best-matching command on a partial match.
-# c.completion.use_best_match = False
+c.completion.use_best_match = False
 
 ## A list of patterns which should not be shown in the history. This only
 ## affects the completion. Matching URLs are still saved in the history
@@ -395,10 +335,6 @@ c.completion.timestamp_format = '%d-%m-%Y-%H:%M:%S'
 ## unlimited
 ## Type: Int
 # c.completion.web_history.max_items = -1
-
-c.confirm_quit = ['downloads']
-
-c.content.autoplay = False
 
 ## Enable support for the HTML 5 web application cache feature. An
 ## application cache acts like an HTTP cache in some sense. For documents
@@ -731,13 +667,6 @@ c.content.mute = False
 ##   - window: Open in a new window.
 # c.new_instance_open_target = 'tab'
 
-# Which window to choose when opening links as new tabs. When
-#   - first-opened: Open new tabs in the first (oldest) opened window.
-#   - last-opened: Open new tabs in the last (newest) opened window.
-#   - last-focused: Open new tabs in the most recently focused window.
-#   - last-visible: Open new tabs in the most recently visible window.
-c.new_instance_open_target_window = 'last-focused'
-
 # Rounding radius (in pixels) for the edges of prompts.
 c.prompt.radius = 20
 
@@ -793,48 +722,11 @@ c.prompt.radius = 20
 ##   - single-process: Run all tabs in a single process. This should be used for debugging purposes only, and it disables `:open --private`.
 # c.qt.process_model = 'process-per-site-instance'
 
+    # scroll + search
 c.scrolling.bar = 'when-searching'
-
-## Enable smooth scrolling for web pages. Note smooth scrolling does not
-## work with the `:scroll-px` command.
-## Type: Bool
 c.scrolling.smooth = False
-
 c.search.ignore_case = 'smart'
 c.search.incremental = True
-
-## Name of the session to save by default. If this is set to null, the
-## session which was last loaded is saved.
-## Type: SessionName
-# c.session.default_name = None
-
-## Format to use for the tab title. The following placeholders are
-## defined:  * `{perc}`: Percentage as a string like `[10%]`. *
-## `{perc_raw}`: Raw percentage, e.g. `10`. * `{title}`: Title of the
-## current web page. * `{title_sep}`: The string ` - ` if a title is set,
-## empty otherwise. * `{index}`: Index of this tab. * `{id}`: Internal
-## tab ID of this tab. * `{scroll_pos}`: Page scroll position. *
-## `{host}`: Host of the current web page. * `{backend}`: Either
-## ''webkit'' or ''webengine'' * `{private}`: Indicates when private mode
-## is enabled. * `{current_url}`: URL of the current web page. *
-## `{protocol}`: Protocol (http/https/...) of the current web page. *
-## `{audio}`: Indicator for audio/mute status.
-## Type: FormatString
-# c.tabs.title.format = '{audio}{index}: {title}'
-
-## Format to use for the tab title for pinned tabs. The same placeholders
-## like for `tabs.title.format` are defined.
-## Type: FormatString
-# c.tabs.title.format_pinned = '{index}'
-
-## Width (in pixels or as percentage of the window) of the tab bar if
-## it's vertical.
-## Type: PercOrInt
-c.tabs.width = '15%'
-
-## Wrap when changing tabs.
-## Type: Bool
-# c.tabs.wrap = True
 
 ## What search to start when something else than a URL is entered.
 ## Type: String
@@ -844,10 +736,6 @@ c.tabs.width = '15%'
 ##   - never: Never search automatically.
 # c.url.auto_search = 'naive'
 
-## Page to open if :open -t/-b/-w is used without URL. Use `about:blank`
-## for a blank page.
-## Type: FuzzyUrl
-# c.url.default_page = 'https://start.duckduckgo.com/'
 
 ## URL segments where `:navigate increment/decrement` will search for a
 ## number.

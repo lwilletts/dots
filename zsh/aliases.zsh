@@ -68,3 +68,4 @@ alias matrix="cmatrix -ab -u 1"
 alias engage="play -c2 -n synth whitenoise band -n 100 24 band -n 300 100 \
 gain +4 synth whitenoise lowpass -1 100 lowpass -1 100 lowpass -1 100 gain +2"
 alias starwars="telnet towel.blinkenlights.nl"
+alias machine="clear; lstopo-no-graphics -.ascii; printf '\n'"

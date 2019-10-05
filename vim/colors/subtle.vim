@@ -29,8 +29,8 @@ hi FoldColumn   ctermfg=4    ctermbg=NONE cterm=NONE
 hi Cursor       ctermfg=7    ctermbg=NONE cterm=NONE
 hi CursorLine   ctermfg=NONE ctermbg=NONE cterm=NONE
 
-hi Search       ctermfg=7    ctermbg=6    cterm=NONE
-hi IncSearch    ctermfg=7    ctermbg=6    cterm=NONE
+hi Search       ctermfg=0    ctermbg=4    cterm=NONE
+hi IncSearch    ctermfg=0    ctermbg=4    cterm=NONE
 
 hi VertSplit    ctermfg=NONE ctermbg=0    cterm=NONE
 hi ColorColumn  ctermfg=0    ctermbg=6    cterm=NONE

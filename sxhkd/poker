@@ -3,10 +3,10 @@
     urxvtc
 {mod1, mod2} + shift + Return
     urxvtc -cd "$(mpvc -f "%dir%")"
-mod1 + {d, w}
-    {drun, wmenu -b}
-{~button1, ~button3, button10}
-    under {pmenu, wmenu, wmenu}
+mod1 + {d, w, shift + w}
+    {drun, wmenu -b, wmenu -b all}
+{~button3, button10}
+    under wmenu
 
 # sys
 mod4 + shift + l
@@ -15,10 +15,8 @@ mod1 + shift + r
     pkill -USR1 -x sxhkd
 mod1 + ctrl + BackSpace
     pkill xinit
-mod1 + v
-    screens sec toggle
-mod1 + shift + b
-    screens all 0.7
+mod1 + {b, shift + b}
+    screens {sec toggle, all 0.7}
 
 # manipulation
 mod1 + @button1
@@ -41,8 +39,8 @@ mod1 + shift + {g,m}
     move {center,maximise} $(pfw) $(lsm -p)
 mod1 + {Left,Down,Up,Right}
     move {left,bottom,top,right}
-mod1 + {s,v,e}
-    tile {-s,-v,-f}
+mod1 + {s,v,e,shift + e}
+    tile {-s,-v,-br,-bl}
 
 # music
 XF86AudioMute
@@ -53,14 +51,12 @@ mod4 + {s,d,9,0}
     mpvc volume {-5,+5,-5,+5} -q
 mod4 + {h,j,k,l}
     mpvc seek {-5s,-30s,30s,5s} -q
-mod4 + {space,Tab,n,p,z,c}
-    mpvc {toggle,next,next,prev,shuffle,clear} -q
+mod4 + {space,Tab,n,p,z,c,BackSpace}
+    mpvc {toggle,next,next,prev,shuffle,clear,remove current} -q
 mod4 + {button3,button8,button9}
     mpvc {toggle, prev, next} -q
 mod4 + a
     find ~/usr/mus/* -type f | sort -R | mpvc add -q
-mod4 + BackSpace
-    mpvc remove current -q
 
 # shot
 Print

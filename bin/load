@@ -37,9 +37,7 @@ for arg in "$@"; do
             ;;
         *.mkv|*.mp4|*.ogv|*youtu.be/*|*youtube.com/watch*|\
         *.googlevideo.com/videoplayback*)
-            mpvc add "$1"
-            mpvc move $(mpvc -f "%playlistlength% %position%")
-            mpvc next
+            mpv "$URL" --really-quiet --loop-file
             ;;
         *.gifv|*.webm|*.gif)
             openBrowser

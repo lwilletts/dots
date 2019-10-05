@@ -204,9 +204,9 @@ set splitright
 set splitbelow
 
 " spellcheck
-nmap <Leader>= 1z=
-nmap zn ]s
-nmap zp [s
+nnoremap <Leader>= 1z=
+nnoremap zn ]s
+nnoremap zp [s
 
 " auto expansion
 inoremap (<CR> (<CR>)<ESC>O
@@ -218,7 +218,8 @@ inoremap [; [<CR>];<ESC>O
 inoremap [, [<CR>],<ESC>O
 
 " external program launching
-nmap <Leader>op :AsyncRun! zathura %:r.pdf<CR>
+nnoremap <Leader>op :AsyncRun! zathura %:r.pdf<CR>
+vnoremap <Leader>s :! awk '{ print length(), $0 \| "sort -n \| cut -d\\  -f2-"}'<CR>
 
     " Mappings for Custom Functions
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

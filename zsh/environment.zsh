@@ -9,6 +9,7 @@ export TERM="rxvt-unicode-256color"
 
 SRC="$HOME/src"
 DOTS="$HOME/.dots"
+GOPATH="$HOME/.go"
 PATH=""
 
 EXECPATHS="/bin
@@ -19,12 +20,14 @@ $DOTS/bin
 $HOME/.fzf/bin
 /usr/local/bin
 $SRC/fwm
+$GOPATH
 $HOME/.gem/ruby/2.6.0/bin"
 
 printf '%s\n' "$EXECPATHS" | while read -r EXECPATH; do
     test -d "$EXECPATH" && PATH="$PATH:$EXECPATH"
 done
 
+export GOPATH
 export PATH=$(printf '%s\n' "$PATH" | cut -c 2-)
 
 unset EXECPATH

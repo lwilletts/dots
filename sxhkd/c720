@@ -3,8 +3,8 @@
     urxvtc
 {mod1, mod2} + shift + Return
     urxvtc -cd "$(mpvc -f "%dir%")"
-mod1 + {d, w}
-    {drun, wmenu -b}
+mod1 + {d, w, shift + w}
+    {drun, wmenu -b, wmenu -b all}
 {~button3, button10}
     under wmenu
 
@@ -15,10 +15,8 @@ mod1 + shift + r
     pkill -USR1 -x sxhkd
 mod1 + ctrl + BackSpace
     pkill xinit
-mod1 + b
-    screens sec toggle
-mod1 + shift + b
-    screens all 0.7
+mod1 + {b, shift + b}
+    screens {sec toggle, all 0.7}
 
 # manipulation
 mod1 + @button1
@@ -43,8 +41,8 @@ mod1 + {Left,Down,Up,Right}
     move {left,bottom,top,right}
 {F4,F5}
     move {maximise,vmaximise} $(pfw)
-mod1 + {s,v,e}
-    tile {-s,-v,-f}
+mod1 + {s,v,e,shift + e}
+    tile {-s,-v,-br,-bl}
 
 # music
 XF86AudioMute
