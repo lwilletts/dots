@@ -1,0 +1,55 @@
+#!/bin/sh
+#
+# mkbtest
+
+info() {
+    cpu t| SIZE=$BAR_SIZE CHAR1="$C1" CHAR2="$C2" SEP='' START='' END='' mkb
+}
+
+launch() {
+    BAR_SIZE=30
+    C1="%{F$(barcolr 4)}$BCHAR%{F-}"
+    C2="%{F$(barcolr 5)}$BCHAR%{F-}"
+
+    while :; do
+
+        buf=""
+        buf="${buf} %{c}"
+        buf="${buf} %{A:${calender}:} ${clock} %{A}"
+
+        printf '%s\n' "$buf"
+        sleep 2
+    done | lemonbar -d -g ${barw}x${barh}+${barx}+${bary} -B ${bar_bg} \
+                    -F ${bar_fg} -R ${bar_border} -r $BW -f ${bar_font} \
+                    -n "date" | /bin/sh &
+}
+
+main() {
+    . fwmrc
+    wmenv
+    wmgaps
+    wmcolours
+
+    # bar variables
+    BW=1
+    bar_bg="#$INACTIVE"
+    bar_fg="#$ACTIVE"
+    bar_border="#808080"
+    bar_font=$(awk '/lemon/ {print $3}' < ~/.Xresources | \
+               head -n 1 | cut -d',' -f 1)
+
+    # bar geometry
+    PX="$(mattr x $PRI)"
+    PX="$(mattr y $PRI)"
+    PW="$(mattr w $PRI)"
+    PH="$(mattr h $PRI)"
+
+    barx=$((PX + LGAP))
+    bary=$((PY))
+    barw=120
+    barh=$((18 + BW*2))
+
+    launch
+}
+
+main "$@"

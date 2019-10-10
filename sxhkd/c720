@@ -6,7 +6,7 @@
 mod1 + {d, w, shift + w}
     {drun, wmenu -b, wmenu -b all}
 {~button3, button10}
-    under wmenu
+    under "wmenu -m"
 
 # sys
 mod4 + shift + l
@@ -69,5 +69,9 @@ Print
     shot
 shift + Print
     shot "$(pfw)"
+
+# backlight
+{F6,F7}
+    xbacklight -steps 100 {-dec 10%,-inc 10%}
 
 # vim: set ft=sxhkdrc :

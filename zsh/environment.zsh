@@ -10,6 +10,7 @@ export TERM="rxvt-unicode-256color"
 SRC="$HOME/src"
 DOTS="$HOME/.dots"
 GOPATH="$HOME/.go"
+TESSDATA_PREFIX="$HOME/.dots/tessdata"
 PATH=""
 
 EXECPATHS="/bin
@@ -28,6 +29,7 @@ printf '%s\n' "$EXECPATHS" | while read -r EXECPATH; do
 done
 
 export GOPATH
+export TESSDATA_PREFIX
 export PATH=$(printf '%s\n' "$PATH" | cut -c 2-)
 
 unset EXECPATH

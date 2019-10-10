@@ -1,0 +1,35 @@
+#!/bin/sh
+#
+# pdfi2txt
+
+usage() {
+    base=$(basename $0)
+
+    cat >&2 << EOF
+Usage:
+    $base input.pdf output
+EOF
+
+    test $# -eq 0 || exit $1
+}
+
+main() {
+    input="$1"
+    output="$2"
+    test -z "$@" && usage 1
+    test -e "$input" || usage 1
+
+    # extract images from pdf
+    convert "$input" "$input.png"
+
+    # extract text from images
+    start=0
+    for i in images; do
+        while test "$start" -le "$range"; do
+            tesseract "$i" "$i.txt"
+            start=$((start + 1))
+        done
+    done
+}
+
+main "$@"

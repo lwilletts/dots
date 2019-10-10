@@ -6,7 +6,7 @@
 mod1 + {d, w, shift + w}
     {drun, wmenu -b, wmenu -b all}
 {~button3, button10}
-    under wmenu
+    under "wmenu -m"
 
 # sys
 mod4 + shift + l
