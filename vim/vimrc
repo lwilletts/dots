@@ -77,6 +77,15 @@ Plug 'benekastah/neomake'
     " async
 Plug 'skywind3000/asyncrun.vim'
 
+    " vim speech
+Plug 'dense-analysis/ale'
+Plug 'w0rp/vim-speech'
+Plug 'vim-scripts/Speech'
+    nnoremap <Leader>r :call SpeechToText()<CR>
+    " nnoremap <Leader>s :call TextToSpeech()<CR>
+
+
+
     " snips
 Plug 'SirVer/ultisnips'
     let g:UltiSnipsUsePythonVersion = 3
@@ -229,7 +238,7 @@ nmap <silent> <Leader>C :Chmox<CR>
 
 " gotta get down tonight
 nnoremap <silent> <Plug>(RotateLines) :<C-u>call <SID>RotateLines()<CR>
-nmap <Leader>r <Plug>(RotateLines)
+nmap <Leader>R <Plug>(RotateLines)
 
 " correct default help to custom help function
 cabbrev h H

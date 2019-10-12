@@ -37,8 +37,8 @@ hi ColorColumn  ctermfg=0    ctermbg=6    cterm=NONE
 hi StatusLine   ctermfg=6    ctermbg=NONE cterm=NONE
 hi StatusLineNC ctermfg=0    ctermbg=NONE cterm=NONE
 
-hi Pmenu        ctermfg=7    ctermbg=0    cterm=NONE
-hi PmenuSel     ctermfg=1    ctermbg=NONE cterm=NONE
+hi Pmenu        ctermfg=0    ctermbg=7    cterm=NONE
+hi PmenuSel     ctermfg=7    ctermbg=0    cterm=NONE
 hi PmenuSbar    ctermfg=6    ctermbg=NONE cterm=NONE
 hi WildMenu     ctermbg=0    ctermbg=7    cterm=NONE
 

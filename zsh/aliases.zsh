@@ -27,6 +27,10 @@ alias todo="$EDITOR $HOME/usr/notes/todo.md"
 alias ffmpeg="ffmpeg -hide_banner"
 alias glances="glances --hide-kernel-threads"
 
+# audio
+alias sinks="pacmd list-sinks|awk '/index:/ {print \$0}; /name:/ {print \$0}; /device\.description/ {print \$0}'"
+alias sources="pacmd list-sources|awk '/index:/ {print \$0}; /name:/ {print \$0}; /device\.description/ {print \$0}'"
+
 # net
 alias ix="curl -F 'f:1=<-' ix.io"
 alias tn="transmission-remote-cli"

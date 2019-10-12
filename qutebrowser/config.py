@@ -30,10 +30,15 @@ config.bind('j', 'scroll-px 0 100')
 config.bind('k', 'scroll-px 0 -100')
 config.bind('<Ctrl-d>', 'spawn youtube-dl {url}')
 config.bind('<Ctrl-f>', 'spawn youtube-dl -x {url}')
-config.bind('<Ctrl-e>', 'config-edit')
 config.bind('<Ctrl-s>', 'config-source ~/.config/qutebrowser/config.py')
+config.bind('<Ctrl-E>', 'config-edit', mode='normal')
 config.bind('<Shift-k>', 'tab-next')
 config.bind('<Shift-j>', 'tab-prev')
+
+# insert mode
+config.bind('<Ctrl-E>', 'open-editor', mode='insert')
+config.bind('<Escape>', 'leave-mode', mode='insert')
+config.bind('<Shift-Ins>', 'insert-text {primary}', mode='insert')
 
     # insert mode
 c.input.insert_mode.auto_load = False
@@ -1005,11 +1010,6 @@ c.search.incremental = True
 # config.bind('<Ctrl-R>', 'hint --rapid links tab-bg', mode='hint')
 # config.bind('<Escape>', 'leave-mode', mode='hint')
 # config.bind('<Return>', 'follow-hint', mode='hint')
-
-## Bindings for insert mode
-# config.bind('<Ctrl-E>', 'open-editor', mode='insert')
-# config.bind('<Escape>', 'leave-mode', mode='insert')
-# config.bind('<Shift-Ins>', 'insert-text {primary}', mode='insert')
 
 ## Bindings for passthrough mode
 # config.bind('<Shift-Escape>', 'leave-mode', mode='passthrough')

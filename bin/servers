@@ -15,7 +15,7 @@ for i in $(seq 1 $LENGTH); do
     SERVER=$(printf '%s' "$OUTPUT" | jq ".[$i]")
 
     MAP=$(printf '%s' "$SERVER" | jq -r '.map')
-    NAME=$(printf '%s' "$SERVER" | jq -r '.name')
+    NAME=$(printf '%s' "$SERVER" | jq -r '.name' | cut -c -32)
     PLAYERS=$(printf '%s' "$SERVER" | jq -r '.players')
     IP=$(printf '%s' "$SERVER" | jq -r '.addr')
 
