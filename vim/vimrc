@@ -227,6 +227,7 @@ inoremap [; [<CR>];<ESC>O
 inoremap [, [<CR>],<ESC>O
 
 " external program launching
+nnoremap <Leader>ob :AsyncRun! qutebrowser %:r.html<CR>
 nnoremap <Leader>op :AsyncRun! zathura %:r.pdf<CR>
 vnoremap <Leader>s :! awk '{ print length(), $0 \| "sort -n \| cut -d\\  -f2-"}'<CR>
 

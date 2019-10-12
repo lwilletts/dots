@@ -1,0 +1,32 @@
+#!/bin/sh
+#
+# exetex
+
+test -e "$1" && ${EDITOR:-vi} "$1" && exit
+
+test -n "$1" && {
+    mkdir img
+    printf '%s' "\documentclass{article}
+\usepackage[parfill]{parskip}
+\usepackage[margin=1.25in]{geometry}
+\usepackage{graphicx}
+\graphicspath{ {./img/} }
+
+\title{}
+\author{Laurence Willetts}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\center \large
+
+\textbf{}
+
+\raggedright \normalsize
+
+\\end{document}
+" > "$1"
+
+    $EDITOR "$1"
+}

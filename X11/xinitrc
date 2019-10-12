@@ -16,11 +16,16 @@ hsetroot -solid "#DBDFE4"
 cwm &
 bars &
 sxhkd &
-compton &
 watcher &
 audiosinks
 unclutter &
 urxvtd -q -o -f &
+
+case "$(hostname)" in
+    inferno)     ;;
+    *) compton & ;;
+esac
+
 test -f ~/.Xresources && xrdb -load ~/.Xresources
 
 PRI="$(lsm -p)"
