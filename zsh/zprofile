@@ -3,10 +3,6 @@
 . ~/.zsh/ttycolors
 . ~/.zsh/environment.zsh
 
-type transmission-daemon 2>&1 > /dev/null && {
-    pgrep transmission-da 2>&1 > /dev/null || transmission-daemon
-}
-
 test -f "$DOTS/bin/startmenu" && {
     $DOTS/bin/startmenu
     clear

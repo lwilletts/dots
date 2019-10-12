@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# audiosink
+# audiosinks
 
 usage() {
     base=$(basename $0)
