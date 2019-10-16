@@ -76,7 +76,7 @@ c.zoom.levels = ['25%', '33%', '50%', '67%', '75%', '90%', '100%', '110%', '125%
 c.zoom.mouse_divider = 512
 
     # statusbar
-c.statusbar.hide = False
+c.statusbar.hide = True
 c.statusbar.position = 'bottom'
 c.statusbar.widgets = ['url', 'scroll']
 c.statusbar.padding = {'top': 5, 'bottom': 5, 'left': 5, 'right': 5}

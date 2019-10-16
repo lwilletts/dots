@@ -24,7 +24,7 @@ case "$mime_type" in
         mpvc next
         ;;
     application/pdf*)
-        mupdf "$1"
+        zathura "$1"
         ;;
     application/zip*)
         unzip "$1"

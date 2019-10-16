@@ -80,11 +80,6 @@ Plug 'skywind3000/asyncrun.vim'
     " vim speech
 Plug 'dense-analysis/ale'
 Plug 'w0rp/vim-speech'
-Plug 'vim-scripts/Speech'
-    nnoremap <Leader>r :call SpeechToText()<CR>
-    " nnoremap <Leader>s :call TextToSpeech()<CR>
-
-
 
     " snips
 Plug 'SirVer/ultisnips'

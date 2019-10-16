@@ -13,6 +13,10 @@ screens
 hsetroot -solid "#DBDFE4"
 
 # fwm
+PRI="$(lsm -p)"
+wmp "$(($(mattr x "$PRI") + $(mattr w "$PRI") / 2))" \
+    "$(($(mattr y "$PRI") + $(mattr h "$PRI") / 2))"
+
 cwm &
 bars &
 sxhkd &
@@ -27,10 +31,6 @@ case "$(hostname)" in
 esac
 
 test -f ~/.Xresources && xrdb -load ~/.Xresources
-
-PRI="$(lsm -p)"
-wmp "$(($(mattr x "$PRI") + $(mattr w "$PRI") / 2))" \
-    "$(($(mattr y "$PRI") + $(mattr h "$PRI") / 2))"
 
 while :; do
     sleep 99d

@@ -4,6 +4,11 @@
 unbind-key all
 unbind-mouse all
 
+bind-mouse M-1 window-move
+bind-mouse M-3 window-resize
+bind-mouse M-4 window-raise
+bind-mouse M-5 window-lower
+
 bind-key 4S-r restart
 bind-key MS-q window-delete
 bind-key M-z menu-window
@@ -42,6 +47,7 @@ sticky no
 moveamount 20
 borderwidth 2
 gap 10 40 10 20
+fontname 'Lemon:pixelsize=8'
 
 # colors
 color activeborder "#101010"
