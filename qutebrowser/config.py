@@ -21,8 +21,8 @@ c.input.forward_unbound_keys = 'auto'
 c.content.geolocation = False
 c.session.default_name = None
 
-c.url.start_pages = ['https://start.duckduckgo.com']
-c.url.default_page = 'https://start.duckduckgo.com'
+c.url.start_pages = ['file:///home/fyr/usr/start/start.html']
+c.url.default_page = 'file:///home/fyr/usr/start/start.html'
 c.window.title_format = '{current_title}'
 
     # custom binds
@@ -434,7 +434,7 @@ c.content.host_blocking.enabled = True
 # the adblocker on a given page, use the `content.host_blocking.enabled`
 # setting with a URL pattern instead. Local domains are always exempt
 # from hostblocking.
-c.content.host_blocking.whitelist = ['googleadservices.com']
+c.content.host_blocking.whitelist = ['googleadservices.com', 'adservice.google.com']
 
 ## Enable hyperlink auditing (`<a ping>`).
 ## Type: Bool
