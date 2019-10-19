@@ -30,7 +30,7 @@ mod1 + f
 mod1 + {g,a,m}
     move {center,vmaximise,maximise} $(pfw)
 mod1 + shift + {g,m}
-    move {center,maximise} $(pfw) $(lsm -p)
+    move {center,maximise} $(pfw) cycle
 mod1 + {Left,Down,Up,Right}
     move {left,bottom,top,right}
 mod1 + {s,v,e,shift + e}
