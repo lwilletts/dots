@@ -2,7 +2,7 @@
 
 # x11 environment
 xset +dpms # powersaving
-xset s off # no screensaver
+xset s 600 600 # time before blanking
 xset r rate 250 40 # better responsiveness
 xset +fp ~/.local/share/fonts # custom fonts directory
 xsetroot -cursor_name left_ptr # left pointer as cursor
@@ -18,10 +18,10 @@ wmp "$(($(mattr x "$PRI") + $(mattr w "$PRI") / 2))" \
     "$(($(mattr y "$PRI") + $(mattr h "$PRI") / 2))"
 
 cwm &
+pulse
 bars &
 sxhkd &
 watcher &
-audiosinks
 unclutter &
 urxvtd -q -o -f &
 

@@ -30,7 +30,7 @@ alias glances="glances --hide-kernel-threads"
 # audio
 alias sinks="pacmd list-sinks|awk '/index:/ {print \$0}; /name:/ {print \$0}; /device\.description/ {print \$0}'"
 alias sources="pacmd list-sources|awk '/index:/ {print \$0}; /name:/ {print \$0}; /device\.description/ {print \$0}'"
-alias routput="ffmpeg -f pulse -i alsa_output.pci-0000_00_1f.3.analog-stereo.monitor"
+alias record="ffmpeg -f pulse -i alsa_input.usb-Focusrite_Scarlett_Solo_USB-00.analog-stereo.remapped"
 
 # net
 alias ix="curl -F 'f:1=<-' ix.io"
@@ -63,8 +63,6 @@ alias taco="printf '%s\n' \"\$(curl -sL git.io/taco)\""
 alias bonsai="cat $HOME/.dots/ascii/bonsai"
 
 # misc
-alias motd="cat /etc/motd"
-alias issue="cat /etc/issue"
 alias happy="toilet -f term -w 200 -t --gay"
 alias metal="toilet -f term -w 200 -t --metal"
 alias gibberish="metal < /dev/urandom"

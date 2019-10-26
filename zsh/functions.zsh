@@ -65,5 +65,9 @@ man() {
     command man "$@"
 }
 
+sigkill() {
+    kill -9 $(pgrep $1)
+}
+
 # name / class / process of window id
 hash fwmrc 2> /dev/null && . fwmrc

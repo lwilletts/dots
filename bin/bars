@@ -2,6 +2,26 @@
 #
 # bars
 
+# bar variables
+barvar() {
+    . fwmrc
+    wmenv
+    wmgaps
+    wmcolours
+
+    BW=1
+    bar_fg="#$ACTIVE"
+    bar_bg="#$INACTIVE"
+    bar_border="#808080"
+    bar_font=$(awk '/lemon/ {print $3}' < ~/.Xresources | \
+               head -n 1 | cut -d',' -f 1)
+}
+
+runbar() {
+    lemonbar -d -g ${barw}x${barh}+${barx}+${bary} -B ${bar_bg} \
+        -F ${bar_fg} -R ${bar_border} -r $BW -f ${bar_font} -n "$1"
+}
+
 datebar() {
     calender="urxvtc -e sh -c '3cal'"
 
@@ -14,9 +34,7 @@ datebar() {
 
         printf '%s\n' "$buf"
         sleep 2
-    done | lemonbar -d -g ${barw}x${barh}+${barx}+${bary} -B ${bar_bg} \
-                    -F ${bar_fg} -R ${bar_border} -r $BW -f ${bar_font} \
-                    -n "datebar" | /bin/sh &
+    done | runbar "datebar" &
 }
 
 sysbar() {
@@ -31,9 +49,7 @@ sysbar() {
 
         printf '%s\n' "$buf"
         sleep 2
-    done | lemonbar -d -g ${barw}x${barh}+${barx}+${bary} -B ${bar_bg} \
-                    -F ${bar_fg} -R ${bar_border} -r $BW -f ${bar_font} \
-                    -n "sysbar" | /bin/sh &
+    done | runbar "sysbar" &
 }
 
 batbar() {
@@ -44,9 +60,7 @@ batbar() {
 
         printf '%s\n' "$buf"
         sleep 2
-    done | lemonbar -d -g ${barw}x${barh}+${barx}+${bary} -B ${bar_bg} \
-                    -F ${bar_fg} -R ${bar_border} -r $BW -f ${bar_font} \
-                    -n "batbar" | /bin/sh &
+    done | runbar "batbar" &
 }
 
 gpubartrigger() {
@@ -77,9 +91,7 @@ gpubar() {
 
         printf '%s\n' "$buf"
         sleep 2
-    done | lemonbar -d -g ${barw}x${barh}+${barx}+${bary} -B ${bar_bg} \
-                    -F ${bar_fg} -R ${bar_border} -r $BW -f ${bar_font} \
-                    -n "gpubar" | /bin/sh &
+    done | runbar "gpubar" &
 }
 
 volbar() {
@@ -99,9 +111,7 @@ volbar() {
 
         printf '%s\n' "$buf"
         sleep 0.1
-    done | lemonbar -d -g ${barw}x${barh}+${barx}+${bary} -B ${bar_bg} \
-                    -F ${bar_fg} -R ${bar_border} -r $BW -f ${bar_font} \
-                    -n "volbar" | /bin/sh &
+    done | runbar "volbar" &
 }
 
 tilebar() {
@@ -117,9 +127,7 @@ tilebar() {
 
         printf '%s\n' "$buf"
         sleep 2
-    done | lemonbar -d -g ${barw}x${barh}+${barx}+${bary} -B ${bar_bg} \
-                    -F ${bar_fg} -R ${bar_border} -r $BW -f ${bar_font} \
-                    -n "tilebar" | /bin/sh &
+    done | runbar "tilebar" &
 }
 
 musbartrigger() {
@@ -152,24 +160,11 @@ musbar() {
 
         printf '%s\n' "$buf"
         sleep 0.1
-    done | lemonbar -d -g ${barw}x${barh}+${barx}+${bary} -B ${bar_bg} \
-                    -F ${bar_fg} -R ${bar_border} -r $BW -f ${bar_font} \
-                    -n "musbar" | /bin/sh &
+    done | runbar "musbar" &
 }
 
 main() {
-    . fwmrc
-    wmenv
-    wmgaps
-    wmcolours
-
-    # bar variables
-    BW=1
-    bar_bg="#$INACTIVE"
-    bar_fg="#$ACTIVE"
-    bar_border="#808080"
-    bar_font=$(awk '/lemon/ {print $3}' < ~/.Xresources | \
-               head -n 1 | cut -d',' -f 1)
+    barvar
 
     # bar geometry
     PX="$(mattr x $PRI)"

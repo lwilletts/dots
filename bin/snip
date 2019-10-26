@@ -28,12 +28,19 @@ generateInfo() {
     test -e "$snapdir/cover.png" && rm "$snipdir/cover.png"
 }
 
+clean() {
+    rm "$snipdir/cover.png"
+    rm "$HOME/playingnow.png"
+}
+
 main() {
     snipdir=${snipdir:-/tmp/snip}
     test ! -d "$snipdir" && mkdir -p "$snipdir"
 
     trackOld=""
     trackNew="$(mpvc -f "%artist% - %title%                   ")"
+
+    trap clean EXIT
 
     while :; do
         test "$trackNew" != "$trackOld" && generateInfo
