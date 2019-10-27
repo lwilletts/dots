@@ -166,12 +166,14 @@ musbar() {
 main() {
     barvar
 
+    SEC="$(lsm | grep -v "$PRI")"
+
     # bar geometry
     PX="$(mattr x $PRI)"
     PW="$(mattr w $PRI)"
     PH="$(mattr h $PRI)"
     SH="$(mattr h $SEC)"
-    barx=$((PX + LGAP))
+    barx=$((PX + JUMP))
     bary=$((PH - BGAP + BGAP/2 - BGAP/5))
     barh=$((18 + BW*2))
 
@@ -193,7 +195,7 @@ main() {
             prevbary=$bary
             barx=$((PX + PW + LGAP))
             bary=$((SH - BGAP + BGAP/2 - BGAP/5))
-            barw=280
+            barw=300
             gpubartrigger &
             barx=$((prevbarx - barw - LGAP))
             bary=$prevbary

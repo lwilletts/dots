@@ -11,7 +11,7 @@ sclk="/sys/class/drm/card$number/device/pp_dpm_sclk"
 test -z "$sclk" && exit 1
 
 sensorOut="$(sensors)"
-VOLT=$(printf '%s\n' "$sensorOut" | awk '/vddgfx/ {print $2,$3}' | cut -c 2-)
+VOLT=$(printf '%s\n' "$sensorOut" | awk '/vddgfx/ {print $2,$3}')
 EDGE=$(printf '%s\n' "$sensorOut" | awk '/edge/ && $3 == "(crit" {print $2}' | cut -c 2-)
 JUNC=$(printf '%s\n' "$sensorOut" | awk '/junction/ && $3 == "(crit" {print $2}' | cut -c 2-)
 POWR=$(printf '%s\n' "$sensorOut" | awk '/power1/ {print $2,$3}')

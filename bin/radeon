@@ -4,7 +4,7 @@
 # run as root
 
 usage() {
-    base=$(basename $0)
+    base=$(basename "$0")
 
     cat >&2 << EOF
 Usage:
@@ -12,12 +12,12 @@ Usage:
     $base high              : Set lowest powerstate to max clocks.
     $base undervolt <value> : Manually set clockspeed in Mhz.
     $base info              : Show current clocks.
-    $base fan               : Manually set fan speed to value [0 - 255] or auto.
+    $base fan               : Manually set fan speed to value [0-255] or auto.
     $base temp              : Auto fan control.
     $base help              : Show this help.
 EOF
 
-    test $# -eq 0 || exit $1
+    test $# -eq 0 || exit "$1"
 }
 
 intCheck() {
@@ -50,7 +50,7 @@ undervolt() {
     printf '%s\n' "s 0 808" > "$odclk"
     printf '%s\n' "s 1 1800" > "$odclk"
     printf '%s\n' "m 1 1200" > "$odclk"
-    printf '%s\n' "vc 2 1900 "$1"" > "$odclk"
+    printf '%s\n' "vc 2 1900 $1" > "$odclk"
     printf '%s\n' "c" > "$odclk"
 }
 
@@ -91,8 +91,8 @@ fanCurve() {
 }
 
 info() {
-    cat $radeonPCI/pp_dpm_sclk
-    printf '%s\n'
+    cat "$radeonPCI/pp_dpm_sclk"
+    printf "\n"
     cat "$odclk"
 }
 
@@ -117,7 +117,7 @@ main() {
         fan)       fanCtrl  "$2"  ;;
         temp)      fanCurve       ;;
         info)      info           ;;
-        *)         usage          ;;
+        *)         usage 1        ;;
     esac
 }
 

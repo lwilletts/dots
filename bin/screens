@@ -35,6 +35,7 @@ brightness() {
             esac
             ;;
         sec|secondary)
+            SEC="$(lsm | grep -v "$PRI")"
             printf '%s\n' "$SEC" | while read -r SCREEN; do
                 case "$2" in
                     on)  filter $SCREEN 1 ;;
