@@ -40,10 +40,16 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DESKTOP_DIR="/home/fyr"
 export BROWSER="/usr/bin/qutebrowser"
 
-export VISUAL="nvim"
-export EDITOR="nvim"
-alias vi="$VISUAL"
-alias vim="$VISUAL"
+hash nvim 2> /dev/null && {
+	export VISUAL="nvim"
+	export EDITOR="nvim"
+	alias vi="$VISUAL"
+	alias vim="$VISUAL"
+} || {
+	export VISUAL="vim"
+	export EDITOR="vim"
+	alias vi="$VISUAL"
+}
 
 export PAGER="less"
 export FZF_DEFAULT_OPTS='--color=bw'

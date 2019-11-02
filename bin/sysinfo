@@ -58,7 +58,13 @@ getVars() {
     USER="$USER"
     HOST="$(hostname)"
     KERN="$(uname -r)"
-    TIME="$(uptime -p)"
+
+    hash busybox 2> /dev/null && {
+        TIME="$(uptime)"
+    } || {
+        TIME="$(uptime -p)"
+    }
+
     lspci | grep "Vega 20" 2>&1 > /dev/null && hash sensors 2> /dev/null && \
         GPU="$(gpu)"
 }
