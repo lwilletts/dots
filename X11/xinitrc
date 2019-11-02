@@ -32,6 +32,4 @@ esac
 
 test -f ~/.Xresources && xrdb -load ~/.Xresources
 
-while :; do
-    sleep 99d
-done
+xwait

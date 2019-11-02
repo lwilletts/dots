@@ -86,7 +86,7 @@ fanCurve() {
             1[0-9][0-9]) printf '%s\n' "200" > "$fanSpeed" ;;
         esac
 
-        sleep 1
+        sleep 3
     done
 }
 

@@ -2,15 +2,15 @@
 #
 # exetex
 
-test -e "$1" && ${EDITOR:-vi} "$1" && exit
+test -e "$1" && ${EDITOR:-vi} "$1.tex" && exit
 
 test -n "$1" && {
-    mkdir img
+    test ! -d img && mkdir img
     printf '%s' "\documentclass{article}
 \usepackage[parfill]{parskip}
 \usepackage[margin=1.25in]{geometry}
 \usepackage{graphicx}
-\graphicspath{ {./img/} }
+\graphicspath{{./img/}}
 
 \title{}
 \author{Laurence Willetts}
@@ -26,7 +26,7 @@ test -n "$1" && {
 \raggedright \normalsize
 
 \\end{document}
-" > "$1"
+" > "$1.tex"
 
-    $EDITOR "$1"
+    $EDITOR "$1.tex"
 }

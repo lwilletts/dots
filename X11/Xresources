@@ -15,6 +15,7 @@
 *.saveLines       : 16384
 
 /* URxvt general settings */
+URxvt.letterSpace    : 0
 URxvt.internalBorder : 10
 URxvt.externalBorder : 0
 URxvt.scrollBar      : 0
@@ -28,6 +29,7 @@ URxvt.url-select.underline   : true
 URxvt.keysym.M-y             : perl:primary:copy/
 
 /* URxvt transparency */
-URxvt.transparent : False
-Urxvt.depth       : 32
-URxvt.shading     : 20
+Urxvt.depth         : 32
+URxvt.shading       : 170
+URxvt.transparent   : false
+URxvt.inheritPixmap : false

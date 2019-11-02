@@ -25,6 +25,7 @@ hi Directory    ctermfg=3    ctermbg=0    cterm=NONE
 hi Underlined   ctermfg=7    ctermbg=NONE cterm=UNDERLINE
 hi WarningMsg   ctermfg=1    ctermbg=NONE cterm=NONE
 hi FoldColumn   ctermfg=4    ctermbg=NONE cterm=NONE
+hi SignColumn   ctermfg=0    ctermbg=NONE cterm=NONE
 
 hi Cursor       ctermfg=7    ctermbg=NONE cterm=NONE
 hi CursorLine   ctermfg=NONE ctermbg=NONE cterm=NONE
@@ -80,3 +81,25 @@ hi TabLine      ctermfg=7    ctermbg=NONE cterm=NONE
 hi TabLineSel   ctermfg=7    ctermbg=NONE cterm=NONE
 hi TabLineFill  ctermfg=7    ctermbg=NONE cterm=NONE
 hi Question     ctermfg=NONE ctermbg=NONE cterm=NONE
+
+    " plugins
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+hi ALEError                  ctermfg=NONE ctermbg=NONE cterm=NONE
+hi ALEErrorSign              ctermfg=0    ctermbg=1    cterm=NONE
+hi ALEErrorSignLineNr        ctermfg=NONE ctermbg=NONE cterm=NONE
+hi ALEWarning                ctermfg=NONE ctermbg=NONE cterm=NONE
+hi ALEWarningLine            ctermfg=NONE ctermbg=NONE cterm=NONE
+hi ALEWarningSign            ctermfg=0    ctermbg=4    cterm=NONE
+hi ALEWarningSignLineNr      ctermfg=NONE ctermbg=NONE cterm=NONE
+hi ALEStyleError             ctermfg=5    ctermbg=NONE cterm=NONE
+hi ALEStyleErrorSign         ctermfg=0    ctermbg=5    cterm=NONE
+hi ALEStyleErrorSignLineNr   ctermfg=NONE ctermbg=NONE cterm=NONE
+hi ALEStyleWarning           ctermfg=5    ctermbg=NONE cterm=NONE
+hi ALEStyleWarningSign       ctermfg=0    ctermbg=5    cterm=NONE
+hi ALEStyleWarningSignLineNr ctermfg=NONE ctermbg=NONE cterm=NONE
+
+hi ALEInfo                   ctermfg=NONE ctermbg=NONE cterm=NONE
+hi ALEInfoSign               ctermfg=NONE ctermbg=NONE cterm=NONE
+hi ALEInfoLine               ctermfg=NONE ctermbg=NONE cterm=NONE
+hi ALEInfoSignLineNr         ctermfg=NONE ctermbg=NONE cterm=NONE

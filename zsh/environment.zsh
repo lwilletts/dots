@@ -55,4 +55,3 @@ export PAGER="less"
 export FZF_DEFAULT_OPTS='--color=bw'
 
 alias white="sed 's/\x1B\[[0-9;]*[JKmsu]//g'"
-alias lesscolor="nocolor | $PAGER"

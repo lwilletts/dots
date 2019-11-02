@@ -1,2 +1,45 @@
+# appearence
+set font "monospace normal 9"
+set page-padding 2
+set adjust-open width
+set show-scrollbars false
+set statusbar-v-padding 20
+set statusbar-h-padding 40
+set window-width 800
+set window-height 800
+
+# colours
+set default-fg "#101010"
+set default-bg "#EFEFEF"
+set inputbar-fg "#101010"
+set inputbar-bg "#EFEFEF"
+set statusbar-fg "#101010"
+set statusbar-bg "#EFEFEF"
+
+set completion-fg "#101010"
+set completion-bg "#EFEFEF"
+set completion-group-fg "#101010"
+set completion-group-bg "#EFEFEF"
+set completion-highlight-fg "#EFEFEF"
+set completion-highlight-bg "#101010"
+set highlight-color "#A7A7A7"
+set highlight-active-color "#B23450"
+set highlight-transparency 0.3
+
+set notification-fg "#101010"
+set notification-bg "#EFEFEF"
+set notification-error-fg "#EFEFEF"
+set notification-error-bg "#B23450"
+set notification-warning-fg "#EFEFEF"
+set notification-warning-bg "#7086B3"
+
+# titles
 set statusbar-basename true
+set window-title-basename true
+
+# behaviour
+set scroll-step 50
+set render-loading false
+set first-page-column 1:1
+set abort-clear-search true
 set selection-clipboard clipboard

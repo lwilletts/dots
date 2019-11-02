@@ -41,15 +41,17 @@ cutfile() {
 }
 
 main() {
-    mpvc > /dev/null
+    SOCKET="/tmp/vidsocket"
+
+    mpvc -S "$SOCKET" > /dev/null
     test $? -eq 3 && usage 1
-    test -z "$(mpvc -f "%ab-loop-b%")" && usage 1
+    test -z "$(mpvc -S "$SOCKET" -f "%ab-loop-b%")" && usage 1
 
     case "$1" in
         -p|--precise) precise=true ;;
     esac
 
-    cutfile "$(mpvc -f "%path%|%ab-loop-a%|%ab-loop-b%")"
+    cutfile "$(mpvc -S "$SOCKET" -f "%path%|%ab-loop-a%|%ab-loop-b%")"
 }
 
 main "$@"

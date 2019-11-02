@@ -8,13 +8,13 @@ export FFF_COL5=0
 
 # fav
 export FFF_FAV1=~/usr/vid
-export FFF_FAV2=~/usr/vid/rec
-export FFF_FAV3=~/usr/vid/yt/music
-export FFF_FAV4=~/usr/mus
-export FFF_FAV5=~/usr/img
-export FFF_FAV6=~/usr/torrents
+export FFF_FAV2=~/usr/vid/yt/music
+export FFF_FAV3=~/usr/mus
+export FFF_FAV4=~/usr/img
+export FFF_FAV5=~/usr/doc
+export FFF_FAV6=
 export FFF_FAV7=
-export FFF_FAV8=
+export FFF_FAV8=~/usr/torrents
 export FFF_FAV9=~/tmp
 
 # config

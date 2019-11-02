@@ -45,7 +45,7 @@ ignore Popup
 # style
 sticky no
 moveamount 20
-borderwidth 2
+borderwidth 1
 gap 10 40 10 20
 fontname 'Lemon:pixelsize=8'
 

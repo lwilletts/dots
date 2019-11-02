@@ -5,9 +5,10 @@
 # conversion layer to get the paste's raw location
 rawp() {
     case "$URL" in
-        *pbin.in/*)        URL="http://pbin.in/raw/$(echo $URL | cut -d/ -f 4)"                 ;;
-        *pastebin.com/*)   URL="http://pastebin.com/raw/$(echo $URL | cut -d/ -f 4)"            ;;
-        *paste.list.org/*) URL="http://paste.lisp.org/display/$(echo $URL | cut -d/ -f 4)/raw"  ;;
+        *pbin.in/*)        URL="https://pbin.in/raw/$(echo "$URL" | cut -d/ -f 4)"                 ;;
+        *pastebin.com/*)   URL="https://pastebin.com/raw/$(echo "$URL" | cut -d/ -f 4)"            ;;
+        *paste.list.org/*) URL="https://paste.lisp.org/display/$(echo "$URL" | cut -d/ -f 4)/raw"  ;;
+        *dpaste.com/*)     URL="$URL.txt" ;;
     esac
 }
 
@@ -37,7 +38,11 @@ for arg in "$@"; do
             ;;
         *.mkv|*.mp4|*.ogv|*youtu.be/*|*youtube.com/watch*|\
         *.googlevideo.com/videoplayback*)
-            mpv "$URL" --really-quiet --loop-file
+            mpvc pause
+            SOCKET="/tmp/vidsocket"
+            mpvc -a "$URL" -S "$SOCKET"
+            mpvc move $(mpvc -S "$SOCKET" -f "%playlistlength% %position%")  -S "$SOCKET"
+            mpvc next -S "$SOCKET"
             ;;
         *.gifv|*.webm|*.gif)
             openBrowser
@@ -49,7 +54,7 @@ for arg in "$@"; do
         *pastebin.com/raw*|*pbin.in/raw*)
             urxvt -e zsh -c "curl -s $URL | $EDITOR -"
             ;;
-        *paste.lisp.org/*|*pastebin.com/*|*pbin.in/*)
+        *paste.lisp.org/*|*pastebin.com/*|*pbin.in/*|*dpaste.com/*)
             rawp
             urxvt -e zsh -c "curl -s $URL | $EDITOR -"
             ;;
