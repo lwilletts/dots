@@ -55,7 +55,7 @@ batbar() {
     while :; do
         buf=""
         buf="${buf} %{c}"
-        buf="${buf} $(bat) "
+        buf="${buf} $(bat acpi) "
 
         printf '%s\n' "$buf"
         sleep 2

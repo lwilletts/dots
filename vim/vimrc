@@ -340,7 +340,7 @@ autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 autocmd! FileType c      setlocal ts=4 sw=4 sts=4
 autocmd! FileType sh     setlocal makeprg=sh\ %\
-autocmd! FileType md     setlocal spell makeprg=
+autocmd! FileType md     setlocal spell makeprg=pandoc\ %\ -o\ %.r
 autocmd! FileType tex    setlocal spell makeprg=pdflatex\ %
 autocmd! FileType txt    setlocal tw=0 spell noexpandtab wrap linebreak
 autocmd! FileType css    setlocal ts=4 sw=4 sts=4
