@@ -115,6 +115,7 @@ endif
 
     " custom syntax
 Plug 'baskerville/vim-sxhkdrc'
+Plug 'kovetskiy/sxhkd-vim'
 
 call plug#end()
 "}}}
@@ -254,6 +255,7 @@ set equalalways
 set noshowcmd
 set noshowmode
 set laststatus=0
+" set statusline=%f
 
 " fuck the readonly warning
 au BufEnter * set noro

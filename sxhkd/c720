@@ -4,7 +4,7 @@
 {mod1, mod2} + shift + Return
     urxvtc -cd "$(mpvc -f "%path%" | rev | cut -d\/ -f 2- | rev)" -g 85x24
 mod1 + {d, w, shift + w}
-    {drun, wmenu -b, wmenu -b all}
+    {drun, wmenu -c, wmenu -c all}
 {~button3, ~button5}
     {under "wmenu -m", under "cmdmenu"}
 
@@ -19,6 +19,8 @@ mod1 + {b, shift + b}
     screens {sec toggle, all 0.7}
 
 # manipulation
+mod1 + shift + q
+    killw $(pfw)
 mod1 + {Tab,p,n}
     focus {prev,prev,cycle}
 mod1 + {h,j,k,l}
@@ -27,14 +29,22 @@ mod1 + shift + {h,j,k,l}
     adjust {left,down,up,right} $(pfw)
 mod1 + f
     full $(pfw)
-mod1 + {g,a,m}
-    move {center,vmaximise,maximise} $(pfw)
+mod1 + {g,a,m,equal,minus,shift + plus,shift + underscore}
+    move {center,vmaximise,maximise,grow,shrink,double,halve} $(pfw)
 mod1 + shift + {g,m}
-    move {center,maximise} $(pfw) $(lsm -p)
+    move {center,maximise} $(pfw) cycle
 mod1 + {Left,Down,Up,Right}
     move {left,bottom,top,right}
 mod1 + {s,v,e,shift + e}
     tile {-s,-v,-br,-bl}
+
+# groups
+mod1 + {1,2,3,4,5,6,7,8,9}
+    group -t {1,2,3,4,5,6,7,8,9}
+mod1 + shift + {1,2,3,4,5,6,7,8,9}
+    group -a {1,2,3,4,5,6,7,8,9}
+mod1 + c
+    group -c $(pfw)
 
 # music
 XF86AudioMute
@@ -47,8 +57,6 @@ mod4 + {h,j,k,l}
     mpvc seek {-5s,-30s,30s,5s} -q
 mod4 + {space,Tab,n,p,z,c,BackSpace}
     mpvc {toggle,next,next,prev,shuffle,clear,remove current} -q
-mod4 + {button3,button8,button9}
-    mpvc {toggle, prev, next} -q
 mod4 + a
     find ~/usr/mus/* -type f | sort -R | mpvc add -q
 F8

@@ -29,8 +29,8 @@ mod1 + shift + {h,j,k,l}
     adjust {left,down,up,right} $(pfw)
 mod1 + {f,shift + f}
     {full $(pfw), full $(pfw) HDMI-A-2}
-mod1 + {g,a,m}
-    move {center,vmaximise,maximise,grow,shrink} $(pfw)
+mod1 + {g,a,m,equal,minus,shift + plus,shift + underscore}
+    move {center,vmaximise,maximise,grow,shrink,double,halve} $(pfw)
 mod1 + shift + {g,m}
     move {center,maximise} $(pfw) cycle
 mod1 + {Left,Down,Up,Right}
