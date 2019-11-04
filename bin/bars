@@ -163,7 +163,7 @@ musbar() {
 }
 
 groupbarinfo() {
-    test -z "$(find "${groupdir:?}" -maxdepth 0 -empty)" && {
+    test -n "$(find "$groupdir" -maxdepth 1 -name '?' -print -quit)" && {
         for groupfile in "$groupdir"/?; do
             group="$(printf '%s\n' "$groupfile" | rev | cut -d/ -f 1 | rev)"
 
@@ -175,7 +175,16 @@ groupbarinfo() {
                 "discord") class="Discord" ;;
             esac
 
-            printf '%s' "/ %{A:group -t $group focus:} $class: $(wname "$wid") %{A} "
+            cmd="group -t $group focus"
+
+            title() {
+                name="$(wname "$wid" | cut -c -50)"
+                printf '%s' "$name"
+            }
+
+            test ! -z "$class" && {
+                printf '%s' "/ %{A:$cmd:} $class: $(title) %{A} "
+            }
         done
     }
 }

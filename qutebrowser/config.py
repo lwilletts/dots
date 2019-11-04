@@ -120,7 +120,7 @@ c.tabs.pinned.shrink = True
 c.tabs.new_position.stacking = True
 c.tabs.new_position.unrelated = 'last'
 c.tabs.tabs_are_windows = False
-c.tabs.show = 'multiple'
+c.tabs.show = 'always'
 c.tabs.show_switching_delay = 1000
 c.new_instance_open_target_window = 'last-focused'
 
