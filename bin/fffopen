@@ -18,9 +18,6 @@ case "$mime_type" in
         mpvc pause
         SOCKET="/tmp/vidsocket"
         mpvc -a "$1" -S "$SOCKET"
-        mpvc -S "$SOCKET" -f "%playlistlength% %position%"
-        mpvc move $(mpvc -S "$SOCKET" -f "%playlistlength% %position%") -S "$SOCKET"
-        mpvc next
         ;;
     audio/*)
         mpvc add "$1"
