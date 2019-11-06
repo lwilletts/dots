@@ -24,7 +24,7 @@ case "$mime_type" in
         ;;
     audio/*)
         mpvc add "$1"
-        mpvc move "$(mpvc -f "%playlistlength% %position%")"
+        mpvc move $(mpvc -f "%playlistlength% %position%")
         mpvc next
         ;;
     application/pdf*)
