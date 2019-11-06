@@ -9,7 +9,7 @@ manual() {
     CHR="$(cat "$BAT/charge_now")"
     MAX="$(cat "$BAT/charge_full")"
     STATUS="$(cat "$BAT/status")"
-    PERCENT="$(printf '%.2f\n' "$(echo "$CHR/$MAX*100" | bc -l)")"
+    PERCENT="$(printf '%.2f\n' "$(echo "$CHR/$MAX*100" | bc -l)" | cut -d. -f 1)"
 }
 
 acpidata() {
@@ -25,16 +25,22 @@ case "$1" in
 esac
 
 case "$STATUS" in
-    "Charging")
+    "Full"|"Charging")
         printf '%s\n' "$PERCENT% ⮒"
         ;;
     "Discharging")
-        test "$(echo "$PERCENT <= 40" | bc)" -eq 1 && printf '%s\n' "$PERCENT% ⮐"
-        test "$(echo "$PERCENT >= 80" | bc)" -eq 1 && printf '%s\n' "$PERCENT% ⮎"
-        test "$(echo "$PERCENT < 80" | bc)" -eq 1 && {
-            test "$(echo "$PERCENT >= 60" | bc)" -eq 1 && {
+        case "$PERCENT" in
+            100)
+                printf '%s\n' "$PERCENT% ⮎"
+                ;;
+            [6-9][0-9])
+                printf '%s\n' "$PERCENT% ⮎"
+                ;;
+            [4-5][0-9])
                 printf '%s\n' "$PERCENT% ⮏"
-            }
-        }
-        ;;
+                ;;
+            [0-3][0-9])
+                printf '%s\n' "$PERCENT% ⮐"
+                ;;
+        esac
 esac

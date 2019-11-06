@@ -5,8 +5,8 @@
     urxvtc -cd "$(mpvc -f "%path%" | rev | cut -d\/ -f 2- | rev)" -g 85x24
 mod1 + {d, w, shift + w}
     {drun, wmenu -c, wmenu -c all}
-{~button3, ~button5}
-    {under "wmenu -m", under "cmdmenu"}
+~button3
+    under "wmenu -m"
 
 # sys
 mod4 + shift + l

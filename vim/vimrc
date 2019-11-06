@@ -115,7 +115,6 @@ endif
 
     " custom syntax
 Plug 'baskerville/vim-sxhkdrc'
-Plug 'kovetskiy/sxhkd-vim'
 
 call plug#end()
 "}}}
@@ -340,7 +339,7 @@ autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 autocmd! FileType c      setlocal ts=4 sw=4 sts=4
 autocmd! FileType sh     setlocal makeprg=sh\ %\
-autocmd! FileType md     setlocal spell makeprg=pandoc\ %\ -o\ %.r
+autocmd! FileType md     setlocal spell makeprg=pandoc\ %\ -o\ %:r.pdf
 autocmd! FileType tex    setlocal spell makeprg=pdflatex\ %
 autocmd! FileType txt    setlocal tw=0 spell noexpandtab wrap linebreak
 autocmd! FileType css    setlocal ts=4 sw=4 sts=4
@@ -353,7 +352,8 @@ autocmd! BufNewFile,BufRead *fstab           setlocal filetype=fstab tw=0
 autocmd! BufNewFile,BufRead *Pkgfile         setlocal filetype=sh noet
 autocmd! BufNewFile,BufRead *.gitconfig      setlocal filetype=gitconfig noet
 autocmd! BufNewFile,BufRead *.zsh,*.zprofile setlocal filetype=sh
-autocmd! BufWritePost *.md silent make %
+
+" filetype write
 autocmd! BufWritePost *.tex silent make %
 
 set history=1000

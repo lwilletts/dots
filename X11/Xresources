@@ -5,6 +5,8 @@
 *.modifier : mod4
 *.font     : -benis-lemon-*-*-*-*-*-*-*-*-*-*-*-*
 *.boldFont : -benis-lemon-*-*-*-*-*-*-*-*-*-*-*-*
+/* -FontForge-miniwi-Regular-R-Normal--16-*-*-*-*-*-*-* */
+/* -FontForge-miniwi-Regular-R-Normal--16-*-*-*-*-*-*-* */
 
 /* general settings */
 *.cursorBlink     : 0
