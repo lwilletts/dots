@@ -262,7 +262,7 @@ au BufEnter * set noro
 syntax on
 
 try
-    colorscheme subtle
+    colorscheme lightish
 catch
 endtry
 
@@ -411,7 +411,7 @@ if has('nvim')
     autocmd TermClose * silent! bd!
 
     function! QuickTerminal()
-        20new
+        10new
         terminal
     endfunction
 

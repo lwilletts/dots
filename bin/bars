@@ -14,8 +14,9 @@ barvar() {
     bar_fg="#$ACTIVE"
     bar_bg="#$INACTIVE"
     bar_border="#808080"
-    bar_font=$(awk '/lemon/ {print $3}' < ~/.Xresources | \
-               head -n 1 | cut -d',' -f 1)
+    bar_active="%{F#$ACTIVE}"
+    bar_inactive="%{F$bar_border}"
+    bar_font=$(awk '/font/ {print $3}' < ~/.Xresources | cut -d',' -f 1)
 }
 
 runbar() {
@@ -45,7 +46,6 @@ sysbar() {
         mem="$(free -m | awk '/Mem:/ {print $3}')/$(free -m | awk '/Mem:/ {print $2}')" buf=""
         buf="${buf} %{c}"
         buf="${buf} %{A:${htop}:} $(cpu t) / ${mem} %{A}"
-
         printf '%s\n' "$buf"
         sleep 2
     done | runbar "sysbar" | /bin/sh &
@@ -68,7 +68,7 @@ gpubartrigger() {
         temp="$(gpu | cut -d\  -f 4 | cut -c 1-2)"
 
         case "$temp" in
-            6[0-9]|7[0-9]|8[0-9]|9[0-9]|1[0-9][0-9])
+            6[0-9]|7[0-9]|8[0-9]|9[0-9]|1[0-9])
                 test -z "$process" && gpubar
                 ;;
             *)
@@ -113,22 +113,6 @@ volbar() {
     done | runbar "volbar" | /bin/sh &
 }
 
-tilebar() {
-    while :; do
-        buf=""
-        buf="${buf} %{c}"
-        buf="${buf} %{A:tile restore:} ⮛ %{A}"
-        buf="${buf} %{A:tile bigleft:} ⮘ %{A}"
-        buf="${buf} %{A:tile bigright:} ⮙ %{A}"
-        buf="${buf} %{A:tile vertical:} ⮚ %{A}"
-        buf="${buf} %{A:tile middle:} ⮽ %{A}"
-        buf="${buf} %{A:tile split:} ⮧ %{A}"
-
-        printf '%s\n' "$buf"
-        sleep 2
-    done | runbar "tilebar" | /bin/sh &
-}
-
 musbartrigger() {
     while :; do
         process="$(ps x | awk '/lemonbar/ && /musbar/ && !/awk/ {print $1}')"
@@ -167,32 +151,53 @@ groupbarinfo() {
         for groupfile in "$groupdir"/?; do
             group="$(printf '%s\n' "$groupfile" | rev | cut -d/ -f 1 | rev)"
 
-            # take top wid from group
-            wid="$(head -n 1 "$groupfile")"
-
-            class="$(name "$wid")"
-            case "$class" in
-                "discord") class="Discord" ;;
-            esac
+            grep -q "$group" "$activegrp" && {
+                activity="$bar_active"
+            } || {
+                activity="$bar_inactive"
+            }
 
             cmd="group -t $group focus"
+            wid="$(head -n 1 "$groupfile")"
 
-            title() {
-                name="$(wname "$wid" | cut -c -50)"
-                printf '%s' "$name"
-            }
-
-            test ! -z "$class" && {
-                printf '%s' "/ %{A:$cmd:} $class: $(title) %{A} "
-            }
+            case "$1" in
+                text)
+                    printf '%s' "$(wname "$wid")   "
+                    ;;
+                *)
+                    printf '%s' "$bar_inactive | $bar_active$activity%{A:$cmd:} $(wname "$wid") %{A}"
+                    ;;
+            esac
         done
     }
 }
 
 groupbartrigger() {
+    width() {
+        echo "($(txtw -f "$FONT" "$(groupbarinfo text)") * 0.77) / 1" | bc
+    }
+
+    matchwid() {
+        for wid in $(lsw -a); do
+            printf '%s\n' "$wid $(wname "$wid")"
+        done
+    }
+
+    groupbar
+
+    sleep 0.1
+    wid="$(matchwid | grep "groupbar" | grep -v grep | cut -d\  -f 1)"
+
     while :; do
         # dynamically resize bar to text length
-        barw=
+        barw="$(width)"
+        curw="$(wattr w "$wid")"
+
+        test "$barw" -ne "$curw" && {
+            wrs "$((barw - curw))" 0 "$wid"
+            chwso -l "$wid"
+        }
+
         sleep 0.1
     done
 }
@@ -200,8 +205,8 @@ groupbartrigger() {
 groupbar() {
     while :; do
         buf=""
-        buf="${buf} %{c}"
-        buf="${buf} $(groupbarinfo | cut -d/ -f 2-)"
+        buf="${buf} %{l}"
+        buf="${buf} $(groupbarinfo | cut -d\| -f 2-)"
 
         printf '%s\n' "$buf"
         sleep 0.1
@@ -222,7 +227,7 @@ main() {
     bary=$((PH - BGAP + BGAP/2 - BGAP/5))
     barh=$((18 + BW*2))
 
-    barw=55
+    barw=50
     volbar
 
     barx=$((barx + barw + LGAP))
@@ -234,15 +239,15 @@ main() {
         fyriousa)
             prevbarx=$barx
             prevbary=$bary
+            barw=300
             barx=$((PX + PW + LGAP))
             bary=$((SH - BGAP + BGAP/2 - BGAP/5))
-            barw=300
             gpubartrigger &
             barx=$((prevbarx - barw - LGAP))
             bary=$prevbary
             barx=$((barx + barw + LGAP))
-            barw=1000
-            groupbar
+            barw=$((PW - barx))
+            groupbartrigger &
             ;;
         inferno)
             barw=70

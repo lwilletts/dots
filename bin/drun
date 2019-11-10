@@ -1,20 +1,22 @@
 #!/bin/zsh
 
 . fwmrc
+wmenv
 wmgaps
 wmcolours
 
 FONT=$(awk '/font/ {print $3}' < ~/.Xresources | cut -d',' -f 1)
 
-X=-2
+X=0
 H=28
-Y="$(($(mattr h $PFM) - $H - 2))"
+Y="$(($(mattr h $PFM) - $H))"
+W="$(($(mattr w $PFM) - $BW * 2))"
 
 printf '%s\n' "$PATH" | sed 's/:/\n/g' | while read -r dir; do
     printf '%s\n' "$(find -L $dir/* -type f -executable)" | \
         rev | cut -d/ -f 1 | rev
 done | sort -u | \
-dmenu -name "drun" -f -x $X -y $Y -h $H -s "$(mattr d $PFM)"  -fn "$FONT" -p "Run >" \
+dmenu -name "drun" -f -x $X -y $Y -w $W -h $H -s "$(mattr d $PFM)"  -fn "$FONT" -p "Run >" \
 -nf "#$ACTIVE" -sf "#$URGENT" -nb "#$INACTIVE" -sb "#$INACTIVE" -bc "#$ACTIVE" \
--bw 1 \
+-bw 0 \
 | ${SHELL:-"/bin/sh"} &

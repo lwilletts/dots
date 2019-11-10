@@ -1,5 +1,5 @@
 # appearence
-set font "monospace normal 9"
+set font "monospace regular 8"
 set page-padding 2
 set adjust-open width
 set show-scrollbars false
@@ -9,29 +9,34 @@ set window-width 800
 set window-height 800
 
 # colours
-set default-fg "#101010"
-set default-bg "#EFEFEF"
-set inputbar-fg "#101010"
-set inputbar-bg "#EFEFEF"
-set statusbar-fg "#101010"
-set statusbar-bg "#EFEFEF"
+set default-fg "#EFEFEF"
+set default-bg "#101010"
+set inputbar-fg "#EFEFEF"
+set inputbar-bg "#101010"
+set statusbar-fg "#EFEFEF"
+set statusbar-bg "#101010"
 
-set completion-fg "#101010"
-set completion-bg "#EFEFEF"
-set completion-group-fg "#101010"
-set completion-group-bg "#EFEFEF"
-set completion-highlight-fg "#EFEFEF"
-set completion-highlight-bg "#101010"
+set completion-fg "#EFEFEF"
+set completion-bg "#101010"
+set completion-group-fg "#EFEFEF"
+set completion-group-bg "#101010"
+set completion-highlight-fg "#101010"
+set completion-highlight-bg "#EFEFEF"
 set highlight-color "#A7A7A7"
 set highlight-active-color "#B23450"
 set highlight-transparency 0.3
 
-set notification-fg "#101010"
-set notification-bg "#EFEFEF"
-set notification-error-fg "#EFEFEF"
-set notification-error-bg "#B23450"
-set notification-warning-fg "#EFEFEF"
-set notification-warning-bg "#7086B3"
+set notification-fg "#EFEFEF"
+set notification-bg "#101010"
+set notification-error-fg "#B23450"
+set notification-error-bg "#101010"
+set notification-warning-fg "#7086B3"
+set notification-warning-bg "#101010"
+
+set recolor false
+set recolor-keephue true
+set recolor-reverse-video false
+set recolor-darkcolor "#EFEFEF"
 
 # titles
 set statusbar-basename true

@@ -51,6 +51,9 @@ hash nvim 2> /dev/null && {
 	alias vi="$VISUAL"
 }
 
+export GAME1="$HOME/.steam/steam/steamapps/common"
+export GAME2="/mnt/speed/steamapps/common"
+
 export PAGER="less"
 export FZF_DEFAULT_OPTS='--color=bw'
 

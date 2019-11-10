@@ -1,12 +1,14 @@
-# menus
+# menus & mouse
 {mod1, mod2} + Return
     urxvtc -g 85x24
 {mod1, mod2} + shift + Return
     urxvtc -cd "$(mpvc -f "%path%" | rev | cut -d\/ -f 2- | rev)" -g 85x24
-mod1 + {d, w, shift + w}
-    {drun, wmenu -c, wmenu -c all}
+mod1 + {d,w,shift + w}
+    {drun,wmenu -c,wmenu -c all}
 ~button3
     under "wmenu -m"
+mod1 + {@button1,@button3,button4,button5}
+    {xmmv,xmrs,chwso -r,chwso -l} $(pfw)
 
 # sys
 mod4 + shift + l
@@ -15,8 +17,6 @@ mod1 + shift + r
     pkill -USR1 -x sxhkd
 mod1 + ctrl + BackSpace
     pkill xinit
-mod1 + {b, shift + b}
-    screens {sec toggle, all 0.7}
 
 # manipulation
 mod1 + shift + q
@@ -47,6 +47,10 @@ mod1 + {e,shift + e}
     group -C {next,prev}
 mod1 + c
     group -c $(pfw)
+
+# vid
+mod1 + {comma,period,space,slash}
+    mpvc {prev,next,toggle,play $} -S /tmp/vidsocket -q
 
 # music
 XF86AudioMute

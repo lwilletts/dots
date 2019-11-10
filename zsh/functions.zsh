@@ -42,12 +42,12 @@ zshrc() {
     unset -v RWD
 }
 
-findexec() {
+fe() {
     find . -maxdepth 1 -type f -executable | sort
 }
 
-editexec() {
-    $EDITOR $(findexec) "$@"
+ee() {
+    $EDITOR $(fe) "$@"
 }
 
 usr() {
@@ -67,6 +67,14 @@ man() {
 
 sigkill() {
     kill -9 $(pgrep $1)
+}
+
+mpvv() {
+    mpvc "$@" -S "/tmp/vidsocket"
+}
+
+mpvi() {
+    mpv "$@" --pause &!
 }
 
 # name / class / process of window id
