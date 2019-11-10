@@ -1,4 +1,5 @@
 adapta-gtk-theme
+adobe-source-code-pro-fonts
 aerc
 alsa-utils
 autoconf
@@ -6,6 +7,7 @@ automake
 avr-gcc
 avr-libc
 avrdude
+base
 bash
 bc
 binutils
@@ -18,7 +20,6 @@ bzip2
 cava-git
 cmake
 compiler-rt
-compton
 con2fbmap
 coreutils
 cronie
@@ -40,6 +41,7 @@ djvulibre
 dmenu-ee-git
 dtach
 e2fsprogs
+epson-inkjet-printer-escpr
 epson-inkjet-printer-escpr2
 exfat-utils
 fakeroot
@@ -54,6 +56,7 @@ filesystem
 findutils
 flex
 fontforge
+fonttosfnt
 gallium-nine-git
 gawk
 gbdfed
@@ -69,12 +72,12 @@ glibc
 gmime3
 gnu-netcat
 go
-google-cloud-sdk
 gotop-bin
 grep
 groff
 gtk-engine-murrine
 gtk-engines
+gutenprint
 gzip
 hddtemp
 hsetroot
@@ -93,6 +96,7 @@ less
 lib32-libpng12
 lib32-mesa
 lib32-vulkan-icd-loader
+libconfig
 libglvnd
 libldac
 libmupdf
@@ -101,6 +105,7 @@ libreoffice-fresh
 libtool
 libva-intel-driver
 libva1-intel-driver
+libxdg-basedir
 licenses
 linux
 linux-firmware
@@ -131,19 +136,22 @@ ninja
 notmuch
 notmuch-runtime
 npm
+ntp
 obs-linuxbrowser-bin
 obs-studio
 ocl-icd
 openssh
 openssl-1.0
+otf-overpass
 pacman
 pacman-contrib
-pandoc
+pandoc-bin
 pass
 patch
 pavucontrol
 pciutils
 perl
+picom-git
 piper
 pkgconf
 pkgfile
@@ -225,6 +233,7 @@ util-linux
 vi
 vkd3d
 vkquake2
+vulkan-tools
 w3m
 wget
 which
@@ -241,6 +250,7 @@ xfsprogs
 xorg-mkfontscale
 xorg-server
 xorg-xev
+xorg-xfontsel
 xorg-xinit
 xorg-xprop
 xorg-xsetroot
