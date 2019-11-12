@@ -16,55 +16,54 @@ openBrowser() {
     qutebrowser "$URL"
 }
 
-for arg in "$@"; do
-    URL="$arg"
+URL="$*"
 
-    # sync clipboards
-    alias xsel="xsel -l /dev/null"
-    printf '%s\n' "$URL" | xsel -pi
-    printf '%s\n' "$URL" | xsel -si
-    printf '%s\n' "$URL" | xsel -bi
+# sync clipboards
+alias xsel="xsel -l /dev/null"
+printf '%s\n' "$URL" | xsel -pi
+printf '%s\n' "$URL" | xsel -si
+printf '%s\n' "$URL" | xsel -bi
 
-    case "$URL" in
-        *imgur.com/*)
-            # fuck you imgur albums
-            # URL=$(curl -s "$URL" | \
-            #     sed -nE 's/^.*<link rel="image_src"[[:space:]]+href="([^"]+)".*$/\1/p')
+case "$URL" in
+    *imgur.com/*)
+        # fuck you imgur albums
+        # URL=$(curl -s "$URL" | \
+        #     sed -nE 's/^.*<link rel="image_src"[[:space:]]+href="([^"]+)".*$/\1/p')
 
-            mpv "$URL" --really-quiet --loop-file
-            ;;
-        *.jp*g|*.png)
-            mpv "$URL" --really-quiet --loop-file
-            ;;
-        *.mkv|*.mp4|*.ogv|*youtu.be/*|*youtube.com/watch*|\
-        *.googlevideo.com/videoplayback*)
-            mpvc pause
-            SOCKET="/tmp/vidsocket"
-            mpvc -a "$URL" -S "$SOCKET"
-            mpvc move $(mpvc -S "$SOCKET" -f "%playlistlength% %position%")  -S "$SOCKET"
-            mpvc next -S "$SOCKET"
-            ;;
-        *.gifv|*.webm|*.gif)
-            openBrowser
-            ;;
-        *twitch.tv/*)
-            openBrowser
-            ;;
-        *.txt|*ix.io/*|*p.iotek.org/*|*sprunge.us/*|*bpaste.net/*|\
-        *pastebin.com/raw*|*pbin.in/raw*)
-            urxvt -e zsh -c "curl -s $URL | $EDITOR -"
-            ;;
-        *paste.lisp.org/*|*pastebin.com/*|*pbin.in/*|*dpaste.com/*)
-            rawp
-            urxvt -e zsh -c "curl -s $URL | $EDITOR -"
-            ;;
-        mailto:*)
-            ;;
-        gopher://*)
-            urxvt -e cgo "$URL"
-            ;;
-        *)
-            openBrowser
-            ;;
-    esac
-done
+        mpv "$URL" --really-quiet --loop-file
+        ;;
+    *.jp*g|*.png)
+        mpv "$URL" --really-quiet --loop-file
+        ;;
+    *.mkv|*.mp4|*.ogv|*youtu.be/*|*youtube.com/watch*|\
+    *.googlevideo.com/videoplayback*)
+        mpvc pause
+        SOCKET="/tmp/vidsocket"
+        mpvc -a "$URL" -S "$SOCKET"
+        mpvc move $(mpvc -S "$SOCKET" -f "%playlistlength% %position%")  -S "$SOCKET"
+        mpvc next -S "$SOCKET"
+        ;;
+    *.gifv|*.webm|*.gif)
+        openBrowser
+        ;;
+    *twitch.tv/*)
+        openBrowser
+        ;;
+    *.txt|*ix.io/*|*p.iotek.org/*|*sprunge.us/*|*bpaste.net/*|\
+    *pastebin.com/raw*|*pbin.in/raw*)
+        urxvt -e zsh -c "curl -s $URL | $EDITOR -"
+        ;;
+    *paste.lisp.org/*|*pastebin.com/*|*pbin.in/*|*dpaste.com/*)
+        rawp
+        urxvt -e zsh -c "curl -s $URL | $EDITOR -"
+        ;;
+    mailto:*)
+        ;;
+    gopher://*)
+        urxvt -e cgo "$URL"
+        ;;
+    *)
+        openBrowser
+        focus -w "$(wid qutebrowser | head -n 1)"
+        ;;
+esac
