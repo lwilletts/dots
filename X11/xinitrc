@@ -14,7 +14,7 @@ urxvtd -q -o -f &
 
 # wall
 screens
-hsetroot -fill "$HOME/usr/img/backs/pluto.tif"
+hsetroot -root -fill "$HOME/usr/img/backs/pluto.tif"
 # hsetroot -solid "#DBDFE4"
 
 # fwm

@@ -173,7 +173,6 @@ groupbarinfo() {
 }
 
 groupbartrigger() {
-
     matchwid() {
         for wid in $(lsw -a); do
             printf '%s\n' "$wid $(wname "$wid")"
