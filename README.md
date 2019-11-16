@@ -4,7 +4,7 @@ My configuration files for my systems.
 
 ### X11 Environment
 
-I use [wmutils scripts](https://github.com/lwilletts/fwm) and combination of
+I use [wmutils scripts](https://github.com/lwilletts/fwm) with a combination of
 other programs and scripts to use my environment.
 
 - urxvt: terminal emulator
@@ -18,9 +18,11 @@ other programs and scripts to use my environment.
 
 ### bin
 
-Various scripts to use dmenu `(durl)`, lemonbar `(bar)` and i3lock `(lock)` are
+Various scripts to use dmenu `(drun)`, lemonbar `(bar)` and i3lock `(lock)` are
 included here along with other cool things like:
 
 - `img`: display images in the terminal using w3m builtin image viewer
 - `startmenu`: quick start cli menu
 - `load`: opens appropriate program when a link is opened within urxvt
+- `bars`: complicated multibar setup with triggers on env changes
+- `winel`: launch script for wine applications

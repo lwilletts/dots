@@ -8,30 +8,28 @@ xset +fp ~/.local/share/fonts # custom fonts directory
 xsetroot -cursor_name left_ptr # left pointer as cursor
 xsetroot -name background
 
+pulse
+unclutter &
+urxvtd -q -o -f &
+
 # wall
 screens
-hsetroot -solid "#DBDFE4"
+hsetroot -fill "$HOME/usr/img/backs/pluto.tif"
+# hsetroot -solid "#DBDFE4"
 
 # fwm
+bars &
+sxhkd &
+watcher &
 PRI="$(lsm -p)"
 wmp "$(($(mattr x "$PRI") + $(mattr w "$PRI") / 2))" \
     "$(($(mattr y "$PRI") + $(mattr h "$PRI") / 2))"
 
-glazier &
-pulse
-bars &
-sxhkd &
-watcher &
-unclutter &
-urxvtd -q -o -f &
-
 case "$(hostname)" in
-    inferno)     ;;
-    *) compton & ;;
+    inferno)   ;;
+    *) picom & ;;
 esac
 
 test -f ~/.Xresources && xrdb -load ~/.Xresources
 
-while :; do
-    sleep 99d
-done
+xwait

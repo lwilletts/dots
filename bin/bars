@@ -8,18 +8,20 @@ barvar() {
     wmenv
     wmgaps
     wmcolours
+    wmgroup
 
     BW=1
     bar_fg="#$ACTIVE"
     bar_bg="#$INACTIVE"
     bar_border="#808080"
-    bar_font=$(awk '/lemon/ {print $3}' < ~/.Xresources | \
-               head -n 1 | cut -d',' -f 1)
+    bar_active="%{F#$ACTIVE}"
+    bar_inactive="%{F$bar_border}"
+    bar_font=$(awk '/font/ {print $3}' < ~/.Xresources | cut -d',' -f 1)
 }
 
 runbar() {
-    lemonbar -d -g ${barw}x${barh}+${barx}+${bary} -B ${bar_bg} \
-        -F ${bar_fg} -R ${bar_border} -r $BW -f ${bar_font} -n "$1"
+    lemonbar -d -g "${barw}x${barh}+${barx}+${bary}" -B "${bar_bg}" \
+        -F "${bar_fg}" -R "${bar_border}" -r "$BW" -f "${bar_font}" -n "$1"
 }
 
 datebar() {
@@ -34,33 +36,30 @@ datebar() {
 
         printf '%s\n' "$buf"
         sleep 2
-    done | runbar "datebar" &
+    done | runbar "datebar" | /bin/sh &
 }
 
 sysbar() {
     htop="urxvtc -e sh -c 'htop'"
 
     while :; do
-        mem="$(free -m | awk '/Mem:/ {print $3}')/$(free -m | awk '/Mem:/ {print $2}')"
-
-        buf=""
+        mem="$(free -m | awk '/Mem:/ {print $3}')/$(free -m | awk '/Mem:/ {print $2}')" buf=""
         buf="${buf} %{c}"
         buf="${buf} %{A:${htop}:} $(cpu t) / ${mem} %{A}"
-
         printf '%s\n' "$buf"
         sleep 2
-    done | runbar "sysbar" &
+    done | runbar "sysbar" | /bin/sh &
 }
 
 batbar() {
     while :; do
         buf=""
         buf="${buf} %{c}"
-        buf="${buf} $(bat) "
+        buf="${buf} $(bat acpi) "
 
         printf '%s\n' "$buf"
         sleep 2
-    done | runbar "batbar" &
+    done | runbar "batbar" | /bin/sh &
 }
 
 gpubartrigger() {
@@ -69,7 +68,7 @@ gpubartrigger() {
         temp="$(gpu | cut -d\  -f 4 | cut -c 1-2)"
 
         case "$temp" in
-            6[0-9]|7[0-9]|8[0-9]|9[0-9]|1[0-9][0-9])
+            6[0-9]|7[0-9]|8[0-9]|9[0-9]|1[0-9])
                 test -z "$process" && gpubar
                 ;;
             *)
@@ -91,7 +90,7 @@ gpubar() {
 
         printf '%s\n' "$buf"
         sleep 2
-    done | runbar "gpubar" &
+    done | runbar "gpubar" | /bin/sh &
 }
 
 volbar() {
@@ -102,7 +101,7 @@ volbar() {
 
         case $(pulsemixer --get-mute) in
             0) syb="♪" ;;
-            1) syb="⮠" ;;
+            1) syb="_" ;;
         esac
 
         buf=""
@@ -111,23 +110,7 @@ volbar() {
 
         printf '%s\n' "$buf"
         sleep 0.1
-    done | runbar "volbar" &
-}
-
-tilebar() {
-    while :; do
-        buf=""
-        buf="${buf} %{c}"
-        buf="${buf} %{A:tile restore:} ⮛ %{A}"
-        buf="${buf} %{A:tile bigleft:} ⮘ %{A}"
-        buf="${buf} %{A:tile bigright:} ⮙ %{A}"
-        buf="${buf} %{A:tile vertical:} ⮚ %{A}"
-        buf="${buf} %{A:tile middle:} ⮽ %{A}"
-        buf="${buf} %{A:tile split:} ⮧ %{A}"
-
-        printf '%s\n' "$buf"
-        sleep 2
-    done | runbar "tilebar" &
+    done | runbar "volbar" | /bin/sh &
 }
 
 musbartrigger() {
@@ -160,7 +143,71 @@ musbar() {
 
         printf '%s\n' "$buf"
         sleep 0.1
-    done | runbar "musbar" &
+    done | runbar "musbar" | /bin/sh &
+}
+
+groupbarinfo() {
+    test -n "$(find "$groupdir" -maxdepth 1 -name '?' -print -quit)" && {
+        for groupfile in "$groupdir"/?; do
+            group="$(printf '%s\n' "$groupfile" | rev | cut -d/ -f 1 | rev)"
+
+            grep -q "$group" "$activegrp" && {
+                activity="$bar_active"
+            } || {
+                activity="$bar_inactive"
+            }
+
+            cmd="group -t $group focus"
+            wid="$(head -n 1 "$groupfile")"
+
+            case "$1" in
+                text)
+                    printf '%s' "$(wname "$wid")   "
+                    ;;
+                *)
+                    printf '%s' "$bar_inactive|$bar_active$activity%{A:$cmd:} $(wname "$wid") %{A}"
+                    ;;
+            esac
+        done
+    }
+}
+
+groupbartrigger() {
+
+    matchwid() {
+        for wid in $(lsw -a); do
+            printf '%s\n' "$wid $(wname "$wid")"
+        done
+    }
+
+    groupbar
+
+    sleep 0.1
+    wid="$(matchwid | grep "groupbar" | grep -v grep | cut -d\  -f 1)"
+
+    while :; do
+        # dynamically resize bar to text length
+        barw=$(txtw "$(groupbarinfo text)")
+        curw="$(wattr w "$wid")"
+
+        test "$barw" -ne "$curw" && {
+            wrs "$((barw - curw))" 0 "$wid"
+            chwso -l "$wid"
+        }
+
+        sleep 0.1
+    done
+}
+
+groupbar() {
+    while :; do
+        buf=""
+        buf="${buf} %{l}"
+        buf="${buf} $(groupbarinfo | cut -d\| -f 2-)"
+
+        printf '%s\n' "$buf"
+        sleep 0.1
+    done | runbar "groupbar" | /bin/sh &
 }
 
 main() {
@@ -169,15 +216,15 @@ main() {
     SEC="$(lsm | grep -v "$PRI")"
 
     # bar geometry
-    PX="$(mattr x $PRI)"
-    PW="$(mattr w $PRI)"
-    PH="$(mattr h $PRI)"
-    SH="$(mattr h $SEC)"
-    barx=$((PX + JUMP))
+    PX="$(mattr x "$PRI")"
+    PW="$(mattr w "$PRI")"
+    PH="$(mattr h "$PRI")"
+    SH="$(mattr h "$SEC")"
+    barx=$((PX + LGAP))
     bary=$((PH - BGAP + BGAP/2 - BGAP/5))
     barh=$((18 + BW*2))
 
-    barw=55
+    barw=50
     volbar
 
     barx=$((barx + barw + LGAP))
@@ -185,20 +232,19 @@ main() {
     datebar
 
     barx=$((barx + barw + LGAP))
-    barw=135
-    tilebar
-
-    barx=$((barx + barw + LGAP))
     case "$(hostname)" in
         fyriousa)
             prevbarx=$barx
             prevbary=$bary
+            barw=300
             barx=$((PX + PW + LGAP))
             bary=$((SH - BGAP + BGAP/2 - BGAP/5))
-            barw=300
             gpubartrigger &
             barx=$((prevbarx - barw - LGAP))
             bary=$prevbary
+            barx=$((barx + barw + LGAP))
+            barw=$((PW - barx))
+            groupbartrigger &
             ;;
         inferno)
             barw=70
@@ -206,8 +252,8 @@ main() {
             ;;
     esac
 
-    barx=$((barx + barw + LGAP))
     barw=500
+    barx=$((PW - barw - RGAP))
     musbartrigger &
 }
 

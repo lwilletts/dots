@@ -7,7 +7,7 @@ main() {
 
     while :; do
         oldstty=$(stty -g)
-        stty raw -echo; key="$(head -c 1)"; stty $oldstty
+        stty raw -echo; key="$(head -c 1)"; stty "$oldstty"
         case $key in
             *)
                 exit

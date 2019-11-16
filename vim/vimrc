@@ -74,12 +74,18 @@ Plug 'benekastah/neomake'
         \ 'texthl': 'TermCursorNC',
     \ }
 
+    " linting
+Plug 'dense-analysis/ale'
+    let g:ale_sign_error = '>>'
+    let g:ale_sign_warning = '..'
+    let g:ale_set_highlights = 1
+    let g:ale_sign_column_always = 1
+
+    nmap <silent> <C-j> <Plug>(ale_next_wrap)
+    nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+
     " async
 Plug 'skywind3000/asyncrun.vim'
-
-    " vim speech
-Plug 'dense-analysis/ale'
-Plug 'w0rp/vim-speech'
 
     " snips
 Plug 'SirVer/ultisnips'
@@ -141,21 +147,14 @@ nmap <Leader>q :Bclose!<CR>
 nmap <C-q> :qa!<CR>
 nmap <C-s> :silent w! !sudo tee % > /dev/null<CR>
 
-" motions
-nnoremap <C-j> }
-nnoremap <C-k> {
-nmap <Leader><Space> %
-vmap <Leader><Space> %
-
-" replace word under cursor
+" replace word under cursor globally
 nnoremap <Leader>* :%s/\<<c-r><c-w>\>//g<left><left>
 
 " manipulating text in normal mode
-nnoremap <CR> i<CR><ESC>
+nnoremap <CR> a<CR><ESC>
 nnoremap <Tab> i<Tab><ESC>l
 
 " formatting options
-vmap Q gq
 nmap <Leader>gq vipgq
 nmap <Leader>gc vipgc
 
@@ -255,6 +254,7 @@ set equalalways
 set noshowcmd
 set noshowmode
 set laststatus=0
+" set statusline=%f
 
 " fuck the readonly warning
 au BufEnter * set noro
@@ -262,7 +262,7 @@ au BufEnter * set noro
 syntax on
 
 try
-    colorscheme subtle
+    colorscheme lightish
 catch
 endtry
 
@@ -279,6 +279,9 @@ set fillchars=vert:\ ,
 set hidden
 set showmatch
 set lazyredraw
+
+" permanent signcolumn
+set signcolumn=yes
 
 " use marker folding by default
 set foldmethod=marker
@@ -335,8 +338,8 @@ filetype plugin indent on
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 autocmd! FileType c      setlocal ts=4 sw=4 sts=4
-autocmd! FileType md     setlocal spell
 autocmd! FileType sh     setlocal makeprg=sh\ %\
+autocmd! FileType md     setlocal spell makeprg=pandoc\ %\ -o\ %:r.pdf
 autocmd! FileType tex    setlocal spell makeprg=pdflatex\ %
 autocmd! FileType txt    setlocal tw=0 spell noexpandtab wrap linebreak
 autocmd! FileType css    setlocal ts=4 sw=4 sts=4
@@ -349,6 +352,8 @@ autocmd! BufNewFile,BufRead *fstab           setlocal filetype=fstab tw=0
 autocmd! BufNewFile,BufRead *Pkgfile         setlocal filetype=sh noet
 autocmd! BufNewFile,BufRead *.gitconfig      setlocal filetype=gitconfig noet
 autocmd! BufNewFile,BufRead *.zsh,*.zprofile setlocal filetype=sh
+
+" filetype write
 autocmd! BufWritePost *.tex silent make %
 
 set history=1000
@@ -406,7 +411,7 @@ if has('nvim')
     autocmd TermClose * silent! bd!
 
     function! QuickTerminal()
-        20new
+        10new
         terminal
     endfunction
 

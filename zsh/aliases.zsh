@@ -21,6 +21,7 @@ alias sxrdb="xrdb ~/.Xresources"
 
 # apps
 alias vol="pulsemixer"
+alias htop="htop -t"
 alias grep="grep --color=auto"
 alias diff="diff --color=auto"
 alias todo="$EDITOR $HOME/usr/notes/todo.md"
@@ -30,25 +31,25 @@ alias glances="glances --hide-kernel-threads"
 # audio
 alias sinks="pacmd list-sinks|awk '/index:/ {print \$0}; /name:/ {print \$0}; /device\.description/ {print \$0}'"
 alias sources="pacmd list-sources|awk '/index:/ {print \$0}; /name:/ {print \$0}; /device\.description/ {print \$0}'"
-alias record="ffmpeg -f pulse -i alsa_input.usb-Focusrite_Scarlett_Solo_USB-00.analog-stereo.remapped"
-
+alias record="ffmpeg -f pulse -i alsa_input.usb-Focusrite_Scarlett_Solo_USB-00.analog-stereo.remapped" 
 # net
 alias ix="curl -F 'f:1=<-' ix.io"
+alias io="curl -sT- p.iotek.org"
 alias tn="transmission-remote-cli"
 alias ytd="youtube-dl"
 alias ytm="youtube-dl \"\$(mpvc -f '%path%')\""
 alias rss="newsboat -q"
 alias net="curl -s ipv4.icanhazip.com"
+alias rirc="mosh remote -- tmux a"
 
 # games
+alias game1="cd $GAME1"
+alias game2="cd $GAME2"
 alias cfg="vi ~/.steam/steam/steamapps/common/Midair/Midair/Binaries/*.cfg"
-alias game1="cd ~/.steam/steam/steamapps/common"
-alias game2="cd /mnt/speed/steamapps/common"
 
 # image
 alias i="img"
-alias p="mupdf"
-alias z="zathura"
+alias p="zathura"
 alias scan="scanimage --device 'epson2:net:192.168.1.89' --mode=Color --format=png --resolution 300"
 
 # x / dtach / tmux

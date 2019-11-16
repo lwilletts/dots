@@ -1,10 +1,11 @@
 /* colours */
-#include ".colours/lightish"
+#include ".colours/darkish"
 
 /* basics */
-*.modifier : mod4
-*.font     : -benis-lemon-*-*-*-*-*-*-*-*-*-*-*-*
-*.boldFont : -benis-lemon-*-*-*-*-*-*-*-*-*-*-*-*
+*.modifier   : mod4
+*.font       : -*-scientifica-*-*-*--11-*-*-*-*-*-*-*
+*.boldFont   : -*-scientifica-*-*-*--11-*-*-*-*-*-*-*
+*.italicFont : -*-scientifica-*-*-*--11-*-*-*-*-*-*-*
 
 /* general settings */
 *.cursorBlink     : 0
@@ -15,19 +16,21 @@
 *.saveLines       : 16384
 
 /* URxvt general settings */
+URxvt.letterSpace    : -6
 URxvt.internalBorder : 10
 URxvt.externalBorder : 0
 URxvt.scrollBar      : 0
 
 /* URxvt extensions */
-URxvt.perl-ext-common        : default,clipboard,url-select
-URxvt.keysym.M-e             : perl:url-select:select_next
-URxvt.url-select.button      : 1
-URxvt.url-select.launcher    : load
-URxvt.url-select.underline   : true
-URxvt.keysym.M-y             : perl:primary:copy/
+URxvt.perl-ext-common      : default,clipboard,url-select
+URxvt.keysym.M-e           : perl:url-select:select_next
+URxvt.url-select.button    : 1
+URxvt.url-select.launcher  : load
+URxvt.url-select.underline : true
+URxvt.keysym.M-y           : perl:primary:copy/
 
 /* URxvt transparency */
-URxvt.transparent : False
-Urxvt.depth       : 32
-URxvt.shading     : 20
+Urxvt.depth         : 32
+URxvt.shading       : 170
+URxvt.transparent   : false
+URxvt.inheritPixmap : false

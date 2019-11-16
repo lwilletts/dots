@@ -2,18 +2,45 @@
 #
 # bat
 
-BAT="/sys/class/power_supply/BAT0"
-test -d "$BAT" || return 0
+manual() {
+    BAT="/sys/class/power_supply/BAT0"
+    test -d "$BAT" || return 0
 
-CHR="$(cat "$BAT/charge_now")"
-MAX="$(cat "$BAT/charge_full")"
-STATUS="$(cat "$BAT/status")"
-PERCENT="$(printf '%.2f\n' "$(echo "$CHR/$MAX*100" | bc -l)")"
-
-test "$STATUS" = "Charging" && {
-    printf '%s\n' "$PERCENT% ⮒"
-} || {
-    test "$(echo "$PERCENT >= 80" | bc)" -eq 1 && printf '%s\n' "$PERCENT% ⮎"
-    test "$(echo "$PERCENT >= 60" | bc)" -eq 1 && printf '%s\n' "$PERCENT% ⮏"
-    test "$(echo "$PERCENT >= 40" | bc)" -eq 1 && printf '%s\n' "$PERCENT% ⮐"
+    CHR="$(cat "$BAT/charge_now")"
+    MAX="$(cat "$BAT/charge_full")"
+    STATUS="$(cat "$BAT/status")"
+    PERCENT="$(printf '%.2f\n' "$(echo "$CHR/$MAX*100" | bc -l)" | cut -d. -f 1)"
 }
+
+acpidata() {
+    ACPINFO="$(acpi -b)"
+    PERCENT="$(printf '%s\n' "$ACPINFO" | cut -d\  -f 4 | cut -d% -f 1)"
+    STATUS="$(printf '%s\n' "$ACPINFO" | cut -d\  -f 3 | cut -d, -f 1)"
+}
+
+case "$1" in
+    manual) manual   ;;
+    acpi)   acpidata ;;
+    *)      acpidata ;;
+esac
+
+case "$STATUS" in
+    "Full"|"Charging")
+        printf '%s\n' "$PERCENT% ⮒"
+        ;;
+    "Discharging")
+        case "$PERCENT" in
+            100)
+                printf '%s\n' "$PERCENT% ⮎"
+                ;;
+            [6-9][0-9])
+                printf '%s\n' "$PERCENT% ⮎"
+                ;;
+            [4-5][0-9])
+                printf '%s\n' "$PERCENT% ⮏"
+                ;;
+            [0-3][0-9])
+                printf '%s\n' "$PERCENT% ⮐"
+                ;;
+        esac
+esac

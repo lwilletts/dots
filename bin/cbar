@@ -4,12 +4,10 @@
 
 f0='[30m'; f1='[31m'; f2='[32m'; f3='[33m'
 f4='[34m'; f5='[35m'; f6='[36m'; f7='[37m'
-b0='[40m'; b1='[41m'; b2='[42m'; b4='[44m'
-b4='[44m'; b5='[45m'; b6='[46m'; b7='[47m'
 
-B='[1m'; R='[0m'; I='[7m'
+R='[0m'
 
-clrpath="$HOME/$(cat ~/.Xresources | grep "#include \".colours" | cut -d\"  -f 2)"
+clrpath="$HOME/$(grep "#include \".colours" ~/.Xresources | cut -d\"  -f 2)"
 colour0="#$(grep -w "color0" "$clrpath" | cut -d\# -f 2)"
 colour1="#$(grep -w "color1" "$clrpath" | cut -d\# -f 2)"
 colour2="#$(grep -w "color2" "$clrpath" | cut -d\# -f 2)"

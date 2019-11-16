@@ -21,6 +21,9 @@ c.input.forward_unbound_keys = 'auto'
 c.content.geolocation = False
 c.session.default_name = None
 
+# list of user stylesheet filenames to use
+# c.content.user_stylesheets = ['']
+
 c.url.start_pages = ['file:///home/fyr/usr/start/start.html']
 c.url.default_page = 'file:///home/fyr/usr/start/start.html'
 c.window.title_format = '{current_title}'
@@ -28,6 +31,7 @@ c.window.title_format = '{current_title}'
     # custom binds
 config.bind('j', 'scroll-px 0 100')
 config.bind('k', 'scroll-px 0 -100')
+config.bind('b', 'set-cmd-text -s :buffer ')
 config.bind('<Ctrl-d>', 'spawn youtube-dl {url}')
 config.bind('<Ctrl-f>', 'spawn youtube-dl -x {url}')
 config.bind('<Ctrl-s>', 'config-source ~/.config/qutebrowser/config.py')
@@ -83,11 +87,11 @@ c.statusbar.padding = {'top': 5, 'bottom': 5, 'left': 5, 'right': 5}
 
     # completion
 c.completion.delay = 0
-c.completion.height = '10%'
+c.completion.height = '20%'
 c.completion.min_chars = 1
 c.completion.cmd_history_max_items = -1
 c.completion.scrollbar.padding = 10
-c.completion.scrollbar.width = 12
+c.completion.scrollbar.width = 0
 
     # tabs
 # position
@@ -118,9 +122,9 @@ c.tabs.select_on_remove = 'next'
 c.tabs.pinned.frozen = True
 c.tabs.pinned.shrink = True
 c.tabs.new_position.stacking = True
-c.tabs.new_position.unrelated = 'last'
+c.tabs.new_position.unrelated = 'next'
 c.tabs.tabs_are_windows = False
-c.tabs.show = 'multiple'
+c.tabs.show = 'always'
 c.tabs.show_switching_delay = 1000
 c.new_instance_open_target_window = 'last-focused'
 
@@ -169,7 +173,7 @@ c.content.autoplay = False
 
     # fonts
 # monospace fonts
-c.fonts.monospace = 'lemon'
+c.fonts.monospace = 'scientifica'
 c.fonts.tabs = '8pt monospace'
 c.fonts.hints = '8pt monospace'
 c.fonts.keyhint = '8pt monospace'

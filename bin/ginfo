@@ -1,0 +1,54 @@
+#!/bin/sh
+#
+# ginfo
+
+usage() {
+    base=$(basename "$0")
+
+    cat >&2 << EOF
+Usage:
+    $base
+EOF
+
+    test $# -eq 0 || exit "$1"
+}
+
+main() {
+    . fwmrc
+    wmenv
+    wmgroup
+
+
+    test -n "$(find "$groupdir" -maxdepth 1 -name '?' -print -quit)" && {
+        for groupfile in "$groupdir"/?; do
+            group="$(printf '%s\n' "$groupfile" | rev | cut -d/ -f 1 | rev)"
+
+            # take top wid from group
+            wid="$(head -n 1 "$groupfile")"
+
+            class="$(name "$wid")"
+            case "$class" in
+                "discord") class="Discord" ;;
+            esac
+
+            grep "$group" "$activegrp" > /dev/null 2>&1 && {
+                activity="$bar_active"
+            } || {
+                activity="$bar_inactive"
+            }
+
+            cmd="group -t $group focus"
+
+            title() {
+                name="$(wname "$wid" | cut -c -50)"
+                printf '%s' "$name"
+            }
+
+            test ! -z "$class" && {
+                printf '%s' "/ %{A:$cmd:} $activity $class: $(title) %{A} "
+            }
+        done
+    }
+}
+
+main "$@"

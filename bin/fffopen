@@ -16,7 +16,8 @@ case "$mime_type" in
         ;;
     video/*)
         mpvc pause
-        mpv "$1"
+        SOCKET="/tmp/vidsocket"
+        mpvc -a "$1" -S "$SOCKET"
         ;;
     audio/*)
         mpvc add "$1"
