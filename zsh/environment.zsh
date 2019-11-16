@@ -41,14 +41,14 @@ export XDG_DESKTOP_DIR="/home/fyr"
 export BROWSER="/usr/bin/qutebrowser"
 
 hash nvim 2> /dev/null && {
-	export VISUAL="nvim"
-	export EDITOR="nvim"
-	alias vi="$VISUAL"
-	alias vim="$VISUAL"
+    export VISUAL="nvim"
+    export EDITOR="nvim"
+    alias vi="$VISUAL"
+    alias vim="$VISUAL"
 } || {
-	export VISUAL="vim"
-	export EDITOR="vim"
-	alias vi="$VISUAL"
+    export VISUAL="vim"
+    export EDITOR="vim"
+    alias vi="$VISUAL"
 }
 
 export GAME1="$HOME/.steam/steam/steamapps/common"
