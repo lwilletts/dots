@@ -36,12 +36,13 @@ alias record="ffmpeg -f pulse -i alsa_input.usb-Focusrite_Scarlett_Solo_USB-00.a
 # net
 alias ix="curl -F 'f:1=<-' ix.io"
 alias io="curl -sT- p.iotek.org"
-alias tn="transmission-remote-cli"
+alias tn="tremc"
 alias ytd="youtube-dl"
 alias ytm="youtube-dl \"\$(mpvc -f '%path%')\""
 alias rss="newsboat -q"
 alias net="curl -s ipv4.icanhazip.com"
 alias rirc="mosh remote -- tmux a"
+alias wakeserv="wol -p e0:d5:5e:91:72:19"
 
 # games
 alias game1="cd $GAME1"

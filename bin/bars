@@ -179,6 +179,9 @@ groupbartrigger() {
         done
     }
 
+    barw="$(txtw "$(groupbarinfo text)")"
+    barw="$(echo "$barw * 0.78" | bc -l | cut -d. -f 1)"
+
     groupbar
 
     sleep 0.1
@@ -186,7 +189,8 @@ groupbartrigger() {
 
     while :; do
         # dynamically resize bar to text length
-        barw=$(txtw "$(groupbarinfo text)")
+        barw="$(txtw "$(groupbarinfo text)")"
+        barw="$(echo "$barw * 0.78" | bc -l | cut -d. -f 1)"
         curw="$(wattr w "$wid")"
 
         test "$barw" -ne "$curw" && {
