@@ -87,12 +87,6 @@ Plug 'dense-analysis/ale'
     " async
 Plug 'skywind3000/asyncrun.vim'
 
-    " snips
-Plug 'SirVer/ultisnips'
-    let g:UltiSnipsUsePythonVersion = 3
-    let g:UltiSnipsSnippetsDirectories = ['~/.config/nvim/Ultisnips', 'Ultisnips']
-    let g:UltisnipsEditSplit = 'vertical'
-
     "  intelligent tab
 Plug 'ervandew/supertab'
     let g:SuperTabDefaultCompletionType = "<c-n>"

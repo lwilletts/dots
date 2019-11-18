@@ -36,10 +36,6 @@ nvim() {
     ln $OPTIONS $DOTFILEDIR/vim/vimrc $HOME/.config/nvim/init.vim
     ln $OPTIONS $DOTFILEDIR/vim/colors $HOME/.config/nvim/colors
     ln $OPTIONS $HOME/.vim/autoload $HOME/.config/nvim/autoload
-
-    ln $OPTIONS $DOTFILEDIR/vim/vimrc $HOME/.config/nvimpager/init.vim
-    ln $OPTIONS $DOTFILEDIR/vim/colors $HOME/.config/nvimpager/colors
-    ln $OPTIONS $HOME/.vim/autoload $HOME/.config/nvimpager/autoload
 }
 
 

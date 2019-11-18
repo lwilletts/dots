@@ -166,7 +166,7 @@ groupbarinfo() {
                     printf '%s' "$(wname "$wid")   "
                     ;;
                 *)
-                    printf '%s' "$bar_inactive | $bar_active$activity%{A:$cmd:} $(wname "$wid") %{A}"
+                    printf '%s' "$bar_inactive|$bar_active$activity%{A:$cmd:} $(wname "$wid") %{A}"
                     ;;
             esac
         done
@@ -174,15 +174,14 @@ groupbarinfo() {
 }
 
 groupbartrigger() {
-    width() {
-        echo "($(txtw -f "$FONT" "$(groupbarinfo text)") * 0.77) / 1" | bc
-    }
-
     matchwid() {
         for wid in $(lsw -a); do
             printf '%s\n' "$wid $(wname "$wid")"
         done
     }
+
+    barw="$(txtw "$(groupbarinfo text)")"
+    barw="$(echo "$barw * 0.78" | bc -l | cut -d. -f 1)"
 
     groupbar
 
@@ -191,7 +190,8 @@ groupbartrigger() {
 
     while :; do
         # dynamically resize bar to text length
-        barw="$(width)"
+        barw="$(txtw "$(groupbarinfo text)")"
+        barw="$(echo "$barw * 0.78" | bc -l | cut -d. -f 1)"
         curw="$(wattr w "$wid")"
 
         test "$barw" -ne "$curw" && {

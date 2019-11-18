@@ -6,7 +6,6 @@ xset s 600 600 # time before blanking
 xset r rate 250 40 # better responsiveness
 xset +fp ~/.local/share/fonts # custom fonts directory
 xsetroot -cursor_name left_ptr # left pointer as cursor
-xsetroot -name background
 
 pulse
 unclutter &
@@ -14,16 +13,16 @@ urxvtd -q -o -f &
 
 # wall
 screens
-hsetroot -fill "$HOME/usr/img/backs/pluto.tif"
+hsetroot -root -fill "$HOME/usr/img/backs/pluto.tif"
 # hsetroot -solid "#DBDFE4"
 
-# fwm
+# fw
 bars &
 sxhkd &
 watcher &
 PRI="$(lsm -p)"
 wmp "$(($(mattr x "$PRI") + $(mattr w "$PRI") / 2))" \
-    "$(($(mattr y "$PRI") + $(mattr h "$PRI") / 2))"
+    "$(($(mattr y "$PRI") + $(mattr h "$PRI") / 2))" &
 
 case "$(hostname)" in
     inferno)   ;;

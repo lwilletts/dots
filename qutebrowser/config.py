@@ -97,8 +97,8 @@ c.completion.scrollbar.width = 0
 # position
 c.tabs.position = 'top'
 c.tabs.width = '15%'
-c.tabs.max_width = 200
-c.tabs.min_width = 200
+c.tabs.max_width = 160
+c.tabs.min_width = 160
 c.tabs.padding = {'top': 5, 'bottom': 5, 'left': 10, 'right': 10}
 c.tabs.title.alignment = 'left'
 c.tabs.title.format_pinned = '{index}'
