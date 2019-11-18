@@ -19,28 +19,16 @@ acpidata() {
 }
 
 case "$1" in
-    manual) manual   ;;
-    acpi)   acpidata ;;
-    *)      acpidata ;;
+    m|manual) manual   ;;
+    a|acpi)   acpidata ;;
+    *)        acpidata ;;
 esac
 
 case "$STATUS" in
     "Full"|"Charging")
-        printf '%s\n' "$PERCENT% ⮒"
+        printf '%s\n' "$PERCENT% /"
         ;;
     "Discharging")
-        case "$PERCENT" in
-            100)
-                printf '%s\n' "$PERCENT% ⮎"
-                ;;
-            [6-9][0-9])
-                printf '%s\n' "$PERCENT% ⮎"
-                ;;
-            [4-5][0-9])
-                printf '%s\n' "$PERCENT% ⮏"
-                ;;
-            [0-3][0-9])
-                printf '%s\n' "$PERCENT% ⮐"
-                ;;
-        esac
+        printf '%s\n' "$PERCENT% _"
+        ;;
 esac

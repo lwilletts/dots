@@ -53,6 +53,7 @@ sysbar() {
 
 batbar() {
     while :; do
+ 
         buf=""
         buf="${buf} %{c}"
         buf="${buf} $(bat acpi) "
@@ -101,7 +102,7 @@ volbar() {
 
         case $(pulsemixer --get-mute) in
             0) syb="♪" ;;
-            1) syb="⮠" ;;
+            1) syb="_" ;;
         esac
 
         buf=""
@@ -250,7 +251,7 @@ main() {
             groupbartrigger &
             ;;
         inferno)
-            barw=70
+            barw=50
             batbar
             ;;
     esac

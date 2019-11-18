@@ -33,7 +33,7 @@ set notification-error-bg "#101010"
 set notification-warning-fg "#7086B3"
 set notification-warning-bg "#101010"
 
-set recolor false
+set recolor true
 set recolor-keephue true
 set recolor-reverse-video false
 set recolor-darkcolor "#EFEFEF"
