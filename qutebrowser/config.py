@@ -143,7 +143,7 @@ c.downloads.open_dispatcher = None
     # privacy & content
 # c.content.headers.user_agent = 'Mozilla/5.0 (Windows NT 6.1; rv:52.0) Gecko/20100101 Firefox/52.0'
 c.content.headers.do_not_track = True
-c.content.host_blocking.enabled = True
+c.content.host_blocking.enabled = False
 
 # List of URLs of lists which contain hosts to block.  The file can be
 # in one of the following formats:  - An `/etc/hosts`-like file - One

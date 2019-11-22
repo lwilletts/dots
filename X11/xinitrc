@@ -1,28 +1,25 @@
 #!/bin/sh
 
 # x11 environment
-xset +dpms # powersaving
-xset s 600 600 # time before blanking
-xset r rate 250 40 # better responsiveness
-xset +fp ~/.local/share/fonts # custom fonts directory
+xset +dpms                     # powersaving
+xset r rate 250 40             # faster keypresses
+xset +fp ~/.local/share/fonts  # custom fonts
 xsetroot -cursor_name left_ptr # left pointer as cursor
-
-pulse
-unclutter &
-urxvtd -q -o -f &
 
 # wall
 screens
 hsetroot -root -fill "$HOME/usr/img/backs/pluto.tif"
-# hsetroot -solid "#DBDFE4"
 
-# fw
+# fwm
 bars &
 sxhkd &
 watcher &
-PRI="$(lsm -p)"
-wmp "$(($(mattr x "$PRI") + $(mattr w "$PRI") / 2))" \
-    "$(($(mattr y "$PRI") + $(mattr h "$PRI") / 2))" &
+glazier &
+
+# apps
+pulse
+unclutter &
+urxvtd -q -o -f &
 
 case "$(hostname)" in
     inferno)   ;;

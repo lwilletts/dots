@@ -7,8 +7,6 @@ mod1 + {d,w,shift + w}
     {drun,wmenu -c,wmenu -c all}
 {button10,~button3}
     {cmdmenu,under "wmenu -m"}
-mod1 + {@button1,@button3,button4,button5}
-    {xmmv,xmrs,chwso -r,chwso -l} $(pfw)
 
 # sys
 mod4 + shift + l
@@ -38,7 +36,7 @@ mod1 + shift + {g,m}
 mod1 + {Left,Down,Up,Right}
     move {left,bottom,top,right}
 mod1 + {t,shift + t}
-    tile {-br,-bl}
+    tile {-g,-bl}
 
 # groups
 mod1 + {1,2,3,4,5,6,7,8,9,0}

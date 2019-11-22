@@ -5,8 +5,6 @@ set adjust-open width
 set show-scrollbars false
 set statusbar-v-padding 20
 set statusbar-h-padding 40
-set window-width 800
-set window-height 800
 
 # colours
 set default-fg "#EFEFEF"

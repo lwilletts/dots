@@ -162,10 +162,10 @@ groupbarinfo() {
 
             case "$1" in
                 text)
-                    printf '%s' "$(wname "$wid")   "
+                    printf '%s' "$(atomx "$wid" WM_NAME)   "
                     ;;
                 *)
-                    printf '%s' "$bar_inactive|$bar_active$activity%{A:$cmd:} $(wname "$wid") %{A}"
+                    printf '%s' "$bar_inactive|$bar_active$activity%{A:$cmd:} $(atomx "$wid" WM_NAME) %{A}"
                     ;;
             esac
         done

@@ -121,7 +121,8 @@ nnoremap K <nop>
 nnoremap <C-u> <nop>
 
 map <Space> <Leader>
-nmap <Leader>c :noh<CR>
+nnoremap <Leader>c :noh<CR>
+nnoremap <Leader><Space> <C-f>
 
 " edit and source vimrc on save
 nmap <silent> <Leader>E :next $MYVIMRC<CR>

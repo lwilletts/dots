@@ -42,7 +42,7 @@ alias ytm="youtube-dl \"\$(mpvc -f '%path%')\""
 alias rss="newsboat -q"
 alias net="curl -s ipv4.icanhazip.com"
 alias rirc="mosh remote -- tmux a"
-alias wakeserv="wol -p e0:d5:5e:91:72:19"
+alias serv="wol -p 9 e0:d5:5e:91:72:19"
 
 # games
 alias game1="cd $GAME1"
@@ -52,7 +52,8 @@ alias cfg="vi ~/.steam/steam/steamapps/common/Midair/Midair/Binaries/*.cfg"
 # image
 alias i="img"
 alias p="zathura"
-alias scan="scanimage --device 'epson2:net:192.168.1.89' --mode=Color --format=png --resolution 300"
+alias scan="scanimage --device 'epson2:net:192.168.1.89' --mode=Color --format=png --resolution 300 --output-file"
+alias strip="jhead -de"
 
 # x / dtach / tmux
 alias x="startx"
