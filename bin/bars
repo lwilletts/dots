@@ -53,6 +53,7 @@ sysbar() {
 
 batbar() {
     while :; do
+ 
         buf=""
         buf="${buf} %{c}"
         buf="${buf} $(bat acpi) "
@@ -250,7 +251,7 @@ main() {
             groupbartrigger &
             ;;
         inferno)
-            barw=70
+            barw=50
             batbar
             ;;
     esac
