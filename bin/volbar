@@ -1,0 +1,19 @@
+#!/bin/sh
+#
+# volbar
+
+main() {
+    pulse="urxvtc -e sh -c 'pulsemixer'"
+    vol="$(printf '%s\n' "$(pulsemixer --get-volume | cut -d\  -f 1)%")"
+
+    case "$(pulsemixer --get-mute)" in
+        1) vol="0%" ;;
+    esac
+
+    buf=""
+    buf="${buf} %{A:${pulse}:} ${vol} %{A}"
+
+    printf '%s\n' "$buf"
+}
+
+main "$@"

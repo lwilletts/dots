@@ -242,7 +242,7 @@ nmap <Leader>I :call <SID>SynStack()<CR>
 
 "{{{
 set title
-set titlestring=vim:\ %t titlelen=50
+set titlestring=nvim:\ %t titlelen=50
 
 set shortmess+=I
 set equalalways

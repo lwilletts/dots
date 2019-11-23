@@ -10,12 +10,12 @@ barvar() {
     wmcolours
     wmgroup
 
-    BW=1
     bar_fg="#$ACTIVE"
     bar_bg="#$INACTIVE"
-    bar_border="#808080"
+    bar_dim="#808080"
+    bar_border="$bar_dim"
     bar_active="%{F#$ACTIVE}"
-    bar_inactive="%{F$bar_border}"
+    bar_inactive="%{F$bar_dim}"
     bar_font=$(awk '/font/ {print $3}' < ~/.Xresources | cut -d',' -f 1)
 }
 
@@ -24,43 +24,31 @@ runbar() {
         -F "${bar_fg}" -R "${bar_border}" -r "$BW" -f "${bar_font}" -n "$1"
 }
 
-datebar() {
-    calender="urxvtc -e sh -c '3cal'"
+simplebar() {
+    case "$1" in
+        batbar|\
+        datebar|\
+        gpubar|\
+        groupbar|\
+        sysbar|\
+        musbar|\
+        volbar) BAR="$1" ;;
+        *)      exit     ;;
+    esac
 
     while :; do
-        clock="$(dat)"
-
         buf=""
-        buf="${buf} %{c}"
-        buf="${buf} %{A:${calender}:} ${clock}  %{A}"
+        case "$2" in
+            l) buf="${buf}%{l}" ;;
+            c) buf="${buf}%{c}" ;;
+            r) buf="${buf}%{r}" ;;
+            *) ;;
+        esac
+        buf="${buf}$(${BAR})"
 
         printf '%s\n' "$buf"
-        sleep 2
-    done | runbar "datebar" | /bin/sh &
-}
-
-sysbar() {
-    htop="urxvtc -e sh -c 'htop'"
-
-    while :; do
-        mem="$(free -m | awk '/Mem:/ {print $3}')/$(free -m | awk '/Mem:/ {print $2}')" buf=""
-        buf="${buf} %{c}"
-        buf="${buf} %{A:${htop}:} $(cpu t) / ${mem} %{A}"
-        printf '%s\n' "$buf"
-        sleep 2
-    done | runbar "sysbar" | /bin/sh &
-}
-
-batbar() {
-    while :; do
- 
-        buf=""
-        buf="${buf} %{c}"
-        buf="${buf} $(bat acpi) "
-
-        printf '%s\n' "$buf"
-        sleep 2
-    done | runbar "batbar" | /bin/sh &
+        sleep 0.1
+    done | runbar "$BAR" | /bin/sh &
 }
 
 gpubartrigger() {
@@ -70,7 +58,7 @@ gpubartrigger() {
 
         case "$temp" in
             6[0-9]|7[0-9]|8[0-9]|9[0-9]|1[0-9])
-                test -z "$process" && gpubar
+                test -z "$process" && simplebar gpubar c
                 ;;
             *)
                 test ! -z "$process" && kill -9 "$process"
@@ -79,39 +67,6 @@ gpubartrigger() {
 
         sleep 1
     done
-}
-
-gpubar() {
-    gotop="urxvtc -e sh -c 'gotop'"
-
-    while :; do
-        buf=""
-        buf="${buf} %{c}"
-        buf="${buf} %{A:${gotop}:} $(gpu) %{A}"
-
-        printf '%s\n' "$buf"
-        sleep 2
-    done | runbar "gpubar" | /bin/sh &
-}
-
-volbar() {
-    pulse="urxvtc -e sh -c 'pulsemixer'"
-
-    while :; do
-        vol="$(printf '%s\n' "$(pulsemixer --get-volume | cut -d\  -f 1)%")"
-
-        case $(pulsemixer --get-mute) in
-            0) syb="♪" ;;
-            1) syb="_" ;;
-        esac
-
-        buf=""
-        buf="${buf} %{c}"
-        buf="${buf} %{A:${pulse}:} ${vol} ${syb}  %{A}"
-
-        printf '%s\n' "$buf"
-        sleep 0.1
-    done | runbar "volbar" | /bin/sh &
 }
 
 musbartrigger() {
@@ -124,27 +79,12 @@ musbartrigger() {
                 test ! -z "$process" && kill -9 "$process"
                 ;;
             0|1)
-                test -z "$process" && musbar
+                test -z "$process" && simplebar musbar c
                 ;;
         esac
 
         sleep 0.1
     done
-}
-
-musbar() {
-    cava="urxvtc -e sh -c 'cava'"
-
-    while :; do
-        mus="$(mpvc -f '%artist% / %title% / %remaining% / %volume%%' 2> /dev/null)"
-
-        buf=""
-        buf="${buf} %{c}"
-        buf="${buf} %{A:${cava}:} ${mus} %{A}"
-
-        printf '%s\n' "$buf"
-        sleep 0.1
-    done | runbar "musbar" | /bin/sh &
 }
 
 groupbarinfo() {
@@ -176,12 +116,9 @@ groupbarinfo() {
 groupbartrigger() {
     matchwid() {
         for wid in $(lsw -a); do
-            printf '%s\n' "$wid $(wname "$wid")"
+            printf '%s\n' "$wid $(atomx "$wid" WM_NAME)"
         done
     }
-
-    barw="$(txtw "$(groupbarinfo text)")"
-    barw="$(echo "$barw * 0.78" | bc -l | cut -d. -f 1)"
 
     groupbar
 
@@ -214,51 +151,78 @@ groupbar() {
     done | runbar "groupbar" | /bin/sh &
 }
 
+mainbar() {
+    BW=0
+    barw=$((PW - LGAP - RGAP - BW*2))
+
+    while :; do
+        buf=""
+        buf="${buf} %{l} $bar_active"
+        buf="${buf} $(datebar)"
+        buf="${buf} %{c}"
+        buf="${buf} $(groupbarinfo | cut -d\| -f 2-)"
+        buf="${buf} %{r} $bar_active"
+        buf="${buf} $(musbar) "
+        buf="${buf} $(volbar) "
+
+        printf '%s\n' "$buf"
+        sleep 0.1
+    done | runbar "mainbar" | /bin/sh &
+}
+
 main() {
     barvar
 
-    SEC="$(lsm | grep -v "$PRI")"
+    SEC="$(lsm | grep -v "$PRI" | head -n 1)"
 
     # bar geometry
     PX="$(mattr x "$PRI")"
     PW="$(mattr w "$PRI")"
     PH="$(mattr h "$PRI")"
     SH="$(mattr h "$SEC")"
-    barx=$((PX + LGAP))
-    bary=$((PH - BGAP + BGAP/2 - BGAP/5))
-    barh=$((18 + BW*2))
+    barx=$((PX + LGAP + BW))
+    bary=$((TGAP/4 - TGAP/8))
+    barh=$((TGAP/2 + BW*2))
 
-    barw=50
-    volbar
-
-    barx=$((barx + barw + LGAP))
-    barw=110
-    datebar
-
-    barx=$((barx + barw + LGAP))
-    case "$(hostname)" in
-        fyriousa)
-            prevbarx=$barx
-            prevbary=$bary
-            barw=300
-            barx=$((PX + PW + LGAP))
-            bary=$((SH - BGAP + BGAP/2 - BGAP/5))
-            gpubartrigger &
-            barx=$((prevbarx - barw - LGAP))
-            bary=$prevbary
-            barx=$((barx + barw + LGAP))
-            barw=$((PW - barx))
-            groupbartrigger &
+    case "$1" in
+        main)
+            barw=$((PW - LGAP - RGAP))
+            mainbar
             ;;
-        inferno)
-            barw=50
-            batbar
+        *)
+            barw=120
+            simplebar datebar c
+
+            barx=$((barx + barw + LGAP))
+            barw=44
+            simplebar volbar c
+
+            barx=$((barx + barw + LGAP))
+            case "$(hostname)" in
+                fyriousa)
+                    prevbarx=$barx
+                    prevbary=$bary
+                    # barw=300
+                    # barx=$((PX + PW + LGAP))
+                    # bary=$((SH - BGAP + BGAP/2 - BGAP/5))
+                    # gpubartrigger &
+                    barx=$((prevbarx - barw - LGAP))
+                    bary=$prevbary
+                    barx=$((barx + barw + LGAP))
+                    barw=$((PW - barx))
+                    groupbartrigger &
+                    ;;
+                inferno)
+                    barw=50
+                    simplebar batbar c
+                    ;;
+            esac
+
+            barw=500
+            barx=$((PW - barw - RGAP))
+            musbartrigger &
             ;;
     esac
-
-    barw=500
-    barx=$((PW - barw - RGAP))
-    musbartrigger &
 }
 
 main "$@"

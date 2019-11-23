@@ -1,0 +1,14 @@
+#!/bin/sh
+#
+# gpubar
+
+main() {
+    gotop="urxvtc -e sh -c 'gotop'"
+
+    buf=""
+    buf="${buf} %{A:${gotop}:} $(gpu) %{A}"
+
+    printf '%s\n' "$buf"
+}
+
+main "$@"

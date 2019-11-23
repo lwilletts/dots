@@ -1,0 +1,15 @@
+#!/bin/sh
+#
+# datebar
+
+main() {
+    calender="urxvtc -e sh -c '3cal'"
+    clock="$(dat)"
+
+    buf=""
+    buf="${buf} %{A:${calender}:} ${clock}  %{A}"
+
+    printf '%s\n' "$buf"
+}
+
+main "$@"

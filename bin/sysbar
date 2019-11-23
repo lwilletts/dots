@@ -1,0 +1,15 @@
+#!/bin/sh
+#
+# sysbar
+
+main() {
+    htop="urxvtc -e sh -c 'htop'"
+    mem="$(free -mh | awk '/Mem:/ {print $3}')/$(free -mh | awk '/Mem:/ {print $2}')"
+
+    buf=""
+    buf="${buf} %{A:${htop}:} $(cpu t) / ${mem} %{A}"
+
+    printf '%s\n' "$buf"
+}
+
+main "$@"

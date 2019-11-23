@@ -1,0 +1,12 @@
+#!/bin/sh
+#
+# batbar
+
+main() {
+    buf=""
+    buf="${buf} $(bat acpi)"
+
+    printf '%s\n' "$buf"
+}
+
+main "$@"

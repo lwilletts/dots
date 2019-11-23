@@ -10,7 +10,6 @@ bind-mouse M-4 window-raise
 bind-mouse M-5 window-lower
 
 bind-key 4S-r restart
-bind-key MS-q window-delete
 bind-key M-z menu-window
 
 bind-key M-c window-stick

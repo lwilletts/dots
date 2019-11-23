@@ -11,7 +11,7 @@ screens
 hsetroot -root -fill "$HOME/usr/img/backs/pluto.tif"
 
 # fwm
-bars &
+bars main&
 sxhkd &
 watcher &
 glazier &
@@ -22,8 +22,11 @@ unclutter &
 urxvtd -q -o -f &
 
 case "$(hostname)" in
-    inferno)   ;;
-    *) picom & ;;
+    inferno) ;;
+    fyriousa)
+        wmp -a 1280 1200
+        picom &
+        ;;
 esac
 
 test -f ~/.Xresources && xrdb -load ~/.Xresources

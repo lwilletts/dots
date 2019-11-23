@@ -1,0 +1,9 @@
+#!/bin/sh
+#
+# groupbar
+
+main() {
+    return 0
+}
+
+main "$@"

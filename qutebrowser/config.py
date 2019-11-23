@@ -143,7 +143,7 @@ c.downloads.open_dispatcher = None
     # privacy & content
 # c.content.headers.user_agent = 'Mozilla/5.0 (Windows NT 6.1; rv:52.0) Gecko/20100101 Firefox/52.0'
 c.content.headers.do_not_track = True
-c.content.host_blocking.enabled = False
+c.content.host_blocking.enabled = True
 
 # List of URLs of lists which contain hosts to block.  The file can be
 # in one of the following formats:  - An `/etc/hosts`-like file - One
@@ -227,13 +227,13 @@ c.colors.statusbar.private.fg = xresources['*color7']
 # statusbar insert mode
 c.colors.statusbar.insert.bg = xresources['*color2']
 c.colors.statusbar.insert.fg = xresources['*color0']
-# Default foreground color of the URL in the statusbar.
+# default foreground color of the URL in the statusbar.
 c.colors.statusbar.url.fg = xresources['*color7']
 c.colors.statusbar.url.success.http.fg = xresources['*color7']
 c.colors.statusbar.url.success.https.fg = xresources['*color7']
-# Background color of the progress bar.
+# background color of the progress bar.
 c.colors.statusbar.progress.bg = xresources['*color0']
-# Foreground color of the URL in the statusbar when there's a warning.
+# foreground color of the URL in the statusbar when there's a warning.
 c.colors.statusbar.url.warn.fg = xresources['*color1']
 c.colors.statusbar.url.error.fg = xresources['*color2']
 
@@ -250,9 +250,9 @@ c.colors.messages.error.fg = xresources['*color0']
 c.colors.downloads.error.bg = xresources['*color1']
 c.colors.downloads.error.fg = xresources['*color0']
 
-# Background color for the download bar.
+# background color for the download bar.
 c.colors.downloads.bar.bg = xresources['*color0']
-# Color gradient start for download backgrounds.
+# color gradient start for download backgrounds.
 c.colors.downloads.start.bg = xresources['*color2']
 c.colors.downloads.start.fg = xresources['*color0']
 c.colors.downloads.stop.bg = xresources['*color5']
@@ -266,9 +266,9 @@ c.colors.downloads.stop.fg = xresources['*color0']
 # c.colors.downloads.system.fg = 'rgb'
 
 # completion
-c.colors.completion.category.bg = xresources['*color7']
+c.colors.completion.category.bg = xresources['*color6']
 c.colors.completion.category.fg = xresources['*color0']
-c.colors.completion.category.border.top = xresources['*color7']
+c.colors.completion.category.border.top = xresources['*color6']
 c.colors.completion.category.border.bottom = xresources['*color0']
 
 # text color of the completion widget.
@@ -283,7 +283,7 @@ c.colors.completion.match.fg = xresources['*color1']
 c.colors.completion.odd.bg = xresources['*color0']
 c.colors.completion.even.bg = xresources['*color0']
 # color of the scrollbar in the completion view.
-c.colors.completion.scrollbar.bg = xresources['*color7']
+c.colors.completion.scrollbar.bg = xresources['*color6']
 c.colors.completion.scrollbar.fg = xresources['*color0']
 
 # Background color of the keyhint widget.

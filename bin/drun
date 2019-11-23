@@ -7,16 +7,16 @@ wmcolours
 
 FONT=$(awk '/font/ {print $3}' < ~/.Xresources | cut -d',' -f 1)
 
-X=0
-H=28
-Y="$(($(mattr h $PFM) - $H))"
-W="$(($(mattr w $PFM) - $BW * 2))"
+X=$((LGAP + BW))
+H=$((TGAP/2 + BW*2))
+Y=$((TGAP/4 - TGAP/8))
+W=$(($(mattr w $PFM) - LGAP - RGAP - BW*2))
 
 printf '%s\n' "$PATH" | sed 's/:/\n/g' | while read -r dir; do
     printf '%s\n' "$(find -L $dir/* -type f -executable)" | \
         rev | cut -d/ -f 1 | rev
 done | sort -u | \
-dmenu -name "drun" -f -x $X -y $Y -w $W -h $H -s "$(mattr d $PFM)"  -fn "$FONT" -p "Run >" \
+dmenu -name "drun" -f -x $X -y $Y -w $W -h $H -bw 0 -s "$(mattr d $PFM)" \
+-fn "$FONT" -p "  Run >" \
 -nf "#$ACTIVE" -sf "#$URGENT" -nb "#$INACTIVE" -sb "#$INACTIVE" -bc "#$ACTIVE" \
--bw 0 \
 | ${SHELL:-"/bin/sh"} &

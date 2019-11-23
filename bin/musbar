@@ -1,0 +1,22 @@
+#!/bin/sh
+#
+# musbar
+
+main() {
+    cava="urxvtc -e sh -c 'cava'"
+    mus="$(mpvc -f \
+    "$act%artist% $ina| $act%title% $ina| $act%remaining%" 2> /dev/null)"
+
+    buf=""
+    buf="${buf} %{A:${cava}:} ${mus} %{A}"
+
+    printf '%s\n' "$buf"
+}
+
+. fwmrc
+wmcolours
+
+act="%{F#EFEFEF}"
+ina="%{F#808080}"
+
+main "$@"
