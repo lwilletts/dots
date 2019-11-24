@@ -11,20 +11,23 @@ screens
 hsetroot -root -fill "$HOME/usr/img/backs/pluto.tif"
 
 # fwm
-bars main&
+bars main &
 sxhkd &
 watcher &
 glazier &
 
 # apps
-pulse
-unclutter &
 urxvtd -q -o -f &
 
 case "$(hostname)" in
-    inferno) ;;
+    spark)
+        unclutter-xfixes &
+        picom &
+        ;;
     fyriousa)
+        pulse
         wmp -a 1280 1200
+        unclutter &
         picom &
         ;;
 esac

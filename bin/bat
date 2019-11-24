@@ -24,6 +24,8 @@ case "$1" in
     *)        acpidata ;;
 esac
 
+hash acpi 2> /dev/null || exit 1
+
 case "$STATUS" in
     "Full"|"Charging")
         printf '%s\n' "$PERCENT% /"

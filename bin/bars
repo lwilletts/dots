@@ -32,9 +32,11 @@ simplebar() {
         groupbar|\
         sysbar|\
         musbar|\
-        volbar) BAR="$1" ;;
-        *)      exit     ;;
+        volbaralsa|\
+        volbarpulse) BAR="$1" ;;
+        *)           exit    ;;
     esac
+
 
     while :; do
         buf=""
@@ -159,11 +161,12 @@ mainbar() {
         buf=""
         buf="${buf} %{l} $bar_active"
         buf="${buf} $(datebar)"
+        buf="${buf} $(batbar)"
         buf="${buf} %{c}"
         buf="${buf} $(groupbarinfo | cut -d\| -f 2-)"
         buf="${buf} %{r} $bar_active"
         buf="${buf} $(musbar) "
-        buf="${buf} $(volbar) "
+        buf="${buf} $(${volbar}) "
 
         printf '%s\n' "$buf"
         sleep 0.1
@@ -175,14 +178,24 @@ main() {
 
     SEC="$(lsm | grep -v "$PRI" | head -n 1)"
 
+
     # bar geometry
     PX="$(mattr x "$PRI")"
     PW="$(mattr w "$PRI")"
     PH="$(mattr h "$PRI")"
-    SH="$(mattr h "$SEC")"
+
+    test ! -z "$SEC" && {
+        SH="$(mattr h "$SEC")"
+    }
+
     barx=$((PX + LGAP + BW))
     bary=$((TGAP/4 - TGAP/8))
     barh=$((TGAP/2 + BW*2))
+
+    case "$(hostname)" in
+        spark)    volbar="volbaralsa"  ;;
+        fyriousa) volbar="volbarpulse" ;;
+    esac
 
     case "$1" in
         main)
@@ -195,7 +208,7 @@ main() {
 
             barx=$((barx + barw + LGAP))
             barw=44
-            simplebar volbar c
+            simplebar $volbar c
 
             barx=$((barx + barw + LGAP))
             case "$(hostname)" in
