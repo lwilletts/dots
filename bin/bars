@@ -101,12 +101,17 @@ groupbarinfo() {
             cmd="group -t $group focus"
             wid="$(head -n 1 "$groupfile")"
 
+            title="$(atomx "$wid" WM_NAME)"
+            test -z "$title" && {
+                title="$(atomx "$wid" WM_CLASS)"
+            }
+
             case "$1" in
                 text)
-                    printf '%s' "$(atomx "$wid" WM_NAME)   "
+                    printf '%s' "$title   "
                     ;;
                 *)
-                    printf '%s' "$bar_inactive|$bar_active$activity%{A:$cmd:} $(atomx "$wid" WM_NAME) %{A}"
+                    printf '%s' "$bar_inactive|$bar_active$activity%{A:$cmd:} $title %{A}"
                     ;;
             esac
         done
