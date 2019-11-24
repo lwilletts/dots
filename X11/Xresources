@@ -1,5 +1,5 @@
 /* colours */
-#include ".colours/darkish"
+#include "/home/fyr/.colours/darkish"
 
 /* basics */
 *.modifier   : mod4

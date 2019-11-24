@@ -1,0 +1,11 @@
+#!/bin/sh
+#
+# volbaralsa
+
+main() {
+    buf=""
+
+    printf '%s\n' "$buf"
+}
+
+main "$@"
