@@ -35,8 +35,8 @@ mod1 + shift + {g,m}
     move {center,maximise} $(pfw) cycle
 mod1 + {Left,Down,Up,Right}
     move {left,bottom,top,right}
-mod1 + {v,t,shift + t}
-    tile {-v,-g,-bl}
+mod1 + {v,r,t,shift + t}
+    tile {-v,-r,-g,-l}
 
 # groups
 mod1 + {1,2,3,4,5,6,7,8,9,0}

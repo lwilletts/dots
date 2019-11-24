@@ -4,7 +4,14 @@
 
 case "$1" in
     0x*) wattr "$1" && wid="$1" || exit 1 ;;
-    *)   wid="$(lsw -r)"                  ;;
+    *)
+        wid="$(lsw -r)"
+        test ! -z "$1" && {
+            file="$1"
+        } || {
+            file="$HOME/$(date +%d-%m-%y-%H:%M:%S)"
+        }
+        ;;
 esac
 
-xscreenshot "$wid" | ff2png > "$HOME/$(date +%d-%m-%y-%H:%M:%S).png"
+xscreenshot "$wid" | ff2png > "$file.png"

@@ -18,13 +18,13 @@ acpidata() {
     STATUS="$(printf '%s\n' "$ACPINFO" | cut -d\  -f 3 | cut -d, -f 1)"
 }
 
+hash acpi 2> /dev/null || exit 1
+
 case "$1" in
     m|manual) manual   ;;
     a|acpi)   acpidata ;;
     *)        acpidata ;;
 esac
-
-hash acpi 2> /dev/null || exit 1
 
 case "$STATUS" in
     "Full"|"Charging")

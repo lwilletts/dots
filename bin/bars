@@ -103,9 +103,9 @@ groupbarinfo() {
             cmd="group -t $group focus"
             wid="$(head -n 1 "$groupfile")"
 
-            title="$(atomx "$wid" WM_NAME)"
+            title="$(atomx WM_NAME "$wid")"
             test -z "$title" && {
-                title="$(atomx "$wid" WM_CLASS)"
+                title="$(atomx WM_CLASS "$wid")"
             }
 
             case "$1" in
@@ -123,7 +123,7 @@ groupbarinfo() {
 groupbartrigger() {
     matchwid() {
         for wid in $(lsw -a); do
-            printf '%s\n' "$wid $(atomx "$wid" WM_NAME)"
+            printf '%s\n' "$wid $(atomx WM_NAME "$wid")"
         done
     }
 

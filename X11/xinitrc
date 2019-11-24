@@ -8,7 +8,7 @@ xsetroot -cursor_name left_ptr # left pointer as cursor
 
 # wall
 screens
-hsetroot -root -fill "$HOME/usr/img/backs/pluto.tif"
+hsetroot -root -fill "$HOME/usr/img/backs/rockarmor.jpg"
 
 # fwm
 bars main &
