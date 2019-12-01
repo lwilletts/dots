@@ -1,0 +1,36 @@
+#!/bin/zsh
+#
+# /home/fyr/.dots/bin/servmount
+
+usage() {
+    base=$(basename "$0")
+
+    cat >&2 << EOF
+Usage:
+    $base
+EOF
+
+    test $# -eq 0 || exit "$1"
+}
+
+main() {
+    host="192.168.2.169"
+
+    mount_dir="/mnt/pool"
+    remote_dir="/srv/nfs/pool"
+
+    if nc -zw 1 "$host" 22 2> /dev/null; then
+        echo "$host alive!"
+        test -z "$(mount -l | awk '$0~s' s="$mount_dir")" && {
+            echo "mounting $host"
+            sudo mount -t nfs "${host}:${remote_dir} ${mount_dir}"
+        }
+    else
+        echo "$host dead!"
+        test -n "$(mount -l | awk '$0~s' s="$mount_dir")" && {
+            sudo umount -f -l "${mount_dir}"
+        }
+    fi
+}
+
+main "$@"

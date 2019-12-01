@@ -6,15 +6,11 @@ xset r rate 250 40             # faster keypresses
 xset +fp ~/.local/share/fonts  # custom fonts
 xsetroot -cursor_name left_ptr # left pointer as cursor
 
+test -f ~/.Xresources && xrdb -load ~/.Xresources
+
 # wall
 screens
 hsetroot -root -fill "$HOME/usr/img/backs/rockarmor.jpg"
-
-# fwm
-bars main &
-sxhkd &
-watcher &
-glazier &
 
 # apps
 urxvtd -q -o -f &
@@ -22,16 +18,19 @@ urxvtd -q -o -f &
 case "$(hostname)" in
     spark)
         unclutter-xfixes &
-        picom &
         ;;
     fyriousa)
-        pulse
         wmp -a 1280 1200
         unclutter &
-        picom &
         ;;
 esac
 
-test -f ~/.Xresources && xrdb -load ~/.Xresources
+# fwm
+picom &
+sxhkd &
+watcher &
+glazier &
+bars main &
 
+pulse
 xwait

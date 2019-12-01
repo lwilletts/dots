@@ -194,8 +194,8 @@ main() {
     }
 
     barx=$((PX + LGAP + BW))
-    bary=$((TGAP/4 - TGAP/8))
-    barh=$((TGAP/2 + BW*2))
+    barh=$((BGAP/2 + BW*2))
+    bary=$((PH - barh - BGAP/4))
 
     case "$(hostname)" in
         spark)    volbar="volbaralsa"  ;;
@@ -211,11 +211,11 @@ main() {
             barw=120
             simplebar datebar c
 
-            barx=$((barx + barw + LGAP))
+            barx=$((barx + barw + IGAP))
             barw=44
             simplebar $volbar c
 
-            barx=$((barx + barw + LGAP))
+            barx=$((barx + barw + IGAP))
             case "$(hostname)" in
                 fyriousa)
                     prevbarx=$barx
@@ -224,9 +224,9 @@ main() {
                     # barx=$((PX + PW + LGAP))
                     # bary=$((SH - BGAP + BGAP/2 - BGAP/5))
                     # gpubartrigger &
-                    barx=$((prevbarx - barw - LGAP))
+                    barx=$((prevbarx - barw - IGAP))
                     bary=$prevbary
-                    barx=$((barx + barw + LGAP))
+                    barx=$((barx + barw + IGAP))
                     barw=$((PW - barx))
                     groupbartrigger &
                     ;;
@@ -237,7 +237,7 @@ main() {
             esac
 
             barw=500
-            barx=$((PW - barw - RGAP))
+            barx=$((PW - barw - IGAP))
             musbartrigger &
             ;;
     esac

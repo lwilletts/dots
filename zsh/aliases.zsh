@@ -7,9 +7,6 @@ alias mine="s chown $(echo $USER):fyr"
 alias all="mine -R *"
 
 # operations
-alias mount="s mount"
-alias umount="s umount"
-
 alias mv="mv -f"
 alias df="df -h"
 alias cp="cp -rf"
@@ -42,7 +39,8 @@ alias ytm="youtube-dl \"\$(mpvc -f '%path%')\""
 alias rss="newsboat -q"
 alias net="curl -s ipv4.icanhazip.com"
 alias rirc="mosh remote -- tmux a"
-alias serv="wol -p 9 e0:d5:5e:91:72:19"
+alias serv="mosh phosphor --"
+alias wserv="wol -p 9 e0:d5:5e:91:72:19"
 
 # games
 alias game1="cd $GAME1"

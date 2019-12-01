@@ -17,9 +17,8 @@ colour6="#$(grep -w "color6" "$clrpath" | cut -d\# -f 2)"
 colour7="#$(grep -w "color7" "$clrpath" | cut -d\# -f 2)"
 
 cat << COLOURS
-
-$colour0 $colour1 $colour2 $colour3 $colour4 $colour5 $colour6 $colour7
 $c0▄▄▄▄▄▄▄ $c1▄▄▄▄▄▄▄ $c2▄▄▄▄▄▄▄ $c3▄▄▄▄▄▄▄ $c4▄▄▄▄▄▄▄ $c5▄▄▄▄▄▄▄ $c6▄▄▄▄▄▄▄ $c7▄▄▄▄▄▄▄$R
 $c0███████ $c1███████ $c2███████ $c3███████ $c4███████ $c5███████ $c6███████ $c7███████$R
 
+$colour0 $colour1 $colour2 $colour3 $colour4 $colour5 $colour6 $colour7
 COLOURS

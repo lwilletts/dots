@@ -8,8 +8,8 @@ wmcolours
 FONT=$(awk '/font/ {print $3}' < ~/.Xresources | cut -d',' -f 1)
 
 X=$((LGAP + BW))
-H=$((TGAP/2 + BW*2))
-Y=$((TGAP/4 - TGAP/8))
+H=$((BGAP/2 + BW*2))
+Y=$(($(mattr h $PFM) - H - BGAP/4))
 W=$(($(mattr w $PFM) - LGAP - RGAP - BW*2))
 
 printf '%s\n' "$PATH" | sed 's/:/\n/g' | while read -r dir; do
