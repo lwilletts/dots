@@ -7,6 +7,9 @@ alias mine="s chown $(echo $USER):fyr"
 alias all="mine -R *"
 
 # operations
+alias mount="s mount"
+alias umount="s umount"
+
 alias mv="mv -f"
 alias df="df -h"
 alias cp="cp -rf"
