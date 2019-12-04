@@ -5,23 +5,20 @@ xset +dpms                     # powersaving
 xset r rate 250 40             # faster keypresses
 xset +fp ~/.local/share/fonts  # custom fonts
 xsetroot -cursor_name left_ptr # left pointer as cursor
+screens                        # set randr
 
 test -f ~/.Xresources && xrdb -load ~/.Xresources
-
-# wall
-screens
-hsetroot -root -fill "$HOME/usr/img/backs/rockarmor.jpg"
-
-# apps
 urxvtd -q -o -f &
 
 case "$(hostname)" in
     spark)
         unclutter-xfixes &
+        hsetroot -root -cover "$HOME/tmp/prescott-horn-tEJocaFubhc-unsplash.jpg"
         ;;
     fyriousa)
-        wmp -a 1280 1200
         unclutter &
+        wmp -a 1280 1200
+        hsetroot -root -fill "$HOME/usr/img/backs/rockarmor.jpg"
         ;;
 esac
 

@@ -215,7 +215,11 @@ inoremap {, {<CR>},<ESC>O
 inoremap [; [<CR>];<ESC>O
 inoremap [, [<CR>],<ESC>O
 
+" make
+nnoremap <Leader>m :make<CR>
+
 " external program launching
+nnoremap <Leader>om :!./%:r<CR>
 nnoremap <Leader>ob :AsyncRun! qutebrowser %:r.html<CR>
 nnoremap <Leader>op :AsyncRun! zathura %:r.pdf<CR>
 vnoremap <Leader>s :! awk '{ print length(), $0 \| "sort -n \| cut -d\\  -f2-"}'<CR>
@@ -332,7 +336,7 @@ filetype plugin indent on
 
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
-autocmd! FileType c      setlocal ts=4 sw=4 sts=4
+autocmd! FileType c      setlocal ts=8 sw=8 sts=8 noexpandtab
 autocmd! FileType sh     setlocal makeprg=sh\ %\
 autocmd! FileType md     setlocal spell makeprg=pandoc\ %\ -o\ %:r.pdf
 autocmd! FileType tex    setlocal spell makeprg=pdflatex\ %

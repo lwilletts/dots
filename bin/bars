@@ -194,8 +194,8 @@ main() {
     }
 
     barx=$((PX + LGAP + BW))
-    barh=$((BGAP/2 + BW*2))
-    bary=$((PH - barh - BGAP/4))
+    barh=$((TGAP/2 + BW*2))
+    bary=$((barh - TGAP/4))
 
     case "$(hostname)" in
         spark)    volbar="volbaralsa"  ;;
