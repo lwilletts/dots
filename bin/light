@@ -85,9 +85,9 @@ def main():
         GPIO.output(16, True)
     elif args.socket == "2":
         # 1110 and 0110 socket 2 ON and OFF
-        GPIO.output(11, True)
+        GPIO.output(11, False)
         GPIO.output(15, True)
-        GPIO.output(16, False)
+        GPIO.output(16, True)
     elif args.socket == "3":
         # 1101 and 0101 socket 3 ON and OFF
         GPIO.output(11, True)
@@ -95,14 +95,14 @@ def main():
         GPIO.output(16, True)
     elif args.socket == "4":
         # 1100 and 0100 socket 4 ON and OFF
-        GPIO.output(11, True)
+        GPIO.output(11, False)
         GPIO.output(15, False)
-        GPIO.output(16, False)
+        GPIO.output(16, True)
     elif args.socket == "all":
         # 0011 and 1011 all sockets ON and OFF
-        GPIO.output(11, False)
+        GPIO.output(11, True)
         GPIO.output(15, True)
-        GPIO.output(16, True)
+        GPIO.output(16, False)
 
     if args.power == "on":
         GPIO.output(13, True)
