@@ -16,7 +16,7 @@ main() {
 . fwmrc
 wmcolours
 
-act="%{F#EFEFEF}"
+act="%{F#101010}"
 ina="%{F#808080}"
 
 main "$@"

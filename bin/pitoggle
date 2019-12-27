@@ -1,0 +1,20 @@
+#!/bin/sh
+#
+# pitoggle
+
+usage() {
+    base=$(basename "$0")
+
+    cat >&2 << EOF
+Usage:
+    $base
+EOF
+
+    test $# -eq 0 || exit "$1"
+}
+
+main() {
+    pgrep picom > /dev/null 2>&1 && pkill picom || picom &
+}
+
+main "$@"

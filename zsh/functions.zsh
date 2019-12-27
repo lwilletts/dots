@@ -51,7 +51,7 @@ ee() {
 }
 
 usr() {
-    ps xgf "$@" | sed '1d; s/--type.*//' | \
+    ps uxgf "$@" | sed '1d; s/--type.*//' | \
         cut -c1-$(stty size < /dev/tty | cut -d\  -f 2)
 }
 
@@ -75,6 +75,20 @@ mpvv() {
 
 mpvi() {
     mpv "$@" --pause &!
+}
+
+winel() {
+    case "$1" in
+        outerworlds)
+            GAMEDIR="$GAME2/The Outer Worlds"
+            cd $GAMEDIR
+
+            WINEDEBUG=-all WINEARCH=win64 \
+            WINEPREFIX=~/.wine/prefixes/theouterworlds WINEESYNC=1 \
+            DXVK_HUD=fps,frametimes,gpuload \
+            wine "$GAMEDIR/TheOuterWorlds.exe" > /dev/null 2>&1 &!
+            ;;
+    esac
 }
 
 # name / class / process of window id

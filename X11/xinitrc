@@ -18,7 +18,7 @@ case "$(hostname)" in
     fyriousa)
         unclutter &
         wmp -a 1280 1200
-        hsetroot -root -fill "$HOME/usr/img/backs/rockarmor.jpg"
+        hsetroot -root -fill "$HOME/usr/img/backs/clouds.jpg"
         ;;
 esac
 

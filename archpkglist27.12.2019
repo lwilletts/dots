@@ -20,7 +20,7 @@ bzip2
 cava-git
 cmake
 compiler-rt
-con2fbmap
+compton-rounded-corners
 coreutils
 cronie
 cryptsetup
@@ -72,6 +72,7 @@ glibc
 gmime3
 gnu-netcat
 go
+google-chrome
 gotop-bin
 grep
 groff
@@ -80,16 +81,17 @@ gtk-engines
 gutenprint
 gzip
 hddtemp
-hsetroot
 htop-vim-git
 hwloc
 i3lock-git
+i7z
 imagemagick
-imgur
+imgur-uploader-git
 inetutils
 iproute2
 iputils
 isync
+iwd
 jhead
 jq
 less
@@ -111,6 +113,7 @@ linux
 linux-firmware
 linux-fsync
 linux-headers
+lsof
 lutris
 lvm2
 lxappearance
@@ -121,6 +124,7 @@ man-pages
 mdadm
 mesa-aco-git
 meson
+minigalaxy
 mkb-git
 mkbold-mkitalic
 mmutils-git
@@ -132,6 +136,7 @@ ncdu
 neovim
 netctl
 newsboat
+nfs-utils
 ninja
 notmuch
 notmuch-runtime
@@ -151,12 +156,10 @@ patch
 pavucontrol
 pciutils
 perl
-picom-git
+pfetch-git
 piper
 pkgconf
 pkgfile
-plex-media-server
-pod2man
 portaudio
 procps-ng
 protontricks-git
@@ -176,9 +179,11 @@ qt5-svg
 qt5ct
 qutebrowser
 reddio-git
+redshift-minimal
 rsync
 rtv
 ruby
+rust
 rxvt-unicode
 s-nail
 sane
@@ -220,8 +225,6 @@ thunar-media-tags-plugin
 tmux
 toilet
 toilet-fonts
-transmission-cli
-transmission-remote-cli-git
 tree
 ttf-roboto
 tumbler
@@ -232,7 +235,7 @@ usbutils
 util-linux
 vi
 vkd3d
-vkquake2
+vulkan-headers
 vulkan-tools
 w3m
 wget
@@ -240,6 +243,9 @@ which
 wine-staging-git
 wmctrl
 wmutils-git
+woeusb
+wol
+wpa_supplicant
 xapian-core
 xcb-util-cursor
 xcb-util-xrm

@@ -1,0 +1,12 @@
+#!/bin/sh
+
+skin_name='No_News'
+skin_resources="$HOME/.steam/steam/skins/$skin_name/resource"
+
+mkdir -p "$skin_resources"
+ln -s ~/.steam/steam/resource/styles "$skin_resources"
+echo ".libraryhome_WhatsNewContainer_gdZT7 {
+  display: none;
+}" > "$skin_resources"/webkit.css
+
+steam steam://settings/interface

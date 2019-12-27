@@ -31,7 +31,7 @@ img() {
 
     FW=5
     FH=10
-    LINES=$(tput lines)
+    LINES=$(($(tput lines) + 2))
     COLUMNS=$(tput cols)
 
     MW=$((FW * COLUMNS))

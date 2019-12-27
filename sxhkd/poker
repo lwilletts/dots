@@ -17,6 +17,8 @@ mod1 + ctrl + BackSpace
     pkill xinit
 mod1 + {b, shift + b}
     screens {sec toggle, all 0.7}
+mod1 + shift + p
+    pitoggle
 
 # manipulation
 mod1 + shift + q
@@ -40,7 +42,7 @@ mod1 + {v,r,t,shift + t}
 
 # groups
 mod1 + {1,2,3,4,5,6,7,8,9,0}
-    group -t {1,2,3,4,5,6,7,8,9,0}
+    group -s {1,2,3,4,5,6,7,8,9,0}
 mod1 + shift + {1,2,3,4,5,6,7,8,9,0}
     group -a {1,2,3,4,5,6,7,8,9,0}
 mod1 + {e,shift + e}
@@ -64,7 +66,7 @@ mod4 + {h,j,k,l}
 mod4 + {space,Tab,n,p,z,c,BackSpace}
     mpvc {toggle,next,next,prev,shuffle,clear,remove current} -q
 mod4 + a
-    find ~/usr/mus/* -type f | sort -R | mpvc add -q
+    find -L ~/usr/mus/* -type f | sort -R | mpvc add -q
 
 # shot
 Print

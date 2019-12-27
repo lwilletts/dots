@@ -23,8 +23,8 @@
 *color6:      #A7A7A7
 *color14:     #A7A7A7
 ! black
-*color7:      #333333
-*color15:     #333333
+*color7:      #171717
+*color15:     #171717
 
-*cursorColor: #101010
+*cursorColor: #171717
 *colorUL:     #7086B3

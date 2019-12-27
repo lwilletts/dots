@@ -1,7 +1,7 @@
 #!/bin/sh
 
 scrot /tmp/lock.bmp
-mpvc pause -Q
+mpvc pause -Q -q
 
 dims="$(file /tmp/lock.bmp | awk '{print $7 "x" $9}')"
 convert -brightness-contrast 2x0 /tmp/lock.bmp -scale 20% -scale 500% RGB:- \

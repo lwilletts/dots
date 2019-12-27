@@ -220,8 +220,8 @@ nnoremap <Leader>m :make<CR>
 
 " external program launching
 nnoremap <Leader>om :!./%:r<CR>
-nnoremap <Leader>ob :AsyncRun! qutebrowser %:r.html<CR>
 nnoremap <Leader>op :AsyncRun! zathura %:r.pdf<CR>
+nnoremap <Leader>ob :AsyncRun! qutebrowser %:r.html<CR>
 vnoremap <Leader>s :! awk '{ print length(), $0 \| "sort -n \| cut -d\\  -f2-"}'<CR>
 
     " Mappings for Custom Functions
@@ -302,6 +302,9 @@ set mouse+=a
 " autosave file on focus loss
 set autowrite
 autocmd! FocusLost * silent! :wa
+
+" spell limit
+set spellsuggest+=5
 
 " stop leader timeout
 set ttimeout

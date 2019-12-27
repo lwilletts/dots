@@ -1,5 +1,5 @@
 /* colours */
-#include "/home/fyr/.colours/vapour"
+#include "/home/fyr/.colours/lightish"
 
 /* basics */
 *.modifier   : mod4

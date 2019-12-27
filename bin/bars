@@ -37,19 +37,22 @@ simplebar() {
         *)           exit    ;;
     esac
 
-
     while :; do
         buf=""
+
         case "$2" in
             l) buf="${buf}%{l}" ;;
             c) buf="${buf}%{c}" ;;
             r) buf="${buf}%{r}" ;;
             *) ;;
         esac
+
+        test -z "$3" && sleepval="0.05" || sleepval="$3"
+
         buf="${buf}$(${BAR})"
 
         printf '%s\n' "$buf"
-        sleep 0.1
+        sleep "$sleepval"
     done | runbar "$BAR" | /bin/sh &
 }
 
@@ -60,7 +63,7 @@ gpubartrigger() {
 
         case "$temp" in
             6[0-9]|7[0-9]|8[0-9]|9[0-9]|1[0-9])
-                test -z "$process" && simplebar gpubar c
+                test -z "$process" && simplebar gpubar c 1
                 ;;
             *)
                 test ! -z "$process" && kill -9 "$process"
@@ -206,6 +209,14 @@ main() {
         main)
             barw=$((PW - LGAP - RGAP))
             mainbar
+
+            case "$(hostname)" in
+                fyriousa)
+                    barx=$((PW + LGAP))
+                    barw=400
+                    gpubartrigger &
+                    ;;
+            esac
             ;;
         *)
             barw=120
