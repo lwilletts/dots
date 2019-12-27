@@ -18,42 +18,42 @@ EOF
 
 headless() {
     test ! -d "$HOME/.vim" && mkdir -p "$HOME/.vim"
-    ln "$OPTIONS" "$DOTFILEDIR/vim/vimrc" "$HOME/.vim/vimrc"
-    ln "$OPTIONS" "$DOTFILEDIR/vim/colors" "$HOME/.vim/colors"
+    ln $OPTIONS "$DOTFILEDIR/vim/vimrc" "$HOME/.vim/vimrc"
+    ln $OPTIONS "$DOTFILEDIR/vim/colors" "$HOME/.vim/colors"
 
-    ln "$OPTIONS" "$DOTFILEDIR/tmux/tmux.conf" "$HOME/.tmux.conf"
+    ln $OPTIONS "$DOTFILEDIR/tmux/tmux.conf" "$HOME/.tmux.conf"
 }
 
 xorg() {
-    ln "$OPTIONS" "$DOTFILEDIR/zsh" "$HOME/.zsh"
-    ln "$OPTIONS" "$DOTFILEDIR/zsh/zshrc" "$HOME/.zshrc"
-    ln "$OPTIONS" "$DOTFILEDIR/zsh/zprofile" "$HOME/.zprofile"
+    ln $OPTIONS "$DOTFILEDIR/zsh" "$HOME/.zsh"
+    ln $OPTIONS "$DOTFILEDIR/zsh/zshrc" "$HOME/.zshrc"
+    ln $OPTIONS "$DOTFILEDIR/zsh/zprofile" "$HOME/.zprofile"
 
-    ln "$OPTIONS" "$DOTFILEDIR/fonts" "$HOME/.local/share/fonts"
-    ln "$OPTIONS" "$DOTFILEDIR/X11/xinitrc" "$HOME/.xinitrc"
-    ln "$OPTIONS" "$DOTFILEDIR/X11/colours" "$HOME/.colours"
-    ln "$OPTIONS" "$DOTFILEDIR/X11/Xresources" "$HOME/.Xresources"
+    ln $OPTIONS "$DOTFILEDIR/fonts" "$HOME/.local/share/fonts"
+    ln $OPTIONS "$DOTFILEDIR/X11/xinitrc" "$HOME/.xinitrc"
+    ln $OPTIONS "$DOTFILEDIR/X11/colours" "$HOME/.colours"
+    ln $OPTIONS "$DOTFILEDIR/X11/Xresources" "$HOME/.Xresources"
 
     test ! -d "$HOME/.config/sxhkd" && mkdir "$HOME/.config/sxhkd"
-    ln "$OPTIONS" "$DOTFILEDIR/sxhkd/poker" "$HOME/.config/sxhkd/sxhkdrc"
+    ln $OPTIONS "$DOTFILEDIR/sxhkd/poker" "$HOME/.config/sxhkd/sxhkdrc"
 
-    ln "$OPTIONS" "$DOTFILEDIR/mpv" "$HOME/.config/mpv"
-    ln "$OPTIONS" "$DOTFILEDIR/cwm/cwmrc" "$HOME/.cwmrc"
-    ln "$OPTIONS" "$DOTFILEDIR/bindings" "$HOME/.bindings"
-    ln "$OPTIONS" "$DOTFILEDIR/alsa/asoundrc" "$HOME/.asoundrc"
-    ln "$OPTIONS" "$DOTFILEDIR/youtube-dl" "$HOME/.config/youtube-dl"
-    ln "$OPTIONS" "$DOTFILEDIR/compton/compton.conf" "$HOME/.compton.conf"
-    ln "$OPTIONS" "$DOTFILEDIR/zathura/zathurarc" "$HOME/.config/zathura/zathurarc"
-    ln "$OPTIONS" "$DOTFILEDIR/qutebrowser/config.py" \
+    ln $OPTIONS "$DOTFILEDIR/mpv" "$HOME/.config/mpv"
+    ln $OPTIONS "$DOTFILEDIR/cwm/cwmrc" "$HOME/.cwmrc"
+    ln $OPTIONS "$DOTFILEDIR/bindings" "$HOME/.bindings"
+    ln $OPTIONS "$DOTFILEDIR/alsa/asoundrc" "$HOME/.asoundrc"
+    ln $OPTIONS "$DOTFILEDIR/youtube-dl" "$HOME/.config/youtube-dl"
+    ln $OPTIONS "$DOTFILEDIR/compton/compton.conf" "$HOME/.compton.conf"
+    ln $OPTIONS "$DOTFILEDIR/zathura/zathurarc" "$HOME/.config/zathura/zathurarc"
+    ln $OPTIONS "$DOTFILEDIR/qutebrowser/config.py" \
     "$HOME/.config/qutebrowser/config.py"
 }
 
 nvim() {
     test ! -d "$HOME/.config/nvim" && mkdir -p "$HOME/.config/nvim"
 
-    ln "$OPTIONS" "$DOTFILEDIR/vim/vimrc" "$HOME/.config/nvim/init.vim"
-    ln "$OPTIONS" "$DOTFILEDIR/vim/colors" "$HOME/.config/nvim/colors"
-    ln "$OPTIONS" "$HOME/.vim/autoload" "$HOME/.config/nvim/autoload"
+    ln $OPTIONS "$DOTFILEDIR/vim/vimrc" "$HOME/.config/nvim/init.vim"
+    ln $OPTIONS "$DOTFILEDIR/vim/colors" "$HOME/.config/nvim/colors"
+    ln $OPTIONS "$HOME/.vim/autoload" "$HOME/.config/nvim/autoload"
 }
 
 case $1 in
