@@ -21,6 +21,7 @@ headless() {
     ln $OPTIONS "$DOTFILEDIR/vim/vimrc" "$HOME/.vim/vimrc"
     ln $OPTIONS "$DOTFILEDIR/vim/colors" "$HOME/.vim/colors"
 
+    ln $OPTIONS "$DOTFILEDIR/git/gitconfig" "$HOME/.gitconfig"
     ln $OPTIONS "$DOTFILEDIR/tmux/tmux.conf" "$HOME/.tmux.conf"
 }
 
