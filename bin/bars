@@ -8,14 +8,17 @@ barvar() {
     wmenv
     wmgaps
     wmcolours
-    wmgroup
 
     bar_fg="#$ACTIVE"
     bar_bg="#$INACTIVE"
     bar_dim="#808080"
+
     bar_border="$bar_dim"
-    bar_active="%{F#$ACTIVE}"
-    bar_inactive="%{F$bar_dim}"
+    bar_text_inactive="%{F$bar_dim}"
+    bar_text_highlight="%{F#$INACTIVE}"
+    bar_text_foreground="%{F#$ACTIVE}"
+    bar_back_highlight="%{B#$URGENT}"
+    bar_back_foreground="%{B#$INACTIVE}"
     bar_font=$(awk '/font/ {print $3}' < ~/.Xresources | cut -d',' -f 1)
 }
 
@@ -34,7 +37,7 @@ simplebar() {
         musbar|\
         volbaralsa|\
         volbarpulse) BAR="$1" ;;
-        *)           exit    ;;
+        *)           exit     ;;
     esac
 
     while :; do
@@ -74,182 +77,53 @@ gpubartrigger() {
     done
 }
 
-musbartrigger() {
-    while :; do
-        process="$(ps x | awk '/lemonbar/ && /musbar/ && !/awk/ {print $1}')"
-
-        mpvc -q
-        case $? in
-            2|3)
-                test ! -z "$process" && kill -9 "$process"
-                ;;
-            0|1)
-                test -z "$process" && simplebar musbar c
-                ;;
-        esac
-
-        sleep 0.1
-    done
-}
-
-groupbarinfo() {
-    test -n "$(find "$groupdir" -maxdepth 1 -name '?' -print -quit)" && {
-        for groupfile in "$groupdir"/?; do
-            group="$(printf '%s\n' "$groupfile" | rev | cut -d/ -f 1 | rev)"
-
-            grep -q "$group" "$activegrp" && {
-                activity="$bar_active"
-            } || {
-                activity="$bar_inactive"
-            }
-
-            cmd="group -t $group focus"
-            wid="$(head -n 1 "$groupfile")"
-
-            title="$(atomx WM_NAME "$wid")"
-            test -z "$title" && {
-                title="$(atomx WM_CLASS "$wid")"
-            }
-
-            case "$1" in
-                text)
-                    printf '%s' "$title   "
-                    ;;
-                *)
-                    printf '%s' "$bar_inactive|$bar_active$activity%{A:$cmd:} $title %{A}"
-                    ;;
-            esac
-        done
-    }
-}
-
-groupbartrigger() {
-    matchwid() {
-        for wid in $(lsw -a); do
-            printf '%s\n' "$wid $(atomx WM_NAME "$wid")"
-        done
-    }
-
-    groupbar
-
-    sleep 0.1
-    wid="$(matchwid | grep "groupbar" | grep -v grep | cut -d\  -f 1)"
-
-    while :; do
-        # dynamically resize bar to text length
-        barw="$(txtw "$(groupbarinfo text)")"
-        barw="$(echo "$barw * 0.78" | bc -l | cut -d. -f 1)"
-        curw="$(wattr w "$wid")"
-
-        test "$barw" -ne "$curw" && {
-            wrs "$((barw - curw))" 0 "$wid"
-            chwso -l "$wid"
-        }
-
-        sleep 0.1
-    done
-}
-
-groupbar() {
-    while :; do
-        buf=""
-        buf="${buf} %{l}"
-        buf="${buf} $(groupbarinfo | cut -d\| -f 2-)"
-
-        printf '%s\n' "$buf"
-        sleep 0.1
-    done | runbar "groupbar" | /bin/sh &
-}
-
 mainbar() {
     BW=0
     barw=$((PW - LGAP - RGAP - BW*2))
 
     while :; do
         buf=""
-        buf="${buf} %{l} $bar_active"
-        buf="${buf} $(datebar)"
+        buf="${buf} %{l} $(datebar)"
+        buf="${buf} $bar_back_highlight$bar_text_highlight"
+        buf="${buf} $(atomx WM_CLASS "$(pfw 2> /dev/null)"):"
+        buf="${buf} $(atomx WM_NAME "$(pfw 2> /dev/null)")"
+        buf="${buf} $bar_back_foreground$bar_text_foreground"
         buf="${buf} $(batbar)"
-        buf="${buf} %{c}"
-        buf="${buf} $(groupbarinfo | cut -d\| -f 2-)"
-        buf="${buf} %{r} $bar_active"
-        buf="${buf} $(musbar) "
-        buf="${buf} $(${volbar}) "
+        buf="${buf} %{r} "
+        buf="${buf} $(musbar)"
+        buf="${buf} $(${volbar})  "
 
         printf '%s\n' "$buf"
-        sleep 0.1
     done | runbar "mainbar" | /bin/sh &
 }
 
 main() {
     barvar
 
-    SEC="$(lsm | grep -v "$PRI" | head -n 1)"
-
-
-    # bar geometry
-    PX="$(mattr x "$PRI")"
-    PW="$(mattr w "$PRI")"
-    PH="$(mattr h "$PRI")"
-
-    test ! -z "$SEC" && {
-        SH="$(mattr h "$SEC")"
-    }
-
-    barx=$((PX + LGAP + BW))
-    barh=$((TGAP/2 + BW*2))
-    bary=$((barh - TGAP/4))
-
     case "$(hostname)" in
         spark)    volbar="volbaralsa"  ;;
         fyriousa) volbar="volbarpulse" ;;
     esac
 
-    case "$1" in
-        main)
-            barw=$((PW - LGAP - RGAP))
-            mainbar
+    # bar geometry
+    PX="$(mattr x "$PRI")"
+    PW="$(mattr w "$PRI")"
+    PH="$(mattr h "$PRI")"
+    SH="$(mattr h "$SEC")"
 
-            case "$(hostname)" in
-                fyriousa)
-                    barx=$((PW + LGAP))
-                    barw=400
-                    gpubartrigger &
-                    ;;
-            esac
-            ;;
-        *)
-            barw=120
-            simplebar datebar c
+    barx=$((PX + LGAP + BW))
+    barh=$((BGAP/2 - BW*2))
+    bary=$((PH - barh - BGAP/4))
+    barw=$((PW - LGAP - RGAP))
 
-            barx=$((barx + barw + IGAP))
-            barw=44
-            simplebar $volbar c
+    mainbar
 
-            barx=$((barx + barw + IGAP))
-            case "$(hostname)" in
-                fyriousa)
-                    prevbarx=$barx
-                    prevbary=$bary
-                    # barw=300
-                    # barx=$((PX + PW + LGAP))
-                    # bary=$((SH - BGAP + BGAP/2 - BGAP/5))
-                    # gpubartrigger &
-                    barx=$((prevbarx - barw - IGAP))
-                    bary=$prevbary
-                    barx=$((barx + barw + IGAP))
-                    barw=$((PW - barx))
-                    groupbartrigger &
-                    ;;
-                inferno)
-                    barw=50
-                    simplebar batbar c
-                    ;;
-            esac
-
-            barw=500
-            barx=$((PW - barw - IGAP))
-            musbartrigger &
+    case "$(hostname)" in
+        fyriousa)
+            barx=$((PW + LGAP))
+            bary=$((SH - barh - BGAP/4))
+            barw=400
+            gpubartrigger &
             ;;
     esac
 }

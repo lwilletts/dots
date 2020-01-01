@@ -336,11 +336,11 @@ c.colors.tabs.odd.fg = xresources['*foreground']
 c.colors.tabs.odd.bg = xresources['*background']
 c.colors.tabs.even.fg = xresources['*foreground']
 c.colors.tabs.even.bg = xresources['*background']
-c.colors.tabs.selected.odd.bg = xresources['*color7']
+c.colors.tabs.selected.odd.bg = xresources['*color1']
 c.colors.tabs.selected.odd.fg = xresources['*color0']
-c.colors.tabs.selected.even.bg = xresources['*color7']
+c.colors.tabs.selected.even.bg = xresources['*color1']
 c.colors.tabs.selected.even.fg = xresources['*color0']
-c.colors.tabs.indicator.error = xresources['*color1']
+c.colors.tabs.indicator.error = xresources['*color6']
 
 c.completion.quick = True
 c.completion.show = 'always'

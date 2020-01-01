@@ -5,10 +5,17 @@
 main() {
     cava="urxvtc -e sh -c 'cava'"
     mus="$(mpvc -f \
-    "$act%artist% $ina| $act%title% $ina| $act%remaining%" 2> /dev/null)"
+        "$act%artist% $ina// $act%title% $ina// $act%remaining% (%percentage%%%)" 2> /dev/null)"
 
-    buf=""
-    buf="${buf} %{A:${cava}:} ${mus} %{A}"
+    if [ -z "$mus" ]; then
+        buf=""
+        buf="${buf} %{A:${cava}:} ${mus} %{A}"
+    else
+        buf=""
+        buf="${buf} $bar_back_highlight$bar_text_highlight"
+        buf="${buf} %{A:${cava}:} ${mus} %{A}"
+        buf="${buf} $bar_back_foreground$bar_text_foreground"
+    fi
 
     printf '%s\n' "$buf"
 }
@@ -16,7 +23,12 @@ main() {
 . fwmrc
 wmcolours
 
-act="%{F#101010}"
+bar_text_highlight="%{F#$INACTIVE}"
+bar_text_foreground="%{F#$ACTIVE}"
+bar_back_highlight="%{B#$URGENT}"
+bar_back_foreground="%{B#$INACTIVE}"
+
+act="%{F#$INACTIVE}"
 ina="%{F#808080}"
 
 main "$@"

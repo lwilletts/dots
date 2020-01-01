@@ -15,7 +15,6 @@ case "$mime_type" in
         mpv --loop-file --really-quiet "$1"
         ;;
     video/*)
-        mpvc pause
         SOCKET="/tmp/vidsocket"
         mpvc -a "$1" -S "$SOCKET"
         ;;

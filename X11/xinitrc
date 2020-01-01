@@ -18,15 +18,15 @@ case "$(hostname)" in
     fyriousa)
         unclutter &
         wmp -a 1280 1200
-        hsetroot -root -fill "$HOME/usr/img/backs/clouds.jpg"
+        hsetroot -root -fill \
+            "$HOME/usr/img/patterns/light/white-waves/white-waves.png" -gamma 0.15
         ;;
 esac
 
 # fwm
+cwm &
 picom &
 sxhkd &
-watcher &
-glazier &
 bars main &
 
 pulse

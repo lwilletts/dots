@@ -20,7 +20,7 @@ main() {
     if nc -zw 1 "$host" 22 2> /dev/null; then
         # requires /etc/fstab entry
         test -z "$(mount -l | awk '$0~s' s="$mount_dir")" && \
-            mount ${mount_dir}
+            mount ${mount_dir} && printf '%s\n' "Mounted ${mount_dir} successfully."
     else
         test -n "$(mount -l | awk '$0~s' s="$mount_dir")" && \
             umount -f -l "${mount_dir}"

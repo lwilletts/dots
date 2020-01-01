@@ -5,12 +5,13 @@ unbind-key all
 unbind-mouse all
 
 bind-mouse M-1 window-move
-bind-mouse M-3 window-resize
-bind-mouse M-4 window-raise
-bind-mouse M-5 window-lower
 
 bind-key 4S-r restart
-bind-key M-z menu-window
+bind-key MS-q window-delete
+bind-key M-Tab window-cycle
+bind-key MS-Tab window-rcycle
+bind-key M-backslash window-cycle-ingroup
+bind-key MS-backslash window-cycle-ingroup
 
 bind-key M-c window-stick
 bind-key M-1 group-toggle-1
@@ -43,22 +44,24 @@ ignore Popup
 
 # style
 sticky no
-moveamount 20
 borderwidth 0
-gap 10 40 10 20
-fontname 'Lemon:pixelsize=8'
+fontname 'scientifica:pixelsize=11'
 
 # colors
+color font "#EFEFEF"
+color menubg "#B23450"
+color menufg "#EFEFEF"
 color activeborder "#101010"
 color urgencyborder "#B23450"
 color inactiveborder "#EFEFEF"
 
 # groups apps
 autogroup 2 "qutebrowser,qutebrowser"
-autogroup 3 "discord,discord"
-autogroup 4 "Steam,Steam"
-autogroup 4 "lutris,Lutris"
-autogroup 8 "gl,mpv"
+autogroup 3 "gl,mpv"
+autogroup 3 "org.pwmt.zathura,org.pwmt.zathura"
+autogroup 4 "discord,discord"
+autogroup 8 "lutris,Lutris"
+autogroup 8 "Steam,Steam"
 autogroup 9 "obs,obs"
 
 # groups games

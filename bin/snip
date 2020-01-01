@@ -14,6 +14,7 @@ generateInfo() {
 
     # fallback to image within folder
     coverpath="$(printf '%s\n' "$path" | rev | cut -d/ -f 2- | rev)"
+
     test -e "$coverpath/?over.*" && {
         convert "$coverpath/?over.*" -resize 350x350 "$snipdir/cover.png"
         return

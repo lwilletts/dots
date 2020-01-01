@@ -3,7 +3,7 @@ Description=radeon
 
 [Service]
 Type=simple
-ExecStartPre=/home/fyr/.dots/bin/radeon undervolt 1050
+ExecStartPre=/home/fyr/.dots/bin/radeon undervolt 1080
 ExecStart=/home/fyr/.dots/bin/radeon temp
 
 [Install]
