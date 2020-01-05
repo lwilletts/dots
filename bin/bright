@@ -1,0 +1,26 @@
+#!/bin/sh
+#
+# bright
+
+intCheck() {
+    test "$1" -ne 0 2> /dev/null
+    test "$?" -ne 2 || return 1
+}
+
+main() {
+    case "$1" in
+        [0-9]|1[0-2])
+            case "$2" in
+                off)
+                    ddcutil -b "$1" setvcp D6 04 > /dev/null 2>&1
+                    ;;
+                *)
+                    intCheck "$2" || exit 1
+                    ddcutil -b "$1" setvcp 10 "$2" > /dev/null 2>&1
+                    ;;
+            esac
+            ;;
+    esac
+}
+
+main "$@"

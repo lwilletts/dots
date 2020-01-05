@@ -2,6 +2,7 @@
 
 # x11 environment
 xset +dpms                     # powersaving
+xset dpms 0 300 0              # timing
 xset r rate 250 40             # faster keypresses
 xset +fp ~/.local/share/fonts  # custom fonts
 xsetroot -cursor_name left_ptr # left pointer as cursor
@@ -18,7 +19,7 @@ case "$(hostname)" in
     fyriousa)
         unclutter &
         wmp -a 1280 1200
-        hsetroot -root -fill \
+        hsetroot -root -tile \
             "$HOME/usr/img/patterns/light/white-waves/white-waves.png" -gamma 0.15
         ;;
 esac

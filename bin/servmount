@@ -23,7 +23,8 @@ main() {
             mount ${mount_dir} && printf '%s\n' "Mounted ${mount_dir} successfully."
     else
         test -n "$(mount -l | awk '$0~s' s="$mount_dir")" && \
-            umount -f -l "${mount_dir}"
+            umount -l "${mount_dir}" && \
+            printf '%s\n' "Unmounted ${mount_dir} successfully."
     fi
 }
 

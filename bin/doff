@@ -1,0 +1,10 @@
+#!/bin/sh
+#
+# doff
+
+main() {
+    ddcutil --bus 5 setvcp D6 04 > /dev/null 2>&1
+    ddcutil --bus 10 setvcp D6 04 > /dev/null 2>&1
+}
+
+main "$@"

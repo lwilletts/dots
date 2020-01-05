@@ -5,8 +5,10 @@ unbind-key all
 unbind-mouse all
 
 bind-mouse M-1 window-move
+bind-mouse M-3 window-resize
 
 bind-key 4S-r restart
+bind-key M-z menu-window
 bind-key MS-q window-delete
 bind-key M-Tab window-cycle
 bind-key MS-Tab window-rcycle
@@ -45,6 +47,7 @@ ignore Popup
 # style
 sticky no
 borderwidth 0
+gap 30 50 50 50
 fontname 'scientifica:pixelsize=11'
 
 # colors

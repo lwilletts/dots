@@ -1,0 +1,29 @@
+#!/bin/sh
+#
+# widbar
+
+main() {
+    if [ $(pfw 2> /dev/null) ]; then
+        buf=""
+        buf="${buf} $bar_back_highlight$bar_text_highlight"
+        buf="${buf} %{A:wmenu -b:}"
+        buf="${buf} $(atomx WM_CLASS "$(pfw 2> /dev/null)"):"
+        buf="${buf} $(atomx WM_NAME "$(pfw 2> /dev/null)")"
+        buf="${buf} %{A}"
+        buf="${buf} $bar_back_foreground$bar_text_foreground"
+    else
+        buf=""
+    fi
+
+    printf '%s\n' "$buf"
+}
+
+. fwmrc
+wmcolours
+
+bar_text_highlight="%{F#$INACTIVE}"
+bar_text_foreground="%{F#$ACTIVE}"
+bar_back_highlight="%{B#$URGENT}"
+bar_back_foreground="%{B#$INACTIVE}"
+
+main "$@"

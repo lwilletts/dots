@@ -64,6 +64,6 @@ case "$URL" in
         ;;
     *)
         openBrowser
-        focus -w "$(wid qutebrowser | head -n 1)"
+        focus -w "$(wid qutebrowser | tail -n 1)"
         ;;
 esac

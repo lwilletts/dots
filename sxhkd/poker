@@ -5,14 +5,8 @@
     urxvtc -cd "$(mpvc -f "%path%" | rev | cut -d\/ -f 2- | rev)" -g 85x24
 mod1 + {d,w,shift + w}
     {drun,wmenu -b,wmenu -b all}
-mod1 + @button3
-    xmrs $(pfw)
-mod1 + {button4,button5}
-    move {grow,shrink} $(pfw)
-mod1 + {button8,button9}
-    {chwso -l,chwso -r} $(pfw)
-{button10,~button3}
-    {cmdmenu,under "wmenu -m"}
+button10
+    cmdmenu
 
 # sys
 mod4 + shift + l
@@ -21,22 +15,26 @@ mod1 + shift + r
     pkill -USR1 -x sxhkd
 mod1 + ctrl + BackSpace
     pkill xinit
-mod1 + {b, shift + b}
-    screens {sec toggle, all 0.7}
 mod1 + shift + p
     pitoggle
+mod1 + shift + b
+    bright 10 off
 
-# manipulation
+# window manipulation
 mod1 + {h,j,k,l}
     closer {left,down,up,right}
 mod1 + shift + {h,j,k,l}
     adjust {left,down,up,right} $(pfw)
-mod1 + {f,g,a,m,equal,minus,plus,underscore}
-    move {full,center,vmaximise,maximise,grow,shrink,double,halve} $(pfw)
-mod1 + shift + {f,g,m}
-    move {full,center,maximise} $(pfw) cycle
 mod1 + {Left,Down,Up,Right}
     move {left,bottom,top,right}
+mod1 + shift + {f,g,m}
+    move {full,center,maximise} $(pfw) cycle
+mod1 + {f,g,m,a,equal,minus,plus,underscore}
+    move {full,center,maximise,vmaximise,grow,shrink,double,halve} $(pfw)
+mod1 + {button4,button5}
+    move {grow,shrink} $(pfw)
+mod1 + {button8,button9}
+    {chwso -l,chwso -r} $(pfw)
 mod1 + {v,t,shift + t}
     tile {-v,-g,-l}
 
@@ -51,10 +49,10 @@ mod4 + {s,d,9,0}
     mpvc volume {-5,+5,-5,+5} -q
 mod4 + {h,j,k,l}
     mpvc seek {-5s,-30s,30s,5s} -q
-mod4 + {space,Tab,n,p,z,c,BackSpace}
-    mpvc {toggle,next,next,prev,shuffle,clear,remove current} -q
+mod4 + {space,Tab,n,p,z,r,c,BackSpace}
+    mpvc {toggle,next,next,prev,shuffle,single,clear,remove current} -q
 mod4 + a
-    find -L ~/usr/mus/* -type f | sort -R | mpvc add -q
+    find -L ~/usr/mus/* -type f | shuf | shuf | mpvc add -q
 
 # shot
 Print

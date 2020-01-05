@@ -3,10 +3,12 @@
 # batbar
 
 main() {
-    buf=""
-    buf="${buf} $(bat acpi)"
+    if [ $(bat > /dev/null) ]; then
+        buf=""
+        buf="${buf} $(bat acpi)"
 
-    printf '%s\n' "$buf"
+        printf '%s\n' "$buf"
+    fi
 }
 
 main "$@"

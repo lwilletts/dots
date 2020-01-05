@@ -35,6 +35,7 @@ simplebar() {
         groupbar|\
         sysbar|\
         musbar|\
+        widbar|\
         volbaralsa|\
         volbarpulse) BAR="$1" ;;
         *)           exit     ;;
@@ -65,7 +66,7 @@ gpubartrigger() {
         temp="$(gpu | cut -d\  -f 4 | cut -c 1-2)"
 
         case "$temp" in
-            6[0-9]|7[0-9]|8[0-9]|9[0-9]|1[0-9])
+            5[5-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9]|1[0-9])
                 test -z "$process" && simplebar gpubar c 1
                 ;;
             *)
@@ -83,14 +84,12 @@ mainbar() {
 
     while :; do
         buf=""
-        buf="${buf} %{l} $(datebar)"
-        buf="${buf} $bar_back_highlight$bar_text_highlight"
-        buf="${buf} $(atomx WM_CLASS "$(pfw 2> /dev/null)"):"
-        buf="${buf} $(atomx WM_NAME "$(pfw 2> /dev/null)")"
-        buf="${buf} $bar_back_foreground$bar_text_foreground"
-        buf="${buf} $(batbar)"
+        buf="${buf} %{l} "
+        buf="${buf}$(datebar)"
+        buf="${buf}$(batbar)"
+        buf="${buf}$(widbar)"
         buf="${buf} %{r} "
-        buf="${buf} $(musbar)"
+        buf="${buf}$(musbar)"
         buf="${buf} $(${volbar})  "
 
         printf '%s\n' "$buf"

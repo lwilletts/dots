@@ -3,7 +3,7 @@
 # volbar
 
 main() {
-    pulse="urxvtc -e sh -c 'pulsemixer'"
+    pulse="urxvtc -g 85x44 -e sh -c 'pulsemixer'"
     vol="$(printf '%s\n' "$(pulsemixer --get-volume | cut -d\  -f 1)%")"
 
     case "$(pulsemixer --get-mute)" in
