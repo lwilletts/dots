@@ -13,12 +13,13 @@ urxvtd -q -o -f &
 case "$(hostname)" in
     spark)
         unclutter-xfixes &
-        hsetroot -root -cover "$HOME/tmp/prescott-horn-tEJocaFubhc-unsplash.jpg"
+        hsetroot -root -tile \
+            "$HOME/usr/img/patterns/light/bgnoise_lg/bgnoise_lg.png" -gamma 0.3
         ;;
     fyriousa)
         unclutter &
         wmp -a 1280 1200
-        hsetroot -root -fill \
+        hsetroot -root -tile \
             "$HOME/usr/img/patterns/light/white-waves/white-waves.png" -gamma 0.15
         ;;
 esac
