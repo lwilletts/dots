@@ -14,7 +14,8 @@ urxvtd -q -o -f &
 case "$(hostname)" in
     spark)
         unclutter-xfixes &
-        hsetroot -root -cover "$HOME/tmp/prescott-horn-tEJocaFubhc-unsplash.jpg"
+        hsetroot -root -tile \
+            "$HOME/usr/img/patterns/light/bgnoise_lg/bgnoise_lg.png" -gamma 0.3
         ;;
     fyriousa)
         unclutter &
