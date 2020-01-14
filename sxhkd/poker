@@ -33,10 +33,10 @@ mod1 + {f,g,m,a,equal,minus,plus,underscore}
     move {full,center,maximise,vmaximise,grow,shrink,double,halve} $(pfw)
 mod1 + {button4,button5}
     move {grow,shrink} $(pfw)
-mod1 + {button8,button9}
-    {chwso -l,chwso -r} $(pfw)
 mod1 + {v,t,shift + t}
     tile {-v,-g,-l}
+mod1 + {button8,button9}
+    {chwso -l,chwso -r} $(pfw)
 
 # media
 XF86AudioMute
