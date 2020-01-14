@@ -3,20 +3,36 @@
 # batbar
 
 main() {
-    if [ $(bat > /dev/null) ]; then
+    bat > /dev/null && {
+        battery="$(bat)"
+
+        charging="$(printf '%s\n' "$battery" | cut -d\  -f 2)"
+
+        if [ "$charging" = "/" ]; then
+            bar_text_highlight="%{F#$INACTIVE}"
+            bar_back_highlight="%{B#$ACTIVE}"
+        fi
+
+        batvalue="$(printf '%s\n' "$battery" | cut -d% -f 1)"
+
+        if [ "$batvalue" -le 40 ]; then
+            bar_text_highlight="%{F#$ACTIVE}"
+            bar_back_highlight="%{B#$URGENT}"
+        fi
+
         buf=""
-        buf="${buf} $(bat acpi)"
+        buf="${buf} $bar_back_highlight$bar_text_highlight"
+        buf="${buf} $batvalue%"
+        buf="${buf} $bar_back_foreground$bar_text_foreground"
 
         printf '%s\n' "$buf"
-    fi
+    }
 }
 
 . fwmrc
 wmcolours
 
-bar_text_highlight="%{F#$INACTIVE}"
 bar_text_foreground="%{F#$ACTIVE}"
-bar_back_highlight="%{B#$URGENT}"
 bar_back_foreground="%{B#$INACTIVE}"
 
 main "$@"
