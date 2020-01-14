@@ -107,7 +107,10 @@ if has('nvim')
     endif
 endif
 
-    " custom syntax
+    " custom syntax && preview
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
+    nnoremap <Leader>om :MarkdownPreview<CR>
+
 Plug 'baskerville/vim-sxhkdrc'
 
 call plug#end()
@@ -219,7 +222,6 @@ inoremap [, [<CR>],<ESC>O
 nnoremap <Leader>m :make<CR>
 
 " external program launching
-nnoremap <Leader>om :!./%:r<CR>
 nnoremap <Leader>op :AsyncRun! zathura %:r.pdf<CR>
 nnoremap <Leader>ob :AsyncRun! qutebrowser %:r.html<CR>
 vnoremap <Leader>s :! awk '{ print length(), $0 \| "sort -n \| cut -d\\  -f2-"}'<CR>

@@ -8,13 +8,11 @@ usage() {
 
     cat >&2 << EOF
 Usage:
-    $base low               : Set lowest powerstate to default clocks.
-    $base high              : Set lowest powerstate to max clocks.
-    $base undervolt <value> : Manually set clockspeed in Mhz.
-    $base info              : Show current clocks.
-    $base fan               : Manually set fan speed to value [0-255] or auto.
-    $base temp              : Auto fan control.
-    $base help              : Show this help.
+    $base clock <mv> <Mhz> : Manually set clockspeed in Mhz.
+    $base info             : Show current clocks.
+    $base fan              : Manually set fan speed to value [0-255] or auto.
+    $base temp             : Auto fan control.
+    $base help             : Show this help.
 EOF
 
     test $# -eq 0 || exit "$1"
@@ -31,26 +29,15 @@ intCheck() {
     }
 }
 
-baseclock() {
-    case $1 in
-        0) Mhz=808  ;;
-        1) Mhz=1800 ;;
-    esac
-
-    printf '%s\n' "s 0 $Mhz" > "$odclk"
-    printf '%s\n' "s 1 1800" > "$odclk"
-    printf '%s\n' "c" > "$odclk"
-}
-
-undervolt() {
+clock() {
     intCheck "$1"
+    intCheck "$2"
 
     printf '%s\n' "manual" > "$powerDRM"
     printf '%s\n' "300000000" > "$power"
-    printf '%s\n' "s 0 808" > "$odclk"
-    printf '%s\n' "s 1 1800" > "$odclk"
-    printf '%s\n' "m 1 1200" > "$odclk"
-    printf '%s\n' "vc 2 1900 $1" > "$odclk"
+    printf '%s\n' "m 1 1200 $1" > "$odclk"
+    printf '%s\n' "s 1 $2 " > "$odclk"
+    printf '%s\n' "vc 2 $2 $1" > "$odclk"
     printf '%s\n' "c" > "$odclk"
 }
 
@@ -76,7 +63,7 @@ fanCurve() {
 
         case $TEMP in
             [0-3][0-9])  printf '%s\n' "0" > "$fanSpeed"   ;;
-            4[0-9])      printf '%s\n' "80" > "$fanSpeed"  ;;
+            4[0-9])      printf '%s\n' "40" > "$fanSpeed"  ;;
             5[0-9])      printf '%s\n' "100" > "$fanSpeed" ;;
             6[0-9])      printf '%s\n' "120" > "$fanSpeed" ;;
             7[0-9])      printf '%s\n' "140" > "$fanSpeed" ;;
@@ -97,26 +84,34 @@ info() {
 
 main() {
     # find correct card
-    for i in $(seq 0 4); do
+    i=0
+    while :; do
         radeonPCI="/sys/class/drm/card$i/device"
-        odclk="$radeonPCI/pp_od_clk_voltage"
+        uevent="$radeonPCI/uevent"
 
-        test -e "$odclk" && break
+        while :; do
+            test -e "$uevent" && break
+        done
+
+        driver="$(awk -F '=' '/DRIVER/ {print $2}' "$uevent")"
+        test "$driver" = "amdgpu" && break
+
+        i="$((i + 1))"
+        test "$i" -eq 4 && i=0
     done
 
+    odclk="$radeonPCI/pp_od_clk_voltage"
     power="$radeonPCI/hwmon/hwmon2/power1_cap"
     fanSpeed="$radeonPCI/hwmon/hwmon2/pwm1"
     fanCtrl="$radeonPCI/hwmon/hwmon2/pwm1_enable"
     powerDRM="$radeonPCI/power_dpm_force_performance_level"
 
     case "$1" in
-        low)       baseclock 0    ;;
-        high)      baseclock 1    ;;
-        undervolt) undervolt "$2" ;;
-        fan)       fanCtrl  "$2"  ;;
-        temp)      fanCurve       ;;
-        info)      info           ;;
-        *)         usage 1        ;;
+        clock) clock "$2" "$3" ;;
+        fan)   fanCtrl  "$2"   ;;
+        temp)  fanCurve        ;;
+        info)  info            ;;
+        *)     usage 1         ;;
     esac
 }
 

@@ -51,7 +51,7 @@ ee() {
 }
 
 usr() {
-    ps uxgf "$@" | sed '1d; s/--type.*//' | \
+    ps xgf "$@" | sed '1d; s/--type.*//' | \
         cut -c1-$(stty size < /dev/tty | cut -d\  -f 2)
 }
 

@@ -12,8 +12,6 @@ bind-key M-z menu-window
 bind-key MS-q window-delete
 bind-key M-Tab window-cycle
 bind-key MS-Tab window-rcycle
-bind-key M-backslash window-cycle-ingroup
-bind-key MS-backslash window-cycle-ingroup
 
 bind-key M-c window-stick
 bind-key M-1 group-toggle-1
@@ -24,8 +22,7 @@ bind-key M-5 group-toggle-5
 bind-key M-6 group-toggle-6
 bind-key M-7 group-toggle-7
 bind-key M-8 group-toggle-8
-bind-key M-9 group-toggle-9
-bind-key M-0 group-toggle-all
+bind-key M-backslash group-toggle-all
 bind-key MS-1 window-movetogroup-1
 bind-key MS-2 window-movetogroup-2
 bind-key MS-3 window-movetogroup-3
@@ -34,7 +31,6 @@ bind-key MS-5 window-movetogroup-5
 bind-key MS-6 window-movetogroup-6
 bind-key MS-7 window-movetogroup-7
 bind-key MS-8 window-movetogroup-8
-bind-key MS-9 window-movetogroup-9
 
 # ignores
 ignore midair-win64-test.exe
@@ -51,21 +47,21 @@ gap 30 50 50 50
 fontname 'scientifica:pixelsize=11'
 
 # colors
-color font "#EFEFEF"
-color menubg "#B23450"
-color menufg "#EFEFEF"
-color activeborder "#101010"
+color font "#171717"
+color menubg "#D9EAE2"
+color menufg "#171717"
+color activeborder "#D9EAE2"
 color urgencyborder "#B23450"
-color inactiveborder "#EFEFEF"
+color inactiveborder "#171717"
 
 # groups apps
 autogroup 2 "qutebrowser,qutebrowser"
 autogroup 3 "gl,mpv"
 autogroup 3 "org.pwmt.zathura,org.pwmt.zathura"
 autogroup 4 "discord,discord"
+autogroup 7 "obs,obs"
 autogroup 8 "lutris,Lutris"
 autogroup 8 "Steam,Steam"
-autogroup 9 "obs,obs"
 
 # groups games
 autogroup 5 "midair-win64-test.exe,steam_app_439370"

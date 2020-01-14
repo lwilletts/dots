@@ -5,6 +5,18 @@
 
 import subprocess
 
+    # colours
+def read_xresources(prefix):
+    props = {}
+    x = subprocess.run(['xrdb', '-query'], stdout=subprocess.PIPE)
+    lines = x.stdout.decode().split('\n')
+    for line in filter(lambda l : l.startswith(prefix), lines):
+        prop, _, value = line.partition(':\t')
+        props[prop] = value
+    return props
+
+xresources = read_xresources('*')
+
 config.load_autoconfig()
 c.aliases = {'h': 'help', 'q': 'close', 'x': 'quit --save'}
 
@@ -12,7 +24,7 @@ c.aliases = {'h': 'help', 'q': 'close', 'x': 'quit --save'}
 c.backend = 'webengine'
 c.auto_save.interval = 20000
 c.auto_save.session = True
-c.editor.command = ['urxvtc', '-e', 'nvim', '{}']
+c.editor.command = ['urxvtc', '-g', '85x22', '-e', 'nvim', '{}']
 c.spellcheck.languages = ['en-GB']
 c.session.lazy_restore = True
 c.confirm_quit = ['downloads']
@@ -86,12 +98,18 @@ c.statusbar.widgets = ['url', 'scroll']
 c.statusbar.padding = {'top': 5, 'bottom': 5, 'left': 5, 'right': 5}
 
     # completion
+c.completion.show = 'always'
 c.completion.delay = 0
+c.completion.quick = True
+c.completion.shrink = True
 c.completion.height = '20%'
 c.completion.min_chars = 1
-c.completion.cmd_history_max_items = -1
-c.completion.scrollbar.padding = 10
 c.completion.scrollbar.width = 0
+c.completion.scrollbar.padding = 10
+c.completion.use_best_match = False
+c.completion.cmd_history_max_items = -1
+c.completion.timestamp_format = '%d-%m-%Y-%H:%M:%S'
+c.completion.open_categories = ['quickmarks', 'bookmarks', 'history']
 
     # tabs
 # position
@@ -180,6 +198,7 @@ c.fonts.keyhint = '8pt monospace'
 c.fonts.prompts = '8pt monospace'
 c.fonts.downloads = '8pt monospace'
 c.fonts.statusbar = '8pt monospace'
+c.fonts.contextmenu = '8pt monospace'
 c.fonts.messages.info = '8pt monospace'
 c.fonts.debug_console = '8pt monospace'
 c.fonts.completion.entry = '8pt monospace'
@@ -194,22 +213,10 @@ c.fonts.completion.category = '8pt monospace'
 # c.fonts.web.size.default
 # c.fonts.web.size.default_fixed
 
-# Hard minimum font size (in pixels).
-# c.fonts.web.size.minimum
-# Minimum logical font size (in pixels) that is applied when zooming out.
-# c.fonts.web.size.minimum_logical
-
-    # colours
-def read_xresources(prefix):
-    props = {}
-    x = subprocess.run(['xrdb', '-query'], stdout=subprocess.PIPE)
-    lines = x.stdout.decode().split('\n')
-    for line in filter(lambda l : l.startswith(prefix), lines):
-        prop, _, value = line.partition(':\t')
-        props[prop] = value
-    return props
-
-xresources = read_xresources('*')
+# hard minimum font size (in pixels).
+c.fonts.web.size.minimum = 11
+# minimum logical font size (in pixels) that is applied when zooming out.
+c.fonts.web.size.minimum_logical = 11
 
 # background color for webpages if unset
 c.colors.webpage.bg = xresources['*color0']
@@ -330,26 +337,23 @@ c.colors.statusbar.caret.selection.fg = xresources['*color0']
 # Foreground color of the statusbar in passthrough mode.
 # c.colors.statusbar.passthrough.fg = 'white'
 
-# Background color of the tab bar.
+# tab
 c.colors.tabs.bar.bg = xresources['*color0']
-c.colors.tabs.odd.fg = xresources['*foreground']
-c.colors.tabs.odd.bg = xresources['*background']
-c.colors.tabs.even.fg = xresources['*foreground']
-c.colors.tabs.even.bg = xresources['*background']
-c.colors.tabs.selected.odd.bg = xresources['*color1']
+c.colors.tabs.odd.fg = xresources['*color7']
+c.colors.tabs.odd.bg = xresources['*color0']
+c.colors.tabs.even.fg = xresources['*color7']
+c.colors.tabs.even.bg = xresources['*color0']
+c.colors.tabs.selected.odd.bg = xresources['*color7']
 c.colors.tabs.selected.odd.fg = xresources['*color0']
-c.colors.tabs.selected.even.bg = xresources['*color1']
+c.colors.tabs.selected.even.bg = xresources['*color7']
 c.colors.tabs.selected.even.fg = xresources['*color0']
-c.colors.tabs.indicator.error = xresources['*color6']
+c.colors.tabs.indicator.error = xresources['*color1']
 
-c.completion.quick = True
-c.completion.show = 'always'
-c.completion.open_categories = ['quickmarks', 'bookmarks', 'history']
-
-
-c.completion.shrink = True
-c.completion.timestamp_format = '%d-%m-%Y-%H:%M:%S'
-c.completion.use_best_match = False
+# right-click menu
+c.colors.contextmenu.menu.bg = xresources['*color0']
+c.colors.contextmenu.menu.fg = xresources['*color7']
+c.colors.contextmenu.selected.bg = xresources['*color7']
+c.colors.contextmenu.selected.fg = xresources['*color0']
 
 ## A list of patterns which should not be shown in the history. This only
 ## affects the completion. Matching URLs are still saved in the history

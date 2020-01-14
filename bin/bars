@@ -14,11 +14,6 @@ barvar() {
     bar_dim="#808080"
 
     bar_border="$bar_dim"
-    bar_text_inactive="%{F$bar_dim}"
-    bar_text_highlight="%{F#$INACTIVE}"
-    bar_text_foreground="%{F#$ACTIVE}"
-    bar_back_highlight="%{B#$URGENT}"
-    bar_back_foreground="%{B#$INACTIVE}"
     bar_font=$(awk '/font/ {print $3}' < ~/.Xresources | cut -d',' -f 1)
 }
 
@@ -86,10 +81,10 @@ mainbar() {
         buf=""
         buf="${buf} %{l} "
         buf="${buf}$(datebar)"
-        buf="${buf}$(batbar)"
         buf="${buf}$(widbar)"
         buf="${buf} %{r} "
         buf="${buf}$(musbar)"
+        buf="${buf}$(batbar)"
         buf="${buf} $(${volbar})  "
 
         printf '%s\n' "$buf"

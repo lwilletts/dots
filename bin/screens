@@ -11,8 +11,8 @@ main() {
         *)
             case "$(hostname)" in
                 "fyriousa")
-                    xrandr --output HDMI-A-2 --auto --rotate right --pos 2560x0 --brightness 1
-                    xrandr --output DisplayPort-1 --pos 0x480 --brightness 1
+                    xrandr --output HDMI-A-2 --auto --rotate right --pos 2560x0
+                    xrandr --output DisplayPort-1 --pos 0x480
                     ;;
             esac
             ;;

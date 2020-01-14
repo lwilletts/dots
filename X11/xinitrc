@@ -14,22 +14,22 @@ urxvtd -q -o -f &
 case "$(hostname)" in
     spark)
         unclutter-xfixes &
-        hsetroot -root -tile \
-            "$HOME/usr/img/patterns/light/bgnoise_lg/bgnoise_lg.png" -gamma 0.3
         ;;
     fyriousa)
         unclutter &
         wmp -a 1280 1200
-        hsetroot -root -tile \
-            "$HOME/usr/img/patterns/light/white-waves/white-waves.png" -gamma 0.15
         ;;
 esac
 
+# back
+hsetroot -root -tile "$HOME/usr/img/patterns/binding_dark.png" -gamma 1.6
+
 # fwm
 cwm &
+bars &
 picom &
 sxhkd &
-bars main &
+watcher &
 
 pulse
 xwait
