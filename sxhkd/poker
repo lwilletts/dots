@@ -25,18 +25,20 @@ mod1 + {h,j,k,l}
     closer {left,down,up,right}
 mod1 + shift + {h,j,k,l}
     adjust {left,down,up,right} $(pfw)
+mod1 + r: {h,j,k,l}
+    move {shrink_left,grow_down,shrink_up,grow_right} $(pfw)
+mod1 + r: Escape
+    pkill -ALRM sxhkd
 mod1 + {Left,Down,Up,Right}
     move {left,bottom,top,right}
 mod1 + shift + {f,g,m}
     move {full,center,maximise} $(pfw) cycle
-mod1 + {f,g,m,a,equal,minus,plus,underscore}
-    move {full,center,maximise,vmaximise,grow,shrink,double,halve} $(pfw)
+mod1 + {f,g,m,a,equal,minus,plus,underscore,x}
+    move {full,center,maximise,vmaximise,grow,shrink,double,halve,restore} $(pfw)
 mod1 + {button4,button5}
-    move {grow,shrink} $(pfw)
+    {chwso -r,chwso -l} $(pfw)
 mod1 + {v,t,shift + t}
     tile {-v,-g,-l}
-mod1 + {button8,button9}
-    {chwso -l,chwso -r} $(pfw)
 
 # media
 XF86AudioMute
@@ -49,10 +51,11 @@ mod4 + {s,d,9,0}
     mpvc volume {-5,+5,-5,+5} -q
 mod4 + {h,j,k,l}
     mpvc seek {-5s,-30s,30s,5s} -q
-mod4 + {space,Tab,n,p,z,r,c,BackSpace}
-    mpvc {toggle,next,next,prev,shuffle,single,clear,remove current} -q
+mod4 + {space,Tab,n,shift + Tab,p,z,r,c,BackSpace}
+    mpvc {toggle,next,next,prev,prev,shuffle,single,clear,remove current} -q
 mod4 + a
-    find -L ~/usr/mus/* -type f | shuf | shuf | mpvc add -q
+    fd . ~/usr/mus -e mp3 -e flac -e wav -e ogg -E '*.m3u8' -E '*.log' \
+    -E '*.cue'| shuf | shuf | mpvc add -q
 
 # shot
 Print

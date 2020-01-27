@@ -6,14 +6,29 @@ main() {
     pulse="urxvtc -g 85x44 -e sh -c 'pulsemixer'"
     vol="$(printf '%s\n' "$(pulsemixer --get-volume | cut -d\  -f 1)%")"
 
+    buf=""
+
     case "$(pulsemixer --get-mute)" in
-        1) vol="0%" ;;
+        0)
+            buf="${buf} %{A:${pulse}:} ${vol}  %{A}"
+            ;;
+        1)
+            buf="${buf}$bar_back_highlight$bar_text_highlight"
+            buf="${buf}  %{A:${pulse}:}${vol} %{A}"
+            buf="${buf} $bar_back_foreground$bar_text_foreground"
+            ;;
     esac
 
-    buf=""
-    buf="${buf} %{A:${pulse}:} ${vol} %{A}"
 
     printf '%s\n' "$buf"
 }
+
+. fwmrc
+wmcolours
+
+bar_text_highlight="%{F#$ACTIVE}"
+bar_text_foreground="%{F#$ACTIVE}"
+bar_back_highlight="%{B#$URGENT}"
+bar_back_foreground="%{B#$INACTIVE}"
 
 main "$@"

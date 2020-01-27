@@ -120,7 +120,7 @@ c.tabs.min_width = 160
 c.tabs.padding = {'top': 5, 'bottom': 5, 'left': 10, 'right': 10}
 c.tabs.title.alignment = 'left'
 c.tabs.title.format_pinned = '{index}'
-c.tabs.title.format = '{current_title}'
+c.tabs.title.format = '{audio}{current_title}'
 
 # indicator
 c.tabs.favicons.show = 'never'
@@ -135,13 +135,14 @@ c.tabs.close_mouse_button = 'right'
 c.tabs.close_mouse_button_on_bar = 'new-tab'
 c.tabs.mode_on_change = 'normal'
 c.tabs.mousewheel_switching = True
+c.tabs.new_position.stacking = True
 c.tabs.new_position.related = 'next'
-c.tabs.select_on_remove = 'next'
+c.tabs.new_position.unrelated = 'last'
+c.tabs.select_on_remove = 'last-used'
 c.tabs.pinned.frozen = True
 c.tabs.pinned.shrink = True
-c.tabs.new_position.stacking = True
-c.tabs.new_position.unrelated = 'last'
 c.tabs.tabs_are_windows = False
+c.tabs.undo_stack_size = -1
 c.tabs.show = 'always'
 c.tabs.show_switching_delay = 1000
 c.new_instance_open_target_window = 'last-focused'
@@ -154,7 +155,7 @@ c.downloads.location.remember = True
 c.downloads.location.suggestion = 'both'
 c.downloads.location.directory = '/home/fyr/tmp'
 
-# Show a filebrowser in upload/download prompts.
+# show a filebrowser in upload/download prompts.
 c.prompt.filebrowser = True
 c.downloads.open_dispatcher = None
 
@@ -188,6 +189,13 @@ c.content.host_blocking.whitelist = ['googleadservices.com', 'adservice.google.c
 c.content.cookies.accept = 'all'
 c.content.cookies.store = True
 c.content.autoplay = False
+
+# javascript
+c.content.javascript.enabled = True
+c.content.javascript.can_open_tabs_automatically = False
+c.content.javascript.can_access_clipboard = False
+c.content.javascript.alert = True
+c.content.javascript.prompt = True
 
     # fonts
 # monospace fonts
@@ -448,20 +456,6 @@ c.colors.contextmenu.selected.fg = xresources['*color0']
 ## Type: Bool
 # c.content.images = True
 
-## Show javascript alerts.
-## Type: Bool
-# c.content.javascript.alert = True
-
-## Allow JavaScript to read from or write to the clipboard. With
-## QtWebEngine, writing the clipboard as response to a user interaction
-## is always allowed.
-## Type: Bool
-# c.content.javascript.can_access_clipboard = False
-
-# Enable JavaScript.
-c.content.javascript.enabled = True
-# Allow JavaScript to open new tabs without user interaction.
-c.content.javascript.can_open_tabs_automatically = False
 
 
 ## Log levels to use for JavaScript console logging messages. When a
@@ -476,9 +470,6 @@ c.content.javascript.can_open_tabs_automatically = False
 ## Type: Bool
 # c.content.javascript.modal_dialog = False
 
-## Show javascript prompts.
-## Type: Bool
-# c.content.javascript.prompt = True
 
 ## Allow locally loaded documents to access other local URLs.
 ## Type: Bool
@@ -661,20 +652,14 @@ c.content.mute = False
 ## Duration (in milliseconds) to show messages in the statusbar for. Set
 ## to 0 to never clear messages.
 ## Type: Int
-# c.messages.timeout = 2000
+c.messages.timeout = 3000
 
-## How to open links in an existing instance if a new one is launched.
-## This happens when e.g. opening a link from a terminal. See
-## `new_instance_open_target_window` to customize in which window the
-## link is opened in.
-## Type: String
-## Valid values:
 ##   - tab: Open a new tab in the existing window and activate the window.
 ##   - tab-bg: Open a new background tab in the existing window and activate the window.
 ##   - tab-silent: Open a new tab in the existing window without activating the window.
 ##   - tab-bg-silent: Open a new background tab in the existing window without activating the window.
 ##   - window: Open in a new window.
-# c.new_instance_open_target = 'tab'
+c.new_instance_open_target = 'tab'
 
 # Rounding radius (in pixels) for the edges of prompts.
 c.prompt.radius = 20
@@ -684,7 +669,8 @@ c.prompt.radius = 20
 ## https://peter.sh/experiments/chromium-command-line-switches/ for a
 ## list) will work.
 ## Type: List of String
-# c.qt.args = []
+c.qt.args = ["blink-settings=darkMode=4"]
+# c.color.webpage.prefers_color_scheme_dark = True
 
 ## Force a Qt platform to use. This sets the `QT_QPA_PLATFORM`
 ## environment variable and is useful to force using the XCB plugin when

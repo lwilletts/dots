@@ -8,7 +8,9 @@ usage() {
 
     cat >&2 << EOF
 Usage:
-    $base clock <mv> <Mhz> : Manually set clockspeed in Mhz.
+    $base clock <Mhz> <mv> : Manually set core clock speed at specific voltage.
+    $base memory <Mhz>     : Manually set memory clock speed.
+    $base power <Watts>    : Manually set the power limit.
     $base info             : Show current clocks.
     $base fan              : Manually set fan speed to value [0-255] or auto.
     $base temp             : Auto fan control.
@@ -29,15 +31,30 @@ intCheck() {
     }
 }
 
+power() {
+    intCheck "$1"
+
+    power="$radeonPCI/hwmon/hwmon2/power1_cap"
+    powerDRM="$radeonPCI/power_dpm_force_performance_level"
+    powerval="$(echo "$1 * 10^7" | bc)"
+
+    printf '%s\n' "manual" > "$powerDRM"
+    printf '%s\n' "$powerval" > "$power"
+}
+
 clock() {
     intCheck "$1"
     intCheck "$2"
 
-    printf '%s\n' "manual" > "$powerDRM"
-    printf '%s\n' "300000000" > "$power"
-    printf '%s\n' "m 1 1200 $1" > "$odclk"
-    printf '%s\n' "s 1 $2 " > "$odclk"
-    printf '%s\n' "vc 2 $2 $1" > "$odclk"
+    printf '%s\n' "s 1 $1" > "$odclk"
+    printf '%s\n' "vc 2 $1 $2" > "$odclk"
+    printf '%s\n' "c" > "$odclk"
+}
+
+memory() {
+    intCheck "$1"
+
+    printf '%s\n' "m 1 $1" > "$odclk"
     printf '%s\n' "c" > "$odclk"
 }
 
@@ -65,11 +82,11 @@ fanCurve() {
             [0-3][0-9])  printf '%s\n' "0" > "$fanSpeed"   ;;
             4[0-9])      printf '%s\n' "40" > "$fanSpeed"  ;;
             5[0-9])      printf '%s\n' "100" > "$fanSpeed" ;;
-            6[0-9])      printf '%s\n' "120" > "$fanSpeed" ;;
-            7[0-9])      printf '%s\n' "140" > "$fanSpeed" ;;
-            8[0-9])      printf '%s\n' "160" > "$fanSpeed" ;;
-            9[0-9])      printf '%s\n' "180" > "$fanSpeed" ;;
-            1[0-9][0-9]) printf '%s\n' "200" > "$fanSpeed" ;;
+            6[0-9])      printf '%s\n' "130" > "$fanSpeed" ;;
+            7[0-9])      printf '%s\n' "150" > "$fanSpeed" ;;
+            8[0-9])      printf '%s\n' "170" > "$fanSpeed" ;;
+            9[0-9])      printf '%s\n' "190" > "$fanSpeed" ;;
+            1[0-9][0-9]) printf '%s\n' "210" > "$fanSpeed" ;;
         esac
 
         sleep 5
@@ -101,17 +118,17 @@ main() {
     done
 
     odclk="$radeonPCI/pp_od_clk_voltage"
-    power="$radeonPCI/hwmon/hwmon2/power1_cap"
     fanSpeed="$radeonPCI/hwmon/hwmon2/pwm1"
     fanCtrl="$radeonPCI/hwmon/hwmon2/pwm1_enable"
-    powerDRM="$radeonPCI/power_dpm_force_performance_level"
 
     case "$1" in
-        clock) clock "$2" "$3" ;;
-        fan)   fanCtrl  "$2"   ;;
-        temp)  fanCurve        ;;
-        info)  info            ;;
-        *)     usage 1         ;;
+        power)  power "$2"      ;;
+        clock)  clock "$2" "$3" ;;
+        memory) memory "$2"     ;;
+        fan)    fanCtrl  "$2"   ;;
+        temp)   fanCurve        ;;
+        info)   info            ;;
+        *)      usage 1         ;;
     esac
 }
 
