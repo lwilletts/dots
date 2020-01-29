@@ -7,17 +7,21 @@ main() {
         battery="$(bat)"
 
         charging="$(printf '%s\n' "$battery" | cut -d\  -f 2)"
+        batvalue="$(printf '%s\n' "$battery" | cut -d% -f 1)"
 
         if [ "$charging" = "/" ]; then
             bar_text_highlight="%{F#$INACTIVE}"
             bar_back_highlight="%{B#$ACTIVE}"
         fi
 
-        batvalue="$(printf '%s\n' "$battery" | cut -d% -f 1)"
-
         if [ "$batvalue" -le 40 ]; then
             bar_text_highlight="%{F#$ACTIVE}"
             bar_back_highlight="%{B#$URGENT}"
+        fi
+
+        if [ "$batvalue" -eq 100 ]; then
+            bar_text_highlight="%{F#$ACTIVE}"
+            bar_back_highlight="%{B#$INACTIVE}"
         fi
 
         buf=""
