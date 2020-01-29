@@ -306,7 +306,7 @@ set autowrite
 autocmd! FocusLost * silent! :wa
 
 " spell limit
-set spellsuggest+=5
+" set spellsuggest+=5
 
 " stop leader timeout
 set ttimeout

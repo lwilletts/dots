@@ -13,12 +13,12 @@ manual() {
 }
 
 acpidata() {
+    hash acpi 2> /dev/null || exit 1
+
     ACPINFO="$(acpi -b)"
     PERCENT="$(printf '%s\n' "$ACPINFO" | cut -d\  -f 4 | cut -d% -f 1)"
     STATUS="$(printf '%s\n' "$ACPINFO" | cut -d\  -f 3 | cut -d, -f 1)"
 }
-
-hash acpi 2> /dev/null || exit 1
 
 case "$1" in
     m|manual) manual   ;;

@@ -62,7 +62,7 @@ gpubartrigger() {
 
         case "$temp" in
             5[5-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9]|1[0-9])
-                test -z "$process" && simplebar gpubar c 1
+                test -z "$process" && simplebar gpubar c 2
                 ;;
             *)
                 test ! -z "$process" && kill -9 "$process"
@@ -85,7 +85,7 @@ mainbar() {
         buf="${buf} %{r} "
         buf="${buf}$(musbar)"
         buf="${buf}$(batbar)"
-        buf="${buf} $(${volbar})  "
+        buf="${buf}$(${volbar})"
 
         printf '%s\n' "$buf"
     done | runbar "mainbar" | /bin/sh &

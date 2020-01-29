@@ -32,11 +32,11 @@ cutfile() {
     test "$precise" = "true" && {
         # encode
         ffmpeg -hide_banner -loglevel panic -i "$path" -ss "$pointA" \
-               -to "$pointB" -c:v libx264 -preset medium -crf 12 \
+               -to "$pointB" -c:v libx264 -preset medium -crf 12 -map 0 \
                "$fileName-$pointA-$pointB.$fileExt"
     } || {
         ffmpeg -hide_banner -loglevel panic -i "$path" -ss "$pointA" \
-               -to "$pointB" -c copy "$fileName-$pointA-$pointB.$fileExt"
+               -to "$pointB" -c copy -map 0 "$fileName-$pointA-$pointB.$fileExt"
     }
 }
 

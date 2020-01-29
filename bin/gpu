@@ -3,15 +3,27 @@
 # gpu
 
 # find correct card
-for i in 0 1 2 3 4; do
-    test -e "/sys/class/drm/card$i/device/pp_dpm_sclk" && number=$i
+i=0
+while :; do
+    radeonPCI="/sys/class/drm/card$i/device"
+    uevent="$radeonPCI/uevent"
+
+    while :; do
+        test -e "$uevent" && break
+    done
+
+    driver="$(awk -F '=' '/DRIVER/ {print $2}' "$uevent")"
+    test "$driver" = "amdgpu" && break
+
+    i="$((i + 1))"
+    test "$i" -eq 4 && i=0
 done
 
-sclk="/sys/class/drm/card$number/device/pp_dpm_sclk"
+sclk="$radeonPCI/pp_dpm_sclk"
 test -z "$sclk" && exit 1
 
 sensorOut="$(sensors)"
-VOLT=$(printf '%s\n' "$sensorOut" | awk '/vddgfx/ {print $2,$3}')
+VOLT="$(cat "$radeonPCI/hwmon/hwmon2/in0_input") mv"
 EDGE=$(printf '%s\n' "$sensorOut" | awk '/edge/ && $3 == "(crit" {print $2}' | cut -c 2-)
 JUNC=$(printf '%s\n' "$sensorOut" | awk '/junction/ && $3 == "(crit" {print $2}' | cut -c 2-)
 POWR=$(printf '%s\n' "$sensorOut" | awk '/power1/ {print $2,$3}')

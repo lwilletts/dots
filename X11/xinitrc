@@ -22,14 +22,15 @@ case "$(hostname)" in
 esac
 
 # back
-hsetroot -root -tile "$HOME/usr/img/patterns/binding_dark.png" -gamma 1.6
+hsetroot -root -tile "$HOME/usr/img/patterns/denim.png" -brightness 0.01
+
+watcher &
 
 # fwm
 cwm &
 bars &
 picom &
 sxhkd &
-watcher &
 
 pulse
 xwait

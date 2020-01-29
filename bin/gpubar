@@ -5,10 +5,65 @@
 main() {
     gotop="urxvtc -e sh -c 'gotop'"
 
+    # find correct card
+    i=0
+    while :; do
+        radeonPCI="/sys/class/drm/card$i/device"
+        uevent="$radeonPCI/uevent"
+
+        while :; do
+            test -e "$uevent" && break
+        done
+
+        driver="$(awk -F '=' '/DRIVER/ {print $2}' "$uevent")"
+        test "$driver" = "amdgpu" && break
+
+        i="$((i + 1))"
+        test "$i" -eq 4 && i=0
+    done
+
+    SCLK="$radeonPCI/pp_dpm_sclk"
+    test -z "$SCLK" && exit 1
+
+    sensorOut="$(sensors)"
+    CLOCK=$(cat "$SCLK" | grep '*' | cut -d\  -f 2)
+    VOLT="$(cat "$radeonPCI/hwmon/hwmon2/in0_input") mv"
+    JUNC=$(printf '%s\n' "$sensorOut" | awk '/junction/ && $3 == "(crit" {print $2}' | cut -c 2-)
+    MEM=$(printf '%s\n' "$sensorOut" | awk '/mem/ && $3 == "(crit" {print $2}' | cut -c 2-)
+    POWR=$(printf '%s\n' "$sensorOut" | awk '/power1/ {print $2,$3}')
+    FANS=$(printf '%s\n' "$sensorOut" | awk '/fan1/ {print $2,$3}')
+
     buf=""
-    buf="${buf} %{A:${gotop}:} $(gpu) %{A}"
+    buf="${buf} %{l} "
+    buf="${buf} %{A:${gotop}:}"
+    buf="${buf} Vega:"
+    buf="${buf} $act$CLOCK $ina// $act$VOLT"
+    buf="${buf} $ina// $act$POWR $ina// $act$FANS "
+
+    buf="${buf} %{r} "
+    if [ "$(printf '%s\n' "$JUNC" | cut -d. -f 1)" -ge 100 ]; then
+        buf="${buf} $bar_back_highlight$bar_text_highlight"
+        buf="${buf}  $JUNC $ina// $act$MEM  "
+        buf="${buf} $bar_back_foreground$bar_text_foreground "
+    else
+        buf="${buf}  $JUNC $ina// $act$MEM  "
+    fi
+
+
+    buf="${buf} %{A}"
 
     printf '%s\n' "$buf"
 }
+
+. fwmrc
+wmcolours
+
+bar_text_highlight="%{F#$ACTIVE}"
+bar_text_foreground="%{F#$ACTIVE}"
+bar_back_highlight="%{B#$URGENT}"
+bar_back_foreground="%{B#$INACTIVE}"
+
+act="%{F#$ACTIVE}"
+ina="%{F#808080}"
 
 main "$@"
