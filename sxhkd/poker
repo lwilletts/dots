@@ -7,6 +7,8 @@ mod1 + {d,s,w,shift + w}
     {drun,sshmenu,wmenu -c,wmenu -c all}
 {~button3,button10}
     {under "cmdmenu",cmdmenu}
+mod1 + {button4,button5}
+    {chwso -r,chwso -l} $(pfw)
 
 # sys
 mod4 + shift + l
@@ -15,7 +17,7 @@ mod1 + shift + r
     pkill -USR1 -x sxhkd
 mod1 + shift + BackSpace
     pkill xinit
-mod1 + p
+mod1 + shift + p
     pgrep picom > /dev/null 2>&1 && pkill picom || picom &
 mod1 + shift + b
     bright 10 off
@@ -31,8 +33,6 @@ mod1 + shift + {f,g,m}
     move {full,center,maximise} $(pfw) cycle
 mod1 + {f,g,m,a,equal,minus,plus,underscore,x}
     move {full,center,maximise,vmaximise,grow,shrink,double,halve,restore}
-mod1 + {button4,button5}
-    {chwso -r,chwso -l} $(pfw)
 
 # tile
 mod1 + t: {t,s,v,l,r,g}

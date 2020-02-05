@@ -149,8 +149,7 @@ nmap <C-s> :silent w! !sudo tee % > /dev/null<CR>
 nnoremap <Leader>* :%s/\<<c-r><c-w>\>//g<left><left>
 
 " manipulating text in normal mode
-nnoremap <CR> a<CR><ESC>
-nnoremap <Tab> i<Tab><ESC>l
+noremap <Tab> i<Tab><ESC>l
 
 " formatting options
 nmap <Leader>gq vipgq

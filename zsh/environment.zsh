@@ -22,6 +22,7 @@ $HOME/.fzf/bin
 /usr/local/bin
 $SRC/fwm
 $GOPATH
+$HOME/.ghcup/bin
 $HOME/.gem/ruby/2.6.0/bin"
 
 printf '%s\n' "$EXECPATHS" | while read -r EXECPATH; do
