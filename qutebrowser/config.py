@@ -43,13 +43,16 @@ c.window.title_format = '{current_title}'
     # custom binds
 config.bind('j', 'scroll-px 0 100')
 config.bind('k', 'scroll-px 0 -100')
-config.bind('b', 'set-cmd-text -s :buffer ')
+config.bind('v', 'set-cmd-text -s :buffer ')
+config.bind('e', 'set-cmd-text -s :session-load ')
+config.bind('<Shift-e>', 'set-cmd-text -s :session-save -o ')
 config.bind('<Ctrl-d>', 'spawn youtube-dl {url}')
 config.bind('<Ctrl-f>', 'spawn youtube-dl -x {url}')
 config.bind('<Ctrl-s>', 'config-source ~/.config/qutebrowser/config.py')
 config.bind('<Ctrl-E>', 'config-edit', mode='normal')
 config.bind('<Shift-k>', 'tab-next')
 config.bind('<Shift-j>', 'tab-prev')
+config.bind('<Shift-x>', 'close')
 
 # insert mode
 config.bind('<Ctrl-E>', 'open-editor', mode='insert')
@@ -114,9 +117,8 @@ c.completion.open_categories = ['quickmarks', 'bookmarks', 'history']
     # tabs
 # position
 c.tabs.position = 'top'
-c.tabs.width = '15%'
-c.tabs.max_width = 160
-c.tabs.min_width = 160
+c.tabs.max_width = 120
+c.tabs.min_width = 120
 c.tabs.padding = {'top': 5, 'bottom': 5, 'left': 10, 'right': 10}
 c.tabs.title.alignment = 'left'
 c.tabs.title.format_pinned = '{index}'
@@ -138,7 +140,7 @@ c.tabs.mousewheel_switching = True
 c.tabs.new_position.stacking = True
 c.tabs.new_position.related = 'next'
 c.tabs.new_position.unrelated = 'last'
-c.tabs.select_on_remove = 'last-used'
+c.tabs.select_on_remove = 'next'
 c.tabs.pinned.frozen = True
 c.tabs.pinned.shrink = True
 c.tabs.tabs_are_windows = False
@@ -146,6 +148,7 @@ c.tabs.undo_stack_size = -1
 c.tabs.show = 'always'
 c.tabs.show_switching_delay = 1000
 c.new_instance_open_target_window = 'last-focused'
+c.tabs.tooltips = True
 
     # downloads
 c.downloads.position = 'bottom'

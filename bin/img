@@ -84,9 +84,6 @@ main() {
                         esac
                     done
                     ;;
-                *.pdf)
-                    zathura "$file"
-                    ;;
                 # move on to the next valid image
                 *)
                     continue
@@ -101,9 +98,6 @@ main() {
                 ;;
             *.tif|*.png|*.jpg|*.jpeg)
                 img "$file"
-                ;;
-            *.pdf)
-                zathura "$file"
                 ;;
         esac
     }

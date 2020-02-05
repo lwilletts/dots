@@ -1,6 +1,7 @@
 # sys
 alias s="sudo"
 alias se="sudo -e"
+alias off="poweroff"
 
 # permissions
 alias mine="s chown $(echo $USER):fyr"
@@ -50,9 +51,10 @@ alias game1="cd $GAME1"
 alias game2="cd $GAME2"
 alias cfg="vi ~/.steam/steam/steamapps/common/Midair/Midair/Binaries/*.cfg"
 
-# image
+# file handling
 alias i="img"
 alias p="zathura"
+alias q="qutebrowser"
 alias scan="scanimage --device 'epson2:net:192.168.1.89' --mode=Color --format=png --resolution 300 --output-file"
 alias strip="jhead -de"
 

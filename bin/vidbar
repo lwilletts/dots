@@ -1,0 +1,41 @@
+#!/bin/sh
+#
+# musbar
+
+main() {
+    SOCKET="/tmp/vidsocket"
+    cava="urxvtc -g 85x22 -fn \"-*-scientifica-*-*-*--10-*-*-*-*-*-*-*\" -e sh -c 'cava'"
+    status="$(mpvc -f "%status%" -S "$SOCKET")"
+
+    if [ "$status" = "playing" ]; then
+        act="%{F#$INACTIVE}"
+        bar_back_highlight="%{B#$ACTIVE}"
+    elif [ "$status" = "paused" ]; then
+        act="%{F#$ACTIVE}"
+        bar_back_highlight="%{B#$URGENT}"
+    else
+        return 1
+    fi
+
+    mus="$(mpvc -f \
+        "$act%title% $ina// $act%remaining% (%percentage%%%)" -S "$SOCKET" \
+        2> /dev/null)"
+
+    buf=""
+    buf="${buf} $bar_back_highlight$bar_text_highlight"
+    buf="${buf} %{A:${cava}:} ${mus} %{A}"
+    buf="${buf} $bar_back_foreground$bar_text_foreground"
+
+    printf '%s\n' "$buf"
+
+}
+
+. fwmrc
+wmcolours
+
+bar_text_highlight="%{F#$INACTIVE}"
+bar_text_foreground="%{F#$ACTIVE}"
+bar_back_foreground="%{B#$INACTIVE}"
+ina="%{F#808080}"
+
+main "$@"
