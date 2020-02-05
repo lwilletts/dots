@@ -1,10 +1,10 @@
 #!/bin/sh
 #
-# volbar
+# volbarpulse
 
 main() {
     pulse="urxvtc -g 85x44 -e sh -c 'pulsemixer'"
-    vol="$(printf '%s\n' "$(pulsemixer --get-volume | cut -d\  -f 1)%")"
+    vol="$(printf '%s\n' "[$(pulsemixer --get-volume | cut -d\  -f 1)%]")"
 
     buf=""
 
@@ -18,7 +18,6 @@ main() {
             buf="${buf} $bar_back_foreground$bar_text_foreground"
             ;;
     esac
-
 
     printf '%s\n' "$buf"
 }

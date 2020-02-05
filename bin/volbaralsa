@@ -3,9 +3,32 @@
 # volbaralsa
 
 main() {
+    alsa="urxvtc -g 85x44 -e sh -c 'alsamixer'"
+    vol="$(printf '%s\n' "$(amixer -c 1 get Master | tail -n 1 | \
+                            awk '{print $4}')")"
+
     buf=""
+
+    case "$(amixer -c 1 get Master | tail -n 1 | awk '{print $6}')" in
+        "[on]")
+            buf="${buf} %{A:${alsa}:} ${vol}  %{A}"
+            ;;
+        "[off]")
+            buf="${buf}$bar_back_highlight$bar_text_highlight"
+            buf="${buf}  %{A:${alsa}:}${vol} %{A}"
+            buf="${buf} $bar_back_foreground$bar_text_foreground"
+            ;;
+    esac
 
     printf '%s\n' "$buf"
 }
+
+. fwmrc
+wmcolours
+
+bar_text_highlight="%{F#$ACTIVE}"
+bar_text_foreground="%{F#$ACTIVE}"
+bar_back_highlight="%{B#$URGENT}"
+bar_back_foreground="%{B#$INACTIVE}"
 
 main "$@"
