@@ -222,8 +222,8 @@ inoremap [, [<CR>],<ESC>O
 nnoremap <Leader>m :make<CR>
 
 " external program launching
-nnoremap <Leader>op :AsyncRun! zathura %:r.pdf<CR>
-nnoremap <Leader>ob :AsyncRun! qutebrowser %:r.html<CR>
+nnoremap <Leader>op :AsyncRun zathura %:r.pdf<CR>
+nnoremap <Leader>ob :AsyncRun qutebrowser %:r.html<CR>
 vnoremap <Leader>s :! awk '{ print length(), $0 \| "sort -n \| cut -d\\  -f2-"}'<CR>
 
     " Mappings for Custom Functions
@@ -267,7 +267,7 @@ try
 catch
 endtry
 
-set colorcolumn=81
+set colorcolumn=+2
 
 " cursor always placed in middle
 set scrolloff=999
@@ -301,12 +301,12 @@ set autochdir
 " enable annoying mouse
 set mouse+=a
 
+" faster updates
+set updatetime=100
+
 " autosave file on focus loss
 set autowrite
 autocmd! FocusLost * silent! :wa
-
-" spell limit
-" set spellsuggest+=5
 
 " stop leader timeout
 set ttimeout
@@ -339,19 +339,17 @@ set smarttab expandtab
 " turn filetype subsystem on
 filetype plugin indent on
 
-autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
-
 autocmd! FileType c      setlocal ts=8 sw=8 sts=8 noexpandtab
 autocmd! FileType sh     setlocal makeprg=sh\ %\
-autocmd! FileType md     setlocal spell makeprg=pandoc\ %\ -o\ %:r.pdf
-autocmd! FileType tex    setlocal spell makeprg=pdflatex\ %
-autocmd! FileType txt    setlocal tw=0 spell noexpandtab wrap linebreak
+autocmd! FileType md     setlocal spell fo+=a makeprg=pandoc\ '%'\ -o\ '%:r'.pdf
+autocmd! FileType tex    setlocal spell fo+=a makeprg=pdflatex\ '%'
+autocmd! FileType txt    setlocal tw=0 spell fo+=a noexpandtab wrap linebreak
 autocmd! FileType css    setlocal ts=4 sw=4 sts=4
 autocmd! FileType html   setlocal ts=2 sw=2 sts=2
 autocmd! FileType ruby   setlocal ts=2 sw=2 sts=2
 autocmd! FileType python setlocal ts=4 sw=4 sts=4
 
-" filetype event map
+" filetype read
 autocmd! BufNewFile,BufRead *fstab           setlocal filetype=fstab tw=0
 autocmd! BufNewFile,BufRead *Pkgfile         setlocal filetype=sh noet
 autocmd! BufNewFile,BufRead *.gitconfig      setlocal filetype=gitconfig noet
@@ -359,6 +357,9 @@ autocmd! BufNewFile,BufRead *.zsh,*.zprofile setlocal filetype=sh
 
 " filetype write
 autocmd! BufWritePost *.tex silent make %
+
+" filetype buffer delete
+autocmd! BufDelete *.tex :AsyncRun latexmk -pdf -C -silent
 
 set history=1000
 

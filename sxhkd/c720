@@ -37,24 +37,21 @@ mod1 + {v,t,shift + t}
     tile {-v,-g,-l}
 
  # media
-XF86AudioMute
-    pulsemixer --toggle-mute
-{XF86AudioLowerVolume, XF86AudioRaiseVolume}
-    pulsemixer --change-volume {-5,+5}
+{XF86AudioMute, XF86AudioLowerVolume, XF86AudioRaiseVolume}
+    volctrl {toggle,dec 3,inc 3}
 mod1 + {comma,period,space,slash,9,0}
     mpvc {prev,next,toggle,play $,volume -5,volume +5} -S /tmp/vidsocket -q
 mod4 + {s,d,9,0}
     mpvc volume {-5,+5,-5,+5} -q
 mod4 + {h,j,k,l}
     mpvc seek {-5s,-30s,30s,5s} -q
-mod4 + {space,Tab,n,p,z,r,c,BackSpace}
-    mpvc {toggle,next,next,prev,shuffle,single,clear,remove current} -q
+mod4 + {space,Tab,n,shift + Tab,p,z,r,c,BackSpace}
+    mpvc {toggle,next,next,prev,prev,shuffle,single,clear,remove current} -q
 mod4 + a
-    find -L ~/usr/mus/* -type f | shuf | shuf | mpvc add -q
-F8
-    pulsemixer --toggle-mute
-{F9,F10}
-    pulsemixer --change-volume {-5,+5}
+    fd . ~/usr/mus -e mp3 -e flac -e wav -e ogg -E '*.m3u8' -E '*.log' \
+    -E '*.cue'| shuf | shuf | mpvc add -q
+{F8,F9,F10}
+    volctrl {toggle,dec 3,inc 3}
 
 # shot
 Print

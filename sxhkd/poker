@@ -41,10 +41,8 @@ mod1 + {v,t,shift + t}
     tile {-v,-g,-l}
 
 # media
-XF86AudioMute
-    pulsemixer --toggle-mute
-{XF86AudioLowerVolume, XF86AudioRaiseVolume}
-    pulsemixer --change-volume {-5,+5}
+{XF86AudioMute, XF86AudioLowerVolume, XF86AudioRaiseVolume}
+    volctrl {toggle,dec 3,inc 3}
 mod1 + {comma,period,space,slash,9,0}
     mpvc {prev,next,toggle,play $,volume -5,volume +5} -S /tmp/vidsocket -q
 mod4 + {s,d,9,0}
