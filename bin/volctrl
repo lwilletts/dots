@@ -14,23 +14,23 @@ EOF
 }
 
 main() {
-    type amixer > /dev/null 2>&1 && {
+    type pulsemixer > /dev/null 2>&1 && {
         case "$1" in
-            toggle) amixer -q -c 1 set Master toggle       ;;
-            inc)    amixer -q -c 1 set Master $2db+ unmute ;;
-            dec)    amixer -q -c 1 set Master $2db- unmute ;;
-            *)      usage 1                                ;;
+            toggle) pulsemixer --toggle-mute         ;;
+            inc)    pulsemixer --change-volume "+$2" ;;
+            dec)    pulsemixer --change-volume "-$2" ;;
+            *)      usage 1 ;;
         esac
 
         exit 0
     }
 
-    type pulsemixer > /dev/null 2>&1 && {
+    type amixer > /dev/null 2>&1 && {
         case "$1" in
-            toggle) pulsemixer --toggle-mute       ;;
-            inc)    pulsemixer --change-volume +$2 ;;
-            dec)    pulsemixer --change-volume -$2 ;;
-            *)      usage 1 ;;
+            toggle) amixer -q -c 1 set Master toggle  ;;
+            inc)    amixer -q -c 1 set Master "$2db+" ;;
+            dec)    amixer -q -c 1 set Master "$2db-" ;;
+            *)      usage 1                           ;;
         esac
 
         exit 0

@@ -1,6 +1,5 @@
 " fyr
 
-
     " vim-plug
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -41,9 +40,11 @@ Plug 'dylanaraps/fff.vim'
     let g:fff#split = "8new"
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
+Plug 'yuki-ycino/fzf-preview.vim'
     nmap <Leader>f :FZF -m <CR>
-    nmap <Leader>F :FZF -m ~/<CR>
-    nmap <Leader>b :Buffers<CR>
+    nmap <Leader>F :FzfPreviewProjectFiles<CR>
+    nmap <Leader>g :FzfPreviewGitFiles<CR>
+    nmap <Leader>b :FzfPreviewBuffers<CR>
 
     let g:fzf_layout = { 'down': '~40%' }
     let g:fzf_colors =

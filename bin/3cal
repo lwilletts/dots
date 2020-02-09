@@ -3,7 +3,7 @@
 # 3cal
 
 main() {
-    cal -3
+    cal "$(date +'%Y')"
 
     while :; do
         oldstty=$(stty -g)

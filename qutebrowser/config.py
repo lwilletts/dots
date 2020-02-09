@@ -202,18 +202,18 @@ c.content.javascript.prompt = True
 
     # fonts
 # monospace fonts
-c.fonts.monospace = 'scientifica'
-c.fonts.tabs = '8pt monospace'
-c.fonts.hints = '8pt monospace'
-c.fonts.keyhint = '8pt monospace'
-c.fonts.prompts = '8pt monospace'
-c.fonts.downloads = '8pt monospace'
-c.fonts.statusbar = '8pt monospace'
-c.fonts.contextmenu = '8pt monospace'
-c.fonts.messages.info = '8pt monospace'
-c.fonts.debug_console = '8pt monospace'
-c.fonts.completion.entry = '8pt monospace'
-c.fonts.completion.category = '8pt monospace'
+# c.fonts.default_family = 'scientifica'
+c.fonts.tabs = '8pt scientifica'
+c.fonts.hints = '8pt scientifica'
+c.fonts.keyhint = '8pt scientifica'
+c.fonts.prompts = '8pt scientifica'
+c.fonts.downloads = '8pt scientifica'
+c.fonts.statusbar = '8pt scientifica'
+c.fonts.contextmenu = '8pt scientifica'
+c.fonts.messages.info = '8pt scientifica'
+c.fonts.debug_console = '8pt scientifica'
+c.fonts.completion.entry = '8pt scientifica'
+c.fonts.completion.category = '8pt scientifica'
 
 # c.fonts.web.family.cursive
 # c.fonts.web.family.fantasy

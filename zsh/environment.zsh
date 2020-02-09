@@ -52,10 +52,12 @@ hash nvim 2> /dev/null && {
     alias vi="$VISUAL"
 }
 
-export GAME1="$HOME/.steam/steam/steamapps/common"
-export GAME2="/mnt/speed/steamapps/common"
-
 export PAGER="less"
 export FZF_DEFAULT_OPTS='--color=bw'
 
 alias white="sed 's/\x1B\[[0-9;]*[JKmsu]//g'"
+
+# games
+export GAME1="$HOME/.steam/steam/steamapps/common"
+export GAME2="/mnt/speed/steamapps/common"
+export MANGOHUD_CONFIG=ram,vram,position=top-right,font_sze=20

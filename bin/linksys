@@ -10,7 +10,7 @@ usage() {
     base="$(basename "$0")"
 
     cat >&2 << EOF
-Usage $base <core|nvim|xorg|all>
+Usage $base <headless|nvim|xorg>
 EOF
 
     test -z "$1" || exit "$1"
@@ -40,7 +40,6 @@ xorg() {
 
     ln $OPTIONS "$DOTFILEDIR/mpv" "$HOME/.config/mpv"
     ln $OPTIONS "$DOTFILEDIR/cwm/cwmrc" "$HOME/.cwmrc"
-    ln $OPTIONS "$DOTFILEDIR/bindings" "$HOME/.bindings"
     ln $OPTIONS "$DOTFILEDIR/alsa/asoundrc" "$HOME/.asoundrc"
     ln $OPTIONS "$DOTFILEDIR/youtube-dl" "$HOME/.config/youtube-dl"
     ln $OPTIONS "$DOTFILEDIR/compton/compton.conf" "$HOME/.compton.conf"

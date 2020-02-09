@@ -3,7 +3,7 @@
 . fwmrc
 wmenv
 wmgaps
-wmcolours
+dcolours
 
 FONT=$(awk '/font/ {print $3}' < ~/.Xresources | cut -d',' -f 1)
 
@@ -18,5 +18,5 @@ printf '%s\n' "$PATH" | sed 's/:/\n/g' | while read -r dir; do
 done | sort -u | \
 dmenu -name "drun" -f -x $X -y $Y -w $W -h $H -bw 0 -s "$PRI" \
 -fn "$FONT" -p "  Run >" \
--nf "#$ACTIVE" -sf "#$INACTIVE" -nb "#$INACTIVE" -sb "#$ACTIVE" -bc "#$ACTIVE" \
+-nf "#$NF" -sf "#$SF" -nb "#$NB" -sb "#$SB" -bc "#$BC" \
 | ${SHELL:-"/bin/sh"} &

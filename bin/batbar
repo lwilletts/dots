@@ -3,8 +3,8 @@
 # batbar
 
 main() {
-    bat > /dev/null && {
-        battery="$(bat)"
+    battery > /dev/null && {
+        battery="$(battery)"
 
         charging="$(printf '%s\n' "$battery" | cut -d\  -f 2)"
         batvalue="$(printf '%s\n' "$battery" | cut -d% -f 1)"

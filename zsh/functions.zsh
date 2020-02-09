@@ -77,27 +77,5 @@ mpvi() {
     mpv "$@" --pause &!
 }
 
-winel() {
-    case "$1" in
-        tribes)
-            GAMEDIR="$GAME1/Tribes/2017_T1Basic"
-            cd $GAMEDIR
-
-            WINEDEBUG=-all WINEARCH=win64 \
-            WINEPREFIX=~/.wine/prefixes/tribes WINEESYNC=1 \
-            wine "$GAMEDIR/Tribes.exe" > /dev/null 2>&1 &!
-            ;;
-        outerworlds)
-            GAMEDIR="$GAME2/The Outer Worlds"
-            cd $GAMEDIR
-
-            WINEDEBUG=-all WINEARCH=win64 \
-            WINEPREFIX=~/.wine/prefixes/theouterworlds WINEESYNC=1 \
-            DXVK_HUD=fps,frametimes,gpuload \
-            wine "$GAMEDIR/TheOuterWorlds.exe" > /dev/null 2>&1 &!
-            ;;
-    esac
-}
-
 # name / class / process of window id
 hash fwmrc 2> /dev/null && . fwmrc

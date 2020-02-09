@@ -27,7 +27,6 @@ hsetroot -root -tile "$HOME/usr/img/patterns/denim.png" -brightness 0.01
 watcher &
 
 # fwm
-cwm &
 bars &
 picom &
 sxhkd &
