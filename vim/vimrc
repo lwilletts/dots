@@ -267,7 +267,7 @@ try
 catch
 endtry
 
-set colorcolumn=+2
+set colorcolumn=+3
 
 " cursor always placed in middle
 set scrolloff=999

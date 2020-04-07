@@ -4,7 +4,7 @@
 
 main() {
     cava="urxvtc -g 85x22 -fn \"-*-scientifica-*-*-*--10-*-*-*-*-*-*-*\" -e sh -c 'cava'"
-    status="$(mpvc -f "%status%")"
+    status="$(mpvc -f "%status%" 2> /dev/null)"
 
     if [ "$status" = "playing" ]; then
         act="%{F#$INACTIVE}"
@@ -20,7 +20,7 @@ main() {
         "$act%artist% $ina// $act%title% $ina// $act%remaining% (%percentage%%%)" 2> /dev/null)"
 
     buf=""
-    buf="${buf} $bar_back_highlight$bar_text_highlight"
+    buf="${buf}$bar_back_highlight$bar_text_highlight"
     buf="${buf} %{A:${cava}:} ${mus} %{A}"
     buf="${buf} $bar_back_foreground$bar_text_foreground"
 

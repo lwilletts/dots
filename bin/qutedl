@@ -1,0 +1,83 @@
+#!/bin/sh
+#
+# band
+
+usage() {
+    base=$(basename "$0")
+
+    cat >&2 << EOF
+Usage:
+    $base
+EOF
+
+    [ $# -eq 0 ] || exit "$1"
+}
+
+youtube_download() {
+    youtube-dl "$URL"
+}
+
+bandcamp_download() {
+    band="$(printf '%s\n' "$domain" | cut -d. -f 1)"
+    dir="$HOME/usr/mus/bandcamp/$band"
+
+    test -e "$dir" || mkdir -p "$dir"
+    bandcamp-dl --base-dir "$dir" --embed-art \
+                --template='%{album}&%{track} & %{title}' "$URL" > /dev/null 2>&1
+
+    # find filename extension just in case format changes in the future
+    ext="$(fd . "$dir" -d 1 | head -n 1 | rev | cut -d'.' -f 1 | rev)"
+
+    # get album name and fix format
+    album="$(fd . "$dir" -d 1 -e "$ext" | head -n 1 | cut -d'&' -f 1 | \
+             rev | cut -d'/' -f 1 | rev | sed -e 's/-/ /g' -e 's/\b\(.\)/\u\1/g')"
+    album="$dir/$album"
+
+    if [ -e "$album" ]; then
+        rm "$dir"/*."$ext"
+    else
+        # rename all tracks to nicer format
+        for file in "$dir"/*."$ext"; do
+            newfile="$(printf '%s\n' "$file" | cut -d'&' -f 2- | \
+                       sed -e 's/-/ /g' -e 's/&/-/' -e 's/\b\(.\)/\u\1/g' | \
+                       rev | cut -d'.' -f 2- | rev)"
+
+            mv "$file" "$dir/$newfile.mp3"
+        done
+
+        # move tracks to album dir
+        mkdir "$album"
+        mv "$dir"/*."$ext" "$album"
+
+        # extract album cover art to separate file for prosperity
+        ffmpeg -hide_banner -i \
+               "$(fd --full-path "$album" -e mp3 | head -n 1)" "$album/cover.jpg"
+    fi
+}
+
+main() {
+    URL="$*"
+    domain="$(printf '%s\n' "$URL" | awk -F[/:] '{print $4}')"
+
+    case "$domain" in
+        *youtube*)  youtube_download  ;;
+        *bandcamp*) bandcamp_download ;;
+    esac
+
+    # echo "01.mp3.tmp" > /tmp/$d/playlist.txt
+    # seq -f "%02g.mp3" 2 20 >> /tmp/$d/playlist.txt
+
+    # file=/tmp/$d/01.mp3.tmp
+    # while [ ! -f "$file" ]
+    # do
+    #     inotifywait -qqt 5 -e create -e moved_to "$(dirname $file)"
+    # done
+    # touch /tmp/$d/cover.jpg
+    # sleep 0.7
+    # ls /tmp/$d/
+    # cat /tmp/$d/playlist.txt
+    # mpv --vid=1 --external-file=/tmp/$d/cover.jpg --osc=yes --playlist=/tmp/$d/playlist.txt
+    # exit 0
+}
+
+main "$@"

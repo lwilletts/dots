@@ -1,0 +1,44 @@
+#!/bin/sh
+#
+# turtle
+
+usage() {
+    base=$(basename "$0")
+
+    cat >&2 << EOF
+Usage:
+    $base
+EOF
+
+    [ $# -eq 0 ] || exit "$1"
+}
+
+turtle_on() {
+    hdr=$(curl http://"$servaddr"/transmission/rpc -sD- | \
+          grep -o '^X-Transmission-Session-Id: [A-Za-z0-9]*')
+
+    curl -s http://"$servaddr"/transmission/rpc \
+         -d '{"method":"session-set","arguments":{"alt-speed-enabled":true}}' \
+         -H "$hdr" > /dev/null
+}
+
+turtle_off() {
+    hdr=$(curl http://"$servaddr"/transmission/rpc -sD- | \
+          grep -o '^X-Transmission-Session-Id: [A-Za-z0-9]*')
+
+    curl -s http://"$servaddr"/transmission/rpc \
+         -d '{"method":"session-set","arguments":{"alt-speed-enabled":false}}' \
+         -H "$hdr" > /dev/null
+}
+
+main() {
+    servaddr="192.168.2.169:9091"
+
+    case "$1" in
+        on|-e|--enable|enable)    turtle_on  ;;
+        off|-d|--disable|disable) turtle_off ;;
+        *)                        usage 0    ;;
+    esac
+}
+
+main "$@"

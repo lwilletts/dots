@@ -1,5 +1,5 @@
 export HISTFILE="$HOME/.histfile"
-export HISTSIZE="10000"
+export HISTSIZE="1000000"
 export SAVEHIST="$HISTSIZE"
 
 setopt share_history

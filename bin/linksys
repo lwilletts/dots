@@ -46,6 +46,7 @@ xorg() {
     ln $OPTIONS "$DOTFILEDIR/zathura/zathurarc" "$HOME/.config/zathura/zathurarc"
     ln $OPTIONS "$DOTFILEDIR/qutebrowser/config.py" \
     "$HOME/.config/qutebrowser/config.py"
+    ln $OPTIONS "$DOTFILEDIR/MangoHud" "$HOME/.config/MangoHud"
 }
 
 nvim() {

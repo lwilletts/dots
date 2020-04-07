@@ -61,7 +61,7 @@ gpubartrigger() {
         temp="$(gpu | cut -d\  -f 4 | cut -c 1-2)"
 
         case "$temp" in
-            6[0-9]|7[0-9]|8[0-9]|9[0-9]|1[0-9])
+            5[5-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9]|1[0-9])
                 test -z "$process" && simplebar gpubar c 2
                 ;;
             *)

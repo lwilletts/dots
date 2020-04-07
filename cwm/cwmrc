@@ -7,10 +7,12 @@ unbind-mouse all
 bind-key 4S-q quit
 bind-key 4S-r restart
 
+bind-key MS-q window-close
+
 # style
-sticky no
+sticky yes
 borderwidth 0
-gap 0 50 0 50
+gap 0 30 0 50
 fontname 'scientifica:pixelsize=11'
 
 # colors

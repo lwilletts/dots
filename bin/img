@@ -53,6 +53,11 @@ img() {
     printf "0;1;0;0;$W;$H;;;;;$FILENAME\n4;\n3;" | $W3MCMD
 }
 
+refresh() {
+    img "$file"
+    printf '%s' "$(basename "$file") "
+}
+
 main() {
     validateDeps
 
@@ -74,9 +79,26 @@ main() {
                             n)
                                 break
                                 ;;
+                            d)
+                                printf '%s' "Delete $(basename "$file")? (y,n) "
+                                while true; do
+                                    oldstty=$(stty -g)
+                                    stty raw -echo; key="$(head -c 1)"; stty $oldstty
+                                    case $key in
+                                        y)
+                                            rm "$file"
+                                            break
+                                            ;;
+                                        n)
+                                            refresh
+                                            ;;
+                                    esac
+                                done
+                                ;;
                             r)
-                                img "$file"
-                                printf '%s' "$(basename "$file") "
+                                ;;
+                            R)
+                                refresh
                                 ;;
                             q)
                                 clean

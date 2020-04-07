@@ -35,10 +35,19 @@ export PATH=$(printf '%s\n' "$PATH" | cut -c 2-)
 
 unset EXECPATH
 
-# global shell vars.
-export QT_QPA_PLATFORMTHEME="qt5ct"
+# program dots
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DESKTOP_DIR="/home/fyr"
+export LESSHISTFILE="$XDG_CONFIG_HOME/lesshist"
+export HISTFILE="$XDG_CONFIG_HOME/histfile"
+export INPUTRC="$XDG_CONFIG_HOME/inputrc"
+export MAIL="$XDG_CONFIG_HOME/mail"
+export PYTHONPATH="$XDG_CONFIG_HOME"
+export XAUTHORITY="$XDG_CONFIG_HOME/xauth"
+export GNUPGHOME="$XDG_CONFIG_HOME"
+
+# global shell vars.
+export QT_QPA_PLATFORMTHEME="qt5ct"
 export BROWSER="/usr/bin/qutebrowser"
 
 hash nvim 2> /dev/null && {
@@ -60,4 +69,3 @@ alias white="sed 's/\x1B\[[0-9;]*[JKmsu]//g'"
 # games
 export GAME1="$HOME/.steam/steam/steamapps/common"
 export GAME2="/mnt/speed/steamapps/common"
-export MANGOHUD_CONFIG=ram,vram,position=top-right,font_sze=20

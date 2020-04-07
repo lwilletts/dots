@@ -1,0 +1,24 @@
+#!/bin/sh
+#
+# resolve
+
+usage() {
+    base=$(basename "$0")
+
+    cat >&2 << EOF
+Usage:
+    $base
+EOF
+
+    [ $# -eq 0 ] || exit "$1"
+}
+
+main() {
+    resolveconf="$XDG_CONFIG_HOME/resolve"
+    test -d "$resolveconf" || mkdir -p "$resolveconf"
+
+    cd "$resolveconf" || return 1
+    HOME="$resolveconf" /opt/resolve/bin/resolve
+}
+
+main "$@"

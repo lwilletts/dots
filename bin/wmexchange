@@ -1,0 +1,26 @@
+#!/bin/sh
+#
+# wmexchange
+
+usage() {
+    base=$(basename "$0")
+
+    cat >&2 << EOF
+Usage:
+    $base
+EOF
+
+    [ $# -eq 0 ] || exit "$1"
+}
+
+main() {
+    pgrep glazier > /dev/null 2>&1 && {
+        pkill glazier
+        cwm &
+    } || {
+        pkill cwm
+        glazier &
+    }
+}
+
+main "$@"

@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# fyr 2017 (c) MIT
+# servers
 
 test -f ~/.ssh/steamkey && KEY="$(cat ~/.ssh/steamkey)"
 URL="https://api.steampowered.com/IGameServersService/GetServerList/v1/?format=json&filter=\gamedir\midair&key=$KEY"
@@ -8,13 +8,12 @@ URL="https://api.steampowered.com/IGameServersService/GetServerList/v1/?format=j
 OUTPUT=$(curl -sL "$URL" | jq -r '(.response.servers)')
 LENGTH=$(printf '%s' "$OUTPUT" | jq '. | length')
 
-FINAL=$(printf "#|Map|Name|IP")
+FINAL=$(printf "#|Name|Address")
 
 for i in $(seq 1 $LENGTH); do
     i=$((i - 1))
     SERVER=$(printf '%s' "$OUTPUT" | jq ".[$i]")
 
-    MAP=$(printf '%s' "$SERVER" | jq -r '.map')
     NAME=$(printf '%s' "$SERVER" | jq -r '.name' | cut -c -32)
     PLAYERS=$(printf '%s' "$SERVER" | jq -r '.players')
     IP=$(printf '%s' "$SERVER" | jq -r '.addr')
@@ -22,8 +21,23 @@ for i in $(seq 1 $LENGTH); do
     TOTALPLAYERS=$(printf '%s' "$SERVER" | jq -r '.max_players')
     CURRENTPLAYERS=$((CURRENTPLAYERS + PLAYERS))
 
-    FINAL=$(printf "$FINAL \n$PLAYERS/$TOTALPLAYERS|$MAP|$NAME|$IP \n")
+    case "$1" in
+        -a|--all|all)
+            FINAL=$(printf "$FINAL \n$PLAYERS/$TOTALPLAYERS|$NAME|$IP \n")
+            ;;
+        *)
+            test "$PLAYERS" -eq 0 || {
+                FINAL=$(printf "$FINAL \n$PLAYERS/$TOTALPLAYERS|$NAME|$IP \n")
+            }
+        ;;
+    esac
 done
 
-printf '%s' "$FINAL" | column -t -s "|"
-printf '\n'
+case "$1" in
+    -a|--all|all)
+        printf '%s' "$FINAL" | column -t -s "|"
+        ;;
+    *)
+        printf '%s' "$FINAL" | column -t -s "|" | sort -n
+        ;;
+esac

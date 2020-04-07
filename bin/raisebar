@@ -1,0 +1,21 @@
+#!/bin/sh
+#
+# raisebar
+
+usage() {
+    base=$(basename "$0")
+
+    cat >&2 << EOF
+Usage:
+    $base
+EOF
+
+    [ $# -eq 0 ] || exit "$1"
+}
+
+main() {
+    wid -a "mainbar"
+    chwso -i "$(wid -a "mainbar")"
+}
+
+main "$@"

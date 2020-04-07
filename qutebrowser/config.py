@@ -43,10 +43,10 @@ c.window.title_format = '{current_title}'
     # custom binds
 config.bind('j', 'scroll-px 0 100')
 config.bind('k', 'scroll-px 0 -100')
-config.bind('v', 'set-cmd-text -s :buffer ')
+config.bind('b', 'set-cmd-text -s :buffer ')
 config.bind('e', 'set-cmd-text -s :session-load ')
 config.bind('<Shift-e>', 'set-cmd-text -s :session-save -o ')
-config.bind('<Ctrl-d>', 'spawn youtube-dl {url}')
+config.bind('<Ctrl-d>', 'spawn qutedl {url}')
 config.bind('<Ctrl-f>', 'spawn youtube-dl -x {url}')
 config.bind('<Ctrl-s>', 'config-source ~/.config/qutebrowser/config.py')
 config.bind('<Ctrl-E>', 'config-edit', mode='normal')
@@ -500,7 +500,7 @@ c.colors.contextmenu.selected.fg = xresources['*color0']
 ##   - true
 ##   - false
 ##   - ask
-# c.content.mouse_lock = 'ask'
+c.content.mouse_lock = False
 
 # Automatically mute tabs.
 c.content.mute = False

@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# winel
+# gl
 
 usage() {
     base=$(basename "$0")
@@ -15,6 +15,11 @@ EOF
 
 main() {
     case "$1" in
+        ma)     steam steam://rungameid/1231210 ;;
+        civ)    steam steam://rungameid/8930    ;;
+        ftl)    steam steam://rungameid/212680  ;;
+        ittb)   steam steam://rungameid/590380  ;;
+        midair) steam steam://rungameid/439370  ;;
         tribes)
             GAMEDIR="$GAME1/Tribes/2017_T1Basic"
             cd "$GAMEDIR" || {
@@ -40,4 +45,4 @@ main() {
     esac
 }
 
-main "$@"
+main "$@" > /dev/null 2>&1

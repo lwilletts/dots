@@ -4,7 +4,7 @@
 
 generateInfo() {
     trackOld="$trackNew"
-    printf '%s\n' "$trackOld" > "$HOME/.playingnow"
+    printf "$trackOld\ninserttextforobs" > "$snipdir/playingnow"
 
     path="$(mpvc -f "%path%")"
 
@@ -15,44 +15,57 @@ generateInfo() {
     # fallback to image within folder
     coverpath="$(printf '%s\n' "$path" | rev | cut -d/ -f 2- | rev)"
 
-    test -e "$coverpath/?over.*" && {
-        convert "$coverpath/?over.*" -resize 350x350 "$snipdir/cover.png"
-        return
-    }
+    for covername in $image_names; do
+        test -e "$coverpath/$covername" && {
+            convert "$coverpath/$covername" -resize 350x350 "$snipdir/cover.png"
+            return
+        }
+    done
 
-    test -e "$coverpath/folder.*" && {
-        convert "$coverpath/?over.*" -resize 350x350 "$snipdir/cover.png"
+    # find first image in folder
+    imgfile="$(fd . --full-path "$coverpath" -e jpg -e png -d 1 | head -n 1)"
+    test -e "$imgfile" && {
+        convert "$imgfile" -resize 350x350 "$snipdir/cover.png"
         return
     }
 
     # delete image if there is no stream
-    test -e "$snapdir/cover.png" && rm "$snipdir/cover.png"
+    test -e "$snipdir/cover.png" && rm "$snipdir/cover.png"
 }
 
 clean() {
     rm "$snipdir/cover.png"
-    rm "$HOME/playingnow.png"
+    rm "$snipdir/playingnow"
 }
 
 main() {
+    image_names="
+    folder.jpg
+    folder.png
+    Cover.jpg
+    Cover.png
+    cover.jpg
+    cover.png
+    "
+
     snipdir=${snipdir:-/tmp/snip}
     test ! -d "$snipdir" && mkdir -p "$snipdir"
 
     trackOld=""
-    trackNew="$(mpvc -f "%artist% - %title%                   ")"
+    trackNew="$(mpvc -f "%artist% - %title%                        ")"
 
     trap clean EXIT
 
     while :; do
         test "$trackNew" != "$trackOld" && generateInfo
 
-        trackNew="$(mpvc -f "%artist% - %title%                   ")"
+        trackNew="$(mpvc -f "%artist% - %title%                        ")"
         test "$trackNew" = "No files added to /tmp/mpvsocket." && {
-            printf '%s\n' "" > "$HOME/.playingnow"
+            printf '%s\n' "" > "$snipdir/playingnow"
             test -e "$snipdir/cover.png" && rm "$snipdir/cover.png"
         }
 
-        sleep 1
+        sleep 0.5
     done
 }
 
