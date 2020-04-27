@@ -14,13 +14,15 @@ EOF
 }
 
 main() {
-    pgrep glazier > /dev/null 2>&1 && {
-        pkill glazier
-        cwm &
-    } || {
-        pkill cwm
-        glazier &
-    }
+    # pgrep glazier > /dev/null 2>&1 && {
+    #     pkill glazier
+    #     cwm &
+    # } || {
+    #     pkill cwm
+    #     glazier &
+    # }
+
+    pgrep cwm > /dev/null 2>&1 && pkill cwm || cwm &
 }
 
 main "$@"

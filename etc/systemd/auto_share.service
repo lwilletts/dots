@@ -1,0 +1,10 @@
+[Unit]
+Description=Automount NFS shares
+After=syslog.target network.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/auto_share
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,39 @@
+#!/bin/sh
+#
+# transcode
+
+usage() {
+    base=$(basename $0)
+
+    cat >&2 << EOF
+Usage: $base [file]
+EOF
+
+    test $# -eq 0 || exit $1
+}
+
+encode() {
+    vid=$(printf '%s\n' "$*" | rev | cut -d\. -f 2- | rev)
+    ext=$(printf '%s\n' "$*" | rev | cut -d\. -f 1 | rev)
+
+    ffmpeg -hide_banner -loglevel info -i "$vid.$ext" \
+           -c:v dnxhd -profile:v dnxhr_hq -pix_fmt yuv422p \
+           -c:a pcm_s16le -map 0 -f mov "$vid.mov" && {
+                test -d "$dir" || mkdir -p "$dir"
+
+                mv "$PWD/$vid.mov" "$PWD/dnxhr/$vid.mov"
+                return 0
+            }
+}
+
+main() {
+    dir="$PWD/dnxhr"
+
+    case "$@" in
+        -h) usage 0 ;;
+        *)  test -e "$1" && encode "$1" || usage 1 ;;
+    esac
+
+}
+
+main "$@"

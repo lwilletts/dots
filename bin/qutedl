@@ -53,6 +53,8 @@ bandcamp_download() {
         ffmpeg -hide_banner -i \
                "$(fd --full-path "$album" -e mp3 | head -n 1)" "$album/cover.jpg"
     fi
+
+    printf '%s\n' "$URL" > "$album"/url
 }
 
 main() {

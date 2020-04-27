@@ -3,16 +3,19 @@
 # screens
 
 main() {
+    . fwmrc
+    wmgaps
+
     case "$1" in
         default)
-            xrandr --output HDMI-A-2 --auto --rotate right --pos 2560x0
-            xrandr --output DisplayPort-1 --pos 0x0
+            xrandr --output "$SEC" --auto --rotate right --pos 2560x0
+            xrandr --output "$PRI" --pos 0x0
             ;;
         *)
             case "$(hostname)" in
                 "fyriousa")
-                    xrandr --output HDMI-A-2 --auto --rotate right --pos 2560x0
-                    xrandr --output DisplayPort-1 --pos 0x480
+                    xrandr --output "$SEC" --auto --rotate right --pos 2560x0
+                    xrandr --output "$PRI" --pos 0x480
                     ;;
             esac
             ;;

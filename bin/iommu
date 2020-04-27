@@ -1,0 +1,26 @@
+#!/bin/bash
+#
+# testiommu.sh
+
+usage() {
+    base=$(basename "$0")
+
+    cat >&2 << EOF
+Usage:
+    $base
+EOF
+
+    [ $# -eq 0 ] || exit "$1"
+}
+
+main() {
+    shopt -s nullglob
+    for g in /sys/kernel/iommu_groups/*; do
+        echo "IOMMU Group ${g##*/}:"
+        for d in "$g"/devices/*; do
+            echo -e "\t$(lspci -nns "${d##*/}")"
+        done
+    done
+}
+
+main "$@"

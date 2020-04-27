@@ -52,10 +52,8 @@ alias wserv="wol -p 9 e0:d5:5e:91:72:19"
 # games
 alias game1="cd $GAME1"
 alias game2="cd $GAME2"
-alias cfg="vi $HOME/.steam/steam/steamapps/common/Midair/Midair/Binaries/*.cfg"
-alias cfg2="vi $HOME/.local/share/Steam/steamapps/common/Midair\ Community\ Edition/MidairCE/Binaries/*.cfg"
-alias mashots="$HOME/.steam/steam/steamapps/common/Midair/Midair/Saved/Screenshots/WindowsNoEditor"
-alias mashots2="$HOME/.local/share/Steam/steamapps/common/Midair\ Community\ Edition/MidairCE/Saved/Screenshots/WindowsNoEditor"
+alias cfg="vi $HOME/.local/share/Steam/steamapps/common/Midair\ Community\ Edition/MidairCE/Binaries/*.cfg"
+alias mashots="$HOME/.local/share/Steam/steamapps/common/Midair\ Community\ Edition/MidairCE/Saved/Screenshots/WindowsNoEditor"
 
 # file handling
 alias i="img"

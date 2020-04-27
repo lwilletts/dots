@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# autogame
+# envreact
 
 usage() {
     base=$(basename "$0")
@@ -18,11 +18,12 @@ main() {
     programs="
 Midair
 DOOM
+ShadowOfTheTombRaider
 "
 
     while :; do
         for prg in $programs; do
-            pgrep "$prg" > /dev/null
+            pgrep -f "$prg" > /dev/null
 
             case "$?" in
                 0)

@@ -44,7 +44,7 @@ mod1 + r: Escape
 
 # tile
 mod1 + t: {t,s,v,shift + v,l,r,g}
-    tile {browse,split,vert HDMI-A-2,vert,left,right,grid}; pkill -ALRM sxhkd
+    tile {browse,split,vert SEC,vert,left,right,grid}; pkill -ALRM sxhkd
 
 # group
 mod1 + {_,shift + }{1-8}
@@ -66,10 +66,10 @@ mod4 + {h,j,k,l}
 mod4 + {space,Tab,n,shift + Tab,p,z,r,c,BackSpace}
     mpvc {toggle,next,next,prev,prev,shuffle,single,clear,remove current} -q
 mod4 + a
-    fd . ~/usr/mus -e mp3 -e flac -e wav -e ogg -E '*.m3u8' -E '*.log' \
+    fd . ~/usr/mus -t f -e mp3 -e flac -e wav -e ogg -E '*.m3u8' -E '*.log' \
     -E '*.cue' -E 'soundtracks' | shuf | shuf | mpvc add -q
 mod1 + v
-    fd . ~/usr/vid/yt/music | shuf | shuf | mpvc add -S /tmp/vidsocket -q
+    fd . ~/usr/vid/yt/music -t f | shuf | shuf | mpvc add -S /tmp/vidsocket -q
 mod1 + {comma,period,space,slash,9,0}
     mpvc {prev,next,toggle,play $,volume -5,volume +5} -S /tmp/vidsocket -q
 

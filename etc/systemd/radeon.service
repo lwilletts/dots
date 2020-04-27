@@ -3,8 +3,8 @@ Description=radeon
 
 [Service]
 Type=simple
-ExecStartPre=/home/fyr/.dots/bin/radeon undervolt 1080
-ExecStart=/home/fyr/.dots/bin/radeon temp
+ExecStartPre=/home/fyr/.dots/bin/radeon memory 1200
+ExecStart=/home/fyr/.dots/bin/radeon clock 1900 1130
 
 [Install]
 WantedBy=multi-user.target

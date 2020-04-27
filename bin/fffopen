@@ -20,9 +20,9 @@ case "$mime_type" in
         ;;
     audio/*)
         mpvc add "$1"
-        mpvc move $(mpvc -f "%playlistlength% %position%")
-        mpvc next
-        mpvc play
+        # mpvc move $(mpvc -f "%playlistlength% %position%")
+        # mpvc next
+        mpvc play $
         ;;
     application/pdf*)
         zathura "$1"

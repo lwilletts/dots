@@ -1,0 +1,11 @@
+[Unit]
+Description=Unmount the damn NFS mounts
+After=networking.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+ExecStop=/usr/bin/umount -f -a -t nfs4
+
+[Install]
+WantedBy=multi-user.target

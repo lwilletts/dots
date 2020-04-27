@@ -2,8 +2,6 @@ umask 022
 unset TERMCAP
 unset MANPATH
 
-export TERM="rxvt-unicode-256color"
-
 # remove terminal suspend
 # stty start undef
 

@@ -46,8 +46,19 @@ clock() {
     intCheck "$1"
     intCheck "$2"
 
+    printf '%s\n' "s 0 808" > "$odclk"
     printf '%s\n' "s 1 $1" > "$odclk"
     printf '%s\n' "vc 2 $1 $2" > "$odclk"
+    printf '%s\n' "c" > "$odclk"
+}
+
+boost() {
+    intCheck "$1"
+    intCheck "$2"
+
+    printf '%s\n' "s 0 $2" > "$odclk"
+    printf '%s\n' "s 1 $1" > "$odclk"
+    printf '%s\n' "vc 2 $1 $3" > "$odclk"
     printf '%s\n' "c" > "$odclk"
 }
 
@@ -122,13 +133,14 @@ main() {
     fanCtrl="$radeonPCI/hwmon/hwmon2/pwm1_enable"
 
     case "$1" in
-        power)  power "$2"      ;;
-        clock)  clock "$2" "$3" ;;
-        memory) memory "$2"     ;;
-        fan)    fanCtrl  "$2"   ;;
-        temp)   fanCurve        ;;
-        info)   info            ;;
-        *)      usage 1         ;;
+        power)  power "$2"           ;;
+        clock)  clock "$2" "$3"      ;;
+        boost)  boost "$2" "$3" "$4" ;;
+        memory) memory "$2"          ;;
+        fan)    fanCtrl  "$2"        ;;
+        temp)   fanCurve             ;;
+        info)   info                 ;;
+        *)      usage 1              ;;
     esac
 }
 

@@ -1,0 +1,8 @@
+[Unit]
+Description=Automount NFS shares every minute
+
+[Timer]
+OnCalendar=*-*-* *:*:00
+
+[Install]
+WantedBy=timers.target

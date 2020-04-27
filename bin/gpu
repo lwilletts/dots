@@ -23,11 +23,11 @@ sclk="$radeonPCI/pp_dpm_sclk"
 test -z "$sclk" && exit 1
 
 sensorOut="$(sensors)"
-VOLT="$(cat "$radeonPCI/hwmon/hwmon3/in0_input") mv"
+VOLT="$(cat "$radeonPCI/hwmon/hwmon"?"/in0_input") mv"
 EDGE=$(printf '%s\n' "$sensorOut" | awk '/edge/ && $3 == "(crit" {print $2}' | cut -c 2-)
 JUNC=$(printf '%s\n' "$sensorOut" | awk '/junction/ && $3 == "(crit" {print $2}' | cut -c 2-)
 POWR=$(printf '%s\n' "$sensorOut" | awk '/power1/ {print $2,$3}')
-FANS=$(printf '%s\n' "$sensorOut" | awk '/fan1/ {print $2,$3}' | head -n 1)
-CLOCK=$(cat "$sclk" | grep '*' | cut -d\  -f 2)
+FANS=$(printf '%s\n' "$sensorOut" | grep -v "3850" | awk '/fan1/ {print $2,$3}')
+CLOCK=$(cat "$sclk" | grep '*' | tail -n 1 | cut -d\  -f 2)
 
 printf '%s\n' "Vega: $CLOCK / $JUNC / $VOLT / $POWR / $FANS "

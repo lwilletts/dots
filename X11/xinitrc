@@ -22,18 +22,17 @@ case "$(hostname)" in
 esac
 
 # back
-hsetroot -root -tile "$HOME/usr/img/patterns/denim.png" -brightness 0.02
+hsetroot -root -tile "$HOME/usr/img/patterns/noisier_net.png"
 
 # obs
 snip &
-pulse
 
 # wm
 bars &
 sxhkd &
 watcher &
-autogame &
+envreact &
 
-sleep 0.5
-glazier &
+sleep 0.3
+# cwm &
 xwait
