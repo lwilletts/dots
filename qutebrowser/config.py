@@ -50,12 +50,12 @@ config.bind('<Ctrl-d>', 'spawn qutedl {url}')
 config.bind('<Ctrl-f>', 'spawn youtube-dl -x {url}')
 config.bind('<Ctrl-s>', 'config-source ~/.config/qutebrowser/config.py')
 config.bind('<Ctrl-E>', 'config-edit', mode='normal')
-config.bind('<Shift-k>', 'tab-next')
-config.bind('<Shift-j>', 'tab-prev')
+config.bind('<Shift-j>', 'tab-next')
+config.bind('<Shift-k>', 'tab-prev')
 config.bind('<Shift-x>', 'close')
 
 # insert mode
-config.bind('<Ctrl-E>', 'open-editor', mode='insert')
+config.bind('<Ctrl-O>', 'open-editor', mode='insert')
 config.bind('<Escape>', 'leave-mode', mode='insert')
 config.bind('<Shift-Ins>', 'insert-text {primary}', mode='insert')
 
@@ -117,8 +117,9 @@ c.completion.open_categories = ['quickmarks', 'bookmarks', 'history']
     # tabs
 # position
 c.tabs.position = 'top'
-c.tabs.max_width = 120
-c.tabs.min_width = 120
+c.tabs.width = 200
+c.tabs.max_width = 110
+c.tabs.min_width = 110
 c.tabs.padding = {'top': 5, 'bottom': 5, 'left': 10, 'right': 10}
 c.tabs.title.alignment = 'left'
 c.tabs.title.format_pinned = '{index}'

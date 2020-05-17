@@ -23,7 +23,7 @@ bandcamp_download() {
 
     test -e "$dir" || mkdir -p "$dir"
     bandcamp-dl --base-dir "$dir" --embed-art \
-                --template='%{album}&%{track} & %{title}' "$URL" > /dev/null 2>&1
+                --template='%{album}&%{track} & %{title}' "$URL"
 
     # find filename extension just in case format changes in the future
     ext="$(fd . "$dir" -d 1 | head -n 1 | rev | cut -d'.' -f 1 | rev)"
@@ -35,24 +35,24 @@ bandcamp_download() {
 
     if [ -e "$album" ]; then
         rm "$dir"/*."$ext"
-    else
-        # rename all tracks to nicer format
-        for file in "$dir"/*."$ext"; do
-            newfile="$(printf '%s\n' "$file" | cut -d'&' -f 2- | \
-                       sed -e 's/-/ /g' -e 's/&/-/' -e 's/\b\(.\)/\u\1/g' | \
-                       rev | cut -d'.' -f 2- | rev)"
-
-            mv "$file" "$dir/$newfile.mp3"
-        done
-
-        # move tracks to album dir
-        mkdir "$album"
-        mv "$dir"/*."$ext" "$album"
-
-        # extract album cover art to separate file for prosperity
-        ffmpeg -hide_banner -i \
-               "$(fd --full-path "$album" -e mp3 | head -n 1)" "$album/cover.jpg"
     fi
+
+    # rename all tracks to nicer format
+    for file in "$dir"/*."$ext"; do
+        newfile="$(printf '%s\n' "$file" | cut -d'&' -f 2- | \
+                   sed -e 's/-/ /g' -e 's/&/-/' -e 's/\b\(.\)/\u\1/g' | \
+                   rev | cut -d'.' -f 2- | rev)"
+
+        mv "$file" "$dir/$newfile.mp3"
+    done
+
+    # move tracks to album dir
+    mkdir "$album"
+    mv "$dir"/*."$ext" "$album"
+
+    # extract album cover art to separate file for prosperity
+    ffmpeg -hide_banner -i \
+           "$(fd --full-path "$album" -e mp3 | head -n 1)" "$album/cover.jpg"
 
     printf '%s\n' "$URL" > "$album"/url
 }

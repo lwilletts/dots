@@ -14,6 +14,8 @@ EOF
 }
 
 main() {
+    MANGODIR="$HOME/.config/Mangohud"
+
     case "$1" in
         og)      steam steam://rungameid/439370  ;;
         midair)  steam steam://rungameid/1231210 ;;
@@ -23,15 +25,39 @@ main() {
         rottr)   steam steam://rungameid/391220  ;;
         sottr)   steam steam://rungameid/750920  ;;
         tribes)
-            GAMEDIR="$GAME1/Tribes/2017_T1Basic"
+            # GAMEDIR="$GAME1/Tribes/2017_T1Basic"
+            GAMEDIR="$GAME1/Tribes/Stork4/ProConfigVol4-1.41"
             cd "$GAMEDIR" || {
                 printf '%s\n' "$GAMEDIR not found!"
                 return 1
             }
 
-            WINEDEBUG=-all WINEARCH=win64 \
-            WINEPREFIX=~/.wine/prefixes/tribes WINEESYNC=1 \
-            wine "$GAMEDIR/Tribes.exe" > /dev/null 2>&1 &
+            case "$2" in
+                cfg)
+                    WINEDEBUG=-all WINEARCH=win32 \
+                    WINEPREFIX=~/.wine/prefixes/tribes WINEESYNC=1 \
+                    winecfg
+                    ;;
+                *)
+                    WINEDEBUG=-all WINEARCH=win32 \
+                    WINEPREFIX=~/.wine/prefixes/tribes WINEESYNC=1 \
+                    RADV_TEX_ANISO=16 pp_jimenezmlaa=8 \
+                    GALLIUM_HUD_PERIOD=0.07 GALLIUM_HUD=".x100.y1330.w250.h80fps" \
+                    wine "$GAMEDIR/Tribes.exe"  &
+
+                    sleep 1
+
+                    TRIBESPID="$(WINEDEBUG=-all WINEARCH=win32 \
+                    WINEPREFIX=~/.wine/prefixes/tribes wine \
+                    "/home/fyr/src/dllinjector/Release/dllInjector-x86.exe" -d | \
+                    grep "Tribes.exe" | cut -d'[' -f 2 | cut -d']' -f 1)"
+
+                    WINEDEBUG=-all WINEARCH=win32 \
+                    WINEPREFIX=~/.wine/prefixes/tribes wine \
+                    "/home/fyr/src/dllinjector/Release/dllInjector-x86.exe" \
+                    -p "$TRIBESPID" -l "$GAMEDIR/rasadhlp.dll"
+                    ;;
+            esac
             ;;
         outerworlds)
             GAMEDIR="$GAME2/The Outer Worlds"
@@ -40,13 +66,12 @@ main() {
                 return 1
             }
 
-            RADV_PERFTEST="aco"
-
             WINEDEBUG=-all WINEARCH=win64 \
-            WINEPREFIX=~/.wine/prefixes/theouterworlds WINEESYNC=1 MANGOHUD=1 \
+            WINEPREFIX=~/.wine/prefixes/theouterworlds WINEESYNC=1 \
+            MANGOHUD=1 MANGOHUD_CONFIGFILE="$MANGODIR/default.conf" \
             wine "$GAMEDIR/TheOuterWorlds.exe"
             ;;
     esac
 }
 
-main "$@" > /dev/null 2>&1
+main "$@"

@@ -22,7 +22,14 @@ main() {
     buf=""
     buf="${buf}$bar_back_highlight$bar_text_highlight"
     buf="${buf} %{A:${cava}:} ${mus} %{A}"
-    buf="${buf} $bar_back_foreground$bar_text_foreground"
+
+    case "$1" in
+        full)
+            ;;
+        *)
+            buf="${buf} $bar_back_foreground$bar_text_foreground"
+            ;;
+    esac
 
     printf '%s\n' "$buf"
 

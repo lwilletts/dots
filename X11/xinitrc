@@ -1,31 +1,31 @@
 #!/bin/sh
 
+case "$(hostname)" in
+    spark)
+        unclutter-xfixes &
+        ;;
+    fyriousa)
+        wmp -a 1280 1200
+
+        unclutter &
+        autotile vert HDMI-A-2 &
+        ;;
+esac
+
 # x11 environment
 xset +dpms                     # powersaving
-xset dpms 0 300 0              # timing
+xset b 50                      # bell volume
+xset dpms 0 300 0              # screen blanking
 xset r rate 250 40             # faster keypresses
 xset +fp ~/.local/share/fonts  # custom fonts
 xsetroot -cursor_name left_ptr # left pointer as cursor
 screens                        # set randr
 
 test -f ~/.Xresources && xrdb -load ~/.Xresources
-urxvtd -q -o -f &
-
-case "$(hostname)" in
-    spark)
-        unclutter-xfixes &
-        ;;
-    fyriousa)
-        unclutter &
-        wmp -a 1280 1200
-        ;;
-esac
+pgrep urxvtd 2> /dev/null || urxvtd -q -o -f &
 
 # back
-hsetroot -root -tile "$HOME/usr/img/patterns/noisier_net.png"
-
-# obs
-snip &
+hsetroot -root -cover "$HOME/usr/img/backs/clouds.jpg" -gamma 0.4
 
 # wm
 bars &
@@ -34,5 +34,4 @@ watcher &
 envreact &
 
 sleep 0.3
-# cwm &
 xwait

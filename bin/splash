@@ -216,8 +216,8 @@ printf '\n'
 
 SIZE=$((SIZE - 5))
 
-printf '%s\n' "$(ram)"
 printf '%s\n' "$(cpu)"
+printf '%s\n' "$(ram)"
 test ! -z "$GPU" && printf '%s\n' "$(gpubar)"
 test -d "/sys/class/power_supply/BAT0" && printf '%s\n' "$(battery)"
 

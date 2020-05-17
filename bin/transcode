@@ -16,7 +16,13 @@ encode() {
     vid=$(printf '%s\n' "$*" | rev | cut -d\. -f 2- | rev)
     ext=$(printf '%s\n' "$*" | rev | cut -d\. -f 1 | rev)
 
+    test -e "$PWD/dnxhr/$vid.mov" && {
+        printf '%s\n' "$vid.mov exists!"
+        exit 1
+    }
+
     ffmpeg -hide_banner -loglevel info -i "$vid.$ext" \
+           -max_muxing_queue_size 1024 -vf scale=1280:-1 \
            -c:v dnxhd -profile:v dnxhr_hq -pix_fmt yuv422p \
            -c:a pcm_s16le -map 0 -f mov "$vid.mov" && {
                 test -d "$dir" || mkdir -p "$dir"

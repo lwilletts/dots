@@ -3,8 +3,9 @@ Description=radeon
 
 [Service]
 Type=simple
+ExecStartPre=/bin/sleep 20
 ExecStartPre=/home/fyr/.dots/bin/radeon memory 1200
-ExecStart=/home/fyr/.dots/bin/radeon clock 1900 1130
+ExecStart=/home/fyr/.dots/bin/radeon clock 1850 1080
 
 [Install]
 WantedBy=multi-user.target

@@ -1,0 +1,64 @@
+#!/bin/sh
+#
+# fanctrl
+
+usage() {
+    base=$(basename "$0")
+
+    cat >&2 << EOF
+Usage:
+    sudo $base
+EOF
+
+    [ $# -eq 0 ] || exit "$1"
+}
+
+main() {
+    # hwmon
+    GPU="/sys/devices/pci0000:00/0000:00:01.0/0000:01:00.0/0000:02:00.0/0000:03:00.0/hwmon/hwmon2"
+    MOBO="/sys/devices/platform/nct6775.656/hwmon/hwmon3"
+
+    # fix dumb out of order loading
+    test -e "$GPU" || {
+        GPU="/sys/devices/pci0000:00/0000:00:01.0/0000:01:00.0/0000:02:00.0/0000:03:00.0/hwmon/hwmon3"
+        MOBO="/sys/devices/platform/nct6775.656/hwmon/hwmon2"
+    }
+
+    gpu_fans="pwm1"
+    front_fan="pwm5"
+    exhaust_fan="pwm4"
+
+    # set manual control
+    printf '%s\n' "0" > "$MOBO/$gpu_fans""_enable"
+    printf '%s\n' "0" > "$MOBO/$front_fan""_enable"
+    printf '%s\n' "0" > "$MOBO/$exhaust_fan""_enable"
+
+    while :; do
+        gpu_temp_edge="$(rev "$GPU/temp2_input" | cut -c 4- | rev)"
+
+        case "$gpu_temp_edge" in
+            # set load rpm
+            6[0-9]|7[0-9]|8[0-9]|9[0-9]|1[0-9][0-9])
+                printf '%s\n' "255" > "$MOBO/$gpu_fans"
+                printf '%s\n' "255" > "$MOBO/$front_fan"
+                printf '%s\n' "255" > "$MOBO/$exhaust_fan"
+                ;;
+            # set intermediate rpm
+            5[0-9])
+                printf '%s\n' "150" > "$MOBO/$gpu_fans"
+                printf '%s\n' "100" > "$MOBO/$front_fan"
+                printf '%s\n' "100" > "$MOBO/$exhaust_fan"
+                ;;
+            # set lowest rpm
+            *)
+                printf '%s\n' "75" > "$MOBO/$gpu_fans"
+                printf '%s\n' "75" > "$MOBO/$front_fan"
+                printf '%s\n' "75" > "$MOBO/$exhaust_fan"
+                ;;
+        esac
+
+        sleep 2
+    done
+}
+
+main "$@"

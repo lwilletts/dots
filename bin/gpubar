@@ -40,13 +40,7 @@ main() {
     buf="${buf} $ina// $act$POWR $ina// $act$FANS "
 
     buf="${buf} %{r} "
-    if [ "$(printf '%s\n' "$JUNC" | cut -d. -f 1)" -ge 100 ]; then
-        buf="${buf} $bar_back_highlight$bar_text_highlight"
-        buf="${buf}  $JUNC $ina// $act$MEM  "
-        buf="${buf} $bar_back_foreground$bar_text_foreground "
-    else
-        buf="${buf}  $JUNC $ina// $act$MEM  "
-    fi
+    buf="${buf}  $JUNC $ina// $act$MEM  "
 
 
     buf="${buf} %{A}"

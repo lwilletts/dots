@@ -5,7 +5,7 @@
 W='[37m'; R='[0m'
 
 prompt() {
-    $HOME/.dots/bin/sysinfo
+    $HOME/.dots/bin/splash
     printf '%s'"${W}| ${R}"
 }
 

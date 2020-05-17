@@ -29,15 +29,26 @@ cutfile() {
     fileExt=$(printf '%s\n' "$path" | rev | cut -d\. -f 1 | rev)
     fileName=$(printf '%s\n' "$path" | rev | cut -d\. -f 2- | rev)
 
-    test "$precise" = "true" && {
-        # encode
-        ffmpeg -hide_banner -loglevel panic -i "$path" -ss "$pointA" \
-               -to "$pointB" -c:v libx264 -preset medium -crf 12 -map 0 \
-               "$fileName-$pointA-$pointB.$fileExt"
-    } || {
-        ffmpeg -hide_banner -loglevel panic -i "$path" -ss "$pointA" \
-               -to "$pointB" -c copy -map 0 "$fileName-$pointA-$pointB.$fileExt"
-    }
+    case "$operation" in
+        e|eof)
+            # cut from a loop point to end of file
+            ffmpeg -hide_banner -loglevel panic -i "$path" -ss "$pointA" \
+                   -c copy -map 0 "$fileName-$pointA.$fileExt"
+            ;;
+        p|precise)
+            # preform lossless transcode to dnxhd
+            ffmpeg -hide_banner -i "$path" -ss "$pointA" \
+                   -to "$pointB" -c:v dnxhd -profile:v dnxhr_hq \
+                   -pix_fmt yuv422p -c:a pcm_s16le -map 0 -f mov \
+                   "$fileName-$pointA-$pointB.$fileExt"
+            ;;
+        *)
+            # cuts to keyframe desyncing audio
+            ffmpeg -hide_banner -loglevel panic -i "$path" -ss "$pointA" \
+                   -to "$pointB" -c copy -map 0 \
+                   "$fileName-$pointA-$pointB.$fileExt"
+            ;;
+    esac
 }
 
 main() {
@@ -45,10 +56,20 @@ main() {
 
     mpvc -S "$SOCKET" > /dev/null
     test $? -eq 3 && usage 1
-    test -z "$(mpvc -S "$SOCKET" -f "%ab-loop-b%")" && usage 1
 
     case "$1" in
-        -p|--precise) precise=true ;;
+        -e|--eof|eof)
+            test -z "$(mpvc -S "$SOCKET" -f "%ab-loop-a%")" && usage 1
+            operation="eof"
+            ;;
+        -p|--precise|precise)
+            test -z "$(mpvc -S "$SOCKET" -f "%ab-loop-b%")" && usage 1
+            operation="precise"
+            ;;
+        -d|--default|default|*)
+            test -z "$(mpvc -S "$SOCKET" -f "%ab-loop-b%")" && usage 1
+            operation="default"
+            ;;
     esac
 
     cutfile "$(mpvc -S "$SOCKET" -f "%path%|%ab-loop-a%|%ab-loop-b%")"

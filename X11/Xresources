@@ -3,9 +3,22 @@
 
 /* basics */
 *.modifier   : mod4
-*.font       : -*-scientifica-*-*-*--11-*-*-*-*-*-*-*
-*.boldFont   : -*-scientifica-*-*-*--11-*-*-*-*-*-*-*
-*.italicFont : -*-scientifica-*-*-*--11-*-*-*-*-*-*-*
+*.font       : xft:scientifica:pixelsize=19
+*.boldFont   : xft:scientifica:pixelsize=19
+*.italicFont : xft:scientifica:pixelsize=19
+
+/* *.font       : -*-scientifica-*-*-*--11-*-*-*-*-*-*-* */
+/* *.boldFont   : -*-scientifica-*-*-*--11-*-*-*-*-*-*-* */
+/* *.italicFont : -*-scientifica-*-*-*--11-*-*-*-*-*-*-* */
+
+/* supposedly improves rendering */
+Xft.dpi: 96
+Xft.antialias: true
+Xft.hinting: true
+Xft.rgba: rgb
+Xft.autohint: false
+Xft.hintstyle: hintslight
+Xft.lcdfilter: lcddefault
 
 /* general settings */
 *.cursorBlink     : 0
@@ -16,7 +29,7 @@
 *.saveLines       : 16384
 
 /* URxvt general settings */
-URxvt.letterSpace    : -6
+URxvt.letterSpace    : 2
 URxvt.internalBorder : 10
 URxvt.externalBorder : 0
 URxvt.scrollBar      : 0
@@ -33,5 +46,5 @@ URxvt.keysym.M-Y           : perl:primary:copy/
 /* URxvt transparency */
 Urxvt.depth         : 32
 URxvt.shading       : 170
-URxvt.transparent   : false
+URxvt.transparent   : true
 URxvt.inheritPixmap : false

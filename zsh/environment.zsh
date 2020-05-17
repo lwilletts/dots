@@ -11,15 +11,15 @@ GOPATH="$HOME/.go"
 TESSDATA_PREFIX="$HOME/.dots/tessdata"
 PATH=""
 
-EXECPATHS="/bin
+EXECPATHS=" $DOTS/bin
+/usr/local/bin
+/bin
 /sbin
 /usr/bin
 /usr/sbin
-$DOTS/bin
-$HOME/.fzf/bin
-/usr/local/bin
 $SRC/fwm
 $GOPATH
+$HOME/.fzf/bin
 $HOME/.ghcup/bin
 $HOME/.gem/ruby/2.6.0/bin"
 
@@ -67,3 +67,5 @@ alias white="sed 's/\x1B\[[0-9;]*[JKmsu]//g'"
 # games
 export GAME1="$HOME/.steam/steam/steamapps/common"
 export GAME2="/mnt/speed/steamapps/common"
+
+RADV_PERFTEST="aco"

@@ -10,9 +10,9 @@ bind-key 4S-r restart
 bind-key MS-q window-close
 
 # style
-sticky yes
+sticky no
 borderwidth 0
-gap 0 30 0 50
+gap 0 50 0 30
 fontname 'scientifica:pixelsize=11'
 
 # colors

@@ -31,6 +31,7 @@ simplebar() {
         sysbar|\
         musbar|\
         widbar|\
+        cwmbar|\
         volbaralsa|\
         volbarpulse) BAR="$1" ;;
         *)           exit     ;;
@@ -47,12 +48,57 @@ simplebar() {
         esac
 
         test -z "$3" && sleepval="0.05" || sleepval="$3"
+        test -z "$4" || extra="$4"
 
-        buf="${buf}$(${BAR})"
+        buf="${buf}$(${BAR} $extra)"
 
         printf '%s\n' "$buf"
         sleep "$sleepval"
     done | runbar "$BAR" | /bin/sh &
+}
+
+musbartrigger() {
+    while :; do
+        process="$(ps x | awk '/lemonbar/ && /musbar/ && !/awk/ {print $1}')"
+
+        mpvc -q
+        case $? in
+            2|3)
+                test ! -z "$process" && kill -9 "$process"
+                ;;
+            0|1)
+                test -z "$process" && simplebar musbar c 0 full
+                ;;
+        esac
+
+        sleep 0.1
+    done
+}
+
+vidbartrigger() {
+    ogbarx=$((barx + barw + IGAP))
+
+    while :; do
+        process="$(ps x | awk '/lemonbar/ && /musbar/ && !/awk/ {print $1}')"
+
+        wid -a musbar && {
+            barx=$((barx + barw + IGAP))
+        } || {
+            barx=$((ogbarx + barw + IGAP))
+        }
+
+        mpvc -q
+        case $? in
+            2|3)
+                test ! -z "$process" && kill -9 "$process"
+                ;;
+            0|1)
+                test -z "$process" && simplebar vidbar c 0 full
+                ;;
+        esac
+
+        sleep 0.1
+    done
 }
 
 gpubartrigger() {
@@ -61,11 +107,11 @@ gpubartrigger() {
         temp="$(gpu | cut -d\  -f 4 | cut -c 1-2)"
 
         case "$temp" in
-            6[5-9]|7[0-9]|8[0-9]|9[0-9]|1[0-9])
+            6[0-9]|7[0-9]|8[0-9]|9[0-9]|1[0-9])
                 test -z "$process" && simplebar gpubar c 2
                 ;;
             *)
-                test ! -z "$process" && kill -9 "$process"
+                test ! -z "$process" && kill -9 "$process" > /dev/null
                 ;;
         esac
 
@@ -105,21 +151,32 @@ main() {
     PX="$(mattr x "$PRI")"
     PW="$(mattr w "$PRI")"
     PH="$(mattr h "$PRI")"
+    SW="$(mattr w "$SEC")"
     SH="$(mattr h "$SEC")"
 
     barx=$((PX + LGAP + BW))
-    barh=$((BGAP/2 - BW*2))
-    bary=$((PH - barh - BGAP/4))
+    barh=$((TGAP/2 - BW*2))
+    bary=$((PY + barh - TGAP/4))
     barw=$((PW - LGAP - RGAP))
 
-    mainbar
+    barw=120
+    simplebar datebar c 1
+
+    barx=$((barx + barw + IGAP))
+    barw=380
+    musbartrigger &
+
+    # barx=$((barx + barw + IGAP))
+    # barw=380
+    # vidbartrigger &
 
     case "$(hostname)" in
         fyriousa)
-            barx=$((PW + LGAP))
-            bary=$((SH - barh - BGAP/4))
             barw=400
+            barx=$((PW + LGAP))
+            bary=$((SY + barh - BGAP/4))
             gpubartrigger &
+
             ;;
     esac
 }

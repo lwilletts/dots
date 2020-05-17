@@ -1,0 +1,20 @@
+#!/bin/sh
+#
+# obs
+
+usage() {
+    base=$(basename "$0")
+
+    cat >&2 << EOF
+Usage:
+    $base
+EOF
+
+    [ $# -eq 0 ] || exit "$1"
+}
+
+main() {
+    /bin/obs --startreplaybuffer "$@"
+}
+
+main "$@"

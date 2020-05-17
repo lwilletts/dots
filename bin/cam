@@ -1,0 +1,31 @@
+#!/bin/sh
+#
+# cam
+
+usage() {
+    base=$(basename "$0")
+
+    cat >&2 << EOF
+Usage:
+    $base
+EOF
+
+    [ $# -eq 0 ] || exit "$1"
+}
+
+main() {
+    case "$1" in
+        -r|--res|res)
+            res="$2"
+            rescmd="--demuxer-lavf-o=video_size="$res":input_format=mjpeg"
+            ;;
+        *)
+            res="640x360"
+            rescmd="--demuxer-lavf-o=video_size="$res""
+            ;;
+    esac
+
+    mpv "$rescmd" --profile=low-latency --untimed /dev/video0
+}
+
+main "$@"
