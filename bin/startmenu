@@ -15,7 +15,7 @@ while read -r action; do
     case "$action" in
         e|exit)   exit                      ;;
         i|irc)    dtach -A /tmp/irc weechat ;;
-        t|tmux)   tmux attach               ;;
+        t|tmux)   tmux -u attach            ;;
         tn|tremc) tremc                     ;;
         x|xinit)  startx                    ;;
         s|shell)  zsh                       ;;
