@@ -1,0 +1,56 @@
+#!/bin/sh
+#
+# stats
+
+usage() {
+    base=$(basename "$0")
+
+    cat >&2 << EOF
+Usage:
+    $base
+EOF
+
+    [ $# -eq 0 ] || exit "$1"
+}
+
+main() {
+    [ -f "$1" ] && {
+        file="$1"
+
+        du -shL "$file"
+        printf '\n'
+
+        mime_type="$(file -biL "$1")"
+
+        case "$mime_type" in
+            text/*|*/xml)
+                ;;
+            image/*)
+                file "$file" | cut -d':' -f 2-
+                ;;
+            video/*)
+                ffprobe -hide_banner -i "$file"
+                ;;
+            audio/*)
+                ffprobe -hide_banner -i "$file"
+                ;;
+            application/pdf*)
+                ;;
+            application/zip*)
+                ;;
+            *opendocument*|*openxmlformats*)
+                ;;
+            *)
+                printf '%s\n' "Unknown filetype"
+                ;;
+        esac
+    }
+
+    [ -d "$1" ] && {
+        dir="$1"
+
+        du -shL "$dir"
+    }
+}
+
+main "$@"

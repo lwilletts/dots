@@ -3,6 +3,9 @@
 # load system defaults
 .include /etc/pulse/default.pa
 
+# try to stop crackling
+load-module module-udev-detect tsched=0
+
 # load null sinks for application audio routing
 load-module module-null-sink sink_name=discord
 load-module module-loopback source=discord.monitor sink=alsa_output.pci-0000_00_1f.3.analog-stereo
@@ -10,9 +13,9 @@ load-module module-loopback source=discord.monitor sink=alsa_output.pci-0000_00_
 load-module module-null-sink sink_name=audiosink
 load-module module-loopback source=audiosink.monitor sink=alsa_output.pci-0000_00_1f.3.analog-stereo
 
+# echo cancellation
+load-module module-echo-cancel use_master_format=1 aec_method=webrtc aec_args="analog_gain_control=0\ digital_gain_control=1 noise_suppression=1 voice_detection=1"
+set-default-source echo_source
+
 # scarlett interface mono to stereo
 # load-module module-remap-source master=alsa_input.usb-Focusrite_Scarlett_Solo_USB-00.analog-stereo master_channel_map=front-left channel_map=mono source_properties=device.description='usb-Focusrite_Scarlett_Solo_USB-00'
-
-# audible bell
-load-sample-lazy x11-bell /usr/share/sounds/freedesktop/stereo/window-attention.oga
-load-module module-x11-bell sample=x11-bell

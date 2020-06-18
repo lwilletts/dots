@@ -1,0 +1,37 @@
+#!/bin/sh
+#
+# transcode
+
+usage() {
+    base=$(basename $0)
+
+    cat >&2 << EOF
+Usage: $base [file]
+EOF
+
+    [ $# -eq 0 ] || exit $1
+}
+
+encode() {
+    ffmpeg -hide_banner -loglevel info -i "$vid.$ext" \
+           -max_muxing_queue_size 1024 \
+           -sws_flags lanczos -vf "scale=-1:720" \
+           -c:v libx264 -profile:v high -crf 25 -preset medium \
+           -c:a copy -map 0 -f mp4 "$PWD/$vid.mp4"
+}
+
+prep() {
+    vid=$(printf '%s\n' "$*" | rev | cut -d\. -f 2- | rev)
+    ext=$(printf '%s\n' "$*" | rev | cut -d\. -f 1 | rev)
+
+    encode "$@"
+}
+
+main() {
+    case "$@" in
+        -h) usage 0 ;;
+        *)  [ -e "$1" ] && prep "$1" ;;
+    esac
+}
+
+main "$@"

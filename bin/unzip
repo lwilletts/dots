@@ -1,17 +1,17 @@
 #!/bin/sh
 #
-# I'm mad and this is the only way to smother my rage
+# uz
 
 test $# -eq 0 && {
     printf '%s\n' "Please provide a file to extract."
     exit 1
 }
 
-FILE=$1
+FILE="$@"
 
-test -f $FILE && {
+test -e $FILE && {
     case $FILE in
-        *.zip|*.7z) unzip "$FILE" -d $DIR ;;
+        *.zip|*.7z) 7z x "$FILE"          ;;
         *.tar.bz2)  tar xjf "$FILE"       ;;
         *.tar.gz)   tar xf "$FILE"        ;;
         *.tar.xz)   tar xf "$FILE"        ;;

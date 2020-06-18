@@ -38,16 +38,13 @@ case "$URL" in
     *.mkv|*.mp4|*.ogv|*youtu.be/*|*youtube.com/watch*|\
     *.googlevideo.com/videoplayback*)
         mpvc pause
-        SOCKET="/tmp/vidsocket"
-        mpvc -a "$URL" -S "$SOCKET"
-        mpvc move $(mpvc -S "$SOCKET" -f "%playlistlength% %position%")  -S "$SOCKET"
-        mpvc next -S "$SOCKET"
+        mpv "$URL" --really-quiet --loop-file
         ;;
     *.gifv|*.webm|*.gif)
         openBrowser
         ;;
     *twitch.tv/*)
-        openBrowser
+        streamlink "$URL" best
         ;;
     *.txt|*ix.io/*|*p.iotek.org/*|*sprunge.us/*|*bpaste.net/*|\
     *pastebin.com/raw*|*pbin.in/raw*)

@@ -4,23 +4,21 @@ alias se="sudo -e"
 alias off="poweroff"
 
 # permissions
-alias mine="s chown $(echo $USER):fyr"
+alias mine="s chown $USER:fyr"
 alias all="mine -R *"
 
 # operations
 alias mount="s mount"
 alias umount="s umount"
 
-alias b="cd $OLDPWD"
-alias mv="mv -f"
+alias mv="mv -i"
 alias df="df -h"
-alias cp="cp -rf"
-alias trash="$HOME/tmp/trash"
+alias cp="cp -ri"
+alias trash="~/tmp/trash"
 alias rsync="rsync -a --info=progress2"
 
 alias xsel="xsel -l /dev/null"
 alias szsh="source ~/.zshrc"
-alias sxrdb="xrdb ~/.Xresources"
 
 # apps
 alias vol="pulsemixer"
@@ -39,15 +37,13 @@ alias record="ffmpeg -f pulse -i alsa_input.usb-Focusrite_Scarlett_Solo_USB-00.a
 # net
 alias ix="curl -F 'f:1=<-' ix.io"
 alias io="curl -sT- p.iotek.org"
-alias tn="tremc"
+alias tn="stig"
 alias ytd="youtube-dl"
 alias ytm="youtube-dl \"\$(mpvc -f '%path%')\""
 alias rss="newsboat -q"
 alias net="curl -s ipv4.icanhazip.com"
 alias wget="wget --no-hsts"
-alias rirc="mosh ignite -- tmux a"
 alias serv="mosh phosphor"
-alias wserv="wol -p 9 e0:d5:5e:91:72:19"
 
 # games
 alias game1="cd $GAME1"
@@ -71,7 +67,7 @@ alias irc="dtach -A /tmp/irc weechat"
 alias tits="curl -sL z3bra.org/tits"
 alias unix="printf '%s\n' \"\$(curl -sL git.io/unix)\""
 alias taco="printf '%s\n' \"\$(curl -sL git.io/taco)\""
-alias bonsai="cat $HOME/.dots/ascii/bonsai"
+alias bonsai="< ~/.dots/ascii/bonsai"
 
 # misc
 alias happy="toilet -f term -w 200 -t --gay"

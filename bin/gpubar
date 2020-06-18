@@ -22,10 +22,10 @@ main() {
     done
 
     SCLK="$radeonPCI/pp_dpm_sclk"
-    test -z "$SCLK" && exit 1
+    [ -z "$SCLK" ] && exit 1
 
     sensorOut="$(sensors)"
-    CLOCK=$(cat "$SCLK" | grep '*' | tail -n 1 | cut -d\  -f 2)
+    CLOCK=$(grep '*' "$SCLK" | tail -n 1 | cut -d\  -f 2)
     VOLT="$(cat "$radeonPCI/hwmon/hwmon"?"/in0_input") mv"
     JUNC=$(printf '%s\n' "$sensorOut" | awk '/junction/ && $3 == "(crit" {print $2}' | cut -c 2-)
     MEM=$(printf '%s\n' "$sensorOut" | awk '/mem/ && $3 == "(crit" {print $2}' | cut -c 2-)
@@ -57,6 +57,6 @@ bar_back_highlight="%{B#$URGENT}"
 bar_back_foreground="%{B#$INACTIVE}"
 
 act="%{F#$ACTIVE}"
-ina="%{F#808080}"
+ina="%{F#$DIM}"
 
 main "$@"

@@ -10,15 +10,15 @@ Usage:
     $base [toggle|inc|dec]
 EOF
 
-    test $# -eq 0 || exit "$1"
+    [ $# -eq 0 ] || exit "$1"
 }
 
 main() {
     type pulsemixer > /dev/null 2>&1 && {
         case "$1" in
-            toggle) pulsemixer --toggle-mute         ;;
-            inc)    pulsemixer --change-volume "+$2" ;;
-            dec)    pulsemixer --change-volume "-$2" ;;
+            !|toggle) pulsemixer --toggle-mute         ;;
+            +|inc)    pulsemixer --change-volume "+$2" ;;
+            -|dec)    pulsemixer --change-volume "-$2" ;;
             *)      usage 1 ;;
         esac
 
@@ -27,9 +27,9 @@ main() {
 
     type amixer > /dev/null 2>&1 && {
         case "$1" in
-            toggle) amixer -q -c 1 set Master toggle  ;;
-            inc)    amixer -q -c 1 set Master "$2db+" ;;
-            dec)    amixer -q -c 1 set Master "$2db-" ;;
+            !|toggle) amixer -q -c 1 set Master toggle  ;;
+            +|inc)    amixer -q -c 1 set Master "$2db+" ;;
+            -|dec)    amixer -q -c 1 set Master "$2db-" ;;
             *)      usage 1                           ;;
         esac
 

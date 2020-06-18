@@ -4,12 +4,18 @@
 
 main() {
     calender="urxvtc -g 66x35 -e sh -c '3cal'"
-    clock="$(dat)"
+    clock="$(printf '%s\n' "$act$(date '+%H%M')$ina hrs $act$(date '+%m/%d') $ina$(date '+%Y')")"
 
     buf=""
     buf="${buf} %{A:${calender}:} ${clock}  %{A}"
 
     printf '%s\n' "$buf"
 }
+
+. fwmrc
+wmcolours
+
+act="%{F#$ACTIVE}"
+ina="%{F#$DIM}"
 
 main "$@"

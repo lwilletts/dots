@@ -31,15 +31,13 @@ chpwd() {
 }
 
 zshrc() {
-    RWD=$PWD
-
-    cd ~/.zsh
-    $EDITOR $(find -maxdepth 1 -type f | sort)
+    $EDITOR $(find ~/.dots/zsh -maxdepth 1 -type f | sort)
 
     . ~/.zshrc
-    cd $RWD
+}
 
-    unset -v RWD
+bin() {
+    $EDITOR $(find ~/.dots/bin -maxdepth 1 -type f | sort)
 }
 
 fe() {

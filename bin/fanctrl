@@ -14,22 +14,36 @@ EOF
 }
 
 main() {
-    # hwmon
-    GPU="/sys/devices/pci0000:00/0000:00:01.0/0000:01:00.0/0000:02:00.0/0000:03:00.0/hwmon/hwmon2"
-    MOBO="/sys/devices/platform/nct6775.656/hwmon/hwmon3"
+    i=2
+    j=3
 
-    # fix dumb out of order loading
-    test -e "$GPU" || {
-        GPU="/sys/devices/pci0000:00/0000:00:01.0/0000:01:00.0/0000:02:00.0/0000:03:00.0/hwmon/hwmon3"
-        MOBO="/sys/devices/platform/nct6775.656/hwmon/hwmon2"
-    }
+    # find correct hwmon and wait until they exist
+    while :; do
+        GPU="/sys/devices/pci0000:00/0000:00:01.0/0000:01:00.0/0000:02:00.0/0000:03:00.0/hwmon/hwmon$i"
+        MOBO="/sys/devices/platform/nct6775.656/hwmon/hwmon$j"
 
-    gpu_fans="pwm1"
+        [ -e "$GPU" ] && [  -e "$MOBO" ] && break
+
+        case "$i" in
+            2) i=3; j=2 ;;
+            3) i=2; j=3 ;;
+        esac
+
+        sleep 1
+    done
+
+    gpu_fan1="pwm1"
+    gpu_fan2="pwm4"
+
+    cpu_fan="pwm2"
     front_fan="pwm5"
-    exhaust_fan="pwm4"
+    exhaust_fan="pwm3"
 
     # set manual control
-    printf '%s\n' "0" > "$MOBO/$gpu_fans""_enable"
+    printf '%s\n' "0" > "$MOBO/$gpu_fan1""_enable"
+    printf '%s\n' "0" > "$MOBO/$gpu_fan2""_enable"
+
+    # printf '%s\n' "0" > "$MOBO/$cpu_fan""_enable"
     printf '%s\n' "0" > "$MOBO/$front_fan""_enable"
     printf '%s\n' "0" > "$MOBO/$exhaust_fan""_enable"
 
@@ -38,22 +52,44 @@ main() {
 
         case "$gpu_temp_edge" in
             # set load rpm
-            6[0-9]|7[0-9]|8[0-9]|9[0-9]|1[0-9][0-9])
-                printf '%s\n' "255" > "$MOBO/$gpu_fans"
+            9[0-9]|1[0-9][0-9])
+                printf '%s\n' "255" > "$MOBO/$gpu_fan1"
+                printf '%s\n' "255" > "$MOBO/$gpu_fan2"
                 printf '%s\n' "255" > "$MOBO/$front_fan"
                 printf '%s\n' "255" > "$MOBO/$exhaust_fan"
                 ;;
-            # set intermediate rpm
+            8[0-9])
+                printf '%s\n' "255" > "$MOBO/$gpu_fan1"
+                printf '%s\n' "255" > "$MOBO/$gpu_fan2"
+                printf '%s\n' "175" > "$MOBO/$front_fan"
+                printf '%s\n' "200" > "$MOBO/$exhaust_fan"
+                ;;
+            7[0-9])
+                printf '%s\n' "200" > "$MOBO/$gpu_fan1"
+                printf '%s\n' "200" > "$MOBO/$gpu_fan2"
+                printf '%s\n' "150" > "$MOBO/$front_fan"
+                printf '%s\n' "150" > "$MOBO/$exhaust_fan"
+                ;;
+            6[0-9])
+                printf '%s\n' "175" > "$MOBO/$gpu_fan1"
+                printf '%s\n' "175" > "$MOBO/$gpu_fan2"
+                printf '%s\n' "125" > "$MOBO/$front_fan"
+                printf '%s\n' "125" > "$MOBO/$exhaust_fan"
+                ;;
             5[0-9])
-                printf '%s\n' "150" > "$MOBO/$gpu_fans"
+                printf '%s\n' "150" > "$MOBO/$gpu_fan1"
+                printf '%s\n' "150" > "$MOBO/$gpu_fan2"
+
                 printf '%s\n' "100" > "$MOBO/$front_fan"
                 printf '%s\n' "100" > "$MOBO/$exhaust_fan"
                 ;;
             # set lowest rpm
             *)
-                printf '%s\n' "75" > "$MOBO/$gpu_fans"
+                printf '%s\n' "50" > "$MOBO/$gpu_fan1"
+                printf '%s\n' "50" > "$MOBO/$gpu_fan2"
+
                 printf '%s\n' "75" > "$MOBO/$front_fan"
-                printf '%s\n' "75" > "$MOBO/$exhaust_fan"
+                printf '%s\n' "0" > "$MOBO/$exhaust_fan"
                 ;;
         esac
 

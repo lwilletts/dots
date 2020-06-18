@@ -9,32 +9,39 @@ barvar() {
     wmgaps
     wmcolours
 
-    bar_fg="#$ACTIVE"
-    bar_bg="#$INACTIVE"
-    bar_dim="#808080"
+    export bar_fg="#$ACTIVE"
+    export bar_bg="#$INACTIVE"
+    export bar_dim="#808080"
 
-    bar_border="$bar_dim"
-    bar_font=$(awk '/font/ {print $3}' < ~/.Xresources | cut -d',' -f 1)
+    export bar_border="$bar_dim"
+    export bar_font=$(awk '/font/ {print $3}' < ~/.Xresources | cut -d',' -f 1)
 }
 
 runbar() {
     lemonbar -d -g "${barw}x${barh}+${barx}+${bary}" -B "${bar_bg}" \
-        -F "${bar_fg}" -R "${bar_border}" -r "$BW" -f "${bar_font}" -n "$1"
+             -F "${bar_fg}" -R "${bar_border}" -r "$BW" -f "${bar_font}" -n "$1"
 }
 
 simplebar() {
     case "$1" in
         batbar|\
-        datebar|\
-        gpubar|\
-        groupbar|\
-        sysbar|\
-        musbar|\
-        widbar|\
         cwmbar|\
+        gpubar|\
+        mpvbar|\
+        sysbar|\
+        datebar|\
         volbaralsa|\
         volbarpulse) BAR="$1" ;;
         *)           exit     ;;
+    esac
+
+    test -z "$3" && sleepval="0.05" || sleepval="$3"
+    test -z "$4" || name="$4"
+
+    case "$name" in
+        "/tmp/mpvsocket") BAR_NAME="musbar" ;;
+        "/tmp/vidsocket") BAR_NAME="vidbar" ;;
+        *)                BAR_NAME="$BAR"   ;;
     esac
 
     while :; do
@@ -47,14 +54,11 @@ simplebar() {
             *) ;;
         esac
 
-        test -z "$3" && sleepval="0.05" || sleepval="$3"
-        test -z "$4" || extra="$4"
-
-        buf="${buf}$(${BAR} $extra)"
+        buf="${buf}$(${BAR} $name)"
 
         printf '%s\n' "$buf"
         sleep "$sleepval"
-    done | runbar "$BAR" | /bin/sh &
+    done | runbar "$BAR_NAME" "$cmd1" | /bin/sh &
 }
 
 musbartrigger() {
@@ -64,14 +68,14 @@ musbartrigger() {
         mpvc -q
         case $? in
             2|3)
-                test ! -z "$process" && kill -9 "$process"
+                [ -n "$process" ] && kill -9 "$process" 2> /dev/null
                 ;;
             0|1)
-                test -z "$process" && simplebar musbar c 0 full
+                [ -z "$process" ] && simplebar mpvbar c 0.01 /tmp/mpvsocket
                 ;;
         esac
 
-        sleep 0.1
+        sleep 0.01
     done
 }
 
@@ -79,7 +83,7 @@ vidbartrigger() {
     ogbarx=$((barx + barw + IGAP))
 
     while :; do
-        process="$(ps x | awk '/lemonbar/ && /musbar/ && !/awk/ {print $1}')"
+        process="$(ps x | awk '/lemonbar/ && /vidbar/ && !/awk/ {print $1}')"
 
         wid -a musbar && {
             barx=$((barx + barw + IGAP))
@@ -90,14 +94,14 @@ vidbartrigger() {
         mpvc -q
         case $? in
             2|3)
-                test ! -z "$process" && kill -9 "$process"
+                [ -n "$process" ] && kill -9 "$process"
                 ;;
             0|1)
-                test -z "$process" && simplebar vidbar c 0 full
+                [ -z "$process" ] && simplebar mpvbar c 0.01 /tmp/vidsocket
                 ;;
         esac
 
-        sleep 0.1
+        sleep 0.05
     done
 }
 
@@ -108,10 +112,10 @@ gpubartrigger() {
 
         case "$temp" in
             6[0-9]|7[0-9]|8[0-9]|9[0-9]|1[0-9])
-                test -z "$process" && simplebar gpubar c 2
+                [ -z "$process" ] && simplebar gpubar c 3
                 ;;
             *)
-                test ! -z "$process" && kill -9 "$process" > /dev/null
+                [ -n "$process" ] && kill -9 "$process" > /dev/null
                 ;;
         esac
 
@@ -121,13 +125,12 @@ gpubartrigger() {
 
 mainbar() {
     BW=0
-    barw=$((PW - LGAP - RGAP - BW*2))
+    barw=$((PW - LGAP - RGAP - BW))
 
     while :; do
         buf=""
         buf="${buf} %{l} "
         buf="${buf}$(datebar)"
-        buf="${buf}$(cwmbar)"
         buf="${buf}$(notifybar)"
         buf="${buf} %{r} "
         buf="${buf}$(vidbar)"
@@ -154,29 +157,48 @@ main() {
     SW="$(mattr w "$SEC")"
     SH="$(mattr h "$SEC")"
 
-    barx=$((PX + LGAP + BW))
-    barh=$((TGAP/2 - BW*2))
-    bary=$((PY + barh - TGAP/4))
+    barx=$((PX + LGAP))
     barw=$((PW - LGAP - RGAP))
 
-    barw=120
-    simplebar datebar c 1
+    if [ "$BAR" = "top" ]; then
+        barh=$((TGAP/2))
+        bary=$((PY + barh - TGAP/4))
+    else
+        barh=$((BGAP/2))
+        bary=$((PY + PH - barh - BGAP/4))
+    fi
 
-    barx=$((barx + barw + IGAP))
-    barw=380
-    musbartrigger &
+    case "$1" in
+        -m)
+            mainbar &
+            ;;
+        *)
+            barw=120
+            simplebar datebar c 3
 
-    # barx=$((barx + barw + IGAP))
-    # barw=380
-    # vidbartrigger &
+            barx=$((barx + barw + IGAP))
+            barw=380
+            musbartrigger &
+
+            # barx=$((barx + barw + IGAP))
+            # barw=380
+            # vidbartrigger &
+            ;;
+    esac
 
     case "$(hostname)" in
         fyriousa)
             barw=400
-            barx=$((PW + LGAP))
-            bary=$((SY + barh - BGAP/4))
-            gpubartrigger &
 
+            if [ "$BAR" = "top" ]; then
+                barx=$((PW + LGAP))
+                bary=$((SY + barh - TGAP/4))
+            else
+                barx=$((PW + LGAP))
+                bary=$((SY + SH - barh - BGAP/4))
+            fi
+
+            gpubartrigger &
             ;;
     esac
 }

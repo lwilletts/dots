@@ -5,6 +5,12 @@
 
 import subprocess
 
+    # umatrix style blocking
+# import sys, os
+
+# sys.path.append(os.path.join(sys.path[0], 'jmatrix'))
+# config.source("jmatrix/jmatrix/integrations/qutebrowser.py")
+
     # colours
 def read_xresources(prefix):
     props = {}
@@ -50,8 +56,11 @@ config.bind('<Ctrl-d>', 'spawn qutedl {url}')
 config.bind('<Ctrl-f>', 'spawn youtube-dl -x {url}')
 config.bind('<Ctrl-s>', 'config-source ~/.config/qutebrowser/config.py')
 config.bind('<Ctrl-E>', 'config-edit', mode='normal')
-config.bind('<Shift-j>', 'tab-next')
-config.bind('<Shift-k>', 'tab-prev')
+config.bind('<Ctrl-m.', 'spawn mpv {url}')
+config.bind('<Shift-k>', 'tab-next')
+config.bind('<Shift-j>', 'tab-prev')
+config.bind('<Ctrl-k>', 'tab-move +')
+config.bind('<Ctrl-j>', 'tab-move -')
 config.bind('<Shift-x>', 'close')
 
 # insert mode
@@ -230,8 +239,28 @@ c.fonts.web.size.minimum = 11
 # minimum logical font size (in pixels) that is applied when zooming out.
 c.fonts.web.size.minimum_logical = 11
 
-# background color for webpages if unset
+
+    # colors
+# dark mode
+c.colors.webpage.darkmode.enabled = True
 c.colors.webpage.bg = xresources['*color0']
+
+
+# lightness-hsl brightness-rgb
+c.colors.webpage.darkmode.algorithm = 'lightness-cielab'
+c.colors.webpage.darkmode.grayscale.all = False
+c.colors.webpage.darkmode.grayscale.images = 0
+
+c.colors.webpage.prefers_color_scheme_dark = False
+
+# alwyas smart never
+c.colors.webpage.darkmode.policy.page = 'always'
+c.colors.webpage.darkmode.policy.images = 'never'
+
+# 'smart'
+# 0 - 256
+# c.colors.webpage.darkmode.threshold.text = 256
+# c.colors.webpage.darkmode.threshold.background = 0
 
 # command bar
 c.colors.statusbar.command.bg = xresources['*color0']
@@ -673,8 +702,7 @@ c.prompt.radius = 20
 ## https://peter.sh/experiments/chromium-command-line-switches/ for a
 ## list) will work.
 ## Type: List of String
-c.qt.args = ["blink-settings=darkMode=4"]
-# c.color.webpage.prefers_color_scheme_dark = True
+# c.qt.args = ["blink-settings=darkMode=4"]
 
 ## Force a Qt platform to use. This sets the `QT_QPA_PLATFORM`
 ## environment variable and is useful to force using the XCB plugin when

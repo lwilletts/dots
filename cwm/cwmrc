@@ -6,7 +6,6 @@ unbind-mouse all
 
 bind-key 4S-q quit
 bind-key 4S-r restart
-
 bind-key MS-q window-close
 
 # style

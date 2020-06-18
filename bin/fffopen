@@ -7,7 +7,6 @@ test -e "$1" || exit
 
 mime_type="$(file -biL "$1")"
 
-
 case "$mime_type" in
     text/*|*/xml)
         "${EDITOR:-vi}" "$1"
@@ -15,9 +14,7 @@ case "$mime_type" in
     image/*)
         mpv --loop-file --really-quiet "$1"
         ;;
-    video/*)
-        mpris-ctl --player Chromium pause
-
+    video/*|application/mxf*)
         VIDSOCKET="/tmp/vidsocket"
         mpvc add "$1" -S "$VIDSOCKET"
         ;;

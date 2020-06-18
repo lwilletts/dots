@@ -47,6 +47,7 @@ xorg() {
     ln $OPTIONS "$DOTFILEDIR/qutebrowser/config.py" \
     "$HOME/.config/qutebrowser/config.py"
     ln $OPTIONS "$DOTFILEDIR/MangoHud" "$HOME/.config/MangoHud"
+    ln $OPTIONS "$DOTFILEDIR/streamlink" "$HOME/.config/streamlink"
 
     ln $OPTIONS "$DOTFILEDIR/pulse/default.pa" "$HOME/.config/pulse/default.pa"
 }

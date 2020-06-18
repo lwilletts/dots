@@ -4,9 +4,9 @@
 {mod1, mod2} + shift + Return
     urxvtc -cd "$(mpvc -f "%path%" | rev | cut -d\/ -f 2- | rev)" -g 85x22
 mod1 + {d,s,w,shift + w}
-    {drun -b, sshmenu -c, wmenu -c, wmenu -b all}
-mod1 + {@button1,@button3}
-    wattr o $(pfw) || chwso -r $(pfw); {xmmv,xmrs}
+    {drun -c, sshmenu -c, wmenu -c, wmenu -b all}
+{@button8, mod1 + @button1, mod1 + @button3}
+    wattr o $(pfw) || chwso -r $(pfw); {xmmv,xmmv,xmrs}
 mod1 + {button4,button5}
     {chwso -r,chwso -l} $(pfw)
 {~button3,button10}
@@ -15,8 +15,8 @@ mod1 + {button4,button5}
 # sys
 mod4 + shift + l
     lock
-mod1 + shift + {r,BackSpace}
-    {pkill -USR1 -x sxhkd, pkill xinit}
+mod1 + shift + r
+    pkill -USR1 -x sxhkd
 mod1 + shift + b
     bright 10 off
 
@@ -55,11 +55,11 @@ mod1 + c
 # music
 mod4 + {h,j,k,l}
     mpvc seek {-5s,-30s,30s,5s} -q
-mod4 + {space,Tab,n,shift + Tab,p,z,r,c,BackSpace}
-    mpvc {toggle,next,next,prev,prev,shuffle,single,clear,remove current} -q
+mod4 + {p,shift + Tab,n,Tab,z,c,r,BackSpace,space,slash}
+    mpvc {prev,prev,next,next,shuffle,clear,single,remove current,toggle,play $} -q
 mod4 + a
-    fd . ~/usr/mus -L -t f -e mp3 -e flac -e wav -e ogg -E '*.m3u8' -E '*.log' \
-    -E '*.cue' -E 'soundtracks' | shuf | shuf | mpvc add -q
+    fd . ~/usr/mus -L -t f -e mp3 -e flac -e wav -e ogg -e m4a -e opus \
+                   -E 'soundtracks' | shuf | shuf | mpvc add -q
 
 # video
 mod1 + v
@@ -77,7 +77,7 @@ mod1 + {9,0}
 mod4 + {s,d,9,0}
     mpvc volume {-5,+5,-5,+5} -q
 {XF86AudioMute, XF86AudioLowerVolume, XF86AudioRaiseVolume}
-    volctrl {toggle,dec 3,inc 3}
+    volctrl {!,- 3,+ 3}
 
 # shot
 Print
@@ -89,8 +89,6 @@ shift + Print
 mod1 + x: {l,p,e}
     fcut {default,precise,eof}; pkill -ALRM sxhkd
 mod1 + i
-    chwso -i 0x00e00002
-ctrl + shift + BackSpace
-    pkill obs
+    invert lemonbar
 
 # vim: set ft=sxhkdrc :

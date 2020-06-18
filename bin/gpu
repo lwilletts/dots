@@ -13,14 +13,14 @@ while :; do
     done
 
     driver="$(awk -F '=' '/DRIVER/ {print $2}' "$uevent")"
-    test "$driver" = "amdgpu" && break
+    [ "$driver" = "amdgpu" ] && break
 
     i="$((i + 1))"
-    test "$i" -eq 4 && i=0
+    [ "$i" -eq 4 ] && i=0
 done
 
-sclk="$radeonPCI/pp_dpm_sclk"
-test -z "$sclk" && exit 1
+SCLK="$radeonPCI/pp_dpm_sclk"
+[ -z "$SCLK" ] && exit 1
 
 sensorOut="$(sensors)"
 VOLT="$(cat "$radeonPCI/hwmon/hwmon"?"/in0_input") mv"
@@ -28,6 +28,6 @@ EDGE=$(printf '%s\n' "$sensorOut" | awk '/edge/ && $3 == "(crit" {print $2}' | c
 JUNC=$(printf '%s\n' "$sensorOut" | awk '/junction/ && $3 == "(crit" {print $2}' | cut -c 2-)
 POWR=$(printf '%s\n' "$sensorOut" | awk '/power1/ {print $2,$3}')
 FANS=$(printf '%s\n' "$sensorOut" | grep -v "3850" | awk '/fan1/ {print $2,$3}')
-CLOCK=$(cat "$sclk" | grep '*' | tail -n 1 | cut -d\  -f 2)
+CLOCK=$(grep '*' "$SCLK" | tail -n 1 | cut -d\  -f 2)
 
 printf '%s\n' "Vega: $CLOCK / $JUNC / $VOLT / $POWR / $FANS "

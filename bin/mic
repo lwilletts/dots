@@ -1,0 +1,36 @@
+#!/bin/sh
+#
+# mic
+
+usage() {
+    base=$(basename "$0")
+
+    cat >&2 << EOF
+Usage:
+    $base
+EOF
+
+    [ $# -eq 0 ] || exit "$1"
+}
+
+main() {
+    noti="$HOME/.dots/notifications"
+
+    case "$1" in
+        *)    ID="source-0"; S1="$noti/Bud.ogg"; S2="$noti/Bulb.ogg" ;;
+    esac
+
+    case "$(pulsemixer --id "$ID" --get-mute)" in
+        0)
+            pulsemixer --id "$ID" --mute
+            play "$S1" vol 0.08
+            ;;
+        1)
+            pulsemixer --id "$ID" --unmute
+            play "$S2" vol 0.08
+            ;;
+    esac
+
+}
+
+main "$@"

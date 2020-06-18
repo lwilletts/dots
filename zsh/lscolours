@@ -277,6 +277,7 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .sample               38;5;2
 .wmv                  38;5;2
 .m2ts                 38;5;2
+.mxf                  38;5;2
 
 # mobile/streaming {{{2
 .3g2                  38;5;2

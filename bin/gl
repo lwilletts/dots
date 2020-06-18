@@ -26,7 +26,7 @@ main() {
         sottr)   steam steam://rungameid/750920  ;;
         tribes)
             # GAMEDIR="$GAME1/Tribes/2017_T1Basic"
-            GAMEDIR="$GAME1/Tribes/Stork4/ProConfigVol4-1.41"
+            GAMEDIR="$GAME1/Tribes/Tribes_MILK"
             cd "$GAMEDIR" || {
                 printf '%s\n' "$GAMEDIR not found!"
                 return 1
@@ -34,28 +34,31 @@ main() {
 
             case "$2" in
                 cfg)
-                    WINEDEBUG=-all WINEARCH=win32 \
-                    WINEPREFIX=~/.wine/prefixes/tribes WINEESYNC=1 \
-                    winecfg
+                    WINEPREFIX=~/.wine/prefixes/tribes winecfg
                     ;;
                 *)
-                    WINEDEBUG=-all WINEARCH=win32 \
-                    WINEPREFIX=~/.wine/prefixes/tribes WINEESYNC=1 \
-                    RADV_TEX_ANISO=16 pp_jimenezmlaa=8 \
-                    GALLIUM_HUD_PERIOD=0.07 GALLIUM_HUD=".x100.y1330.w250.h80fps" \
-                    wine "$GAMEDIR/Tribes.exe"  &
+                    # wine envs
+                    WINEESYNC=1 \
+                    WINEDEBUG=-all \
+                    WINEARCH=win32 \
+                    WINEPREFIX=~/.wine/prefixes/tribes \
+                    vblank_mode=0 \
+                    RADV_TEX_ANISO=0 \
+                    pp_jimenezmlaa=0 \
+                    GALLIUM_HUD_PERIOD=0.25 \
+                    GALLIUM_HUD=".x200.y1330.w250.h80fps" \
+                    strangle 500 wine "$GAMEDIR/Tribes.exe" &
+                    # MANGOHUD=1 \
 
-                    sleep 1
+                    sleep 2
 
-                    TRIBESPID="$(WINEDEBUG=-all WINEARCH=win32 \
-                    WINEPREFIX=~/.wine/prefixes/tribes wine \
+                    PID="$(WINEPREFIX=~/.wine/prefixes/tribes wine \
                     "/home/fyr/src/dllinjector/Release/dllInjector-x86.exe" -d | \
-                    grep "Tribes.exe" | cut -d'[' -f 2 | cut -d']' -f 1)"
+                    grep -F "Tribes.exe" | cut -d'[' -f 2 | cut -d']' -f 1)"
 
-                    WINEDEBUG=-all WINEARCH=win32 \
                     WINEPREFIX=~/.wine/prefixes/tribes wine \
                     "/home/fyr/src/dllinjector/Release/dllInjector-x86.exe" \
-                    -p "$TRIBESPID" -l "$GAMEDIR/rasadhlp.dll"
+                    -p "$PID" -l "$GAMEDIR/rasadhlp.dll"
                     ;;
             esac
             ;;
@@ -74,4 +77,12 @@ main() {
     esac
 }
 
-main "$@"
+case "$1" in
+    -v|verbose)
+        shift
+        main "$@"
+        ;;
+    *)
+        main "$@" > /dev/null 2>&1
+        ;;
+esac

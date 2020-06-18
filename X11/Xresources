@@ -1,15 +1,11 @@
 /* colours */
-#include "/home/fyr/.colours/vapour"
+#include "/home/fyr/.colours/mono"
 
 /* basics */
 *.modifier   : mod4
-*.font       : xft:scientifica:pixelsize=19
-*.boldFont   : xft:scientifica:pixelsize=19
-*.italicFont : xft:scientifica:pixelsize=19
-
-/* *.font       : -*-scientifica-*-*-*--11-*-*-*-*-*-*-* */
-/* *.boldFont   : -*-scientifica-*-*-*--11-*-*-*-*-*-*-* */
-/* *.italicFont : -*-scientifica-*-*-*--11-*-*-*-*-*-*-* */
+*.font       : -*-scientifica-*-*-*--11-*-*-*-*-*-*-*
+*.boldFont   : -*-scientifica-*-*-*--11-*-*-*-*-*-*-*
+*.italicFont : -*-scientifica-*-*-*--11-*-*-*-*-*-*-*
 
 /* supposedly improves rendering */
 Xft.dpi: 96
@@ -29,8 +25,8 @@ Xft.lcdfilter: lcddefault
 *.saveLines       : 16384
 
 /* URxvt general settings */
-URxvt.letterSpace    : 2
-URxvt.internalBorder : 10
+URxvt.letterSpace    : -6
+URxvt.internalBorder : 20
 URxvt.externalBorder : 0
 URxvt.scrollBar      : 0
 

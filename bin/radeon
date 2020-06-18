@@ -34,7 +34,7 @@ intCheck() {
 power() {
     intCheck "$1"
 
-    power="$radeonPCI/hwmon/hwmon2/power1_cap"
+    power="$radeonPCI/hwmon/hwmon3/power1_cap"
     powerDRM="$radeonPCI/power_dpm_force_performance_level"
     powerval="$(echo "$1 * 10^7" | bc)"
 

@@ -263,7 +263,7 @@ au BufEnter * set noro
 syntax on
 
 try
-    colorscheme lightish
+    colorscheme mono
 catch
 endtry
 
@@ -292,6 +292,11 @@ set foldmethod=marker
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 "{{{
+
+" remove viminfo
+let skip_defaults_vim=1
+set viminfo=""
+
 " set zsh as our default shell
 let shell="/bin/zsh"
 

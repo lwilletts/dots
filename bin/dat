@@ -10,11 +10,11 @@ Usage:
     $base
 EOF
 
-    test $# -eq 0 || exit "$1"
+    [ $# -eq 0 ] || exit "$1"
 }
 
 main() {
-    printf '%s\n' "$(date '+%a %d %b %H:%M')"
+    printf '%s\n' "$(date '+%H%M') hrs $(date '+%m/%d') $(date '+%Y')"
 }
 
 main "$@"
