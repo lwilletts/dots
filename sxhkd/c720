@@ -3,34 +3,38 @@
     urxvtc -g 85x22
 {mod1, mod2} + shift + Return
     urxvtc -cd "$(mpvc -f "%path%" | rev | cut -d\/ -f 2- | rev)" -g 85x22
-mod1 + {d,s,w,shift + w,o}
-    {drun -c,sshmenu -c,wmenu -c,wmenu -c all,lmenu -c}
-~button3
-    under "cmdmenu"
+mod1 + {d,s,w,shift + w}
+    {drun -c, sshmenu -c, wmenu -c, wmenu -b all}
+{@button8, mod1 + @button1, mod1 + @button3}
+    wattr o $(pfw) || chwso -r $(pfw); {xmmv,xmmv,xmrs}
 mod1 + {button4,button5}
     {chwso -r,chwso -l} $(pfw)
+{~button3,button10}
+    {under "cmdmenu", cmdmenu}
 
 # sys
 mod4 + shift + l
     lock
 mod1 + shift + r
     pkill -USR1 -x sxhkd
-mod1 + shift + BackSpace
-    pkill xinit
-mod1 + shift + p
-    pgrep picom > /dev/null 2>&1 && pkill picom || picom &
+mod1 + shift + b
+    bright 10 off
 
-# manipulation
+# window manipulation
+mod1 + {_,shift + }q
+    {killw,killwa} $(pfw)
+mod1 + {_,shift + }Tab
+    {focus cycle,focus prev}
 mod1 + {h,j,k,l}
-    closer {left,down,up,right}
+    closer {left,down -s,up -s,right}
 mod1 + shift + {h,j,k,l}
-    adjust {left,down,up,right} $(pfw)
+    adjust {left,down,up,right}
 mod1 + {Left,Down,Up,Right}
     move {left,bottom,top,right}
 mod1 + shift + {f,g,m}
     move {full,center,maximise} $(pfw) cycle
-mod1 + {f,g,m,a,equal,minus,plus,underscore,x}
-    move {full,center,maximise,vmaximise,grow,shrink,double,halve,restore}
+mod1 + {f,g,m,a,o,equal,minus,plus,underscore}
+    move {full,center,maximise,vmaximise,obs,grow,shrink,double,halve}
 
 # resize
 mod1 + r: {h,j,k,l}
@@ -39,8 +43,8 @@ mod1 + r: Escape
     pkill -ALRM sxhkd
 
 # tile
-mod1 + t: {t,s,v,shift + v,l,r,g}
-    tile {browse,split,vert HDMI-A-2,vert,left,right,grid}; pkill -ALRM sxhkd
+mod1 + t: {t,s,v,,l,r,g}
+    tile {browse,split,vert,left,right,grid}; pkill -ALRM sxhkd
 
 # group
 mod1 + {_,shift + }{1-8}
@@ -48,24 +52,34 @@ mod1 + {_,shift + }{1-8}
 mod1 + c
     group -d $(pfw)
 
- # media
-{XF86AudioMute, XF86AudioLowerVolume, XF86AudioRaiseVolume}
-    volctrl {toggle,dec 3,inc 3}
-{F8,F9,F10}
-    volctrl {toggle,dec 3,inc 3}
-mod1 + {comma,period,space,slash,9,0}
-    mpvc {prev,next,toggle,play $,volume -5,volume +5} -S /tmp/vidsocket -q
-mod4 + {s,d,9,0}
-    mpvc volume {-5,+5,-5,+5} -q
+# music
 mod4 + {h,j,k,l}
     mpvc seek {-5s,-30s,30s,5s} -q
-mod4 + {space,Tab,n,shift + Tab,p,z,r,c,BackSpace}
-    mpvc {toggle,next,next,prev,prev,shuffle,single,clear,remove current} -q
+mod4 + {p,shift + Tab,n,Tab,z,c,r,BackSpace,space,slash}
+    mpvc {prev,prev,next,next,shuffle,clear,single,remove current,toggle,play $} -q
 mod4 + a
-    fd . ~/usr/mus -e mp3 -e flac -e wav -e ogg -E '*.m3u8' -E '*.log' \
-    -E '*.cue'| shuf | shuf | mpvc add -q
+    fd . ~/usr/mus -L -t f -e mp3 -e flac -e wav -e ogg -e m4a -e opus \
+                   -E 'soundtracks' | shuf | shuf | mpvc add -q
+
+# video
 mod1 + v
-    fd . ~/usr/vid/yt/music | shuf | shuf | mpvc add -S /tmp/vidsocket -q
+    fd . ~/usr/vid/yt/music -t f | shuf | shuf | mpvc add -S /tmp/vidsocket -q
+mod1 + {comma,period,space,slash}
+    mpvc {prev,next,toggle,play $} -S /tmp/vidsocket -q
+mod1 + {bracketleft,bracketright,braceleft,braceright}
+    mpvc seek {-5,5,-30,30} -S /tmp/vidsocket -q
+mod1 + p
+    mpris-ctl --player Chromium pp
+
+# volume
+mod1 + {9,0}
+    mpvc volume {-5,+5} -S /tmp/vidsocket -q
+mod4 + {s,d,9,0}
+    mpvc volume {-5,+5,-5,+5} -q
+{XF86AudioMute, XF86AudioLowerVolume, XF86AudioRaiseVolume}
+    volctrl {!,- 3,+ 3}
+{F8,F9,F10}
+    volctrl {!,- 3,+ 3}
 
 # shot
 Print
@@ -73,7 +87,11 @@ Print
 shift + Print
     shot "$(pfw)"
 
-# backlight
+# misc
+mod1 + x: {l,p,e}
+    fcut {default,precise,eof}; pkill -ALRM sxhkd
+mod1 + i
+    invert lemonbar
 {F6,F7}
     xbacklight -steps 100 {-dec 10%,-inc 10%}
 

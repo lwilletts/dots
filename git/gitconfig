@@ -11,3 +11,5 @@
 	pl = pull
 	pu = push
 	ci = commit
+[pull]
+	rebase = true

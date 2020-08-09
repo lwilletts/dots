@@ -1,11 +1,12 @@
 #!/bin/sh
 
 case "$(hostname)" in
-    spark)
-        unclutter-xfixes &
-        ;;
     fyriousa)
+<<<<<<< HEAD
         mount /mnt/pool
+=======
+        wmp -a 1280 1200
+>>>>>>> 0c5797b... latest
         ;;
 esac
 
@@ -31,6 +32,7 @@ ewmh &
 sxhkd &
 watcher &
 envreact &
+unclutter &
 
 sleep 0.3
 xwait
