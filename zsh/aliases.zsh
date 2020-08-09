@@ -42,20 +42,21 @@ alias ytd="youtube-dl"
 alias ytm="youtube-dl \"\$(mpvc -f '%path%')\""
 alias rss="newsboat -q"
 alias net="curl -s ipv4.icanhazip.com"
+alias net6="curl -s ipv6.icanhazip.com"
 alias wget="wget --no-hsts"
 alias serv="mosh phosphor"
 
 # games
 alias game1="cd $GAME1"
 alias game2="cd $GAME2"
-alias cfg="vi $HOME/.local/share/Steam/steamapps/common/Midair\ Community\ Edition/MidairCE/Binaries/*.cfg"
-alias mashots="$HOME/.local/share/Steam/steamapps/common/Midair\ Community\ Edition/MidairCE/Saved/Screenshots/WindowsNoEditor"
+alias cfg="vi $GAME2/Midair\ Community\ Edition/MidairCE/Binaries/*.cfg"
+alias madir="$GAME2/Midair\ Community\ Edition/MidairCE/"
 
 # file handling
 alias i="img"
 alias p="zathura"
 alias q="qutebrowser"
-alias scan="scanimage --device 'epson2:net:192.168.1.89' --mode=Color --format=png --resolution 300 --output-file"
+alias scan="scanimage --device 'epson2:net:192.168.1.121' --mode=Color --format=png --resolution 300 --output-file"
 alias strip="jhead -de"
 
 # x / dtach / tmux

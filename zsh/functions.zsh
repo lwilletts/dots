@@ -5,7 +5,7 @@ chpwd() {
     f4='[34m'; f5='[35m'; f6='[36m'; f7='[37m'
     R='[0m'
 
-    test $(ls -1 | wc -l) -gt 100 && {
+    [ $(ls -1 | wc -l) -gt 100 ] && {
         files=$(find -maxdepth 1 -type f | wc -l)
         links=$(find -maxdepth 1 -type l | wc -l)
         dirts=$(find -maxdepth 1 -type d | sed '1d' | wc -l)
@@ -14,7 +14,7 @@ chpwd() {
         return 0
     }
 
-    test -z "$(ls -1)" && {
+    [ -z "$(ls -1)" ] && {
         printf '%s\n\n' "${f5}Directory is empty!${R}"
     } || {
         ls -F --color=auto --group-directories-first

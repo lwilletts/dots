@@ -5,10 +5,7 @@ case "$(hostname)" in
         unclutter-xfixes &
         ;;
     fyriousa)
-        wmp -a 1280 1200
-
-        unclutter &
-        autotile vert HDMI-A-2 &
+        mount /mnt/pool
         ;;
 esac
 
@@ -24,11 +21,12 @@ screens                        # set randr
 [ -f ~/.Xresources ] && xrdb -load ~/.Xresources
 pgrep urxvtd 2> /dev/null || urxvtd -q -o -f &
 
-# back
-hsetroot -root -tile "$HOME/usr/img/patterns/blackorchid.png" -brightness -0.01
+PRI="$(lsm -p)"
+wmp -a $(($(mattr x "$PRI") + $(mattr w "$PRI") / 2)) \
+       $(($(mattr y "$PRI") + $(mattr h "$PRI") / 2))
 
 # wm
-bars &
+back
 ewmh &
 sxhkd &
 watcher &

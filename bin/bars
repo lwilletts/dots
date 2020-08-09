@@ -19,7 +19,8 @@ barvar() {
 
 runbar() {
     lemonbar -d -g "${barw}x${barh}+${barx}+${bary}" -B "${bar_bg}" \
-             -F "${bar_fg}" -R "${bar_border}" -r "$BW" -f "${bar_font}" -n "$1"
+             -F "${bar_fg}" -R "${bar_border}" -r "$BW" -f "${bar_font}" \
+             -n "$1" 2> /dev/null
 }
 
 simplebar() {
@@ -35,8 +36,8 @@ simplebar() {
         *)           exit     ;;
     esac
 
-    test -z "$3" && sleepval="0.05" || sleepval="$3"
-    test -z "$4" || name="$4"
+    [ -z "$3" ] && sleepval="0.05" || sleepval="$3"
+    [ -z "$4" ] || name="$4"
 
     case "$name" in
         "/tmp/mpvsocket") BAR_NAME="musbar" ;;
@@ -68,7 +69,7 @@ musbartrigger() {
         mpvc -q
         case $? in
             2|3)
-                [ -n "$process" ] && kill -9 "$process" 2> /dev/null
+                [ -n "$process" ] && kill "$process"
                 ;;
             0|1)
                 [ -z "$process" ] && simplebar mpvbar c 0.01 /tmp/mpvsocket
@@ -80,21 +81,33 @@ musbartrigger() {
 }
 
 vidbartrigger() {
-    ogbarx=$((barx + barw + IGAP))
+    vidbarx="$barx"
+    mvx=$((barw + IGAP))
+    musbarx=$((barx - mvx))
+
+    if [ -z "$(wid -o musbar)" ]; then
+        barx="$musbarx"
+    fi
 
     while :; do
         process="$(ps x | awk '/lemonbar/ && /vidbar/ && !/awk/ {print $1}')"
 
-        wid -a musbar && {
-            barx=$((barx + barw + IGAP))
-        } || {
-            barx=$((ogbarx + barw + IGAP))
-        }
+        if [ -n "$(wid -o musbar)" ]; then
+            [ "$barx" -eq "$musbarx" ] && {
+                barx=$((barx + mvx))
+                wmv "+$mvx" 0 "$(wid -o vidbar)"
+            }
+        else
+            [ "$barx" -eq "$vidbarx" ] && {
+                barx=$((barx - mvx))
+                wmv "-$mvx" 0 "$(wid -o vidbar)"
+            }
+        fi
 
-        mpvc -q
+        mpvc -q -S /tmp/vidsocket
         case $? in
             2|3)
-                [ -n "$process" ] && kill -9 "$process"
+                [ -n "$process" ] && kill "$process"
                 ;;
             0|1)
                 [ -z "$process" ] && simplebar mpvbar c 0.01 /tmp/vidsocket
@@ -111,11 +124,11 @@ gpubartrigger() {
         temp="$(gpu | cut -d\  -f 4 | cut -c 1-2)"
 
         case "$temp" in
-            6[0-9]|7[0-9]|8[0-9]|9[0-9]|1[0-9])
+            5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9]|1[0-9])
                 [ -z "$process" ] && simplebar gpubar c 3
                 ;;
             *)
-                [ -n "$process" ] && kill -9 "$process" > /dev/null
+                [ -n "$process" ] && kill "$process" > /dev/null
                 ;;
         esac
 
@@ -160,13 +173,16 @@ main() {
     barx=$((PX + LGAP))
     barw=$((PW - LGAP - RGAP))
 
-    if [ "$BAR" = "top" ]; then
-        barh=$((TGAP/2))
-        bary=$((PY + barh - TGAP/4))
-    else
-        barh=$((BGAP/2))
-        bary=$((PY + PH - barh - BGAP/4))
-    fi
+    case "$BAR" in
+        top)
+            barh=$((TGAP/2))
+            bary=$((PY + barh - TGAP/4))
+            ;;
+        *)
+            barh=$((BGAP/2))
+            bary=$((PY + PH - barh - BGAP/4))
+            ;;
+    esac
 
     case "$1" in
         -m)
@@ -174,15 +190,15 @@ main() {
             ;;
         *)
             barw=120
-            simplebar datebar c 3
+            simplebar datebar c 1
 
             barx=$((barx + barw + IGAP))
             barw=380
             musbartrigger &
 
-            # barx=$((barx + barw + IGAP))
-            # barw=380
-            # vidbartrigger &
+            barx=$((barx + barw + IGAP))
+            barw=380
+            vidbartrigger &
             ;;
     esac
 
@@ -190,13 +206,16 @@ main() {
         fyriousa)
             barw=400
 
-            if [ "$BAR" = "top" ]; then
-                barx=$((PW + LGAP))
-                bary=$((SY + barh - TGAP/4))
-            else
-                barx=$((PW + LGAP))
-                bary=$((SY + SH - barh - BGAP/4))
-            fi
+            case "$BAR" in
+                top)
+                    barx=$((PW + LGAP))
+                    bary=$((SY + barh - TGAP/4))
+                    ;;
+                *)
+                    barx=$((PW + LGAP))
+                    bary=$((SY + SH - barh - BGAP/4))
+                    ;;
+            esac
 
             gpubartrigger &
             ;;

@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# dat
+# flatsteam
 
 usage() {
     base=$(basename "$0")
@@ -14,7 +14,7 @@ EOF
 }
 
 main() {
-    printf '%s\n' "$(date '+%H%M') hrs $(date '+%m/%d') $(date '+%Y') "
+    flatpak run com.valvesoftware.Steam
 }
 
 main "$@"

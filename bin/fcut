@@ -35,7 +35,7 @@ cutfile() {
                            -ss "$pointA" \
                            -max_muxing_queue_size 1024 \
                            -sws_flags lanczos -vf "scale=-1:720" \
-                           -c:v libx264 -crf 24 -preset medium \
+                           -c:v libx264 -crf 25 -preset medium \
                            -c:a copy -map 0 -f mp4 "$fileName-$pointA-$pointB.mp4"
                             ;;
                 *)
@@ -43,7 +43,7 @@ cutfile() {
                            -ss "$pointA" -to "$pointB" \
                            -max_muxing_queue_size 1024 \
                            -sws_flags lanczos -vf "scale=-1:720" \
-                           -c:v libx264 -crf 24 -preset medium \
+                           -c:v libx264 -crf 25 -preset medium \
                            -c:a copy -map 0 -f mp4 "$fileName-$pointA-$pointB.mp4"
                             ;;
             esac

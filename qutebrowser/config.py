@@ -11,6 +11,16 @@ import subprocess
 # sys.path.append(os.path.join(sys.path[0], 'jmatrix'))
 # config.source("jmatrix/jmatrix/integrations/qutebrowser.py")
 
+    # youtube adblock
+from qutebrowser.api import interceptor
+
+def filter_yt(info: interceptor.Request):
+    url = info.request_url
+    if (url.host() == 'www.youtube.com' and url.path() == '/get_video_info' and '&adformat=' in url.query()):
+        info.block()
+
+interceptor.register(filter_yt)
+
     # colours
 def read_xresources(prefix):
     props = {}
@@ -23,8 +33,12 @@ def read_xresources(prefix):
 
 xresources = read_xresources('*')
 
-config.load_autoconfig()
-c.aliases = {'h': 'help', 'q': 'close', 'x': 'quit --save'}
+# list of user stylesheet filenames to use
+# c.content.user_stylesheets = ['']
+
+    # start
+c.url.start_pages = ['file:///home/fyr/usr/start/start.html']
+c.url.default_page = 'file:///home/fyr/usr/start/start.html'
 
     # sane defaults
 c.backend = 'webengine'
@@ -39,36 +53,53 @@ c.input.forward_unbound_keys = 'auto'
 c.content.geolocation = False
 c.session.default_name = None
 
-# list of user stylesheet filenames to use
-# c.content.user_stylesheets = ['']
-
-c.url.start_pages = ['file:///home/fyr/usr/start/start.html']
-c.url.default_page = 'file:///home/fyr/usr/start/start.html'
 c.window.title_format = '{current_title}'
 
     # custom binds
+config.load_autoconfig()
+c.aliases = {'h': 'help', 'q': 'close', 'x': 'quit --save'}
+
+# defaults
 config.bind('j', 'scroll-px 0 100')
 config.bind('k', 'scroll-px 0 -100')
 config.bind('b', 'set-cmd-text -s :buffer ')
-config.bind('e', 'set-cmd-text -s :session-load ')
-config.bind('<Shift-e>', 'set-cmd-text -s :session-save -o ')
-config.bind('<Ctrl-d>', 'spawn qutedl {url}')
-config.bind('<Ctrl-f>', 'spawn youtube-dl -x {url}')
+config.bind('return', 'follow-selected')
+config.bind('cx', 'download-cancel')
 config.bind('<Ctrl-s>', 'config-source ~/.config/qutebrowser/config.py')
 config.bind('<Ctrl-E>', 'config-edit', mode='normal')
-config.bind('<Ctrl-m.', 'spawn mpv {url}')
-config.bind('<Shift-k>', 'tab-next')
-config.bind('<Shift-j>', 'tab-prev')
+
+# mouse
+c.input.mouse.rocker_gestures = True
+c.input.mouse.back_forward_buttons = False
+
+# tab management
 config.bind('<Ctrl-k>', 'tab-move +')
 config.bind('<Ctrl-j>', 'tab-move -')
+config.bind('<Shift-k>', 'tab-next')
+config.bind('<Shift-j>', 'tab-prev')
+config.bind('<Shift-d>', 'tab-clone')
+
+# quickmarks
+config.bind('am', 'quickmark-load -t mail')
+config.bind('ag', 'quickmark-load -t github')
+config.bind('ar', 'quickmark-load -t reddit')
+config.bind('ay', 'quickmark-load -t youtube')
+
+# sessions
+config.bind('e', 'set-cmd-text -s :session-load ')
+config.bind('<Shift-e>', 'set-cmd-text -s :session-save -o ')
 config.bind('<Shift-x>', 'close')
 
+# downloads
+config.bind('<Ctrl-d>', 'spawn qutedl {url}')
+config.bind('<Ctrl-f>', 'spawn youtube-dl -x {url}')
+config.bind('<Ctrl-m.', 'spawn mpv {url}')
+
 # insert mode
-config.bind('<Ctrl-O>', 'open-editor', mode='insert')
 config.bind('<Escape>', 'leave-mode', mode='insert')
 config.bind('<Shift-Ins>', 'insert-text {primary}', mode='insert')
 
-    # insert mode
+    # insert
 c.input.insert_mode.auto_load = False
 c.input.insert_mode.auto_leave = True
 c.input.insert_mode.auto_enter = True
@@ -99,12 +130,12 @@ c.hints.auto_follow_timeout = 0
 # c.url.yank_ignored_parameters = ['ref', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content']
 
     # zoom
-c.zoom.default = '90%'
-c.zoom.levels = ['25%', '33%', '50%', '67%', '75%', '90%', '100%', '110%', '125%', '150%', '175%', '200%', '250%', '300%', '400%', '500%']
+c.zoom.default = '100%'
+c.zoom.levels = ['50%', '67%', '75%', '90%', '100%', '110%', '125%', '150%']
 c.zoom.mouse_divider = 512
 
     # statusbar
-c.statusbar.hide = True
+c.statusbar.show = 'in-mode'
 c.statusbar.position = 'bottom'
 c.statusbar.widgets = ['url', 'scroll']
 c.statusbar.padding = {'top': 5, 'bottom': 5, 'left': 5, 'right': 5}
@@ -121,7 +152,7 @@ c.completion.scrollbar.padding = 10
 c.completion.use_best_match = False
 c.completion.cmd_history_max_items = -1
 c.completion.timestamp_format = '%d-%m-%Y-%H:%M:%S'
-c.completion.open_categories = ['quickmarks', 'bookmarks', 'history']
+c.completion.open_categories = ['bookmarks', 'quickmarks', 'history']
 
     # tabs
 # position
@@ -141,7 +172,7 @@ c.tabs.indicator.padding = {'top': 5, 'bottom': 10, 'left': 10, 'right': 10}
 
 # behaviour
 c.tabs.wrap = False
-c.tabs.background = False
+c.tabs.background = True
 c.tabs.last_close = 'close'
 c.tabs.close_mouse_button = 'right'
 c.tabs.close_mouse_button_on_bar = 'new-tab'
@@ -182,7 +213,7 @@ c.content.host_blocking.enabled = True
 # host per line - A zip-file of any of the above, with either only one
 # file, or a file   named `hosts` (with any extension).  It's also
 # possible to add a local file or directory via a `file://` URL. In case
-# of a directory, all files in the directory are read as adblock lists.
+# of a directory, all files in the directory are read as dblock lists.
 # The file `~/.config/qutebrowser/blocked-hosts` is always read if it
 # c.content.host_blocking.lists = ['https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts']
 
@@ -211,9 +242,10 @@ c.content.javascript.alert = True
 c.content.javascript.prompt = True
 
     # fonts
+c.fonts.web.size.minimum = 8
+c.fonts.web.size.minimum_logical = 8
+
 # monospace fonts
-# c.fonts.default_family = 'scientifica'
-c.fonts.tabs = '8pt scientifica'
 c.fonts.hints = '8pt scientifica'
 c.fonts.keyhint = '8pt scientifica'
 c.fonts.prompts = '8pt scientifica'
@@ -222,8 +254,11 @@ c.fonts.statusbar = '8pt scientifica'
 c.fonts.contextmenu = '8pt scientifica'
 c.fonts.messages.info = '8pt scientifica'
 c.fonts.debug_console = '8pt scientifica'
+c.fonts.messages.error = '8pt scientifica'
 c.fonts.completion.entry = '8pt scientifica'
 c.fonts.completion.category = '8pt scientifica'
+c.fonts.tabs.selected = '8pt scientifica'
+c.fonts.tabs.unselected = '8pt scientifica'
 
 # c.fonts.web.family.cursive
 # c.fonts.web.family.fantasy
@@ -234,17 +269,10 @@ c.fonts.completion.category = '8pt scientifica'
 # c.fonts.web.size.default
 # c.fonts.web.size.default_fixed
 
-# hard minimum font size (in pixels).
-c.fonts.web.size.minimum = 11
-# minimum logical font size (in pixels) that is applied when zooming out.
-c.fonts.web.size.minimum_logical = 11
-
 
     # colors
 # dark mode
 c.colors.webpage.darkmode.enabled = True
-c.colors.webpage.bg = xresources['*color0']
-
 
 # lightness-hsl brightness-rgb
 c.colors.webpage.darkmode.algorithm = 'lightness-cielab'
@@ -273,8 +301,8 @@ c.colors.statusbar.normal.fg = xresources['*color7']
 c.colors.statusbar.private.bg = xresources['*color0']
 c.colors.statusbar.private.fg = xresources['*color7']
 # statusbar insert mode
-c.colors.statusbar.insert.bg = xresources['*color2']
-c.colors.statusbar.insert.fg = xresources['*color0']
+c.colors.statusbar.insert.bg = xresources['*color0']
+c.colors.statusbar.insert.fg = xresources['*color7']
 # default foreground color of the URL in the statusbar.
 c.colors.statusbar.url.fg = xresources['*color7']
 c.colors.statusbar.url.success.http.fg = xresources['*color7']
@@ -288,11 +316,11 @@ c.colors.statusbar.url.error.fg = xresources['*color2']
 # hints
 c.colors.hints.bg = xresources['*color7']
 c.colors.hints.fg = xresources['*color0']
-c.colors.hints.match.fg = xresources['*color1']
-c.hints.border = '2px solid' + str(xresources['*color7'])
+c.colors.hints.match.fg = xresources['*color7']
+c.hints.border = '1px solid' + str(xresources['*color7'])
 
 # background color of an error message
-c.colors.messages.error.bg = xresources['*color1']
+c.colors.messages.error.bg = xresources['*color7']
 c.colors.messages.error.fg = xresources['*color0']
 # downloads with errors
 c.colors.downloads.error.bg = xresources['*color1']
@@ -655,9 +683,6 @@ c.content.mute = False
 ## Type: Int
 # c.input.partial_timeout = 5000
 
-## Enable Opera-like mouse rocker gestures. This disables the context
-# c.input.rocker_gestures = False
-
 ## Enable spatial navigation. Spatial navigation consists in the ability
 ## to navigate between focusable elements in a Web page, such as
 ## hyperlinks and form controls, by using Left, Right, Up and Down arrow
@@ -879,7 +904,7 @@ c.search.incremental = True
 # config.bind('[[', 'navigate prev')
 # config.bind(']]', 'navigate next')
 # config.bind('`', 'enter-mode set_mark')
-# config.bind('ad', 'download-cancel')
+
 # config.bind('b', 'set-cmd-text -s :quickmark-load')
 # config.bind('cd', 'download-clear')
 # config.bind('co', 'tab-only')

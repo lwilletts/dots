@@ -14,3 +14,7 @@ case "$1" in
 esac
 
 xscreenshot "$wid" | ff2png > "$file.png"
+
+case "$1" in
+    pri) convert -crop 2560x1440+0+480 "$file.png" "$file.png" ;;
+esac

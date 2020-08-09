@@ -1,15 +1,15 @@
 #!/bin/sh
 #
-# uz
+# unzip
 
-test $# -eq 0 && {
+[ $# -eq 0 ] && {
     printf '%s\n' "Please provide a file to extract."
     exit 1
 }
 
-FILE="$@"
+FILE="$1"
 
-test -e $FILE && {
+[ -e "$FILE" ] && {
     case $FILE in
         *.zip|*.7z) 7z x "$FILE"          ;;
         *.tar.bz2)  tar xjf "$FILE"       ;;

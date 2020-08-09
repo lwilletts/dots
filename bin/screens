@@ -6,16 +6,41 @@ main() {
     . fwmrc
     wmgaps
 
+    SEC="HDMI-A-2"
+
     case "$1" in
         default)
-            xrandr --output "$SEC" --auto --rotate right --pos 2560x0
-            xrandr --output "$PRI" --pos 0x0
+            xrandr --output "$SEC" --auto --pos 410x0 --rotate inverted
+            xrandr --output "$PRI" --pos 0x1080
+            ;;
+        pri)
+            PRI="$(lsm -p)"
+
+            for wid in $(listwindows "$SEC"); do
+                move center "$wid" "$PRI"
+            done
+
+            xrandr --output "$SEC" --off
+            xrandr --output "$PRI" --pos 0x480
+
+            for wid in $(listwindows "$PRI"); do
+                wmv 0 -480 "$wid"
+            done
+
+            pkill bars
+            bars
             ;;
         *)
             case "$(hostname)" in
                 "fyriousa")
-                    xrandr --output "$SEC" --auto --rotate right --pos 2560x0
-                    xrandr --output "$PRI" --pos 0x480
+                    xrandr --output "$SEC" --auto --pos 410x0 --rotate inverted
+                    xrandr --output "$PRI" --pos 0x1080
+                    for wid in $(listwindows "$PRI"); do
+                        wmv 0 480 "$wid"
+                    done
+
+                    pkill bars
+                    bars
                     ;;
             esac
             ;;

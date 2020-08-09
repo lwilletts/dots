@@ -15,7 +15,15 @@ main() {
         return 1
     fi
 
-    mus="$(mpvc -f "$act%artist% $ina// $act%title%" 2> /dev/null)"
+    case "$SOCKET" in
+        /tmp/mpvsocket)
+            mus="$(mpvc -f "$act%artist% $ina// $act%title%" 2> /dev/null)"
+            ;;
+        /tmp/vidsocket)
+            mus="$(mpvc -f "$act%title%" -S "$SOCKET" 2> /dev/null)"
+            ;;
+    esac
+
 
     buf=""
     buf="${buf} %{A:${cava}:} ${mus} %{A}"

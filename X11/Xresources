@@ -1,20 +1,11 @@
 /* colours */
-#include "/home/fyr/.colours/mono"
+#include "/home/fyr/.colours/vapour"
 
 /* basics */
 *.modifier   : mod4
 *.font       : -*-scientifica-*-*-*--11-*-*-*-*-*-*-*
 *.boldFont   : -*-scientifica-*-*-*--11-*-*-*-*-*-*-*
 *.italicFont : -*-scientifica-*-*-*--11-*-*-*-*-*-*-*
-
-/* supposedly improves rendering */
-Xft.dpi: 96
-Xft.antialias: true
-Xft.hinting: true
-Xft.rgba: rgb
-Xft.autohint: false
-Xft.hintstyle: hintslight
-Xft.lcdfilter: lcddefault
 
 /* general settings */
 *.cursorBlink     : 0

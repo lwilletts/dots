@@ -5,10 +5,6 @@
     urxvtc -cd "$(mpvc -f "%path%" | rev | cut -d\/ -f 2- | rev)" -g 85x22
 mod1 + {d,s,w,shift + w}
     {drun -c, sshmenu -c, wmenu -c, wmenu -b all}
-{mod1 + @button1, mod1 + @button3}
-    wattr o $(pfw) || chwso -r $(pfw); {xmmv,xmrs}
-mod1 + {button4,button5}
-    chwso {-r,-l} $(pfw)
 {~button3,button10}
     {under "cmdmenu", cmdmenu}
 
@@ -24,9 +20,9 @@ mod1 + shift + b
 mod1 + {_,shift + }q
     {killw,killwa} $(pfw)
 mod1 + {_,shift + }Tab
-    {focus swap,focus cycle}
+    {focus cycle,focus prev}
 mod1 + {h,j,k,l}
-    closer {left -s,down -s,up -s,right -s}
+    closer {left,down -s,up -s,right}
 mod1 + shift + {h,j,k,l}
     adjust {left,down,up,right}
 mod1 + {Left,Down,Up,Right}
@@ -44,17 +40,17 @@ mod1 + r: Escape
 
 # tile
 mod1 + t: {t,s,v,,l,r,g}
-    tile {3way,split,vert,left,right,grid}; pkill -ALRM sxhkd
+    tile {browse,split,vert,left,right,grid}; pkill -ALRM sxhkd
 
-# groups
-mod1 + {shift + ,ctrl + ,_} {1-8}
-    group {-a,-A,-s} {1-8} $(pfw)
+# group
+mod1 + {_,shift + }{1-8}
+    group {-t,-a} {1-8} $(pfw)
 mod1 + c
     group -d $(pfw)
 
 # music
-mod4 + {bracketleft,bracketright,braceleft,braceright}
-    mpvc seek {-5,5,-30,30} -q
+mod4 + {h,j,k,l}
+    mpvc seek {-5s,-30s,30s,5s} -q
 mod4 + {p,shift + Tab,n,Tab,z,c,r,BackSpace,space,slash}
     mpvc {prev,prev,next,next,shuffle,clear,single,remove current,toggle,play $} -q
 mod4 + a
@@ -86,8 +82,8 @@ shift + Print
     shot "$(pfw)"
 
 # misc
-mod1 + x
-    pkill WGrab
+mod1 + x: {l,p,e}
+    fcut {default,precise,eof}; pkill -ALRM sxhkd
 mod1 + i
     invert lemonbar
 

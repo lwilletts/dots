@@ -70,17 +70,9 @@ clearLS() {
 zle -N clearLS
 bindboth "^l" clearLS
 
-killFzf() {
-    killfzf
-    zle redisplay
-}
-
-zle -N killFzf
-bindboth "^y" killFzf
-
 goBack() {
     clear
-    cd -
+    cd - || return
     zle redisplay
 }
 

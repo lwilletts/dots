@@ -3,19 +3,21 @@
 # load system defaults
 .include /etc/pulse/default.pa
 
-# try to stop crackling
-load-module module-udev-detect tsched=0
+# set defaults
+set-default-sink alsa_output.usb-FiiO_DigiHug_USB_Audio-01.analog-stereo
+set-default-source alsa_input.usb-Focusrite_Scarlett_Solo_USB-00.analog-stereo
 
 # load null sinks for application audio routing
-load-module module-null-sink sink_name=discord
-load-module module-loopback source=discord.monitor sink=alsa_output.pci-0000_00_1f.3.analog-stereo
-
 load-module module-null-sink sink_name=audiosink
-load-module module-loopback source=audiosink.monitor sink=alsa_output.pci-0000_00_1f.3.analog-stereo
+load-module module-loopback source=audiosink.monitor sink=alsa_output.usb-FiiO_DigiHug_USB_Audio-01.analog-stereo
 
-# echo cancellation
-load-module module-echo-cancel use_master_format=1 aec_method=webrtc aec_args="analog_gain_control=0\ digital_gain_control=1 noise_suppression=1 voice_detection=1"
-set-default-source echo_source
+# enable bluetooth
+load-module module-bluetooth-policy
+load-module module-bluetooth-discover
 
 # scarlett interface mono to stereo
 # load-module module-remap-source master=alsa_input.usb-Focusrite_Scarlett_Solo_USB-00.analog-stereo master_channel_map=front-left channel_map=mono source_properties=device.description='usb-Focusrite_Scarlett_Solo_USB-00'
+#
+# echo cancellation
+# load-module module-echo-cancel use_master_format=1 aec_method=webrtc aec_args="analog_gain_control=0\ digital_gain_control=1\ noise_suppression=1\ voice_detection=1" source_master=alsa_input.usb-Focusrite_Scarlett_Solo_USB-00.analog-stereo source_name=microphone_source sink_name=microphone_sink
+# set-default-source microphone_source

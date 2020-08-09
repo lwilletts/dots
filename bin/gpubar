@@ -35,7 +35,7 @@ main() {
     buf=""
     buf="${buf} %{l} "
     buf="${buf} %{A:${gotop}:}"
-    buf="${buf} Vega:"
+    buf="${buf} Radeon:"
     buf="${buf} $act$CLOCK $ina// $act$VOLT"
     buf="${buf} $ina// $act$POWR $ina// $act$FANS "
 

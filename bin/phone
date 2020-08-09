@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# dat
+# phone
 
 usage() {
     base=$(basename "$0")
@@ -14,7 +14,8 @@ EOF
 }
 
 main() {
-    printf '%s\n' "$(date '+%H%M') hrs $(date '+%m/%d') $(date '+%Y') "
+    DEVICE="de748b29"
+    scrcpy -s "$DEVICE" -m 1920 -b 40M -S -w
 }
 
 main "$@"

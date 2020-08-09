@@ -8,7 +8,7 @@
 if empty(glob('$HOME/.vim/autoload/plug.vim'))
     silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    autocmd VimEnter * PlugInstall
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
 nmap <Leader>Vu :PlugUpdate<CR>
@@ -26,7 +26,10 @@ Plug 'wellle/targets.vim'
 Plug 'tpope/vim-commentary'
 Plug 'rbgrouleff/bclose.vim'
 Plug 'pgdouyon/vim-evanesco'
-Plug 'lwilletts/autoswap.vim'
+Plug 'farmergreg/vim-lastplace'
+    let g:lastplace_open_folds = 1
+    let g:lastplace_ignore = "gitcommit,gitrebase"
+    let g:lastplace_ignore_buftype = "quickfix,nofile,help"
 
 Plug 'tpope/vim-surround'
     nmap sl yss
@@ -35,32 +38,16 @@ Plug 'tpope/vim-surround'
     nmap sap ysap
     nmap sip ysip
 
-    " file opening
-Plug 'dylanaraps/fff.vim'
-    let g:fff#split = "8new"
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
-Plug 'junegunn/fzf.vim'
-Plug 'yuki-ycino/fzf-preview.vim'
-    nmap <Leader>f :FZF -m <CR>
-    nmap <Leader>F :FzfPreviewProjectFiles<CR>
-    nmap <Leader>g :FzfPreviewGitFiles<CR>
-    nmap <Leader>b :FzfPreviewBuffers<CR>
+    " file opener
+Plug 'srstevenson/vim-picker'
+    let g:picker_selector_executable = 'fzy'
+    let g:picker_selector_flags = ''
+    let g:picker_height = 10
 
-    let g:fzf_layout = { 'down': '~40%' }
-    let g:fzf_colors =
-    \ { 'fg':      ['fg', 'Normal'],
-      \ 'bg':      ['bg', 'Normal'],
-      \ 'hl':      ['fg', 'Comment'],
-      \ 'fg+':     ['fg', 'Normal', 'CursorColumn', 'Normal'],
-      \ 'bg+':     ['bg', 'ErrorMsg', 'CursorColumn'],
-      \ 'hl+':     ['fg', 'Statement'],
-      \ 'info':    ['fg', 'PreProc'],
-      \ 'border':  ['fg', 'Ignore'],
-      \ 'prompt':  ['fg', 'Conditional'],
-      \ 'pointer': ['fg', 'ErrorMsg'],
-      \ 'marker':  ['fg', 'Keyword'],
-      \ 'spinner': ['fg', 'Label'],
-      \ 'header':  ['fg', 'Comment'] }
+    nnoremap <Leader>f :PickerEdit<CR>
+    nnoremap <Leader>b :PickerBuffer<CR>
+    nnoremap <Leader>v :PickerSplit<CR>
+    nnoremap <Leader>s :PickerVsplit<CR>
 
     " build checkers
 Plug 'benekastah/neomake'
@@ -139,8 +126,7 @@ augroup END
 set autoread
 
 " saving and closing
-nmap <Leader>w :w!<CR>
-nmap <Leader>W :wa!<CR>
+nmap <Leader>w :wa!<CR>
 nmap <Leader>x :xa!<CR>
 nmap <Leader>q :Bclose!<CR>
 nmap <C-q> :qa!<CR>
@@ -172,7 +158,7 @@ nnoremap * #
 nmap <Leader>z mz:%s/\s\+$<CR>'z:w<CR>:noh<CR>
 
 " toggles
-nmap <Leader>v :set spell!<CR>
+nmap <Leader>V :set spell!<CR>
 nmap <Leader>n :set number!<CR>
 
 " visual mappings
@@ -194,8 +180,6 @@ nmap <Leader>tn :tabnew %<CR>
 nmap <Leader>to :tabonly<CR>
 nmap <Leader>tc :tabclose<CR>
 nmap <Leader>ts :tab sball<CR>:tabnext<CR>
-nnoremap H :tabprevious<CR>
-nnoremap L :tabnext<CR>
 
 " reverse splits
 nnoremap <C-w>s <C-w>v
@@ -255,7 +239,6 @@ set equalalways
 set noshowcmd
 set noshowmode
 set laststatus=0
-" set statusline=%f
 
 " fuck the readonly warning
 au BufEnter * set noro
@@ -263,7 +246,7 @@ au BufEnter * set noro
 syntax on
 
 try
-    colorscheme mono
+    colorscheme darkish
 catch
 endtry
 
@@ -295,7 +278,6 @@ set foldmethod=marker
 
 " remove viminfo
 let skip_defaults_vim=1
-set viminfo=""
 
 " set zsh as our default shell
 let shell="/bin/zsh"
@@ -303,8 +285,8 @@ let shell="/bin/zsh"
 " change $PWD to current file location
 set autochdir
 
-" enable annoying mouse
-set mouse+=a
+" disable annoying mouse
+set mouse-=a
 
 " faster updates
 set updatetime=100
@@ -344,26 +326,24 @@ set smarttab expandtab
 " turn filetype subsystem on
 filetype plugin indent on
 
-autocmd! FileType c      setlocal ts=8 sw=8 sts=8 noexpandtab
-autocmd! FileType sh     setlocal makeprg=sh\ %\
-autocmd! FileType md     setlocal spell fo+=a makeprg=pandoc\ '%'\ -o\ '%:r'.pdf
-autocmd! FileType tex    setlocal spell fo+=a makeprg=pdflatex\ '%'
-autocmd! FileType txt    setlocal tw=0 spell fo+=a noexpandtab wrap linebreak
-autocmd! FileType css    setlocal ts=4 sw=4 sts=4
-autocmd! FileType html   setlocal ts=2 sw=2 sts=2
-autocmd! FileType ruby   setlocal ts=2 sw=2 sts=2
-autocmd! FileType python setlocal ts=4 sw=4 sts=4
+autocmd! FileType c          setlocal ts=8 sw=8 sts=8 noet
+autocmd! FileType sh         setlocal makeprg=sh\ %\
+autocmd! FileType md         setlocal spell fo+=a makeprg=pandoc\ '%'\ -o\ '%:r'.pdf
+autocmd! FileType tex        setlocal spell fo+=a makeprg=pdflatex\ '%'
+autocmd! FileType txt        setlocal spell fo+=a noet wrap linebreak
+autocmd! FileType html,ruby  setlocal ts=2 sw=2 sts=2
+autocmd! FileType css,python setlocal ts=4 sw=4 sts=4
 
-" filetype read
+" buffer read
 autocmd! BufNewFile,BufRead *fstab           setlocal filetype=fstab tw=0
 autocmd! BufNewFile,BufRead *Pkgfile         setlocal filetype=sh noet
 autocmd! BufNewFile,BufRead *.gitconfig      setlocal filetype=gitconfig noet
 autocmd! BufNewFile,BufRead *.zsh,*.zprofile setlocal filetype=sh
 
-" filetype write
+" buffer write
 autocmd! BufWritePost *.tex silent make %
 
-" filetype buffer delete
+" buffer delete
 autocmd! BufDelete *.tex :AsyncRun latexmk -pdf -C -silent
 
 set history=1000
@@ -389,12 +369,6 @@ if has('persistent_undo')
     endif
 endif
 
-" always jump to the last known cursor position
-autocmd BufReadPost *
-\ if line("'\"") > 0 && line("'\"") <= line("$") |
-\ exe "normal! g`\"" |
-\ endif
-
 if has('nvim')
     " settings
     set list
@@ -406,10 +380,12 @@ if has('nvim')
     nmap <Leader>ds :vsplit<CR>:term<CR>
 
     tnoremap <C-e> <C-\><C-n>
-    nnoremap <Leader>j <c-\><c-n><c-w>j
-    nnoremap <Leader>k <c-\><c-n><c-w>k
-    nnoremap <Leader>h <c-\><c-n><c-w>h
-    nnoremap <Leader>l <c-\><c-n><c-w>l
+
+    nnoremap <M-h> <c-\><c-n><c-w>h
+    nnoremap <M-j> <c-\><c-n><c-w>j
+    nnoremap <M-k> <c-\><c-n><c-w>k
+    nnoremap <M-l> <c-\><c-n><c-w>l
+    nnoremap <M-w> <c-\><c-n><c-w>h
 
     " jump to insert mode automatically
     autocmd BufEnter *
@@ -419,13 +395,6 @@ if has('nvim')
 
     " close terminal buffer immediately
     autocmd TermClose * silent! bd!
-
-    function! QuickTerminal()
-        10new
-        terminal
-    endfunction
-
-    nnoremap <silent> <Leader>t :call QuickTerminal()<CR>
 endif
 "}}}
 
@@ -446,53 +415,6 @@ function! Chmox()
 endfunction
 
 command! Chmox call Chmox()
-
-function! s:RotateString(string)
-    let split_string = split(a:string, '\zs')
-    return join(split_string[-1:] + split_string[:-2], '')
-endfunction
-
-function! s:RotateLine(line, leading_whitespace, trailing_whitespace)
-    return substitute(
-        \ a:line,
-        \ '^\(' . a:leading_whitespace . '\)\(.\{-}\)\(' . a:trailing_whitespace . '\)$',
-        \ '\=submatch(1) . <SID>RotateString(submatch(2)) . submatch(3)',
-        \ ''
-    \ )
-endfunction
-
-function! s:RotateLines()
-    set nolist
-    let saved_view = winsaveview()
-    let first_visible_line = line('w0')
-    let last_visible_line = line('w$')
-    let lines = getline(first_visible_line, last_visible_line)
-    let leading_whitespace = map(
-        \ range(len(lines)),
-        \ 'matchstr(lines[v:val], ''^\s*'')'
-    \ )
-    let trailing_whitespace = map(
-        \ range(len(lines)),
-        \ 'matchstr(lines[v:val], ''\s*$'')'
-    \ )
-    try
-        while 1 " <C-c> to exit
-            let lines = map(
-                \ range(len(lines)),
-                \ '<SID>RotateLine(lines[v:val], leading_whitespace[v:val], trailing_whitespace[v:val])'
-            \ )
-            call setline(first_visible_line, lines)
-            redraw
-            sleep 50m
-        endwhile
-    finally
-        set list
-        if &modified
-            silent undo
-        endif
-        call winrestview(saved_view)
-    endtry
-endfunction
 
 " open help in own buffer without split
 function! FullScreenHelp(helpfile)

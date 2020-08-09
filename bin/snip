@@ -4,7 +4,7 @@
 
 generateInfo() {
     trackOld="$trackNew"
-    printf "$trackOld\ninserttextforobs" > "$snipdir/playingnow"
+    printf "$trackOld\ninserttextforobs" > "$snipdir/playingnow.txt"
 
     path="$(mpvc -f "%path%")"
 
@@ -35,7 +35,7 @@ generateInfo() {
 
 clean() {
     rm "$snipdir/cover.png"
-    rm "$snipdir/playingnow"
+    rm "$snipdir/playingnow.txt"
 }
 
 main() {
@@ -61,7 +61,7 @@ main() {
 
         trackNew="$(mpvc -f "%artist% - %title%                        ")"
         test "$trackNew" = "No files added to /tmp/mpvsocket." && {
-            printf '%s\n' "" > "$snipdir/playingnow"
+            printf '%s\n' "" > "$snipdir/playingnow.txt"
             test -e "$snipdir/cover.png" && rm "$snipdir/cover.png"
         }
 

@@ -11,4 +11,4 @@ UUID=85c5feef-583b-4068-9b56-3a68525a361f   /mnt/speed  btrfs   rw,noatime,disca
 UUID=47f3d8a0-efea-40a1-b5dc-f85ac90846d5   /mnt/spare  btrfs   rw,noatime,discard                                                                                          0 0
 
 # phosphor
-phosphor:/srv/nfs/pool                      /mnt/pool   nfs     defaults,timeo=30,retrans=3,_netdev                                                                         0 0
+phosphor:/srv/nfs/pool                      /mnt/pool   nfs     rw,hard,intr,timeo=15,retrans=3,_netdev                                                                     0 0
