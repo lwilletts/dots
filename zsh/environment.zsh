@@ -20,6 +20,7 @@ EXECPATHS=" $DOTS/bin
 $SRC/fwm
 $GOPATH
 $HOME/.fzf/bin
+$HOME/.local/bin
 $HOME/.ghcup/bin
 $HOME/.gem/ruby/2.6.0/bin"
 
