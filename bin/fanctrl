@@ -19,10 +19,6 @@ main() {
         radeonPCI="/sys/class/drm/card$i/device"
         uevent="$radeonPCI/uevent"
 
-        while :; do
-            test -e "$uevent" && break
-        done
-
         driver="$(awk -F '=' '/DRIVER/ {print $2}' "$uevent")"
         [ "$driver" = "amdgpu" ] && break
 
@@ -30,7 +26,7 @@ main() {
         [ "$i" -eq 4 ] && i=0
     done
 
-    GPU="$radeonPCI/hwmon/hwmon$i"
+    hwmon="$(ls "$radeonPCI/hwmon")"
 
     j=2
     while :; do
@@ -58,61 +54,62 @@ main() {
     printf '%s\n' "0" > "$MOBO/$front_fan""_enable"
 
     while :; do
-        gpu_temp_edge="$(rev "$GPU/temp2_input" | cut -c 4- | rev)"
-        cpu_temp="$(sensors | awk '/Core/ {print $3}' | head -n 1 | cut -c 2-3)"
+        gpu_temp_edge="$(rev "$radeonPCI/hwmon/$hwmon/temp2_input" | cut -c 4- | rev)"
+        cpu_temp="$(sensors | awk '/Package id 0:/ {print $4}' | cut -c 2-3)"
 
-        printf '%s\n' "110" > "$MOBO/$front_fan"
+        case "$gpu_temp_edge" in
+            # set load rpm
+            9[0-9]|1[0-9][0-9])
+                printf '%s\n' "255" > "$MOBO/$gpu_fan"
+                printf '%s\n' "150" > "$MOBO/$front_fan"
+                ;;
+            8[0-9])
+                printf '%s\n' "120" > "$MOBO/$gpu_fan"
+                printf '%s\n' "110" > "$MOBO/$front_fan"
+                ;;
+            7[0-9])
+                printf '%s\n' "100" > "$MOBO/$gpu_fan"
+                printf '%s\n' "110" > "$MOBO/$front_fan"
+                ;;
+            6[0-9])
+                printf '%s\n' "100" > "$MOBO/$gpu_fan"
+                printf '%s\n' "0" > "$MOBO/$front_fan"
+                ;;
+            5[0-9])
+                printf '%s\n' "75" > "$MOBO/$gpu_fan"
+                printf '%s\n' "0" > "$MOBO/$front_fan"
+                ;;
+            *)
+                printf '%s\n' "20" > "$MOBO/$gpu_fan"
+                printf '%s\n' "0" > "$MOBO/$front_fan"
+                ;;
+        esac
 
         case "$cpu_temp" in
             8[0-9]|9[0-9]|1[0-9][0-9])
                 printf '%s\n' "255" > "$MOBO/$cpu_fan"
                 printf '%s\n' "255" > "$MOBO/$exhaust_fan"
-                printf '%s\n' "200" > "$MOBO/$front_fan"
+                printf '%s\n' "110" > "$MOBO/$front_fan"
                 ;;
             6[5-9]|7[0-9])
-                printf '%s\n' "160" > "$MOBO/$cpu_fan"
-                printf '%s\n' "225" > "$MOBO/$exhaust_fan"
+                printf '%s\n' "140" > "$MOBO/$cpu_fan"
+                printf '%s\n' "200" > "$MOBO/$exhaust_fan"
                 ;;
             5[0-9]|6[0-4])
-                printf '%s\n' "140" > "$MOBO/$cpu_fan"
+                printf '%s\n' "110" > "$MOBO/$cpu_fan"
                 printf '%s\n' "160" > "$MOBO/$exhaust_fan"
                 ;;
-            *)
+            4[0-9])
                 printf '%s\n' "100" > "$MOBO/$cpu_fan"
+                printf '%s\n' "75" > "$MOBO/$exhaust_fan"
+                ;;
+            *)
+                printf '%s\n' "90" > "$MOBO/$cpu_fan"
                 printf '%s\n' "75" > "$MOBO/$exhaust_fan"
                 ;;
         esac
 
-        case "$gpu_temp_edge" in
-            # set load rpm
-            8[5-9]|9[0-9]|1[0-9][0-9])
-                printf '%s\n' "255" > "$MOBO/$gpu_fan"
-                printf '%s\n' "130" > "$MOBO/$front_fan"
-                ;;
-            8[0-4])
-                printf '%s\n' "150" > "$MOBO/$gpu_fan"
-                printf '%s\n' "125" > "$MOBO/$front_fan"
-                ;;
-            7[0-9])
-                printf '%s\n' "125" > "$MOBO/$gpu_fan"
-                printf '%s\n' "125" > "$MOBO/$front_fan"
-                ;;
-            6[0-9])
-                printf '%s\n' "100" > "$MOBO/$gpu_fan"
-                ;;
-            5[0-9])
-                printf '%s\n' "75" > "$MOBO/$gpu_fan"
-                ;;
-            4[0-9])
-                printf '%s\n' "25" > "$MOBO/$gpu_fan"
-                ;;
-            # set zero rpm
-            *)
-                printf '%s\n' "0" > "$MOBO/$gpu_fan"
-                ;;
-        esac
-
-        sleep 2
+        sleep 3
     done
 }
 

@@ -44,7 +44,7 @@ c.url.default_page = 'file:///home/fyr/usr/start/start.html'
 c.backend = 'webengine'
 c.auto_save.interval = 20000
 c.auto_save.session = True
-c.editor.command = ['urxvtc', '-g', '85x22', '-e', 'nvim', '{}']
+c.editor.command = ['urxvtc', '-g', '85x22', '-e', 'nvim', '{}', "+call cursor({line}, {column})"]
 c.spellcheck.languages = ['en-GB']
 c.session.lazy_restore = True
 c.confirm_quit = ['downloads']
@@ -301,8 +301,8 @@ c.colors.statusbar.normal.fg = xresources['*color7']
 c.colors.statusbar.private.bg = xresources['*color0']
 c.colors.statusbar.private.fg = xresources['*color7']
 # statusbar insert mode
-c.colors.statusbar.insert.bg = xresources['*color0']
-c.colors.statusbar.insert.fg = xresources['*color7']
+c.colors.statusbar.insert.bg = xresources['*color7']
+c.colors.statusbar.insert.fg = xresources['*color0']
 # default foreground color of the URL in the statusbar.
 c.colors.statusbar.url.fg = xresources['*color7']
 c.colors.statusbar.url.success.http.fg = xresources['*color7']
@@ -401,10 +401,8 @@ c.colors.messages.warning.fg = xresources['*color1']
 c.colors.statusbar.caret.selection.bg = xresources['*color7']
 c.colors.statusbar.caret.selection.fg = xresources['*color0']
 
-# Background color of the statusbar in passthrough mode.
-# c.colors.statusbar.passthrough.bg = 'darkblue'
-# Foreground color of the statusbar in passthrough mode.
-# c.colors.statusbar.passthrough.fg = 'white'
+c.colors.statusbar.passthrough.bg = xresources['*color7']
+c.colors.statusbar.passthrough.fg = xresources['*color0']
 
 # tab
 c.colors.tabs.bar.bg = xresources['*color0']
@@ -573,13 +571,13 @@ c.content.mute = False
 ##   - true
 ##   - false
 ##   - ask
-# c.content.notifications = 'ask'
+c.content.notifications = False
 
 ## Allow pdf.js to view PDF files in the browser. Note that the files can
 ## still be downloaded by clicking the download button in the pdf.js
 ## viewer.
 ## Type: Bool
-# c.content.pdfjs = False
+c.content.pdfjs = True
 
 ## Allow websites to request persistent storage quota via
 ## `navigator.webkitPersistentStorage.requestQuota`.
@@ -864,7 +862,6 @@ c.search.incremental = True
 # config.bind('<Ctrl-T>', 'open -t')
 # config.bind('<Ctrl-Tab>', 'tab-focus last')
 # config.bind('<Ctrl-U>', 'scroll-page 0 -0.5')
-# config.bind('<Ctrl-V>', 'enter-mode passthrough')
 # config.bind('<Ctrl-W>', 'tab-close')
 # config.bind('<Ctrl-X>', 'navigate decrement')
 # config.bind('<Ctrl-^>', 'tab-focus last')
@@ -1058,8 +1055,9 @@ c.search.incremental = True
 # config.bind('<Escape>', 'leave-mode', mode='hint')
 # config.bind('<Return>', 'follow-hint', mode='hint')
 
-## Bindings for passthrough mode
-# config.bind('<Shift-Escape>', 'leave-mode', mode='passthrough')
+# Bindings for passthrough mode
+config.bind('<Ctrl-V>', 'enter-mode passthrough')
+config.bind('<Shift-Z>', 'leave-mode', mode='passthrough')
 
 ## Bindings for prompt mode
 # config.bind('<Alt-B>', 'rl-backward-word', mode='prompt')

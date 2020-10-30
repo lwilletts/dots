@@ -15,7 +15,7 @@ export FFF_FAV5="$HOME/usr/img"
 export FFF_FAV6="$HOME/usr/doc"
 export FFF_FAV7=""
 export FFF_FAV8="$HOME/usr/torrents"
-export FFF_FAV9="$HOME/tmp"
+export FFF_FAV9="/mnt/pool"
 
 # config
 export FFF_HIDDEN=0
@@ -26,7 +26,7 @@ export FFF_W3M_XOFFSET=0
 export FFF_W3M_YOFFSET=0
 export FFF_FILE_FORMAT=" %f"
 export FFF_MARK_FORMAT="> %f*"
-export FFF_TRASH_CMD="rm"
+export FFF_TRASH_CMD="rm -rf"
 
 # functions
 f() {

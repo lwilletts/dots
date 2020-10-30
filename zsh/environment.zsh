@@ -66,11 +66,8 @@ export FZF_DEFAULT_OPTS='--color=bw'
 alias white="sed 's/\x1B\[[0-9;]*[JKmsu]//g'"
 
 # games
-export RADV_PERFTEST="aco"
-
 export GAME1="$HOME/.steam/steam/steamapps/common"
 export GAME2="/mnt/speed/steamapps/common"
-
 
 # shortcuts
 export POOL="/mnt/pool"

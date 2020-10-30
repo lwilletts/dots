@@ -2,16 +2,23 @@
 #
 # screens
 
+resetbar() {
+    pkill bars
+    bars
+}
+
 main() {
     . fwmrc
     wmgaps
 
     SEC="HDMI-A-2"
+    LAYOUTDIR="$HOME/.screenlayout"
 
     case "$1" in
         default)
-            xrandr --output "$SEC" --auto --pos 410x0 --rotate inverted
-            xrandr --output "$PRI" --pos 0x1080
+            "$LAYOUTDIR/default.sh"
+
+            resetbar
             ;;
         pri)
             PRI="$(lsm -p)"
@@ -20,27 +27,24 @@ main() {
                 move center "$wid" "$PRI"
             done
 
-            xrandr --output "$SEC" --off
-            xrandr --output "$PRI" --pos 0x480
+            "$LAYOUTDIR/pri.sh"
 
             for wid in $(listwindows "$PRI"); do
                 wmv 0 -480 "$wid"
             done
 
-            pkill bars
-            bars
+            resetbar
             ;;
         *)
             case "$(hostname)" in
                 "fyriousa")
-                    xrandr --output "$SEC" --auto --pos 410x0 --rotate inverted
-                    xrandr --output "$PRI" --pos 0x1080
+                    "$LAYOUTDIR/default.sh"
+
                     for wid in $(listwindows "$PRI"); do
                         wmv 0 480 "$wid"
                     done
 
-                    pkill bars
-                    bars
+                    resetbar
                     ;;
             esac
             ;;

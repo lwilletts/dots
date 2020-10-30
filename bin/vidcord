@@ -16,8 +16,8 @@ encode() {
     ffmpeg -hide_banner -loglevel info -i "$vid.$ext" \
            -max_muxing_queue_size 1024 \
            -sws_flags lanczos -vf "scale=-1:720" \
-           -c:v libx264 -crf 12 -preset ultrafast \
-           -c:a copy -map 0 -f mp4 "$PWD/$vid.mp4"
+           -c:v libx264 -crf 20 -preset fast \
+           -c:a aac -b:a 160k -map 0 -f mp4 "$PWD/$vid.mp4"
 }
 
 prep() {

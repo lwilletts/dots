@@ -17,15 +17,15 @@ Usage:
     $base help             : Show this help.
 EOF
 
-    test $# -eq 0 || exit "$1"
+    [ $# -eq 0 ] || exit "$1"
 }
 
 intCheck() {
     # check if empty
-    test -z "$1" && return 1
+    [ -z "$1" ] && return 1
 
-    test "$1" -ne 0 2> /dev/null
-    test $? -ne 2 || {
+    [ "$1" -ne 0 ] 2> /dev/null
+    [ $? -ne 2 ] || {
          printf '%s\n' "'$1' is not an integer." >&2
          return 1
     }
@@ -118,14 +118,14 @@ main() {
         uevent="$radeonPCI/uevent"
 
         while :; do
-            test -e "$uevent" && break
+            [ -e "$uevent" ] && break
         done
 
         driver="$(awk -F '=' '/DRIVER/ {print $2}' "$uevent")"
-        test "$driver" = "amdgpu" && break
+        [ "$driver" = "amdgpu" ] && break
 
         i="$((i + 1))"
-        test "$i" -eq 4 && i=0
+        [ "$i" -eq 4 ] && i=0
     done
 
     odclk="$radeonPCI/pp_od_clk_voltage"
@@ -137,7 +137,7 @@ main() {
         clock)  clock "$2" "$3"      ;;
         boost)  boost "$2" "$3" "$4" ;;
         memory) memory "$2"          ;;
-        fan)    fanCtrl  "$2"        ;;
+        fan)    fanCtrl "$2"         ;;
         temp)   fanCurve             ;;
         info)   info                 ;;
         *)      usage 1              ;;

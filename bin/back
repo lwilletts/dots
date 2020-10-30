@@ -14,7 +14,7 @@ EOF
 }
 
 main() {
-    hsetroot -fill "$HOME/tmp/mono/rock.jpg" -brightness -0.01
+    hsetroot -root -tile "/home/fyr/usr/img/patterns/noisy_net.png"
 }
 
 main "$@"

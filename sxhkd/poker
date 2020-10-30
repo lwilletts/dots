@@ -18,15 +18,15 @@ mod4 + shift + l
 mod1 + shift + r
     pkill -USR1 -x sxhkd
 mod1 + shift + b
-    bright 10 off
+    bright 8 off
 
 # window manipulation
 mod1 + {_,shift + }q
     {killw,killwa} $(pfw)
 mod1 + {_,shift + }Tab
-    {focus swap,focus cycle}
+    {focus cycle,focus swap}
 mod1 + {h,j,k,l}
-    closer {left -s,down -s,up -s,right -s}
+    closer {left -s,down,up,right -s}
 mod1 + shift + {h,j,k,l}
     adjust {left,down,up,right}
 mod1 + {Left,Down,Up,Right}
@@ -69,7 +69,7 @@ mod1 + {comma,period,space,slash}
 mod1 + {bracketleft,bracketright,braceleft,braceright}
     mpvc seek {-5,5,-30,30} -S /tmp/vidsocket -q
 mod1 + p
-    mpris-ctl --player Chromium pp
+    mpris-ctl --player qutebrowser pp
 
 # volume
 mod1 + {9,0}

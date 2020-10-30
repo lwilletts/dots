@@ -341,7 +341,7 @@ autocmd! BufNewFile,BufRead *.gitconfig      setlocal filetype=gitconfig noet
 autocmd! BufNewFile,BufRead *.zsh,*.zprofile setlocal filetype=sh
 
 " buffer write
-autocmd! BufWritePost *.tex silent make %
+autocmd! BufWritePost *.tex make %
 
 " buffer delete
 autocmd! BufDelete *.tex :AsyncRun latexmk -pdf -C -silent

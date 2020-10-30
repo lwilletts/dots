@@ -10,7 +10,7 @@ Usage:
     $base
 EOF
 
-    test $# -eq 0 || exit "$1"
+    [ $# -eq 0 ] || exit "$1"
 }
 
 main() {
@@ -72,6 +72,9 @@ main() {
             WINEPREFIX=~/.wine/prefixes/theouterworlds WINEESYNC=1 \
             MANGOHUD=1 MANGOHUD_CONFIGFILE="$MANGODIR/default.conf" \
             wine "$GAMEDIR/TheOuterWorlds.exe"
+            ;;
+        tradewinds)
+            GAMEDIR="/home/fyr/.games/Tradewinds.(Sandlot.Games)-WWW/"
             ;;
     esac
 }
