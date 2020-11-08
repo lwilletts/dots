@@ -37,7 +37,7 @@ alias record="ffmpeg -f pulse -i alsa_input.usb-Focusrite_Scarlett_Solo_USB-00.a
 # net
 alias ix="curl -F 'f:1=<-' ix.io"
 alias io="curl -sT- p.iotek.org"
-alias tn="stig"
+alias tn="tremc"
 alias ytd="youtube-dl"
 alias ytm="youtube-dl \"\$(mpvc -f '%path%')\""
 alias rss="newsboat -q"

@@ -1,0 +1,24 @@
+#!/bin/sh
+#
+# twitch
+
+usage() {
+    base=$(basename "$0")
+
+    cat >&2 << EOF
+Usage:
+    $base
+EOF
+
+    [ $# -eq 0 ] || exit "$1"
+}
+
+main() {
+    ffmpeg -i rtmp://localhost/restream/$1 \
+        -threads 4 -sws_flags lanczos -vf "scale=-1:720" \
+        -c:v libx264 -b:v 8000k -preset superfast -f mp4 \
+        -c:a copy \
+        rtmp://live-lhr03.twitch.tv/app/$(cat /home/fyr/.ssh/streamkey)
+}
+
+main "$@"
