@@ -158,7 +158,7 @@ main() {
     barvar
 
     case "$(hostname)" in
-        spark)    volbar="volbaralsa"  ;;
+        inferno)  volbar="volbaralsa"  ;;
         fyriousa) volbar="volbarpulse" ;;
     esac
 
@@ -166,8 +166,6 @@ main() {
     PX="$(mattr x "$PRI")"
     PW="$(mattr w "$PRI")"
     PH="$(mattr h "$PRI")"
-    SW="$(mattr w "$SEC")"
-    SH="$(mattr h "$SEC")"
 
     barx=$((PX + LGAP))
     barw=$((PW - LGAP - RGAP))
@@ -189,7 +187,15 @@ main() {
             ;;
         *)
             barw=120
-            simplebar datebar c 3
+            simplebar datebar c 5
+
+            case "$(hostname)" in
+                inferno)
+                    barx=$((barx + barw + IGAP))
+                    barw=40
+                    simplebar batbar c 1
+                    ;;
+            esac
 
             barx=$((barx + barw + IGAP))
             barw=380

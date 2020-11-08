@@ -46,6 +46,10 @@ main() {
 
                     resetbar
                     ;;
+                "inferno")
+                    pkill bars
+                    bars
+                    ;;
             esac
             ;;
     esac

@@ -200,7 +200,7 @@ getSystem
 getVars
 
 # set window title
-echo "\033]2$HOST\007"
+# echo "\033]2$HOST\007"
 
 workOutLineSize
 

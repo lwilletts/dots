@@ -3,28 +3,14 @@
 # bat
 
 manual() {
-    BAT="/sys/class/power_supply/BAT0"
-    test -d "$BAT" || return 0
+    BAT="/sys/class/power_supply/cw2015-battery"
+    [ -d "$BAT" ] || return 1
 
-    CHR="$(cat "$BAT/charge_now")"
-    MAX="$(cat "$BAT/charge_full")"
     STATUS="$(cat "$BAT/status")"
-    PERCENT="$(printf '%.2f\n' "$(echo "$CHR/$MAX*100" | bc -l)" | cut -d. -f 1)"
+    PERCENT="$(printf '%s\n' "$(cat "$BAT/capacity")")"
 }
 
-acpidata() {
-    hash acpi 2> /dev/null || exit 1
-
-    ACPINFO="$(acpi -b)"
-    PERCENT="$(printf '%s\n' "$ACPINFO" | cut -d\  -f 4 | cut -d% -f 1)"
-    STATUS="$(printf '%s\n' "$ACPINFO" | cut -d\  -f 3 | cut -d, -f 1)"
-}
-
-case "$1" in
-    m|manual) manual   ;;
-    a|acpi)   acpidata ;;
-    *)        acpidata ;;
-esac
+manual
 
 case "$STATUS" in
     "Full"|"Charging")

@@ -329,7 +329,7 @@ filetype plugin indent on
 autocmd! FileType c          setlocal ts=8 sw=8 sts=8 noet
 autocmd! FileType sh         setlocal makeprg=sh\ %\
 autocmd! FileType md         setlocal spell fo+=a makeprg=pandoc\ '%'\ -o\ '%:r'.pdf
-autocmd! FileType tex        setlocal spell fo+=a makeprg=pdflatex\ '%'
+autocmd! FileType tex        setlocal spell fo-=a makeprg=pdflatex\ '%'
 autocmd! FileType txt        setlocal spell fo+=a noet wrap linebreak
 autocmd! FileType html,ruby  setlocal ts=2 sw=2 sts=2
 autocmd! FileType css,python setlocal ts=4 sw=4 sts=4

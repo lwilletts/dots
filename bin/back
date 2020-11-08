@@ -14,7 +14,14 @@ EOF
 }
 
 main() {
-    hsetroot -root -tile "/home/fyr/usr/img/patterns/noisy_net.png"
+    case "$(hostname)" in
+        fyriousa)
+            hsetroot -root -tile "/home/fyr/usr/img/patterns/noisy_net.png"
+            ;;
+        inferno)
+            hsetroot -fill "/home/fyr/usr/img/backs/calm.png"
+            ;;
+    esac
 }
 
 main "$@"
