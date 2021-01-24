@@ -2,13 +2,15 @@
 #
 # servers
 
-test -f ~/.ssh/steamkey && KEY="$(cat ~/.ssh/steamkey)"
-URL="https://api.steampowered.com/IGameServersService/GetServerList/v1/?format=json&filter=\gamedir\midair&key=$KEY"
+APPID="1231210"
+[ -f ~/.ssh/steamkey ] && KEY="$(cat ~/.ssh/steamkey)"
+
+URL="https://api.steampowered.com/IGameServersService/GetServerList/v1/?format=json&filter=%5Cappid%5C$APPID&key=$KEY"
 
 OUTPUT=$(curl -sL "$URL" | jq -r '(.response.servers)')
 LENGTH=$(printf '%s' "$OUTPUT" | jq '. | length')
 
-FINAL=$(printf "#|Name|Address")
+FINAL=""
 
 for i in $(seq 1 $LENGTH); do
     i=$((i - 1))
@@ -26,7 +28,7 @@ for i in $(seq 1 $LENGTH); do
             FINAL=$(printf "$FINAL \n$PLAYERS/$TOTALPLAYERS|$NAME|$IP \n")
             ;;
         *)
-            test "$PLAYERS" -eq 0 || {
+            [ "$PLAYERS" -eq 0 ] || {
                 FINAL=$(printf "$FINAL \n$PLAYERS/$TOTALPLAYERS|$NAME|$IP \n")
             }
         ;;
@@ -38,6 +40,6 @@ case "$1" in
         printf '%s' "$FINAL" | column -t -s "|"
         ;;
     *)
-        printf '%s' "$FINAL" | column -t -s "|" | sort -n
+        printf '%s' "$FINAL" | column -t -s "|" | sort -nr
         ;;
 esac

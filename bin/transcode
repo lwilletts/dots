@@ -17,48 +17,17 @@ linkfile() {
 }
 
 encode() {
-    if [ "$SCALE" = "1440" ]; then
         ffmpeg -hide_banner -loglevel info -i "$vid.$ext" \
                -max_muxing_queue_size 1024 \
                -c:v dnxhd -profile:v dnxhr_hq -pix_fmt yuv422p \
                -c:a pcm_s16le -map 0 -f mov "$dir/$SCALE/$vid.mov" && linkfile
-   else
-        # -sws_flags lanczos -vf "scale=-1:$SCALE, smartblur=1.0:-1.0" \
-
-        ffmpeg -hide_banner -loglevel info -i "$vid.$ext" \
-               -max_muxing_queue_size 1024 \
-               -sws_flags lanczos -vf "scale=-1:$SCALE" \
-               -c:v dnxhd -profile:v dnxhr_hq -pix_fmt yuv422p \
-               -c:a pcm_s16le -map 0 -f mov "$dir/$SCALE/$vid.mov" && linkfile
-    fi
 }
 
 prep() {
-    [ -d "$dir/$SCALE" ] || mkdir -p "$dir/$SCALE"
-
     vid=$(printf '%s\n' "$*" | rev | cut -d\. -f 2- | rev)
     ext=$(printf '%s\n' "$*" | rev | cut -d\. -f 1 | rev)
 
-    if [ -e "$dir/$vid.mov" ]; then
-        VSIZE="$(ffprobe -v error -select_streams v:0 -show_entries \
-                 stream=height -of csv=s=x:p=0 "$dir/$vid.mov")"
-
-        # link different resolution from scale to working directory
-        [ "$LINK" = "1" ] && [ -d "$dir/$SCALE" ] && {
-            if [ "$VSIZE" -ne "$SCALE" ]; then
-                ln -vf "$dir/$SCALE/$vid.mov" "$dir/$vid.mov"
-                return 0
-            else
-                [ -e "$dir/$SCALE/$vid.mov" ] || encode "$@"
-            fi
-        }
-    fi
-
-    if [ -e "$dir/$SCALE/$vid.mov" ]; then
-        [ "$LINK" = "1" ] && [ -d "$dir/$SCALE" ] && {
-            ln -vf "$dir/$SCALE/$vid.mov" "$dir/$vid.mov"
-        }
-    else
+    if [ ! -e "$dir/$SCALE/$vid.mov" ]; then
         encode "$@"
     fi
 }
@@ -66,12 +35,8 @@ prep() {
 main() {
     dir="$PWD/dnxhr"
 
-    [ -z "$LINK" ] && LINK=1
-    [ -z "$SCALE" ] && SCALE=1440
-
     case "$@" in
         -h) usage 0 ;;
-        *)  [ -e "$1" ] && prep "$1" ;;
     esac
 }
 

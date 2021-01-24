@@ -18,15 +18,15 @@ mod4 + shift + l
 mod1 + shift + r
     pkill -USR1 -x sxhkd
 mod1 + shift + b
-    bright 8 off
+    bright 3 off
 
 # window manipulation
 mod1 + {_,shift + }q
-    {killw,killwa} $(pfw)
+    {killw $(pfw),kill -9 $(xprop -id $(pfw) | grep _NET_WM_PID | grep -v grep | cut -d' ' -f 3)}
 mod1 + {_,shift + }Tab
     {focus cycle,focus swap}
 mod1 + {h,j,k,l}
-    closer {left -s,down,up,right -s}
+    closer {left,down -s,up -s,right}
 mod1 + shift + {h,j,k,l}
     adjust {left,down,up,right}
 mod1 + {Left,Down,Up,Right}
@@ -45,6 +45,8 @@ mod1 + r: Escape
 # tile
 mod1 + t: {t,s,v,,l,r,g}
     tile {3way,split,vert,left,right,grid}; pkill -ALRM sxhkd
+mod1 + shift + t: {t,s,v,,l,r,g}
+    tile {3way,split,vert,left,right,grid} HDMI-A-2; pkill -ALRM sxhkd
 
 # groups
 mod1 + {shift + ,ctrl + ,_} {1-8}
@@ -59,7 +61,7 @@ mod4 + {p,shift + Tab,n,Tab,z,c,r,BackSpace,space,slash}
     mpvc {prev,prev,next,next,shuffle,clear,single,remove current,toggle,play $} -q
 mod4 + a
     fd . ~/usr/mus -L -t f -e mp3 -e flac -e wav -e ogg -e m4a -e opus \
-                   -E 'soundtracks' | shuf | shuf | mpvc add -q
+                   -E 'soundtracks' -E 'tracks' | shuf | shuf | mpvc add -q
 
 # video
 mod1 + v
@@ -81,7 +83,9 @@ mod4 + {s,d,9,0}
 
 # shot
 Print
-    shot
+    shot pri
+mod1 + Print
+    shot sel
 shift + Print
     shot "$(pfw)"
 

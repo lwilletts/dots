@@ -42,16 +42,16 @@ main() {
         sleep 1
     done
 
-    gpu_fan="pwm1"
+    # gpu_fan="pwm1"
+    # printf '%s\n' "0" > "$MOBO/$gpu_fan""_enable"
+
     cpu_fan="pwm2"
     front_fan="pwm5"
     exhaust_fan="pwm4"
 
     printf '%s\n' "0" > "$MOBO/$cpu_fan""_enable"
-    printf '%s\n' "0" > "$MOBO/$exhaust_fan""_enable"
-
-    printf '%s\n' "0" > "$MOBO/$gpu_fan""_enable"
     printf '%s\n' "0" > "$MOBO/$front_fan""_enable"
+    printf '%s\n' "0" > "$MOBO/$exhaust_fan""_enable"
 
     while :; do
         gpu_temp_edge="$(rev "$radeonPCI/hwmon/$hwmon/temp2_input" | cut -c 4- | rev)"
@@ -60,27 +60,21 @@ main() {
         case "$gpu_temp_edge" in
             # set load rpm
             9[0-9]|1[0-9][0-9])
-                printf '%s\n' "255" > "$MOBO/$gpu_fan"
-                printf '%s\n' "150" > "$MOBO/$front_fan"
+                printf '%s\n' "80" > "$MOBO/$front_fan"
                 ;;
             8[0-9])
-                printf '%s\n' "120" > "$MOBO/$gpu_fan"
-                printf '%s\n' "110" > "$MOBO/$front_fan"
+                printf '%s\n' "80" > "$MOBO/$front_fan"
                 ;;
             7[0-9])
-                printf '%s\n' "100" > "$MOBO/$gpu_fan"
-                printf '%s\n' "110" > "$MOBO/$front_fan"
+                printf '%s\n' "80" > "$MOBO/$front_fan"
                 ;;
             6[0-9])
-                printf '%s\n' "100" > "$MOBO/$gpu_fan"
-                printf '%s\n' "0" > "$MOBO/$front_fan"
+                printf '%s\n' "50" > "$MOBO/$front_fan"
                 ;;
             5[0-9])
-                printf '%s\n' "75" > "$MOBO/$gpu_fan"
-                printf '%s\n' "0" > "$MOBO/$front_fan"
+                printf '%s\n' "25" > "$MOBO/$front_fan"
                 ;;
             *)
-                printf '%s\n' "20" > "$MOBO/$gpu_fan"
                 printf '%s\n' "0" > "$MOBO/$front_fan"
                 ;;
         esac

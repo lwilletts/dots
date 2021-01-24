@@ -30,12 +30,12 @@ main() {
     JUNC=$(printf '%s\n' "$sensorOut" | awk '/junction/ && $3 == "(crit" {print $2}' | cut -c 2-)
     MEM=$(printf '%s\n' "$sensorOut" | awk '/mem/ && $3 == "(crit" {print $2}' | cut -c 2-)
     POWR=$(printf '%s\n' "$sensorOut" | awk '/power1/ {print $2,$3}')
-    FANS=$(printf '%s\n' "$sensorOut" | grep -v "3850" | awk '/fan1/ {print $2,$3}')
+    FANS=$(printf '%s\n' "$sensorOut" | grep "3600" | awk '/fan1/ {print $2,$3}')
 
     buf=""
     buf="${buf} %{l} "
     buf="${buf} %{A:${gotop}:}"
-    buf="${buf} Radeon:"
+    buf="${buf} Navi:"
     buf="${buf} $act$CLOCK $ina// $act$VOLT"
     buf="${buf} $ina// $act$POWR $ina// $act$FANS "
 

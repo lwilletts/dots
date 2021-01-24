@@ -8,12 +8,21 @@ set-default-sink alsa_output.usb-FiiO_DigiHug_USB_Audio-01.analog-stereo
 set-default-source alsa_input.usb-Focusrite_Scarlett_Solo_USB-00.analog-stereo
 
 # load null sinks for application audio routing
-load-module module-null-sink sink_name=audiosink
-load-module module-loopback source=audiosink.monitor sink=alsa_output.usb-FiiO_DigiHug_USB_Audio-01.analog-stereo
+load-module module-null-sink sink_name=gamesink sink_properties='device.description="Game Sink"'
+load-module module-null-sink sink_name=mediasink sink_properties='device.description="Media Sink"'
+load-module module-null-sink sink_name=discordsink sink_properties='device.description="Discord Sink"'
+load-module module-null-sink sink_name=vodsink sink_properties='device.description="VOD Sink"'
+
+load-module module-loopback source=gamesink.monitor sink=vodsink latency_msec=30 sink_input_properties='media.name="VOD Game Loopback"'
+load-module module-loopback source=discordsink.monitor sink=vodsink latency_msec=30 sink_input_properties='media.name="VOD Discord Loopback"'
+
+load-module module-loopback source=gamesink.monitor sink=alsa_output.usb-FiiO_DigiHug_USB_Audio-01.analog-stereo latency_msec=30 sink_input_properties='media.name="Fiio Game Loopback"'
+load-module module-loopback source=mediasink.monitor sink=alsa_output.usb-FiiO_DigiHug_USB_Audio-01.analog-stereo latency_msec=30 sink_input_properties='media.name="Fiio Media Loopback"'
+load-module module-loopback source=discordsink.monitor sink=alsa_output.usb-FiiO_DigiHug_USB_Audio-01.analog-stereo latency_msec=30 sink_input_properties='media.name="Fiio Discord Loopback"'
 
 # enable bluetooth
-load-module module-bluetooth-policy
-load-module module-bluetooth-discover
+# load-module module-bluetooth-policy
+# load-module module-bluetooth-discover
 
 # scarlett interface mono to stereo
 # load-module module-remap-source master=alsa_input.usb-Focusrite_Scarlett_Solo_USB-00.analog-stereo master_channel_map=front-left channel_map=mono source_properties=device.description='usb-Focusrite_Scarlett_Solo_USB-00'

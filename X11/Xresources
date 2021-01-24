@@ -32,6 +32,6 @@ URxvt.keysym.M-Y           : perl:primary:copy/
 
 /* URxvt transparency */
 Urxvt.depth         : 32
-URxvt.shading       : 170
+URxvt.shading       : 50
 URxvt.transparent   : true
-URxvt.inheritPixmap : false
+URxvt.inheritPixmap : true

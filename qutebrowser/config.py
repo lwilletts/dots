@@ -16,8 +16,11 @@ from qutebrowser.api import interceptor
 
 def filter_yt(info: interceptor.Request):
     url = info.request_url
-    if (url.host() == 'www.youtube.com' and url.path() == '/get_video_info' and '&adformat=' in url.query()):
-        info.block()
+    if (
+        url.host() == 'www.youtube.com' 
+        and url.path() == '/get_video_info' 
+        and '&adformat=' in url.query()
+    ): info.block()
 
 interceptor.register(filter_yt)
 
@@ -94,6 +97,9 @@ config.bind('<Shift-x>', 'close')
 config.bind('<Ctrl-d>', 'spawn qutedl {url}')
 config.bind('<Ctrl-f>', 'spawn youtube-dl -x {url}')
 config.bind('<Ctrl-m.', 'spawn mpv {url}')
+
+# yank
+config.bind("<y><o>", "yank inline [[{url}][{title}]]")
 
 # insert mode
 config.bind('<Escape>', 'leave-mode', mode='insert')
@@ -180,7 +186,7 @@ c.tabs.mode_on_change = 'normal'
 c.tabs.mousewheel_switching = True
 c.tabs.new_position.stacking = True
 c.tabs.new_position.related = 'next'
-c.tabs.new_position.unrelated = 'last'
+c.tabs.new_position.unrelated = 'next'
 c.tabs.select_on_remove = 'next'
 c.tabs.pinned.frozen = True
 c.tabs.pinned.shrink = True
@@ -206,7 +212,7 @@ c.downloads.open_dispatcher = None
     # privacy & content
 # c.content.headers.user_agent = 'Mozilla/5.0 (Windows NT 6.1; rv:52.0) Gecko/20100101 Firefox/52.0'
 c.content.headers.do_not_track = True
-c.content.host_blocking.enabled = True
+# c.content.host_blocking.enabled = True
 
 # List of URLs of lists which contain hosts to block.  The file can be
 # in one of the following formats:  - An `/etc/hosts`-like file - One
@@ -224,13 +230,13 @@ c.content.host_blocking.enabled = True
 # the adblocker on a given page, use the `content.host_blocking.enabled`
 # setting with a URL pattern instead. Local domains are always exempt
 # from hostblocking.
-c.content.host_blocking.whitelist = ['googleadservices.com', 'adservice.google.com']
+# c.content.host_blocking.whitelist = ['googleadservices.com', 'adservice.google.com']
 
 #   - all: Accept all cookies.
 #   - no-3rdparty: Accept cookies from the same origin only. This is known to break some sites, such as GMail.
 #   - no-unknown-3rdparty: Accept cookies from the same origin only, unless a cookie is already set for the domain. On QtWebEngine, this is the same as no-3rdparty.
 #   - never: Don't accept cookies at all.
-c.content.cookies.accept = 'all'
+c.content.cookies.accept = 'no-3rdparty'
 c.content.cookies.store = True
 c.content.autoplay = False
 
@@ -273,6 +279,7 @@ c.fonts.tabs.unselected = '8pt scientifica'
     # colors
 # dark mode
 c.colors.webpage.darkmode.enabled = True
+c.colors.webpage.bg = 'black'
 
 # lightness-hsl brightness-rgb
 c.colors.webpage.darkmode.algorithm = 'lightness-cielab'

@@ -16,13 +16,11 @@ case "$mime_type" in
         ;;
     video/*|application/mxf*)
         VIDSOCKET="/tmp/vidsocket"
-        mpvc add "$1" -S "$VIDSOCKET"
+        mpvc playnext "$1" -S "$VIDSOCKET"
         ;;
     audio/*)
-        mpvc add "$1"
-        # mpvc move $(mpvc -f "%playlistlength% %position%")
-        # mpvc next
-        mpvc play $
+        mpvc playnext "$1"
+        mpvc next
         ;;
     application/pdf*)
         zathura "$1"

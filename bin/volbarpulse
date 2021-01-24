@@ -10,7 +10,9 @@ main() {
 
     case "$(pulsemixer --get-mute)" in
         0)
+            buf="${buf}$bar_back_foreground$bar_text_foreground"
             buf="${buf} %{A:${pulse}:} ${vol}  %{A}"
+            buf="${buf}$bar_back_foreground$bar_text_foreground"
             ;;
         1)
             buf="${buf}$bar_back_highlight$bar_text_highlight"
@@ -25,7 +27,7 @@ main() {
 . fwmrc
 wmcolours
 
-bar_text_highlight="%{F#$ACTIVE}"
+bar_text_warning="%{F#$ACTIVE}"
 bar_text_foreground="%{F#$ACTIVE}"
 bar_back_highlight="%{B#$URGENT}"
 bar_back_foreground="%{B#$INACTIVE}"

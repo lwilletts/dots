@@ -1,0 +1,54 @@
+#!/bin/sh
+#
+# groupbar
+
+main() {
+    grplist="$(mktemp)"
+    grouptoggle="group -t $grpnum"
+
+    oldgrp=0
+    group -l > "$grplist"
+
+    buf=""
+    buf="${buf}$bar_back_highlight$bar_text_highlight"
+
+    while read -r group; do
+        grpnum="$(printf '%s\n' "${group%% *}" | cut -d'_' -f 2)"
+        winfo="${group##* }"
+
+        case $(atomx GROUP_"$grpnum" "$(lsw -r)") in
+            on)  buf="${buf} $act " ;;
+            off) buf="${buf} $ina " ;;
+        esac
+
+        if [ $grpnum -ne $oldgrp ]; then
+            buf="${buf}%{A:${grouptoggle}:}"
+            buf="${buf} $grpnum"
+            buf="${buf}%{A}"
+        fi
+
+        buf="${buf} $winfo"
+
+        oldgrp="$grpnum"
+    done < "$grplist"
+
+
+    buf="${buf} $bar_back_foreground$bar_text_foreground"
+
+    rm "$grplist"
+
+    printf '%s\n' "$buf"
+}
+
+. fwmrc
+wmcolours
+
+bar_text_highlight="%{F#$INACTIVE}"
+bar_text_foreground="%{F#$ACTIVE}"
+bar_back_highlight="%{B#$ACTIVE}"
+bar_back_foreground="%{B#$INACTIVE}"
+
+act="%{F#$INACTIVE}"
+ina="%{F#$DIM}"
+
+main "$@"

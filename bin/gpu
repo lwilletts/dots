@@ -27,7 +27,7 @@ VOLT="$(cat "$radeonPCI/hwmon/hwmon"?"/in0_input") mv"
 EDGE=$(printf '%s\n' "$sensorOut" | awk '/edge/ && $3 == "(crit" {print $2}' | cut -c 2-)
 JUNC=$(printf '%s\n' "$sensorOut" | awk '/junction/ && $3 == "(crit" {print $2}' | cut -c 2-)
 POWR=$(printf '%s\n' "$sensorOut" | awk '/power1/ {print $2,$3}')
-FANS=$(printf '%s\n' "$sensorOut" | grep -v "3850" | awk '/fan1/ {print $2,$3}')
+FANS=$(printf '%s\n' "$sensorOut" | grep "3600" | awk '/fan1/ {print $2,$3}')
 CLOCK=$(grep '*' "$SCLK" | tail -n 1 | cut -d\  -f 2)
 
-printf '%s\n' "Vega: $CLOCK / $JUNC / $VOLT / $POWR / $FANS "
+printf '%s\n' "Navi: $CLOCK / $JUNC / $VOLT / $POWR / $FANS "

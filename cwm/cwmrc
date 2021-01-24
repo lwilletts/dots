@@ -1,6 +1,5 @@
 # ~/.cwmrc
 
-# binds
 unbind-key all
 unbind-mouse all
 
@@ -10,8 +9,8 @@ bind-key MS-q window-close
 
 # style
 sticky no
-borderwidth 0
-gap 0 50 0 30
+borderwidth 2
+gap 30 50 30 30
 fontname 'scientifica:pixelsize=11'
 
 # colors

@@ -18,7 +18,7 @@ EXECPATHS=" $DOTS/bin
 /usr/bin
 /usr/sbin
 $SRC/fwm
-$GOPATH
+$GOPATH/bin
 $HOME/.fzf/bin
 $HOME/.local/bin
 $HOME/.ghcup/bin

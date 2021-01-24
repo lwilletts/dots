@@ -7,26 +7,36 @@ main() {
     cava="urxvtc -g 85x22 -fn \"-*-scientifica-*-*-*--9-*-*-*-*-*-*-*\" -e sh -c 'cava'"
     status="$(mpvc -f "%status%" -S "$SOCKET" 2> /dev/null)"
 
+
     if [ "$status" = "playing" ]; then
-        act="%{F#$ACTIVE}"
+        bar_text_highlight="%{F#$INACTIVE}"
+        bar_text_foreground="%{F#$ACTIVE}"
+        bar_back_highlight="%{B#$ACTIVE}"
+        bar_back_foreground="%{B#$INACTIVE}"
     elif [ "$status" = "paused" ]; then
-        act="$ina"
+        bar_text_highlight="%{F#$DIM}"
+        bar_text_foreground="%{F#$ACTIVE}"
+        bar_back_highlight="%{B#$INACTIVE}"
+        bar_back_foreground="%{B#$INACTIVE}"
     else
         return 1
     fi
 
+
     case "$SOCKET" in
         /tmp/mpvsocket)
-            mus="$(mpvc -f "$act%artist% $ina// $act%title%" 2> /dev/null)"
+            mus="$(mpvc -f "%artist% // %title%" 2> /dev/null)"
             ;;
         /tmp/vidsocket)
-            mus="$(mpvc -f "$act%title%" -S "$SOCKET" 2> /dev/null)"
+            mus="$(mpvc -f "%title%" -S "$SOCKET" 2> /dev/null)"
             ;;
     esac
 
 
     buf=""
+    buf="${buf}$bar_back_highlight$bar_text_highlight"
     buf="${buf} %{A:${cava}:} ${mus} %{A}"
+    buf="${buf} $bar_back_foreground$bar_text_foreground"
 
     printf '%s\n' "$buf"
 }

@@ -1,16 +1,9 @@
 #!/bin/sh
 
-case "$(hostname)" in
-    fyriousa)
-        mount /mnt/pool
-        wmp -a 1280 1200
-        ;;
-esac
-
 # x11 environment
 xset +dpms                     # powersaving
 xset b 50                      # bell volume
-xset dpms 0 900 0              # screen blanking
+xset dpms 0 600 0              # screen blanking
 xset r rate 250 40             # faster keypresses
 xset +fp ~/.local/share/fonts  # custom fonts
 xsetroot -cursor_name left_ptr # left pointer as cursor

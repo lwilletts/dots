@@ -2,6 +2,7 @@
 alias s="sudo"
 alias se="sudo -e"
 alias off="poweroff"
+alias firmware="sudo systemctl reboot --firmware-setup"
 
 # permissions
 alias mine="s chown $USER:fyr"
@@ -14,6 +15,7 @@ alias umount="s umount"
 alias mv="mv -i"
 alias df="df -h"
 alias cp="cp -ri"
+alias path="readlink -f"
 alias trash="~/tmp/trash"
 alias rsync="rsync -a --info=progress2"
 
@@ -45,6 +47,7 @@ alias net="curl -s ipv4.icanhazip.com"
 alias net6="curl -s ipv6.icanhazip.com"
 alias wget="wget --no-hsts"
 alias serv="mosh phosphor"
+alias remote="mosh remote"
 
 # games
 alias game1="cd $GAME1"

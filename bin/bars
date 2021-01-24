@@ -31,6 +31,7 @@ simplebar() {
         mpvbar|\
         sysbar|\
         datebar|\
+        groupbar|\
         volbaralsa|\
         volbarpulse) BAR="$1" ;;
         *)           exit     ;;
@@ -123,7 +124,7 @@ gpubartrigger() {
         temp="$(gpu | cut -d\  -f 4 | cut -c 1-2)"
 
         case "$temp" in
-            5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9]|1[0-9])
+            6[0-9]|7[0-9]|8[0-9]|9[0-9]|1[0-9])
                 [ -z "$process" ] && simplebar gpubar c 3
                 ;;
             *)
@@ -137,16 +138,16 @@ gpubartrigger() {
 
 mainbar() {
     BW=0
-    barw=$((PW - LGAP - RGAP - BW))
 
     while :; do
         buf=""
-        buf="${buf} %{l} "
+        buf="${buf} %{l} %{+o}"
         buf="${buf}$(datebar)"
         buf="${buf}$(notifybar)"
+        buf="${buf}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     "
         buf="${buf} %{r} "
-        buf="${buf}$(vidbar)"
-        buf="${buf}$(musbar)"
+        buf="${buf}$(mpvbar /tmp/mpvsocket)"
+        buf="${buf}$(mpvbar /tmp/vidsocket)"
         buf="${buf}$(batbar)"
         buf="${buf}$(${volbar})"
 
@@ -167,15 +168,39 @@ main() {
     PW="$(mattr w "$PRI")"
     PH="$(mattr h "$PRI")"
 
-    barx=$((PX + LGAP))
-    barw=$((PW - LGAP - RGAP))
+    case "$(hostname)" in
+        fyriousa)
+            SX="$(mattr x "$SEC")"
+            SH="$(mattr h "$SEC")"
+            ;;
+    esac
 
     case "$BAR" in
         top)
+            barx=$((PX + LGAP))
+            barw=$((PW - LGAP - RGAP))
+
             barh=$((TGAP/2))
             bary=$((PY + barh - TGAP/4))
             ;;
+        topborder)
+            barx=$PX
+            barw=$PW
+
+            barh=$((TGAP/2))
+            bary=$((PY))
+            ;;
+        botborder)
+            barx=$PX
+            barw=$((PW - BW))
+
+            barh=$((BGAP/2))
+            bary=$((PY + PH - barh))
+            ;;
         *)
+            barx=$((PX + LGAP))
+            barw=$((PW - LGAP - RGAP))
+
             barh=$((BGAP/2))
             bary=$((PY + PH - barh - BGAP/4))
             ;;
@@ -207,17 +232,19 @@ main() {
             ;;
     esac
 
+    # second monitor bars
     case "$(hostname)" in
         fyriousa)
             barw=400
 
             case "$BAR" in
                 top)
-                    barx=$((PW + LGAP))
+                    barx=$((SX + LGAP))
                     bary=$((SY + barh - TGAP/4))
+
                     ;;
                 *)
-                    barx=$((PW + LGAP))
+                    barx=$((SX + LGAP))
                     bary=$((SH - barh - BGAP/4))
                     ;;
             esac

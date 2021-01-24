@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# modify VEGA20 clocks
+# modify radeon clocks
 # run as root
 
 usage() {

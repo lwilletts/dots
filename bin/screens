@@ -4,14 +4,14 @@
 
 resetbar() {
     pkill bars
-    bars
+    bars -m
 }
 
 main() {
     . fwmrc
     wmgaps
 
-    SEC="HDMI-A-2"
+    SEC="HDMI-A-0"
     LAYOUTDIR="$HOME/.screenlayout"
 
     case "$1" in
@@ -45,10 +45,6 @@ main() {
                     done
 
                     resetbar
-                    ;;
-                "inferno")
-                    pkill bars
-                    bars
                     ;;
             esac
             ;;

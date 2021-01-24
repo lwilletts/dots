@@ -1,0 +1,38 @@
+#!/bin/sh
+#
+# amdresolve
+
+usage() {
+    base=$(basename "$0")
+
+    cat >&2 << EOF
+Usage:
+    $base
+EOF
+
+    [ $# -eq 0 ] || exit "$1"
+}
+
+progl() {
+    export LD_LIBRARY_PATH="${HOME}/pro/drivers:${LD_LIBRARY_PATH}"
+    export LIBGL_DRIVERS_PATH="${HOME}/pro/drivers/dri"
+    export dri_driver="amdgpu"
+}
+
+main() {
+    resolveconf="$XDG_CONFIG_HOME/resolve"
+    test -d "$resolveconf" || mkdir -p "$resolveconf"
+
+    cd "$resolveconf" || return 1
+
+    case $1 in
+        noquiet)
+            progl && HOME="$resolveconf" /opt/resolve/bin/resolve
+            ;;
+        *)
+            progl && HOME="$resolveconf" /opt/resolve/bin/resolve > /dev/null 2>&1
+            ;;
+    esac
+}
+
+main "$@"

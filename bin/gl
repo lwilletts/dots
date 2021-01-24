@@ -17,12 +17,14 @@ main() {
     MANGODIR="$HOME/.config/Mangohud"
 
     case "$1" in
+        hades)   steam steam://rungameid/1145360 & ;;
         midair)  steam steam://rungameid/1231210 & ;;
         civ)     steam steam://rungameid/8930    & ;;
         ftl)     steam steam://rungameid/212680  & ;;
         ittb)    steam steam://rungameid/590380  & ;;
         rottr)   steam steam://rungameid/391220  & ;;
         sottr)   steam steam://rungameid/750920  & ;;
+        stardew) steam steam://rungameid/413150  & ;;
         tribes)
             # GAMEDIR="$GAME1/Tribes/2017_T1Basic"
             GAMEDIR="$GAME1/Tribes/Tribes_MILK"

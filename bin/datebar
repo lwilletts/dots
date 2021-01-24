@@ -15,6 +15,11 @@ main() {
 . fwmrc
 wmcolours
 
+bar_text_highlight="%{F#$INACTIVE}"
+bar_text_foreground="%{F#$ACTIVE}"
+bar_back_highlight="%{B#$ACTIVE}"
+bar_back_foreground="%{B#$INACTIVE}"
+
 act="%{F#$ACTIVE}"
 ina="%{F#$DIM}"
 

@@ -10,7 +10,7 @@ manual() {
     PERCENT="$(printf '%s\n' "$(cat "$BAT/capacity")")"
 }
 
-manual
+manual || exit 1
 
 case "$STATUS" in
     "Full"|"Charging")

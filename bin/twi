@@ -14,7 +14,7 @@ EOF
 }
 
 main() {
-    streamlink "$1" best
+    streamlink twitch.tv/"$1" best
 }
 
 main "$@"

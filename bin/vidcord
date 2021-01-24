@@ -12,17 +12,28 @@ EOF
     [ $# -eq 0 ] || exit $1
 }
 
+intCheck() {
+    [ "$1" -ne 0 ] 2> /dev/null
+    [ "$?" -ne 2 ] || printf '%s\n' "NaN"; exit 1
+}
+
 encode() {
     ffmpeg -hide_banner -loglevel info -i "$vid.$ext" \
            -max_muxing_queue_size 1024 \
-           -sws_flags lanczos -vf "scale=-1:720" \
-           -c:v libx264 -crf 20 -preset fast \
-           -c:a aac -b:a 160k -map 0 -f mp4 "$PWD/$vid.mp4"
+           -sws_flags lanczos -vf "scale=-2:$RES" \
+           -c:v libx264 -crf 20 -preset veryslow \
+           -c:a aac -b:a 160k -f mp4 -map 0:0 -map 0:2 "$PWD/$vid.mp4"
 }
 
 prep() {
     vid=$(printf '%s\n' "$*" | rev | cut -d\. -f 2- | rev)
     ext=$(printf '%s\n' "$*" | rev | cut -d\. -f 1 | rev)
+
+    if [ -n "$RES" ]; then
+        intCheck "$RES"
+    else
+        RES=480
+    fi
 
     encode "$@"
 }
