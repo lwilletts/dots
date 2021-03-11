@@ -46,8 +46,7 @@ clock() {
     intCheck "$1"
     intCheck "$2"
 
-    printf '%s\n' "s 0 808" > "$odclk"
-    printf '%s\n' "s 1 $1" > "$odclk"
+    printf '%s\n' "s 0 800" > "$odclk"
     printf '%s\n' "vc 2 $1 $2" > "$odclk"
     printf '%s\n' "c" > "$odclk"
 }
@@ -139,8 +138,8 @@ main() {
         memory) memory "$2"          ;;
         fan)    fanCtrl "$2"         ;;
         temp)   fanCurve             ;;
-        info)   info                 ;;
-        *)      usage 1              ;;
+        -h)     usage 1              ;;
+        *)      info                 ;;
     esac
 }
 

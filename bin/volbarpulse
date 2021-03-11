@@ -3,21 +3,21 @@
 # volbarpulse
 
 main() {
-    pulse="urxvtc -g 85x44 -e sh -c 'pulsemixer'"
-    vol="$(printf '%s\n' "[$(pulsemixer --get-volume | cut -d\  -f 1)%]")"
+    pulse="urxvtc -g 85x44 -title 'volbar' -e sh -c 'pulsemixer'"
+    vol="$(pacmd list-sinks | head -n 9 | tail -n 1 | cut -d\  -f 6)"
 
     buf=""
 
-    case "$(pulsemixer --get-mute)" in
-        0)
+    case "$(pacmd list-sinks | head -n 13 | tail -n 1 | cut -d\  -f 2)" in
+        no)
             buf="${buf}$bar_back_foreground$bar_text_foreground"
-            buf="${buf} %{A:${pulse}:} ${vol}  %{A}"
+            buf="${buf}  %{A:${pulse}:} [${vol}]  %{A}"
             buf="${buf}$bar_back_foreground$bar_text_foreground"
             ;;
-        1)
+        yes)
             buf="${buf}$bar_back_highlight$bar_text_highlight"
-            buf="${buf}  %{A:${pulse}:}${vol} %{A}"
-            buf="${buf} $bar_back_foreground$bar_text_foreground"
+            buf="${buf}  %{A:${pulse}:} [${vol}]  %{A}"
+            buf="${buf}$bar_back_foreground$bar_text_foreground"
             ;;
     esac
 

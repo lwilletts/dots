@@ -4,7 +4,7 @@
 {mod1, mod2} + shift + Return
     urxvtc -cd "$(mpvc -f "%path%" | rev | cut -d\/ -f 2- | rev)" -g 85x22
 mod1 + {d,s,w,shift + w}
-    {drun -c, sshmenu -c, wmenu -c, wmenu -b all}
+    {drun -c, sshmenu -c, wmenu -m, wmenu -b all}
 {mod1 + @button1, mod1 + @button3}
     wattr o $(pfw) || chwso -r $(pfw); {xmmv,xmrs}
 mod1 + {button4,button5}
@@ -49,8 +49,8 @@ mod1 + shift + t: {t,s,v,,l,r,g}
     tile {3way,split,vert,left,right,grid} HDMI-A-2; pkill -ALRM sxhkd
 
 # groups
-mod1 + {shift + ,ctrl + ,_} {1-8}
-    group {-a,-A,-s} {1-8} $(pfw)
+mod1 + {shift + ,_} {1-8}
+    group {-a,-s} {1-8} $(pfw)
 mod1 + c
     group -d $(pfw)
 
@@ -60,8 +60,7 @@ mod4 + {bracketleft,bracketright,braceleft,braceright}
 mod4 + {p,shift + Tab,n,Tab,z,c,r,BackSpace,space,slash}
     mpvc {prev,prev,next,next,shuffle,clear,single,remove current,toggle,play $} -q
 mod4 + a
-    fd . ~/usr/mus -L -t f -e mp3 -e flac -e wav -e ogg -e m4a -e opus \
-                   -E 'soundtracks' -E 'tracks' | shuf | shuf | mpvc add -q
+    music
 
 # video
 mod1 + v
@@ -81,6 +80,7 @@ mod4 + {s,d,9,0}
 {XF86AudioMute, XF86AudioLowerVolume, XF86AudioRaiseVolume}
     volctrl {!,- 3,+ 3}
 
+
 # shot
 Print
     shot pri
@@ -88,6 +88,12 @@ mod1 + Print
     shot sel
 shift + Print
     shot "$(pfw)"
+
+# brightness
+mod1 + F1
+    bright max
+F12
+    swapinput
 
 # misc
 mod1 + x

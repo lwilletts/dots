@@ -1,0 +1,48 @@
+#!/bin/sh
+#
+# launchvm
+
+usage() {
+    base=$(basename "$0")
+
+    cat >&2 << EOF
+Usage:
+    sudo $base
+EOF
+
+    [ $# -eq 0 ] || exit "$1"
+}
+
+checkroot() {
+    [ "$(id -u)" -eq 0 ] || {
+        printf '%s\n' "$(basename "$0") must be run as root!" 1>&2
+        exit 1
+    }
+}
+
+main() {
+    checkroot
+
+    case "$1" in
+        off)
+            virsh shutdown win10 && {
+                ddcutil --model="C27JG5x" setvcp 0x60 0x06 > /dev/null 2>&1
+            }
+            ;;
+        kill)
+            virsh destroy win10 && {
+                ddcutil --model="C27JG5x" setvcp 0x60 0x06 > /dev/null 2>&1
+            }
+            ;;
+        d|display)
+            virsh start win10 && {
+                ddcutil --model="C27JG5x" setvcp 0x60 0x0f > /dev/null 2>&1
+            }
+            ;;
+        *)
+            virsh start win10
+            ;;
+    esac
+}
+
+main "$@"

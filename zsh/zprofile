@@ -3,7 +3,7 @@
 . ~/.zsh/ttycolors
 . ~/.zsh/environment.zsh
 
-test -f "$DOTS/bin/startmenu" && {
+[ -f "$DOTS/bin/startmenu" ] && {
     $DOTS/bin/startmenu
     clear
     exit

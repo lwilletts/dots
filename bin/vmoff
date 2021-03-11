@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# flatsteam
+# vmoff
 
 usage() {
     base=$(basename "$0")
@@ -14,7 +14,7 @@ EOF
 }
 
 main() {
-    flatpak run com.valvesoftware.Steam
+    pgrep "qemu" > /dev/null 2>&1 && virsh shutdown win10
 }
 
 main "$@"

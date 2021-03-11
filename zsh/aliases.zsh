@@ -52,8 +52,8 @@ alias remote="mosh remote"
 # games
 alias game1="cd $GAME1"
 alias game2="cd $GAME2"
-alias cfg="vi $GAME2/Midair\ Community\ Edition/MidairCE/Binaries/*.cfg"
-alias madir="$GAME2/Midair\ Community\ Edition/MidairCE/"
+alias cfg="vi $GAME1/Midair\ Community\ Edition/MidairCE/Binaries/*.cfg"
+alias madir="$GAME1/Midair\ Community\ Edition/MidairCE/"
 
 # file handling
 alias i="img"
@@ -83,3 +83,4 @@ alias engage="play -c2 -n synth whitenoise band -n 100 24 band -n 300 100 \
 gain +4 synth whitenoise lowpass -1 100 lowpass -1 100 lowpass -1 100 gain +2"
 alias starwars="telnet towel.blinkenlights.nl"
 alias machine="clear; lstopo-no-graphics -.ascii; printf '\n'"
+

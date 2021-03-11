@@ -30,7 +30,7 @@ main() {
 
     j=2
     while :; do
-        MOBO="/sys/devices/platform/nct6775.656/hwmon/hwmon$j"
+        MOBO="/sys/devices/platform/it87.2656/hwmon/hwmon$j"
 
         [ -e "$MOBO" ] && break
 

@@ -3,7 +3,7 @@
 # x11 environment
 xset +dpms                     # powersaving
 xset b 50                      # bell volume
-xset dpms 0 600 0              # screen blanking
+xset s off -dpms               # screen blanking
 xset r rate 250 40             # faster keypresses
 xset +fp ~/.local/share/fonts  # custom fonts
 xsetroot -cursor_name left_ptr # left pointer as cursor
@@ -13,8 +13,8 @@ screens                        # set randr
 pgrep urxvtd 2> /dev/null || urxvtd -q -o -f &
 
 PRI="$(lsm -p)"
-wmp -a $(($(mattr x "$PRI") + $(mattr w "$PRI") / 2)) \
-       $(($(mattr y "$PRI") + $(mattr h "$PRI") / 2))
+# wmp -a $(($(mattr x "$PRI") + $(mattr w "$PRI") / 2)) \
+#        $(($(mattr y "$PRI") + $(mattr h "$PRI") / 2))
 
 # wm
 back
@@ -23,6 +23,7 @@ sxhkd &
 watcher &
 envreact &
 unclutter &
+autotile vert HDMI-A-1 &
 
 sleep 0.3
 xwait

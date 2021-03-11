@@ -1,0 +1,28 @@
+#!/bin/sh
+#
+# music
+
+usage() {
+    base=$(basename "$0")
+
+    cat >&2 << EOF
+Usage:
+    $base
+EOF
+
+    [ $# -eq 0 ] || exit "$1"
+}
+
+main() {
+    fd . ~/usr/mus -L -t f \
+        -e mp3 \
+        -e m4a \
+        -e ogg \
+        -e wav \
+        -e flac \
+        -e opus \
+        -E 'soundtracks' \
+        -E 'tracks' | shuf | shuf | mpvc add -q
+}
+
+main "$@"

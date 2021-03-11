@@ -3,7 +3,7 @@
 # volbaralsa
 
 main() {
-    alsa="urxvtc -g 85x44 -e sh -c 'alsamixer'"
+    alsa="urxvtc -g 85x44 -e -title 'volbar' sh -c 'alsamixer'"
     vol="$(printf '%s\n' "$(amixer -c 1 get Master | tail -n 1 | \
                             awk '{print $4}')")"
 

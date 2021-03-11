@@ -16,7 +16,7 @@ main() {
 
     case "$1" in
         default)
-            "$LAYOUTDIR/default.sh"
+            "$LAYOUTDIR/newdefault.sh"
 
             resetbar
             ;;
@@ -38,7 +38,7 @@ main() {
         *)
             case "$(hostname)" in
                 "fyriousa")
-                    "$LAYOUTDIR/default.sh"
+                    "$LAYOUTDIR/newdefault.sh"
 
                     for wid in $(listwindows "$PRI"); do
                         wmv 0 480 "$wid"

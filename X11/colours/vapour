@@ -1,9 +1,9 @@
-*background:  #171717
+*background:  #121212
 *foreground:  #D9EAE2
 
 ! black
-*color0:      #171717
-*color8:      #171717
+*color0:      #121212
+*color8:      #121212
 ! red
 *color1:      #CA3448
 *color9:      #CA3448

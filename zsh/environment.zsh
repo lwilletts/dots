@@ -67,7 +67,7 @@ alias white="sed 's/\x1B\[[0-9;]*[JKmsu]//g'"
 
 # games
 export GAME1="$HOME/.steam/steam/steamapps/common"
-export GAME2="/mnt/speed/steamapps/common"
+export GAME2="/mnt/spare/steamapps/common"
 
 # shortcuts
 export POOL="/mnt/pool"

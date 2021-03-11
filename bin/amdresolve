@@ -21,16 +21,15 @@ progl() {
 
 main() {
     resolveconf="$XDG_CONFIG_HOME/resolve"
-    test -d "$resolveconf" || mkdir -p "$resolveconf"
-
+    [ -d "$resolveconf" ] || mkdir -p "$resolveconf"
     cd "$resolveconf" || return 1
 
     case $1 in
         noquiet)
-            progl && HOME="$resolveconf" /opt/resolve/bin/resolve
+            progl && HOME="$resolveconf" DRI_PRIME=1 /opt/resolve/bin/resolve
             ;;
         *)
-            progl && HOME="$resolveconf" /opt/resolve/bin/resolve > /dev/null 2>&1
+            progl && HOME="$resolveconf" DRI_PRIME=1 /opt/resolve/bin/resolve > /dev/null 2>&1
             ;;
     esac
 }

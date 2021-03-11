@@ -50,4 +50,21 @@ hash busybox 2> /dev/null || {
 }
 
 # load reporting
-REPORTTIME=60
+REPORTTIME=120
+
+# function zle-line-init zle-keymap-select {
+# case "$KEYMAP" in
+# vicmd)
+# 	# block cursor
+# 	echo -en '\033[0 q'
+# 	;;
+# main|viins)
+# 	# line cursor
+# 	echo -en '\033[5 q'
+# 	;;
+# esac
+# }
+
+# zle -N zle-line-init
+# zle -N zle-keymap-select
+

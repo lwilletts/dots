@@ -1,0 +1,50 @@
+#!/bin/sh
+#
+# bind
+
+usage() {
+    base=$(basename "$0")
+
+    cat >&2 << EOF
+Usage:
+    sudo $base
+EOF
+
+    [ $# -eq 0 ] || exit "$1"
+}
+
+checkroot() {
+    [ "$(id -u)" -eq 0 ] || {
+        printf '%s\n' "$(basename "$0") must be run as root!" 1>&2
+        exit 1
+    }
+}
+
+main() {
+    checkroot
+
+    GPU="0000:55:00.0"
+    AUDIO="0000:55:00.1"
+
+    case "$1" in
+        host)
+            sh -c "printf '%s' '$GPU' > /sys/bus/pci/drivers/vfio-pci/unbind"
+
+            printf '%s\n' "Binding to host..."
+
+            sh -c "printf '%s' '$GPU' > /sys/bus/pci/drivers/amdgpu/bind"
+            ;;
+        vfio)
+            sh -c "printf '%s' '$GPU' > /sys/bus/pci/drivers/amdgpu/unbind"
+
+            printf '%s\n' "Binding to vfio..."
+
+            sh -c "printf '%s' '$GPU'> /sys/bus/pci/drivers/vfio-pci/bind"
+            ;;
+        *)
+            usage 1
+            ;;
+    esac
+}
+
+main "$@"

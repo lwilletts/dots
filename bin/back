@@ -16,8 +16,8 @@ EOF
 main() {
     case "$(hostname)" in
         fyriousa)
-            hsetroot -root -tile "/home/fyr/usr/img/patterns/dark_denim.png"  \
-                     -brightness "0.03"
+            hsetroot -root -tile "/home/fyr/usr/img/patterns/blackmamba.png"  \
+                     -brightness "-0.01"
             ;;
         inferno)
             hsetroot -fill "/home/fyr/usr/img/backs/calm.png"

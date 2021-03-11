@@ -108,7 +108,7 @@ call plug#end()
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 "{{{
-nnoremap K <nop>
+noremap K <nop>
 nnoremap <C-u> <nop>
 
 map <Space> <Leader>

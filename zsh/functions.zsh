@@ -74,6 +74,3 @@ mpvv() {
 mpvi() {
     mpv "$@" --pause &!
 }
-
-# name / class / process of window id
-hash fwmrc 2> /dev/null && . fwmrc

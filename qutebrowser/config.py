@@ -58,6 +58,10 @@ c.session.default_name = None
 
 c.window.title_format = '{current_title}'
 
+# c.fileselect.handler = 'externa'
+# c.fileselect.multiple_files.command = 'fff'
+# c.fileselect.single_file.command = 'fff'
+
     # custom binds
 config.load_autoconfig()
 c.aliases = {'h': 'help', 'q': 'close', 'x': 'quit --save'}
@@ -65,8 +69,8 @@ c.aliases = {'h': 'help', 'q': 'close', 'x': 'quit --save'}
 # defaults
 config.bind('j', 'scroll-px 0 100')
 config.bind('k', 'scroll-px 0 -100')
-config.bind('b', 'set-cmd-text -s :buffer ')
-config.bind('return', 'follow-selected')
+config.bind('b', 'set-cmd-text -s :tab-select ')
+config.bind('return', 'selection-follow')
 config.bind('cx', 'download-cancel')
 config.bind('<Ctrl-s>', 'config-source ~/.config/qutebrowser/config.py')
 config.bind('<Ctrl-E>', 'config-edit', mode='normal')
@@ -91,7 +95,6 @@ config.bind('ay', 'quickmark-load -t youtube')
 # sessions
 config.bind('e', 'set-cmd-text -s :session-load ')
 config.bind('<Shift-e>', 'set-cmd-text -s :session-save -o ')
-config.bind('<Shift-x>', 'close')
 
 # downloads
 config.bind('<Ctrl-d>', 'spawn qutedl {url}')
@@ -101,8 +104,12 @@ config.bind('<Ctrl-m.', 'spawn mpv {url}')
 # yank
 config.bind("<y><o>", "yank inline [[{url}][{title}]]")
 
+# passthrough mode
+config.bind('<Ctrl-V>', 'mode-enter passthrough')
+config.bind('<Shift-Z>', 'mode-leave', mode='passthrough')
+
 # insert mode
-config.bind('<Escape>', 'leave-mode', mode='insert')
+config.bind('<Escape>', 'mode-leave', mode='insert')
 config.bind('<Shift-Ins>', 'insert-text {primary}', mode='insert')
 
     # insert
@@ -1061,10 +1068,6 @@ c.search.incremental = True
 # config.bind('<Ctrl-R>', 'hint --rapid links tab-bg', mode='hint')
 # config.bind('<Escape>', 'leave-mode', mode='hint')
 # config.bind('<Return>', 'follow-hint', mode='hint')
-
-# Bindings for passthrough mode
-config.bind('<Ctrl-V>', 'enter-mode passthrough')
-config.bind('<Shift-Z>', 'leave-mode', mode='passthrough')
 
 ## Bindings for prompt mode
 # config.bind('<Alt-B>', 'rl-backward-word', mode='prompt')

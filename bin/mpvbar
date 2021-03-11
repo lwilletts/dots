@@ -4,7 +4,7 @@
 
 main() {
     SOCKET="$1"
-    cava="urxvtc -g 85x22 -fn \"-*-scientifica-*-*-*--9-*-*-*-*-*-*-*\" -e sh -c 'cava'"
+    cava="urxvtc -g 85x22 -fn \"-*-scientifica-*-*-*--9-*-*-*-*-*-*-*\" -title 'cava' -e sh -c 'cava'"
     status="$(mpvc -f "%status%" -S "$SOCKET" 2> /dev/null)"
 
 

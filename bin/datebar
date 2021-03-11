@@ -3,7 +3,7 @@
 # datebar
 
 main() {
-    calender="urxvtc -g 66x35 -e sh -c '3cal'"
+    calender="urxvtc -g 66x35 -title 'calender' -e sh -c '3cal' "
     clock="$(printf '%s\n' "$act$(date '+%H%M')$ina hrs $act$(date '+%m/%d') $ina$(date '+%Y')")"
 
     buf=""

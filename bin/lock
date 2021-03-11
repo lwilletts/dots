@@ -4,6 +4,6 @@ scrot /tmp/lock.bmp
 mpvc pause -Q -q
 
 dims="$(wattr wh "$(lsw -r)" | sed 's/\ /x/')"
-convert -brightness-contrast 1x0 /tmp/lock.bmp -scale 20% -scale 500% RGB:- \
+convert -brightness-contrast 1x0 /tmp/lock.bmp -scale 5% -scale 2000% RGB:- \
     | i3lock -u --raw "$dims:rgb" --image /dev/stdin
 rm -f /tmp/lock.bmp

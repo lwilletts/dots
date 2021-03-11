@@ -3,8 +3,7 @@
 # bright
 
 intCheck() {
-    test "$1" -ne 0 2> /dev/null
-    test "$?" -ne 2 || return 1
+    printf '%d' "$1" > /dev/null 2>&1
 }
 
 main() {
@@ -19,6 +18,18 @@ main() {
                     ddcutil -b "$1" setvcp 10 "$2" > /dev/null 2>&1
                     ;;
             esac
+            ;;
+        max)
+            ddcutil --model="C27JG5x" --sleep-multiplier 0.125 setvcp 10 "100" > /dev/null 2>&1
+            ddcutil --model="LG IPS FULLHD" --sleep-multiplier 0.125 setvcp 10 "100" > /dev/null 2>&1
+            ;;
+        dim)
+            ddcutil --model="C27JG5x" --sleep-multiplier 0.125 setvcp 10 "10" > /dev/null 2>&1
+            ddcutil --model="LG IPS FULLHD" --sleep-multiplier 0.125 setvcp 10 "0" > /dev/null 2>&1
+            ;;
+        *)
+            ddcutil --model="C27JG5x" --sleep-multiplier 0.125 setvcp 10 "40" > /dev/null 2>&1
+            ddcutil --model="LG IPS FULLHD" --sleep-multiplier 0.125 setvcp 10 "80" > /dev/null 2>&1
             ;;
     esac
 }

@@ -6,7 +6,7 @@ main() {
     if [ "$(pfw 2> /dev/null)" ]; then
         if [ -n "$(atomx WM_CLASS "$(pfw 2> /dev/null)")" ]; then
             buf=""
-            buf="${buf} $bar_back_highlight$bar_text_highlight"
+            buf="${buf}$bar_back_highlight$bar_text_highlight"
             buf="${buf} %{A:wmenu -b:}"
             buf="${buf} $(atomx WM_CLASS "$(pfw 2> /dev/null)"):"
             buf="${buf} $(atomx WM_NAME "$(pfw 2> /dev/null)")"

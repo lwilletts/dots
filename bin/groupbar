@@ -3,41 +3,19 @@
 # groupbar
 
 main() {
-    grplist="$(mktemp)"
-    grouptoggle="group -t $grpnum"
-
-    oldgrp=0
-    group -l > "$grplist"
-
     buf=""
-    buf="${buf}$bar_back_highlight$bar_text_highlight"
 
-    while read -r group; do
-        grpnum="$(printf '%s\n' "${group%% *}" | cut -d'_' -f 2)"
-        winfo="${group##* }"
+    for grp in 1 2 3 4 5 6 7 8; do
+        grouptoggle="group -t $grp"
 
-        case $(atomx GROUP_"$grpnum" "$(lsw -r)") in
-            on)  buf="${buf} $act " ;;
-            off) buf="${buf} $ina " ;;
+        case $(atomx GROUP_"$grp" "$(lsw -r)") in
+            on)  buf="${buf} %{A:${grouptoggle}:}$bar_back_highlight$bar_text_highlight  $grp %{{A}" ;;
+            off) buf="${buf} %{A:${grouptoggle}:}$bar_back_foreground$act  $grp %{A}" ;;
+            *)   buf="${buf} $bar_back_foreground$ina  $grp " ;;
         esac
+    done
 
-        if [ $grpnum -ne $oldgrp ]; then
-            buf="${buf}%{A:${grouptoggle}:}"
-            buf="${buf} $grpnum"
-            buf="${buf}%{A}"
-        fi
-
-        buf="${buf} $winfo"
-
-        oldgrp="$grpnum"
-    done < "$grplist"
-
-
-    buf="${buf} $bar_back_foreground$bar_text_foreground"
-
-    rm "$grplist"
-
-    printf '%s\n' "$buf"
+    printf '%s\n' "${buf} $bar_back_foreground$bar_text_foreground"
 }
 
 . fwmrc
@@ -48,7 +26,7 @@ bar_text_foreground="%{F#$ACTIVE}"
 bar_back_highlight="%{B#$ACTIVE}"
 bar_back_foreground="%{B#$INACTIVE}"
 
-act="%{F#$INACTIVE}"
+act="%{F#$ACTIVE}"
 ina="%{F#$DIM}"
 
 main "$@"

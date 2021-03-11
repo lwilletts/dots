@@ -3,4 +3,4 @@ unset configuration
 
 chpwd
 
-test -f ~/.fzf.zsh && . ~/.fzf.zsh
+[ -f ~/.fzf.zsh ] && . ~/.fzf.zsh

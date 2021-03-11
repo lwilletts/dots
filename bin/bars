@@ -165,44 +165,38 @@ main() {
 
     # bar geometry
     PX="$(mattr x "$PRI")"
+    PY="$(mattr y "$PRI")"
     PW="$(mattr w "$PRI")"
     PH="$(mattr h "$PRI")"
-
-    case "$(hostname)" in
-        fyriousa)
-            SX="$(mattr x "$SEC")"
-            SH="$(mattr h "$SEC")"
-            ;;
-    esac
 
     case "$BAR" in
         top)
             barx=$((PX + LGAP))
             barw=$((PW - LGAP - RGAP))
 
-            barh=$((TGAP/2))
-            bary=$((PY + barh - TGAP/4))
+            barh=$((60/2))
+            bary=$((barh - TGAP/4))
             ;;
         topborder)
             barx=$PX
             barw=$PW
 
-            barh=$((TGAP/2))
+            barh=$((60/2))
             bary=$((PY))
             ;;
         botborder)
             barx=$PX
             barw=$((PW - BW))
 
-            barh=$((BGAP/2))
-            bary=$((PY + PH - barh))
+            barh=$((60/2))
+            bary=$((PH - barh))
             ;;
         *)
             barx=$((PX + LGAP))
             barw=$((PW - LGAP - RGAP))
 
-            barh=$((BGAP/2))
-            bary=$((PY + PH - barh - BGAP/4))
+            barh=$((60/2))
+            bary=$((PH - barh - BGAP/4))
             ;;
     esac
 
@@ -235,21 +229,28 @@ main() {
     # second monitor bars
     case "$(hostname)" in
         fyriousa)
-            barw=400
+            case "$SEC" in
+                HDMI-A-2)
+                    barw=400
 
-            case "$BAR" in
-                top)
-                    barx=$((SX + LGAP))
-                    bary=$((SY + barh - TGAP/4))
+                    SX="$(mattr x "$SEC")"
+                    SW="$(mattr w "$SEC")"
+                    SH="$(mattr h "$SEC")"
 
-                    ;;
-                *)
-                    barx=$((SX + LGAP))
-                    bary=$((SH - barh - BGAP/4))
-                    ;;
+                    case "$BAR" in
+                        top)
+                            barx=$((SX + SW - barw - RGAP))
+                            bary=$((SY + barh - TGAP/4))
+                            ;;
+                        *)
+                            barx=$((SX + SW - barw - RGAP))
+                            bary=$((SH - barh - BW))
+                            ;;
+                    esac
+
+                    gpubartrigger &
+                ;;
             esac
-
-            gpubartrigger &
             ;;
     esac
 }

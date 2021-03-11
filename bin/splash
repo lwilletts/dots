@@ -128,8 +128,8 @@ getVars() {
         TIME="$(uptime -p)"
     }
 
-    lspci | grep "Navi" 2>&1 > /dev/null && hash sensors 2> /dev/null && \
-        GPU="$(gpu)"
+    # lspci | grep "Navi" 2>&1 > /dev/null && hash sensors 2> /dev/null && \
+    #     GPU="$(gpu)"
 }
 
 workOutLineSize() {
@@ -180,10 +180,10 @@ cpu() {
     printf "${c7}CPU${R} %s" "$(draw $cpu $SIZE $c4)"
 }
 
-gpubar() {
-    TEMP="$(($(printf '%s\n' "$GPU" | cut -d\  -f 4 | cut -d\. -f1) - 35))"
-    printf "${c7}GPU${R} %s" "$(draw $TEMP $SIZE $c1)"
-}
+# gpubar() {
+#     TEMP="$(($(printf '%s\n' "$GPU" | cut -d\  -f 4 | cut -d\. -f1) - 35))"
+#     printf "${c7}GPU${R} %s" "$(draw $TEMP $SIZE $c1)"
+# }
 
 ram() {
     ram="$(free | awk '/Mem:/ {print int($3/$2 * 100.0)}')"
@@ -218,7 +218,7 @@ SIZE=$((SIZE - 5))
 
 printf '%s\n' "$(cpu)"
 printf '%s\n' "$(ram)"
-test ! -z "$GPU" && printf '%s\n' "$(gpubar)"
+[  ! -z "$GPU" ] && printf '%s\n' "$(gpubar)"
 [  -d "/sys/class/power_supply/BAT0" ] && printf '%s\n' "$(battery)"
 
 printf '\n'

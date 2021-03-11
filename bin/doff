@@ -3,8 +3,8 @@
 # doff
 
 main() {
-    ddcutil --bus 3 setvcp D6 04 > /dev/null 2>&1
-    ddcutil --bus 4 setvcp D6 04 > /dev/null 2>&1
+    ddcutil --model="C27JG5x" --sleep-multiplier 0.125 setvcp D6 04 > /dev/null 2>&1
+    ddcutil --model="LG IPS FULLHD" --sleep-multiplier 0.125 setvcp D6 04 > /dev/null 2>&1
 }
 
 main "$@"
