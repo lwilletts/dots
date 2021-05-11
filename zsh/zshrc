@@ -4,3 +4,5 @@ unset configuration
 chpwd
 
 [ -f ~/.fzf.zsh ] && . ~/.fzf.zsh
+
+export XAUTHORITY=~/.Xauthority

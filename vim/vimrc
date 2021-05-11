@@ -108,10 +108,7 @@ call plug#end()
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 "{{{
-nnoremap j j0
-nnoremap k k0
-
-noremap K <nop>
+nnoremap K <nop>
 nnoremap <C-u> <nop>
 
 map <Space> <Leader>
@@ -256,7 +253,7 @@ endtry
 set colorcolumn=+3
 
 " cursor always placed in middle
-set scrolloff=999
+set scrolloff=0
 " cursor allowed to exist where there is no character in visual block mode
 set virtualedit=block
 

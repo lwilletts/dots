@@ -15,7 +15,7 @@ hash make 2> /dev/null && {
 }
 
 # fzf
-hash fzf 2> /dev/null && {
-    . "$HOME/.fzf/shell/completion.zsh"
-    . "$HOME/.fzf/shell/key-bindings.zsh"
-}
+# hash fzf 2> /dev/null && {
+#     . "$HOME/.fzf/shell/completion.zsh"
+#     . "$HOME/.fzf/shell/key-bindings.zsh"
+# }
