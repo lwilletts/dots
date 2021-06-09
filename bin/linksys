@@ -13,11 +13,11 @@ usage() {
 Usage $base <headless|nvim|xorg>
 EOF
 
-    test -z "$1" || exit "$1"
+    [ -z "$1" ] || exit "$1"
 }
 
 headless() {
-    test ! -d "$HOME/.vim" && mkdir -p "$HOME/.vim"
+    [ ! -d "$HOME/.vim" ] && mkdir -p "$HOME/.vim"
     ln $OPTIONS "$DOTFILEDIR/vim/vimrc" "$HOME/.vim/vimrc"
     ln $OPTIONS "$DOTFILEDIR/vim/colors" "$HOME/.vim/colors"
 
@@ -35,34 +35,40 @@ xorg() {
     ln $OPTIONS "$DOTFILEDIR/X11/colours" "$HOME/.colours"
     ln $OPTIONS "$DOTFILEDIR/X11/Xresources" "$HOME/.Xresources"
 
-    test ! -d "$HOME/.config/sxhkd" && mkdir "$HOME/.config/sxhkd"
+    [ ! -d "$HOME/.config/sxhkd" ] && mkdir "$HOME/.config/sxhkd"
     ln $OPTIONS "$DOTFILEDIR/sxhkd/poker" "$HOME/.config/sxhkd/sxhkdrc"
 
     ln $OPTIONS "$DOTFILEDIR/mpv" "$HOME/.config/mpv"
-    ln $OPTIONS "$DOTFILEDIR/cwm/cwmrc" "$HOME/.cwmrc"
-    ln $OPTIONS "$DOTFILEDIR/alsa/asoundrc" "$HOME/.asoundrc"
     ln $OPTIONS "$DOTFILEDIR/youtube-dl" "$HOME/.config/youtube-dl"
     ln $OPTIONS "$DOTFILEDIR/compton/compton.conf" "$HOME/.compton.conf"
+
+    [ ! -d "$HOME/.config/zathura" ] && mkdir "$HOME/.config/zathura"
     ln $OPTIONS "$DOTFILEDIR/zathura/zathurarc" "$HOME/.config/zathura/zathurarc"
+
     ln $OPTIONS "$DOTFILEDIR/qutebrowser/config.py" \
-    "$HOME/.config/qutebrowser/config.py"
+        "$HOME/.config/qutebrowser/config.py"
     ln $OPTIONS "$DOTFILEDIR/MangoHud" "$HOME/.config/MangoHud"
     ln $OPTIONS "$DOTFILEDIR/streamlink" "$HOME/.config/streamlink"
 
-    ln $OPTIONS "$DOTFILEDIR/pulse/default.pa" "$HOME/.config/pulse/default.pa"
+    ln $OPTIONS "$DOTFILEDIR/alsa/asoundrc" "$HOME/.asoundrc"
+    ln $OPTIONS "$DOTFILEDIR/pipewire" "$HOME/.config/"
 }
 
 nvim() {
-    test ! -d "$HOME/.config/nvim" && mkdir -p "$HOME/.config/nvim"
+    [ ! -d "$HOME/.config/nvim" ] && mkdir -p "$HOME/.config/nvim"
 
     ln $OPTIONS "$DOTFILEDIR/vim/vimrc" "$HOME/.config/nvim/init.vim"
     ln $OPTIONS "$DOTFILEDIR/vim/colors" "$HOME/.config/nvim/colors"
     ln $OPTIONS "$HOME/.vim/autoload" "$HOME/.config/nvim/autoload"
 }
 
-case $1 in
-    h|headless) headless ;;
-    x|xorg)     xorg     ;;
-    n|nvim)     nvim     ;;
-    *)          usage 0  ;;
-esac
+for arg in "$@"; do
+        case "$arg" in
+            h|headless) headless ;;
+            x|xorg)     xorg     ;;
+            n|nvim)     nvim     ;;
+            -?)         usage 1  ;;
+            *)          usage 0  ;;
+        esac
+
+done

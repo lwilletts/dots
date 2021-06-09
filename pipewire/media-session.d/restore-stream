@@ -1,0 +1,12 @@
+{
+  "restore.stream.Audio/Sink.node.name:Game": { "volume": 1.000000, "mute": false, "volumes": [ 1.000000, 1.000000 ], "channels": [ "FL", "FR" ] },
+  "restore.stream.Audio/Sink.node.name:Media": { "volume": 1.000000, "mute": false, "volumes": [ 1.000000, 1.000000 ], "channels": [ "FL", "FR" ] },
+  "restore.stream.Audio/Sink.node.name:Discord": { "volume": 1.000000, "mute": false, "volumes": [ 1.000000, 1.000000 ], "channels": [ "FL", "FR" ] },
+  "restore.stream.Output/Audio.application.name:mpv": { "volume": 1.000000, "mute": false, "volumes": [ 1.000000, 1.000000 ], "channels": [ "FL", "FR" ] },
+  "restore.stream.Output/Audio.application.name:qutebrowser": { "volume": 1.000000, "mute": false, "volumes": [ 1.000000, 1.000000 ], "channels": [ "FL", "FR" ] },
+  "restore.stream.Input/Audio.node.name:pw-loopback": { "volume": 1.000000, "mute": true, "volumes": [ 1.000000, 1.000000 ], "channels": [ "FL", "FR" ] },
+  "restore.stream.Output/Audio.node.name:pw-loopback": { "volume": 1.000000, "mute": false, "volumes": [ 1.000000, 1.000000 ], "channels": [ "FL", "FR" ] },
+  "restore.stream.Audio/Sink.node.name:alsa_output.usb-Focusrite_Scarlett_Solo_USB_Y7FUH950A67C93-00.pro-output-0": { "volume": 1.000000, "mute": false, "volumes": [ 1.000000, 1.000000 ], "channels": [ "UNK", "UNK" ] },
+  "restore.stream.Audio/Source.node.name:alsa_input.usb-Focusrite_Scarlett_Solo_USB_Y7FUH950A67C93-00.pro-input-0": { "volume": 1.000000, "mute": false, "volumes": [ 1.000000, 1.000000 ], "channels": [ "UNK", "UNK" ] },
+  "restore.stream.Output/Audio.application.name:Chromium": { "volume": 1.000000, "mute": false, "volumes": [ 0.008000, 0.008000 ], "channels": [ "FL", "FR" ] }
+}

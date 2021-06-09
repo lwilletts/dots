@@ -37,6 +37,7 @@ unset EXECPATH
 # program dots
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DESKTOP_DIR="/home/fyr"
+export XDG_DOWNLOAD_DIR="$HOME/tmp"
 export LESSHISTFILE="$XDG_CONFIG_HOME/lesshist"
 export HISTFILE="$XDG_CONFIG_HOME/histfile"
 export INPUTRC="$XDG_CONFIG_HOME/inputrc"
@@ -66,8 +67,9 @@ export FZF_DEFAULT_OPTS='--color=bw'
 alias white="sed 's/\x1B\[[0-9;]*[JKmsu]//g'"
 
 # games
+export VK_ICD_FILENAMES="/usr/share/vulkan/icd.d/radeon_icd.i686.json:/usr/share/vulkan/icd.d/radeon_icd.x86_64.json"
 export GAME1="$HOME/.steam/steam/steamapps/common"
-export GAME2="/mnt/spare/steamapps/common"
+export GAME2="/mnt/spare/steam/steamapps/common"
 
 # shortcuts
 export POOL="/mnt/pool"

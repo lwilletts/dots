@@ -1,0 +1,8 @@
+{
+  "default.profile.alsa_card.pci-0000_54_00.1": { "name": "off" },
+  "default.profile.alsa_card.usb-Focusrite_Scarlett_Solo_USB_Y7FUH950A67C93-00": { "name": "input:analog-stereo" },
+  "default.profile.alsa_card.usb-FiiO_DigiHug_USB_Audio-01": { "name": "output:analog-stereo" },
+  "default.profile.alsa_card.usb-046d_HD_Pro_Webcam_C920_70E9E59F-02": { "name": "off" },
+  "default.profile.alsa_card.usb-Focusrite_Scarlett_Solo_USB-00": { "name": "input:analog-stereo" },
+  "default.profile.alsa_card.pci-0000_57_00.4": { "name": "off" }
+}

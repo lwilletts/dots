@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# obs
+# up
 
 usage() {
     base=$(basename "$0")
@@ -14,9 +14,7 @@ EOF
 }
 
 main() {
-    # /bin/obs --startreplaybuffer "$@"
-    # OBS_USE_EGL=1 /bin/obs
-    /bin/obs
+    rsync "$1" phosphor:~/src/site/dst
 }
 
 main "$@"

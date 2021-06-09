@@ -319,7 +319,7 @@ set wildignore+=*.gif,*.png,*.jp*
 set completeopt=menu,preview
 
 " defaults
-set tw=79
+set tw=80
 set ts=4 sw=4 sts=4
 set smarttab expandtab
 

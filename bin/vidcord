@@ -21,7 +21,7 @@ encode() {
            -max_muxing_queue_size 1024 \
            -sws_flags lanczos -vf "scale=-2:$RES" \
            -c:v libx264 -crf 18 -preset medium \
-           -c:a aac -b:a 160k -f mp4 -map 0:0 -map 0:2 "$PWD/$vid.mp4"
+           -c:a aac -b:a 160k -f mp4 "$PWD/$vid.mp4"
 }
 
 prep() {

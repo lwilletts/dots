@@ -9,7 +9,7 @@ t: Print temperature of cpu.
 n: Number of running processes.
 EOF
 
-    test $# -eq 0 || exit "$1"
+    [ $# -eq 0 ] || exit "$1"
 }
 
 cpuperc() {
@@ -22,8 +22,7 @@ cpunumb() {
 }
 
 cputemp() {
-    printf '%s\n' "$(sensors | awk '/Core/ {print $3}' | \
-                    cut -c 2- | head -n 1)"
+    printf '%s\n' "$(sensors | awk -F '+' '/Tdie:/ {print $2}')"
 }
 
 main() {

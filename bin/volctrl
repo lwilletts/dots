@@ -14,11 +14,11 @@ EOF
 }
 
 main() {
-    type pulsemixer > /dev/null 2>&1 && {
+    type pamixer > /dev/null 2>&1 && {
         case "$1" in
-            !|toggle) pulsemixer --toggle-mute         ;;
-            +|inc)    pulsemixer --change-volume "+$2" ;;
-            -|dec)    pulsemixer --change-volume "-$2" ;;
+            !|toggle) pamixer -t      ;;
+            +|inc)    pamixer -i "$2" ;;
+            -|dec)    pamixer -d "$2" ;;
             *)      usage 1 ;;
         esac
 

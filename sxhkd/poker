@@ -17,8 +17,8 @@ mod4 + shift + l
     lock
 mod1 + shift + r
     pkill -USR1 -x sxhkd
-mod1 + shift + b
-    bright 3 off
+mod4 + ctrl + BackSpace
+    pkill xinit
 
 # window manipulation
 mod1 + {_,shift + }q
@@ -43,7 +43,7 @@ mod1 + r: Escape
     pkill -ALRM sxhkd
 
 # tile
-mod1 + t: {t,s,v,,l,r,g}
+mod1 + t: {t,s,v,l,r,g}
     tile {3way,split,vert,left,right,grid}; pkill -ALRM sxhkd
 mod1 + shift + t: {t,s,v,,l,r,g}
     tile {3way,split,vert,left,right,grid} HDMI-A-2; pkill -ALRM sxhkd
@@ -58,7 +58,7 @@ mod1 + c
 mod4 + {bracketleft,bracketright,braceleft,braceright}
     mpvc seek {-5,5,-30,30} -q
 mod4 + {p,shift + Tab,n,Tab,z,c,r,BackSpace,space,slash}
-    mpvc {prev,prev,next,next,shuffle,clear,single,remove current,toggle,play $} -q
+    mpvc {prev,prev,next,-j 1 -P,shuffle,clear,single,remove current,toggle,play $} -q
 mod4 + a
     music
 
@@ -76,10 +76,9 @@ mod1 + p
 mod1 + {9,0}
     mpvc volume {-5,+5} -S /tmp/vidsocket -q
 mod4 + {s,d,9,0}
-    mpvc volume {-5,+5,-5,+5} -q
+    mpvc volume {-3,+3,-3,+3} -q
 {XF86AudioMute, XF86AudioLowerVolume, XF86AudioRaiseVolume}
     volctrl {!,- 3,+ 3}
-
 
 # shot
 Print
@@ -89,15 +88,11 @@ mod1 + Print
 shift + Print
     shot "$(pfw)"
 
-# brightness
-mod1 + F1
-    bright max
-F12
-    swapinput
+# screen
+{F22,F23,F24}
+    {bright min,bright,bright max}
 
 # misc
-mod1 + x
-    pkill WGrab
 mod1 + i
     invert lemonbar
 

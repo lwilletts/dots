@@ -107,4 +107,21 @@ main() {
     done
 }
 
-main "$@"
+dirtyhack() {
+    for i in 0 1 2 3 4 5; do
+        MOBO="/sys/devices/platform/it87.2656/hwmon/hwmon$i"
+
+        [ -e $MOBO ] && {
+            case "$1" in
+                on)  printf '%s\n' "0" > "$MOBO/pwm3_enable" ;;
+                off) printf '%s\n' "1" > "$MOBO/pwm3_enable" ;;
+            esac
+
+            return 0
+        }
+    done
+}
+
+dirtyhack "$@"
+
+# main "$@"

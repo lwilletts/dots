@@ -1,0 +1,226 @@
+#!/bin/sh
+#
+# modify radeon clocks
+# run as root
+
+usage() {
+    base=$(basename "$0")
+
+    cat >&2 << EOF
+Usage: $base [options]:
+
+Options:
+    -d | --device           Set which card to use if there are multiple in the system
+    -c | --clock <Mhz> <mv> Set boost clock speed at specific voltage.
+    -m | --memory <Mhz>     Set memory clock speed.
+    -p | --power <Watts>    Set power limit.
+    -i | --info             Show current clocks.
+    -f | --fan              Manually set fan speed to value [0-255] or auto.
+    -t | --temp             Auto fan control.
+    -h | --help             Show this help.
+EOF
+
+    [ $# -eq 0 ] || exit "$1"
+}
+
+intCheck() {
+    printf '%d' "$1" > /dev/null 2>&1
+}
+
+checkroot() {
+    if [ "$(id -u)" -ne 0 ]; then
+        printf '%s\n' "root permissions required for modifying clocks and fan speed"
+        exit 1
+    fi
+}
+
+power() {
+    intCheck "$1"
+    checkroot
+
+    power="$radeonPCI/hwmon/hwmon3/power1_cap"
+    powerDRM="$radeonPCI/power_dpm_force_performance_level"
+    # powerval="$(echo "$1 * 10^7" | bc)"
+
+    # manual
+    # auto
+    # low
+    # high
+    # profile_standard
+    # profile_min_sclk
+    # profile_min_mclk
+    # profile_peak
+
+    printf '%s\n' "auto" > "$powerDRM"
+    # printf '%s\n' "$powerval" > "$power"
+}
+
+clock() {
+    intCheck "$1"
+    intCheck "$2"
+    checkroot
+
+    printf '%s\n' "vc 2 $1 $2" > "$odclk"
+    printf '%s\n' "c" > "$odclk"
+}
+
+memory() {
+    intCheck "$1"
+    checkroot
+
+    printf '%s\n' "m 1 $1" > "$odclk"
+    printf '%s\n' "c" > "$odclk"
+}
+
+fanCtrl() {
+    checkroot
+
+    systemctl is-active --quiet radeontweak.service || {
+        systemctl stop radeontweak.service
+    }
+
+    case "$1" in
+        [0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-5][0-5])
+            printf '%s\n' "1" > "$fanCtrl"
+            printf '%s\n' "$1" > "$fanSpeed"
+            ;;
+        auto|*)
+            printf '%s\n' "2" > "$fanCtrl"
+            ;;
+    esac
+}
+
+fanCurve() {
+    checkroot
+
+    printf '%s\n' "1" > "$fanCtrl"
+
+    while :; do
+        TEMP="$(($(cat "$hwmon/temp2_input") / 1000))"
+
+        case $TEMP in
+            [0-3][0-9])  printf '%s\n' "0" > "$fanSpeed"   ;;
+            4[0-9])      printf '%s\n' "40" > "$fanSpeed"  ;;
+            5[0-9])      printf '%s\n' "100" > "$fanSpeed" ;;
+            6[0-9])      printf '%s\n' "130" > "$fanSpeed" ;;
+            7[0-9])      printf '%s\n' "150" > "$fanSpeed" ;;
+            8[0-9])      printf '%s\n' "170" > "$fanSpeed" ;;
+            9[0-9])      printf '%s\n' "190" > "$fanSpeed" ;;
+            1[0-9][0-9]) printf '%s\n' "210" > "$fanSpeed" ;;
+        esac
+
+        sleep 5
+    done
+}
+
+info() {
+    cat "$radeonPCI/pp_dpm_sclk"
+    printf "\n"
+    cat "$odclk"
+    exit
+}
+
+pci() {
+    [ -z "$PCI_VALUE" ] && PCI_VALUE="$1"
+
+    gpu_paths="$(mktemp)"
+    find /sys/class/drm -maxdepth 1 -type l -name "card?" > "$gpu_paths"
+
+    if [ "$(wc -l < "$gpu_paths")" -eq 1 ]; then
+        radeonPCI="/sys/class/drm/card0/device"
+        if [ "$(awk -F '=' '/DRIVER/ {print $2}' "$radeonPCI/uevent")" != "amdgpu" ]; then
+            printf '%s\n' "No AMD Radeon PCI card found!"
+            exit 1
+        fi
+
+        if [ -d "$radeonPCI/hwmon/hwmon2" ]; then
+            hwmon="$radeonPCI/hwmon/hwmon2"
+        else
+            hwmon="$radeonPCI/hwmon/hwmon3"
+        fi
+
+        return
+    else
+        # find correct card path using uevent
+        while read -r card; do
+            radeonPCI="$card/device"
+
+            if [ -e "$radeonPCI/uevent" ]; then
+                PCI_ID="$(awk -F '=' '/PCI_ID/ {print tolower($2)}' "$radeonPCI/uevent")"
+                if [ "$PCI_ID" = "$PCI_VALUE" ]; then
+                    if [ -d "$radeonPCI/hwmon/hwmon2" ]; then
+                        hwmon="$radeonPCI/hwmon/hwmon2"
+                    elif [ -d "$radeonPCI/hwmon/hwmon3" ]; then
+                        hwmon="$radeonPCI/hwmon/hwmon3"
+                    else
+                        hwmon="$radeonPCI/hwmon/hwmon4"
+                    fi
+
+                    rm "$gpu_paths"
+                    return
+                fi
+            fi
+
+            unset radeonPCI
+        done < "$gpu_paths"
+    fi
+
+    printf '%s\n' "No PCI device specified!"
+    exit 1
+}
+
+main() {
+    odclk="$radeonPCI/pp_od_clk_voltage"
+    fanSpeed="$hwmon/pwm1"
+    fanCtrl="$hwmon/pwm1_enable"
+
+    # check to see if there are root permissions?
+
+    # GNU-style options
+    for arg in "$@"; do
+        [ "$CLOCK_FLAG" = true ] && {
+            case "$count" in
+                0)
+                    clock="$arg"
+                    count=$((count + 1))
+                    ;;
+                1)
+                    voltage="$arg"
+
+                    clock "$clock" "$voltage"
+                    unset CLOCK_FLAG count
+                    ;;
+            esac
+        }
+
+        [ "$FAN_FLAG"    = true ] && fanCtrl "$arg" ; unset FAN_FLAG
+        [ "$POWER_FLAG"  = true ] && power "$arg"   ; unset POWER_FLAG
+        [ "$MEMORY_FLAG" = true ] && memory "$arg"  ; unset MEMORY_FLAG
+
+        case "$arg" in
+            -c|--clock)  count=0; CLOCK_FLAG=true ;;
+            -f|--fan)    FAN_FLAG=true    ;;
+            -p|--power)  POWER_FLAG=true  ;;
+            -m|--memory) MEMORY_FLAG=true ;;
+            -t|--temp)   fanCurve         ;;
+            -i|--info)   info             ;;
+            -d|--device) ;;
+            -?) usage 1  ;;
+        esac
+    done
+}
+
+for arg in "$@"; do
+    [ "$PCI_FLAG" = true ] && pci "$arg"; unset PCI_FLAG
+
+    case $arg in
+        -d|--device)      PCI_FLAG=true ;;
+        -h|--help|h|help) usage 0       ;;
+    esac
+done
+
+if [ -z "$hwmon" ]; then
+    usage 1
+fi
+
+main "$@"

@@ -1,0 +1,22 @@
+{
+  "default.route.alsa_card.usb-FiiO_DigiHug_USB_Audio-01:profile:off": [ ],
+  "default.route.alsa_card.usb-Focusrite_Scarlett_Solo_USB_Y7FUH950A67C93-00:profile:off": [ ],
+  "default.route.alsa_card.pci-0000_54_00.1:profile:off": [ ],
+  "default.route.alsa_card.pci-0000_55_00.1:profile:off": [ ],
+  "default.route.alsa_card.usb-046d_HD_Pro_Webcam_C920_70E9E59F-02:profile:off": [ ],
+  "default.route.alsa_card.usb-Focusrite_Scarlett_Solo_USB-00:profile:off": [ ],
+  "default.route.alsa_card.pci-0000_57_00.4:profile:off": [ ],
+  "default.route.alsa_card.usb-FiiO_DigiHug_USB_Audio-01:profile:output:analog-stereo+input:analog-stereo": [ "analog-output" ],
+  "default.route.alsa_card.usb-Focusrite_Scarlett_Solo_USB_Y7FUH950A67C93-00:profile:output:analog-stereo+input:analog-stereo": [ ],
+  "default.route.alsa_card.pci-0000_54_00.1:profile:output:hdmi-stereo": [ ],
+  "default.route.alsa_card.usb-046d_HD_Pro_Webcam_C920_70E9E59F-02:profile:input:analog-stereo": [ ],
+  "default.route.alsa_card.usb-Focusrite_Scarlett_Solo_USB-00:profile:output:analog-stereo+input:analog-stereo": [ ],
+  "default.route.alsa_card.pci-0000_57_00.4:profile:output:iec958-stereo": [ ],
+  "default.route.alsa_card.usb-FiiO_DigiHug_USB_Audio-01:output:analog-output": { "mute": false, "volumes": [ 1.000000, 1.000000 ], "channels": [ "FL", "FR" ] },
+  "default.route.alsa_card.usb-Focusrite_Scarlett_Solo_USB_Y7FUH950A67C93-00:profile:input:analog-stereo": [ "analog-input" ],
+  "default.route.alsa_card.usb-FiiO_DigiHug_USB_Audio-01:profile:output:analog-stereo": [ "analog-output" ],
+  "default.route.alsa_card.usb-Focusrite_Scarlett_Solo_USB-00:profile:input:analog-stereo": [ "analog-input" ],
+  "default.route.alsa_card.usb-Focusrite_Scarlett_Solo_USB-00:input:analog-input": { "mute": false, "volumes": [ 1.000000, 1.000000 ], "channels": [ "FL", "FR" ] },
+  "default.route.alsa_card.usb-Focusrite_Scarlett_Solo_USB_Y7FUH950A67C93-00:input:analog-input": { "mute": false, "volumes": [ 1.000000, 1.000000 ], "channels": [ "FL", "FR" ] },
+  "default.route.alsa_card.usb-Focusrite_Scarlett_Solo_USB_Y7FUH950A67C93-00:profile:pro-audio": [ ]
+}

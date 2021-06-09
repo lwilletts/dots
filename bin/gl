@@ -24,6 +24,7 @@ main() {
         ittb)    steam steam://rungameid/590380  & ;;
         rottr)   steam steam://rungameid/391220  & ;;
         sottr)   steam steam://rungameid/750920  & ;;
+        kovaak)  steam steam://rungameid/824270  & ;;
         stardew) steam steam://rungameid/413150  & ;;
         tribes)
             # GAMEDIR="$GAME1/Tribes/2017_T1Basic"
@@ -77,6 +78,9 @@ main() {
             ;;
         tradewinds)
             GAMEDIR="/home/fyr/.games/Tradewinds.(Sandlot.Games)-WWW/"
+            ;;
+        *)
+            printf '%s\n' "game not found"
             ;;
     esac
 }

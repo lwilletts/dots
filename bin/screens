@@ -11,38 +11,18 @@ main() {
     . fwmrc
     wmgaps
 
-    SEC="HDMI-A-0"
     LAYOUTDIR="$HOME/.screenlayout"
 
     case "$1" in
-        default)
-            "$LAYOUTDIR/newdefault.sh"
-
-            resetbar
-            ;;
         pri)
-            PRI="$(lsm -p)"
-
-            for wid in $(listwindows "$SEC"); do
-                move center "$wid" "$PRI"
-            done
-
             "$LAYOUTDIR/pri.sh"
-
-            for wid in $(listwindows "$PRI"); do
-                wmv 0 -480 "$wid"
-            done
 
             resetbar
             ;;
         *)
             case "$(hostname)" in
                 "fyriousa")
-                    "$LAYOUTDIR/newdefault.sh"
-
-                    for wid in $(listwindows "$PRI"); do
-                        wmv 0 480 "$wid"
-                    done
+                    "$LAYOUTDIR/default.sh"
 
                     resetbar
                     ;;

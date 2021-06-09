@@ -20,6 +20,9 @@ checkroot() {
     }
 }
 
+# 0x06 hdmi-2
+# 0x0f displayport
+
 main() {
     checkroot
 
@@ -34,7 +37,7 @@ main() {
                 ddcutil --model="C27JG5x" setvcp 0x60 0x06 > /dev/null 2>&1
             }
             ;;
-        d|display)
+        d)
             virsh start win10 && {
                 ddcutil --model="C27JG5x" setvcp 0x60 0x0f > /dev/null 2>&1
             }

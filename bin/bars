@@ -226,31 +226,26 @@ main() {
             ;;
     esac
 
-    # second monitor bars
     case "$(hostname)" in
         fyriousa)
-            case "$SEC" in
-                HDMI-A-2)
-                    barw=400
+            barw=400
 
-                    SX="$(mattr x "$SEC")"
-                    SW="$(mattr w "$SEC")"
-                    SH="$(mattr h "$SEC")"
+            SX="$(mattr x "$SEC")"
+            SW="$(mattr w "$SEC")"
+            SH="$(mattr h "$SEC")"
 
-                    case "$BAR" in
-                        top)
-                            barx=$((SX + SW - barw - RGAP))
-                            bary=$((SY + barh - TGAP/4))
-                            ;;
-                        *)
-                            barx=$((SX + SW - barw - RGAP))
-                            bary=$((SH - barh - BW))
-                            ;;
-                    esac
-
-                    gpubartrigger &
-                ;;
+            case "$BAR" in
+                top)
+                    barx=$((SX + SW - barw - RGAP))
+                    bary=$((SY + barh - TGAP/4))
+                    ;;
+                *)
+                    barx=$((SX + SW - barw - RGAP))
+                    bary=$((SH - barh - BW))
+                    ;;
             esac
+
+            gpubartrigger &
             ;;
     esac
 }

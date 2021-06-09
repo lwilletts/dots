@@ -4,19 +4,19 @@
 
 main() {
     pulse="urxvtc -g 85x44 -title 'volbar' -e sh -c 'pulsemixer'"
-    vol="$(pacmd list-sinks | head -n 9 | tail -n 1 | cut -d\  -f 6)"
+    vol="$(pamixer --get-volume)"
 
     buf=""
 
-    case "$(pacmd list-sinks | head -n 13 | tail -n 1 | cut -d\  -f 2)" in
-        no)
+    case "$(pamixer --get-mute)" in
+        false)
             buf="${buf}$bar_back_foreground$bar_text_foreground"
-            buf="${buf}  %{A:${pulse}:} [${vol}]  %{A}"
+            buf="${buf} %{A:${pulse}:} [${vol}%]  %{A}"
             buf="${buf}$bar_back_foreground$bar_text_foreground"
             ;;
-        yes)
+        true)
             buf="${buf}$bar_back_highlight$bar_text_highlight"
-            buf="${buf}  %{A:${pulse}:} [${vol}]  %{A}"
+            buf="${buf} %{A:${pulse}:} [${vol}%]  %{A}"
             buf="${buf}$bar_back_foreground$bar_text_foreground"
             ;;
     esac

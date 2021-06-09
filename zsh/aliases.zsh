@@ -23,6 +23,7 @@ alias xsel="xsel -l /dev/null"
 alias szsh="source ~/.zshrc"
 
 # apps
+alias rt="radeontweak"
 alias vol="pulsemixer"
 alias htop="htop -t"
 alias grep="grep --color=auto"
@@ -32,8 +33,6 @@ alias ffmpeg="ffmpeg -hide_banner"
 alias glances="glances --hide-kernel-threads"
 
 # audio
-alias sinks="pacmd list-sinks|awk '/index:/ {print \$0}; /name:/ {print \$0}; /device\.description/ {print \$0}'"
-alias sources="pacmd list-sources|awk '/index:/ {print \$0}; /name:/ {print \$0}; /device\.description/ {print \$0}'"
 alias record="ffmpeg -f pulse -i alsa_input.usb-Focusrite_Scarlett_Solo_USB-00.analog-stereo.remapped"
 
 # net
@@ -48,6 +47,12 @@ alias net6="curl -s ipv6.icanhazip.com"
 alias wget="wget --no-hsts"
 alias serv="mosh phosphor"
 alias remote="mosh remote"
+
+# oneliners
+alias coin="curl -s rate.sx"
+alias eth="curl -s rate.sx/eth"
+alias bit="curl -s rate.sx/bitcoin"
+alias weather="curl -s wttr.in | tail -n 32 | head -n 30"
 
 # games
 alias game1="cd $GAME1"
