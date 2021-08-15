@@ -108,6 +108,9 @@ call plug#end()
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 "{{{
+nnoremap j j0
+nnoremap k k0
+
 noremap K <nop>
 nnoremap <C-u> <nop>
 
@@ -318,8 +321,12 @@ set wildignore+=*.gif,*.png,*.jp*
 " completion menu
 set completeopt=menu,preview
 
+" clipboard
+set clipboard=unnamedplus
+
 " defaults
 set tw=80
+set fo+=t
 set ts=4 sw=4 sts=4
 set smarttab expandtab
 

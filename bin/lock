@@ -1,5 +1,16 @@
 #!/bin/sh
 
+testfun() {
+    for WID in $(lsw)
+    do
+        REGION="$(wattr whxy "$WID" | sed 's/ /x/; s/ /+/g')"
+        COMMANDS="$COMMANDS -region $REGION -statistic mode 1.0 +region"
+    done
+
+    scrot ~/test.png
+    convert ~/test.png $COMMANDS example.png
+}
+
 scrot /tmp/lock.bmp
 mpvc pause -Q -q
 

@@ -45,8 +45,6 @@ mod1 + r: Escape
 # tile
 mod1 + t: {t,s,v,l,r,g}
     tile {3way,split,vert,left,right,grid}; pkill -ALRM sxhkd
-mod1 + shift + t: {t,s,v,,l,r,g}
-    tile {3way,split,vert,left,right,grid} HDMI-A-2; pkill -ALRM sxhkd
 
 # groups
 mod1 + {shift + ,_} {1-8}
@@ -58,7 +56,7 @@ mod1 + c
 mod4 + {bracketleft,bracketright,braceleft,braceright}
     mpvc seek {-5,5,-30,30} -q
 mod4 + {p,shift + Tab,n,Tab,z,c,r,BackSpace,space,slash}
-    mpvc {prev,prev,next,-j 1 -P,shuffle,clear,single,remove current,toggle,play $} -q
+    mpvc {prev,prev,-j 1 -P,-j 1 -P,shuffle,clear,single,remove current,toggle,play $} -q
 mod4 + a
     music
 
@@ -84,7 +82,7 @@ mod4 + {s,d,9,0}
 Print
     shot pri
 mod1 + Print
-    shot sel
+    snap
 shift + Print
     shot "$(pfw)"
 

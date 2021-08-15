@@ -2,7 +2,6 @@
 set font "monospace regular 8"
 set page-padding 2
 set adjust-open width
-set show-scrollbars false
 set statusbar-v-padding 20
 set statusbar-h-padding 40
 

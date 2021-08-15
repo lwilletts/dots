@@ -27,7 +27,6 @@ main() {
 . fwmrc
 wmcolours
 
-bar_text_warning="%{F#$ACTIVE}"
 bar_text_foreground="%{F#$ACTIVE}"
 bar_back_highlight="%{B#$URGENT}"
 bar_back_foreground="%{B#$INACTIVE}"

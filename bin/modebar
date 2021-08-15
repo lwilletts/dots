@@ -1,0 +1,38 @@
+#!/bin/sh
+#
+# modebar
+
+main() {
+    while read -r line; do
+        case $line in
+            "H*")
+                # buf=""
+                # buf="${buf}$bar_back_highlight$bar_text_highlight"
+                # buf="${buf}  $MODE  "
+                # buf="${buf}$bar_back_foreground$bar_text_foreground"
+                ;;
+            "C*")
+                ;;
+            "B*")
+                ;;
+            "E*")
+                ;;
+            "T*")
+                ;;
+        esac
+
+    printf '%s\n' "$buf"
+
+    done < ~/.sxhkdfifo
+
+}
+
+. fwmrc
+wmcolours
+
+bar_text_highlight="%{F#$ACTIVE}"
+bar_text_foreground="%{F#$ACTIVE}"
+bar_back_highlight="%{B#$URGENT}"
+bar_back_foreground="%{B#$INACTIVE}"
+
+main "$@"

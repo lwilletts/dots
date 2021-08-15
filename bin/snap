@@ -1,0 +1,14 @@
+#!/bin/sh
+#
+# snap
+
+main() {
+    shotdir="$HOME/tmp/shots"
+
+    shot sel
+    pkill -HUP -x picom
+    file="$(ls -t "$shotdir" | head -n 1)"
+    dragon -x "$shotdir/$file"
+}
+
+main "$@"

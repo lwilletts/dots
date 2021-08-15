@@ -15,41 +15,30 @@ generateInfo() {
     # fallback to image within folder
     coverpath="$(printf '%s\n' "$path" | rev | cut -d/ -f 2- | rev)"
 
-    for covername in $image_names; do
-        test -e "$coverpath/$covername" && {
-            convert "$coverpath/$covername" -resize 350x350 "$snipdir/cover.png"
-            return
-        }
-    done
-
     # find first image in folder
     imgfile="$(fd . --full-path "$coverpath" -e jpg -e png -d 1 | head -n 1)"
-    test -e "$imgfile" && {
+    [ -e "$imgfile" ] && {
         convert "$imgfile" -resize 350x350 "$snipdir/cover.png"
         return
     }
 
-    # delete image if there is no stream
-    test -e "$snipdir/cover.png" && rm "$snipdir/cover.png"
+    # replace image if there is no stream
+    [ -e "$snipdir/cover.png" ] && \
+        convert -size 350x350 xc:none "$snipdir/cover.png"
 }
 
 clean() {
-    rm "$snipdir/cover.png"
-    rm "$snipdir/playingnow.txt"
+    convert -size 350x350 xc:none "$snipdir/cover.png"
+    printf '%s\n\n' "" > "$snipdir/playingnow.txt"
 }
 
 main() {
-    image_names="
-    folder.jpg
-    folder.png
-    Cover.jpg
-    Cover.png
-    cover.jpg
-    cover.png
-    "
-
     snipdir=${snipdir:-/tmp/snip}
-    test ! -d "$snipdir" && mkdir -p "$snipdir"
+    [ ! -d "$snipdir" ] && mkdir -p "$snipdir"
+
+    # init blank files
+    convert -size 350x350 xc:none "$snipdir/cover.png"
+    printf '%s\n\n' "" > "$snipdir/playingnow.txt"
 
     trackOld=""
     trackNew="$(mpvc -f "%artist% - %title%                        ")"
@@ -57,12 +46,13 @@ main() {
     trap clean EXIT
 
     while :; do
-        test "$trackNew" != "$trackOld" && generateInfo
+        [ "$trackNew" != "$trackOld" ] && generateInfo
 
         trackNew="$(mpvc -f "%artist% - %title%                        ")"
-        test "$trackNew" = "No files added to /tmp/mpvsocket." && {
+        [  "$trackNew" = "No files added to /tmp/mpvsocket." ] && {
             printf '%s\n' "" > "$snipdir/playingnow.txt"
-            test -e "$snipdir/cover.png" && rm "$snipdir/cover.png"
+            [ -e "$snipdir/cover.png" ] && \
+                convert -size 350x350 xc:none "$snipdir/cover.png"
         }
 
         sleep 0.5

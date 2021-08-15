@@ -48,7 +48,7 @@ export GNUPGHOME="$XDG_CONFIG_HOME"
 
 # global shell vars.
 export QT_QPA_PLATFORMTHEME="qt5ct"
-export BROWSER="/usr/bin/qutebrowser"
+# export BROWSER="/usr/bin/qutebrowser"
 
 hash nvim 2> /dev/null && {
     export VISUAL="nvim"
@@ -69,7 +69,7 @@ alias white="sed 's/\x1B\[[0-9;]*[JKmsu]//g'"
 # games
 export VK_ICD_FILENAMES="/usr/share/vulkan/icd.d/radeon_icd.i686.json:/usr/share/vulkan/icd.d/radeon_icd.x86_64.json"
 export GAME1="$HOME/.steam/steam/steamapps/common"
-export GAME2="/mnt/spare/steam/steamapps/common"
+export GAME2="/mnt/steam/steam/steamapps/common"
 
 # shortcuts
 export POOL="/mnt/pool"

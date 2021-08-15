@@ -5,10 +5,14 @@ UUID=b8b6aa53-fdd0-4d12-a3d1-4992602765b0   /           ext4        rw,noatime,c
 # /dev/sdd3
 UUID=c93b807d-2d53-4742-a92d-919b270f0422   /home       ext4        rw,noatime,commit=60,barrier=0                                                                              0 2
 
-# /dev/sd(a,b)
-# UUID=85c5feef-583b-4068-9b56-3a68525a361f   /mnt/speed  btrfs       rw,noatime,discard                                                                                          0 0
+# /dev/sda1
+UUID=5a923beb-649d-406a-9cf1-ad916a448937   /opt        btrfs       rw,noatime,discard                                                                                          0 0
+
 # /dev/sdc
 UUID=47f3d8a0-efea-40a1-b5dc-f85ac90846d5   /mnt/spare  btrfs       rw,noatime,discard                                                                                          0 0
+
+# tmpfs
+tmpfs                                       /tmp        tmpfs       rw,nodev,nosuid,noatime,size=8G                                                                             0 0
 
 # phosphor
 fyr@phosphor:/srv/nfs/pool                  /mnt/pool   fuse.sshfs  x-systemd.automount,delay_connect,_netdev,user,idmap=user,follow_symlinks,allow_other,reconnect,IdentityFile=/home/fyr/.ssh/me,default_permissions,uid=1000,gid=1000,ciphers=aes128-ctr  0

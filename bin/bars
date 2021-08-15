@@ -30,6 +30,7 @@ simplebar() {
         gpubar|\
         mpvbar|\
         sysbar|\
+        modebar|\
         datebar|\
         groupbar|\
         volbaralsa|\
@@ -143,6 +144,7 @@ mainbar() {
         buf=""
         buf="${buf} %{l} %{+o}"
         buf="${buf}$(datebar)"
+        # buf="${buf}$(modebar)"
         buf="${buf}$(notifybar)"
         buf="${buf}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     "
         buf="${buf} %{r} "

@@ -29,23 +29,7 @@ c.content.blocking.adblock.lists = ['https://easylist.to/easylist/easylist.txt',
 # mpv
 @cmdutils.register()
 
-def get_mouse_uri():
-    url = objreg.last_focused_window().status.url
-    if(url._hover_url):
-        return url._hover_url
-    elif(url._normal_url):
-        return url._normal_url
-    else:
-        return ""
 
-def exec_hover_uri() -> None:
-    if(get_mouse_uri()):
-        os.system('mpvopen ' + get_mouse_uri())
-
-config.bind("left", "exec-hover-uri", mode="normal")
-
-
-# colours
 def read_xresources(prefix):
     props = {}
     x = subprocess.run(['xrdb', '-query'], stdout=subprocess.PIPE)
@@ -57,6 +41,7 @@ def read_xresources(prefix):
 
 
 xresources = read_xresources('*')
+
 
 # list of user stylesheet filenames to use
 # c.content.user_stylesheets = ['']
