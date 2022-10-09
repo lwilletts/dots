@@ -1,0 +1,29 @@
+#!/bin/sh
+#
+# glass
+
+usage() {
+    base=$(basename "$0")
+
+    cat >&2 << EOF
+Usage:
+    $base
+EOF
+
+    [ $# -eq 0 ] || exit "$1"
+}
+
+main() {
+    looking-glass-client \
+        win:title=win10 \
+        win:size=2560x1440 \
+        win:position=center \
+        win:keepaspect \
+        win:noScreensaver \
+        input:rawMouse \
+        input:autoCapture=yes \
+        -m 59 \
+        "$@"
+}
+
+main "$@"

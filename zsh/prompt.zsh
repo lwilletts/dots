@@ -6,6 +6,9 @@ zle -N zle-keymap-select
 # no cd required
 setopt autocd nomatch notify
 
+# accent chars
+setopt combining_chars
+
 # coloured prompt
 autoload -U colors && colors
 

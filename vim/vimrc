@@ -89,9 +89,7 @@ if has('nvim')
         Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
 
         let g:deoplete#enable_at_startup = 1
-        let g:deoplete#enable_smart_case = 1
         let g:deoplete#enable_ignore_case = 0
-        let g:deoplete#auto_complete_start_length = 1
     endif
 endif
 
@@ -250,7 +248,7 @@ try
 catch
 endtry
 
-set colorcolumn=+3
+set colorcolumn=0
 
 " cursor always placed in middle
 set scrolloff=0
@@ -286,7 +284,7 @@ let shell="/bin/zsh"
 set autochdir
 
 " disable annoying mouse
-set mouse-=a
+set mouse+=a
 
 " faster updates
 set updatetime=100

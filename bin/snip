@@ -4,7 +4,7 @@
 
 generateInfo() {
     trackOld="$trackNew"
-    printf "$trackOld\ninserttextforobs" > "$snipdir/playingnow.txt"
+    printf "$trackOld\n\ninserttextforobs" > "$snipdir/playingnow.txt"
 
     path="$(mpvc -f "%path%")"
 
@@ -15,20 +15,21 @@ generateInfo() {
     # fallback to image within folder
     coverpath="$(printf '%s\n' "$path" | rev | cut -d/ -f 2- | rev)"
 
-    # find first image in folder
-    imgfile="$(fd . --full-path "$coverpath" -e jpg -e png -d 1 | head -n 1)"
-    [ -e "$imgfile" ] && {
-        convert "$imgfile" -resize 350x350 "$snipdir/cover.png"
-        return
-    }
+    if [ "No files added to /tmp" != "$coverpath" ]; then
+        # find first image in folder
+        imgfile="$(fd . --full-path "$coverpath" -e jpg -e png -d 1 | head -n 1)"
+        [ -e "$imgfile" ] && {
+            convert "$imgfile" -resize 350x350 "$snipdir/cover.png"
+            return
+        }
+    fi
 
-    # replace image if there is no stream
-    [ -e "$snipdir/cover.png" ] && \
-        convert -size 350x350 xc:none "$snipdir/cover.png"
+    # delete image if there is no stream
+    [ -e "$snipdir/cover.png" ] && rm "$snipdir/cover.png"
 }
 
 clean() {
-    convert -size 350x350 xc:none "$snipdir/cover.png"
+    rm "$snipdir/cover.png"
     printf '%s\n\n' "" > "$snipdir/playingnow.txt"
 }
 
@@ -36,9 +37,11 @@ main() {
     snipdir=${snipdir:-/tmp/snip}
     [ ! -d "$snipdir" ] && mkdir -p "$snipdir"
 
-    # init blank files
-    convert -size 350x350 xc:none "$snipdir/cover.png"
-    printf '%s\n\n' "" > "$snipdir/playingnow.txt"
+    # init blank files if obs is closed
+    pgrep obs > /dev/null || {
+        convert -size 350x350 xc:transparent "$snipdir/cover.png"
+        printf '%s\n\n' "" > "$snipdir/playingnow.txt"
+    }
 
     trackOld=""
     trackNew="$(mpvc -f "%artist% - %title%                        ")"
@@ -51,8 +54,7 @@ main() {
         trackNew="$(mpvc -f "%artist% - %title%                        ")"
         [  "$trackNew" = "No files added to /tmp/mpvsocket." ] && {
             printf '%s\n' "" > "$snipdir/playingnow.txt"
-            [ -e "$snipdir/cover.png" ] && \
-                convert -size 350x350 xc:none "$snipdir/cover.png"
+            [ -e "$snipdir/cover.png" ] && rm "$snipdir/cover.png"
         }
 
         sleep 0.5

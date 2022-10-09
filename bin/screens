@@ -2,11 +2,6 @@
 #
 # screens
 
-resetbar() {
-    pkill bars
-    bars -m
-}
-
 main() {
     . fwmrc
     wmgaps
@@ -17,14 +12,14 @@ main() {
         pri)
             "$LAYOUTDIR/pri.sh"
 
-            resetbar
+            for wid in $(lsw); do
+                move center "$wid"
+            done
             ;;
         *)
             case "$(hostname)" in
                 "fyriousa")
                     "$LAYOUTDIR/default.sh"
-
-                    resetbar
                     ;;
             esac
             ;;

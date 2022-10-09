@@ -145,13 +145,16 @@ mainbar() {
         buf="${buf} %{l} %{+o}"
         buf="${buf}$(datebar)"
         # buf="${buf}$(modebar)"
-        buf="${buf}$(notifybar)"
+        # buf="${buf}$(notifybar)"
         buf="${buf}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     "
         buf="${buf} %{r} "
+        buf="${buf}%{F#$ACTIVE}"
+        buf="${buf}$(gpu) "
         buf="${buf}$(mpvbar /tmp/mpvsocket)"
-        buf="${buf}$(mpvbar /tmp/vidsocket)"
         buf="${buf}$(batbar)"
         buf="${buf}$(${volbar})"
+
+        sleep 0.25
 
         printf '%s\n' "$buf"
     done | runbar "mainbar" | /bin/sh &
@@ -180,7 +183,7 @@ main() {
             bary=$((barh - TGAP/4))
             ;;
         topborder)
-            barx=$PX
+            barx=-2530
             barw=$PW
 
             barh=$((60/2))
@@ -188,7 +191,7 @@ main() {
             ;;
         botborder)
             barx=$PX
-            barw=$((PW - BW))
+            barw=$PW
 
             barh=$((60/2))
             bary=$((PH - barh))
@@ -203,10 +206,7 @@ main() {
     esac
 
     case "$1" in
-        -m)
-            mainbar &
-            ;;
-        *)
+        -s|separate)
             barw=120
             simplebar datebar c 5
 
@@ -226,28 +226,8 @@ main() {
             barw=380
             vidbartrigger &
             ;;
-    esac
-
-    case "$(hostname)" in
-        fyriousa)
-            barw=400
-
-            SX="$(mattr x "$SEC")"
-            SW="$(mattr w "$SEC")"
-            SH="$(mattr h "$SEC")"
-
-            case "$BAR" in
-                top)
-                    barx=$((SX + SW - barw - RGAP))
-                    bary=$((SY + barh - TGAP/4))
-                    ;;
-                *)
-                    barx=$((SX + SW - barw - RGAP))
-                    bary=$((SH - barh - BW))
-                    ;;
-            esac
-
-            gpubartrigger &
+        *)
+            mainbar &
             ;;
     esac
 }

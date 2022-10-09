@@ -1,34 +1,27 @@
 #!/bin/sh
 
-back
 wmp -a 2360 1008
 
 # x11 environment
 xset s off -dpms                                  # screen blanking
-xset r rate 250 40                                # faster keypresses
 xset +fp ~/.local/share/fonts                     # custom fonts
 xsetroot -cursor_name left_ptr                    # left pointer as cursor
-xkbcomp "$HOME"/.dots/X11/FNkeymap.xkb "$DISPLAY" # keymap for romac
 screens                                           # set randr
+
+back
+
+solaar &
 
 [ -f ~/.Xresources ] && xrdb -load ~/.Xresources
 pgrep urxvtd 2> /dev/null || urxvtd -q -o -f &
 
 # wm
+bars &
 snip &
-ewmh &
 sxhkd -s ~/.sxhkdfifo &
 watcher &
+xbanish &
 envreact &
 
-case "$(hostname)" in
-    "fyriousa")
-        vibrant-cli "$(lsm -p)" 1.3
-        vibrant-cli HDMI-A-0 1.3
-        autotile vert HDMI-A-0 &
-        unclutter &
-        ;;
-esac
-
-sleep 0.3
+sleep 0.2
 xwait

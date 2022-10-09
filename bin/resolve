@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# setpoker
+# .dots/bin/resolve
 
 usage() {
     base=$(basename "$0")
@@ -14,10 +14,9 @@ EOF
 }
 
 main() {
-    # check there is a display running
-    test ! -z "$DISPLAY" && {
-        xset r rate 250 40
-    }
+    HOME=/opt/resolve/tmp || exit 1
+
+    progl /opt/resolve/bin/resolve
 }
 
 main "$@"

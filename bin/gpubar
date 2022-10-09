@@ -29,7 +29,7 @@ main() {
     VOLT="$(cat "$radeonPCI/hwmon/hwmon"?"/in0_input") mv"
     JUNC=$(printf '%s\n' "$sensorOut" | awk '/junction/ && $3 == "(crit" {print $2}' | cut -c 2-)
     MEM=$(printf '%s\n' "$sensorOut" | awk '/mem/ && $3 == "(crit" {print $2}' | cut -c 2-)
-    POWR=$(printf '%s\n' "$sensorOut" | awk '/power1/ {print $2,$3}')
+    POWR=$(printf '%s\n' "$sensorOut" | awk '/slowPTT/ {print $2,$3}')
     FANS=$(printf '%s\n' "$sensorOut" | grep "3300" | awk '/fan1/ {print $2,$3}')
 
     buf=""

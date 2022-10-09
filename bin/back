@@ -16,8 +16,12 @@ EOF
 main() {
     case "$(hostname)" in
         fyriousa)
-            hsetroot -root -tile "/home/fyr/usr/img/patterns/leather.png"  \
-                     -brightness "0.01"
+            BACK="/home/fyr/usr/subtle/mosaic.png"
+            if [ -e "$BACK" ]; then
+                hsetroot -root -tile "$BACK" -brightness "0.05"
+            else
+                hsetroot -root -tile "$HOME/.backup.png" -brightness "-0.8"
+            fi
             ;;
     esac
 }

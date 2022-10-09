@@ -1,10 +1,11 @@
 #!/bin/sh
 
-. ~/.zsh/ttycolors
-. ~/.zsh/environment.zsh
+. $HOME/.zsh/ttycolors
+. $HOME/.zsh/environment.zsh
 
-# [ -f "$DOTS/bin/startmenu" ] && {
-#     $DOTS/bin/startmenu
-#     clear
-#     exit
-# }
+if [ -z "$DISPLAY" ]; then
+    if [ "$(tty)" = /dev/tty1 ]; then
+        sleep 3
+        startx
+    fi
+fi

@@ -1,0 +1,27 @@
+#!/bin/sh
+#
+# loopback
+
+usage() {
+    base=$(basename "$0")
+
+    cat >&2 << EOF
+Usage:
+    $base
+EOF
+
+    [ $# -eq 0 ] || exit "$1"
+}
+
+link() {
+    pw-link Game:monitor_FL alsa_output.usb-FiiO_DigiHug_USB_Audio-01.analog-stereo:playback_FL
+    pw-link Game:monitor_FR alsa_output.usb-FiiO_DigiHug_USB_Audio-01.analog-stereo:playback_FR
+
+    pw-link Media:monitor_FL alsa_output.usb-FiiO_DigiHug_USB_Audio-01.analog-stereo:playback_FL
+    pw-link Media:monitor_FR alsa_output.usb-FiiO_DigiHug_USB_Audio-01.analog-stereo:playback_FR
+
+    pw-link Discord:monitor_FL alsa_output.usb-FiiO_DigiHug_USB_Audio-01.analog-stereo:playback_FL
+    pw-link Discord:monitor_FR alsa_output.usb-FiiO_DigiHug_USB_Audio-01.analog-stereo:playback_FR
+}
+
+pgrep pipewire 2>&1 /dev/null | link "$@"

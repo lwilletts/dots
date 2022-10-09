@@ -25,10 +25,11 @@ def filter_yt(info: interceptor.Request):
 interceptor.register(filter_yt)
 
 c.content.blocking.adblock.lists = ['https://easylist.to/easylist/easylist.txt', 'https://easylist.to/easylist/easyprivacy.txt', 'https://easylist-downloads.adblockplus.org/easylistdutch.txt', 'https://easylist-downloads.adblockplus.org/abp-filters-anti-cv.txt', 'https://www.i-dont-care-about-cookies.eu/abp/', 'https://secure.fanboy.co.nz/fanboy-cookiemonster.txt']
+c.content.blocking.enabled = True
+config.bind('Ctrl-o', 'config-cycle content.blocking.enabled')
 
 # mpv
 @cmdutils.register()
-
 
 def read_xresources(prefix):
     props = {}
@@ -39,9 +40,10 @@ def read_xresources(prefix):
         props[prop] = value
     return props
 
-
-xresources = read_xresources('*')
-
+try:
+    xresources = read_xresources('*')
+except ValueError as error:
+    pass
 
 # list of user stylesheet filenames to use
 # c.content.user_stylesheets = ['']
@@ -86,10 +88,10 @@ c.input.mouse.rocker_gestures = True
 c.input.mouse.back_forward_buttons = False
 
 # tab management
-config.bind('<Ctrl-k>', 'tab-move +')
-config.bind('<Ctrl-j>', 'tab-move -')
-config.bind('<Shift-k>', 'tab-next')
-config.bind('<Shift-j>', 'tab-prev')
+config.bind('<Ctrl-k>', 'tab-move -')
+config.bind('<Ctrl-j>', 'tab-move +')
+config.bind('<Shift-k>', 'tab-prev')
+config.bind('<Shift-j>', 'tab-next')
 config.bind('<Shift-d>', 'tab-clone')
 
 # quickmarks
@@ -104,7 +106,7 @@ config.bind('<Shift-e>', 'set-cmd-text -s :session-save -o ')
 
 # downloads
 config.bind('<Ctrl-d>', 'spawn qutedl {url}')
-config.bind('<Ctrl-f>', 'spawn youtube-dl -x {url}')
+config.bind('<Ctrl-f>', 'spawn yt-dlp -x {url}')
 config.bind('<Ctrl-m>', 'spawn mpv {url}')
 
 # yank
@@ -179,7 +181,7 @@ c.completion.open_categories = ['bookmarks', 'quickmarks', 'history']
 
 # tabs
 # position
-c.tabs.position = 'top'
+c.tabs.position = 'left'
 c.tabs.width = 200
 c.tabs.max_width = 110
 c.tabs.min_width = 110
@@ -204,7 +206,7 @@ c.tabs.mousewheel_switching = True
 c.tabs.new_position.stacking = True
 c.tabs.new_position.related = 'next'
 c.tabs.new_position.unrelated = 'next'
-c.tabs.select_on_remove = 'next'
+c.tabs.select_on_remove = 'prev'
 c.tabs.pinned.frozen = True
 c.tabs.pinned.shrink = True
 c.tabs.tabs_are_windows = False
@@ -227,7 +229,7 @@ c.prompt.filebrowser = True
 c.downloads.open_dispatcher = None
 
 # privacy & content
-# c.content.headers.user_agent = 'Mozilla/5.0 (Windows NT 6.1; rv:52.0) Gecko/20100101 Firefox/52.0'
+c.content.headers.user_agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36'
 c.content.headers.do_not_track = True
 # c.content.host_blocking.enabled = True
 
@@ -597,7 +599,7 @@ c.content.notifications.show_origin = False
 # still be downloaded by clicking the download button in the pdf.js
 # viewer.
 # Type: Bool
-c.content.pdfjs = True
+c.content.pdfjs = False
 
 # Allow websites to request persistent storage quota via
 # `navigator.webkitPersistentStorage.requestQuota`.

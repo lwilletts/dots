@@ -2,8 +2,8 @@
 #
 # fffopen
 
-test -z "$1" && exit
-test -e "$1" || exit
+[  -z "$1" ] && exit
+[  -e "$1" ] || exit
 
 mime_type="$(file -biL "$1")"
 
@@ -20,13 +20,13 @@ case "$mime_type" in
         ;;
     audio/*)
         mpvc playnext "$1"
-        mpvc next
+        mpvc -j 1 -P
         ;;
     application/pdf*)
         zathura "$1"
         ;;
-    application/zip*)
-        unzip "$1"
+    application/zip*|application/gzip)
+        unzipper "$1"
         ;;
     *opendocument*|*openxmlformats*)
         libreoffice "$1"

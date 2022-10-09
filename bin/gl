@@ -1,6 +1,7 @@
 #!/bin/sh
 #
 # gl
+# steam game launch
 
 usage() {
     base=$(basename "$0")
@@ -14,71 +15,19 @@ EOF
 }
 
 main() {
-    MANGODIR="$HOME/.config/Mangohud"
-
     case "$1" in
-        hades)   steam steam://rungameid/1145360 & ;;
-        midair)  steam steam://rungameid/1231210 & ;;
-        civ)     steam steam://rungameid/8930    & ;;
-        ftl)     steam steam://rungameid/212680  & ;;
-        ittb)    steam steam://rungameid/590380  & ;;
-        rottr)   steam steam://rungameid/391220  & ;;
-        sottr)   steam steam://rungameid/750920  & ;;
-        kovaak)  steam steam://rungameid/824270  & ;;
-        stardew) steam steam://rungameid/413150  & ;;
-        tribes)
-            # GAMEDIR="$GAME1/Tribes/2017_T1Basic"
-            GAMEDIR="$GAME1/Tribes/Tribes_MILK"
-            cd "$GAMEDIR" || {
-                printf '%s\n' "$GAMEDIR not found!"
-                return 1
-            }
-
-            case "$2" in
-                cfg)
-                    WINEPREFIX=~/.wine/prefixes/tribes winecfg
-                    ;;
-                *)
-                    # wine envs
-                    WINEESYNC=1 \
-                    WINEDEBUG=-all \
-                    WINEARCH=win32 \
-                    WINEPREFIX=~/.wine/prefixes/tribes \
-                    vblank_mode=0 \
-                    RADV_TEX_ANISO=0 \
-                    pp_jimenezmlaa=0 \
-                    GALLIUM_HUD_PERIOD=0.25 \
-                    GALLIUM_HUD=".x200.y1330.w250.h80fps" \
-                    strangle 500 wine "$GAMEDIR/Tribes.exe" &
-                    # MANGOHUD=1 \
-
-                    sleep 2
-
-                    PID="$(WINEPREFIX=~/.wine/prefixes/tribes wine \
-                    "/home/fyr/src/dllinjector/Release/dllInjector-x86.exe" -d | \
-                    grep -F "Tribes.exe" | cut -d'[' -f 2 | cut -d']' -f 1)"
-
-                    WINEPREFIX=~/.wine/prefixes/tribes wine \
-                    "/home/fyr/src/dllinjector/Release/dllInjector-x86.exe" \
-                    -p "$PID" -l "$GAMEDIR/rasadhlp.dll"
-                    ;;
-            esac
-            ;;
-        outerworlds)
-            GAMEDIR="$GAME2/The Outer Worlds"
-            cd "$GAMEDIR" || {
-                printf '%s\n' "$GAMEDIR not found!"
-                return 1
-            }
-
-            WINEDEBUG=-all WINEARCH=win64 \
-            WINEPREFIX=~/.wine/prefixes/theouterworlds WINEESYNC=1 \
-            MANGOHUD=1 MANGOHUD_CONFIGFILE="$MANGODIR/default.conf" \
-            wine "$GAMEDIR/TheOuterWorlds.exe"
-            ;;
-        tradewinds)
-            GAMEDIR="/home/fyr/.games/Tradewinds.(Sandlot.Games)-WWW/"
-            ;;
+        apex)     steam steam://rungameid/1172470  & ;;
+        civ5)     steam steam://rungameid/8930     & ;;
+        ftl)      steam steam://rungameid/212680   & ;;
+        hades)    steam steam://rungameid/1145360  & ;;
+        horizon)  steam steam://rungameid/1151640  & ;;
+        ittb)     steam steam://rungameid/590380   & ;;
+        midair)   steam steam://rungameid/1231210  & ;;
+        rottr)    steam steam://rungameid/391220   & ;;
+        sottr)    steam steam://rungameid/750920   & ;;
+        shenzhen) steam steam://rungameid/504210   & ;;
+        stardew)  steam steam://rungameid/413150   & ;;
+        xcom)     steam steam://rungameid/268500   & ;;
         *)
             printf '%s\n' "game not found"
             ;;

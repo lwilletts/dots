@@ -14,9 +14,8 @@ EOF
 }
 
 main() {
+    VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/amd_pro_icd64.json:/usr/share/vulkan/icd.d/amd_pro_icd64.json OBS_USE_EGL=1 devour /bin/obs
     # /bin/obs --startreplaybuffer "$@"
-    # OBS_USE_EGL=1 /bin/obs
-    /bin/obs
 }
 
 main "$@"

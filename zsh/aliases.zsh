@@ -9,15 +9,12 @@ alias mine="s chown $USER:fyr"
 alias all="mine -R *"
 
 # operations
-alias mount="s mount"
-alias umount="s umount"
-
 alias mv="mv -i"
 alias df="df -h"
 alias cp="cp -ri"
 alias path="readlink -f"
 alias trash="~/tmp/trash"
-alias rsync="rsync -a --info=progress2"
+alias rsync="rsync --info=progress2"
 
 alias xsel="xsel -l /dev/null"
 alias szsh="source ~/.zshrc"
@@ -55,11 +52,9 @@ alias bit="curl -s rate.sx/bitcoin"
 alias weather="curl -s wttr.in | tail -n 32 | head -n 30"
 
 # games
-alias game1="cd $GAME1"
-alias game2="cd $GAME2"
-alias cfg="vi $GAME1/Midair\ Community\ Edition/MidairCE/Binaries/*.cfg"
-alias madir="$GAME1/Midair\ Community\ Edition/MidairCE/; fff"
-alias medir="$GAME1/Mass\ Effect\ Legendary\ Edition/Game; fff"
+alias cfg="vi /home/fyr/.steam/steam/steamapps/common/Midair\ Community\ Edition/MidairCE/Binaries/*.cfg"
+alias madir="/home/fyr/.steam/steam/steamapps/common/Midair\ Community\ Edition/MidairCE/"
+alias medir="/mnt/spare/steam/steamapps/common/Mass\ Effect\ Legendary\ Edition/Game"
 
 # file handling
 alias i="img"
@@ -74,6 +69,9 @@ alias x="startx"
 alias dz="dtach -A /tmp/zsh -z zsh"
 alias irc="dtach -A /tmp/irc weechat"
 
+# romac
+alias keys="xkbcomp $HOME/.dots/X11/FNkeymap.xkb $DISPLAY"
+
 # ascii
 alias tits="curl -sL z3bra.org/tits"
 alias unix="printf '%s\n' \"\$(curl -sL git.io/unix)\""
@@ -85,7 +83,6 @@ alias happy="toilet -f term -w 200 -t --gay"
 alias metal="toilet -f term -w 200 -t --metal"
 alias gibberish="metal < /dev/urandom"
 alias snake="terminibbles -d 3 -q"
-alias matrix="cmatrix -ab -u 1"
 alias engage="play -c2 -n synth whitenoise band -n 100 24 band -n 300 100 \
 gain +4 synth whitenoise lowpass -1 100 lowpass -1 100 lowpass -1 100 gain +2"
 alias starwars="telnet towel.blinkenlights.nl"

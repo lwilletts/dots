@@ -20,16 +20,19 @@ main() {
             esac
             ;;
         max)
-            ddcutil --model="C27JG5x" --sleep-multiplier 0.125 setvcp 10 "100" > /dev/null 2>&1
-            ddcutil --model="LG IPS FULLHD" --sleep-multiplier 0.125 setvcp 10 "100" > /dev/null 2>&1
+            ddcutil --model="C27JG5x" --sleep-multiplier 0.125 setvcp 10 "100" > /dev/null &
+            sleep 0.05
+            ddcutil --model="Dell AW2721D" --sleep-multiplier 0.125 setvcp 10 "500" > /dev/null &
             ;;
         dim|min)
-            ddcutil --model="C27JG5x" --sleep-multiplier 0.125 setvcp 10 "10" > /dev/null 2>&1
-            ddcutil --model="LG IPS FULLHD" --sleep-multiplier 0.125 setvcp 10 "0" > /dev/null 2>&1
+            ddcutil --model="C27JG5x" --sleep-multiplier 0.125 setvcp 10 "20" > /dev/null &
+            sleep 0.05
+            ddcutil --model="Dell AW2721D" --sleep-multiplier 0.125 setvcp 10 "250" > /dev/null &
             ;;
         *)
-            ddcutil --model="C27JG5x" --sleep-multiplier 0.125 setvcp 10 "40" > /dev/null 2>&1
-            ddcutil --model="LG IPS FULLHD" --sleep-multiplier 0.125 setvcp 10 "30" > /dev/null 2>&1
+            ddcutil --model="C27JG5x" --sleep-multiplier 0.125 setvcp 10 "40" > /dev/null &
+            sleep 0.05
+            ddcutil --model="Dell AW2721D" --sleep-multiplier 0.125 setvcp 10 "350" > /dev/null &
             ;;
     esac
 }

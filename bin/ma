@@ -1,0 +1,59 @@
+#!/bin/sh
+#
+# ma host server
+
+usage() {
+    base=$(basename "$0")
+
+    cat >&2 << EOF
+Usage:
+    $base
+EOF
+
+    [ $# -eq 0 ] || exit "$1"
+}
+
+main() {
+        GAMEDIR="$HOME/Midair"
+        cd "$GAMEDIR" || {
+            printf '%s\n' "$GAMEDIR not found!"
+            return 1
+        }
+
+        case "$1" in
+            cfg)
+                WINEPREFIX=~/.wine/prefixes/midair winecfg
+                ;;
+            tricks)
+                WINEPREFIX=~/.wine/prefixes/midair winetricks
+                ;;
+            inject)
+                WINEPREFIX=~/.wine/prefixes/midair wine \
+                    "/home/fyr/tmp/Midair/MidairCE/Binaries/Win64/Injector.exe" \
+                    -n midairce-win64-test.exe -e MAKEServer.dll
+                ;;
+            *)
+                # wine envs
+                WINEESYNC=0 \
+                WINEDEBUG=-all \
+                WINEARCH=win64 \
+                WINEPREFIX=~/.wine/prefixes/midair \
+                ENABLE_VKBASALT=1 \
+                MANGOHUD=1 \
+                wine \
+                    "$GAMEDIR/MidairCE/Binaries/Win64/MidairCE-Win64-Test.exe" \
+                    -vulkan -exec=auto.cfg &
+
+                ;;
+        esac
+}
+
+case "$1" in
+    -v|verbose)
+        shift
+        main "$@"
+        ;;
+    *)
+        main "$@" > /dev/null 2>&1
+        ;;
+esac

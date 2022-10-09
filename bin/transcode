@@ -23,6 +23,10 @@ prep() {
     vid=$(printf '%s\n' "$*" | rev | cut -d\. -f 2- | rev)
     ext=$(printf '%s\n' "$*" | rev | cut -d\. -f 1 | rev)
 
+    if [ ! -d "$dir" ]; then
+        mkdir "$dir"
+    fi
+
     if [ ! -e "$dir/$vid.mov" ]; then
         encode "$@"
     fi

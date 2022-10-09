@@ -26,7 +26,7 @@ mod1 + {_,shift + }q
 mod1 + {_,shift + }Tab
     {focus cycle,focus swap}
 mod1 + {h,j,k,l}
-    closer {left,down -s,up -s,right}
+    closer {left -s,down,up,right -s}
 mod1 + shift + {h,j,k,l}
     adjust {left,down,up,right}
 mod1 + {Left,Down,Up,Right}
@@ -86,11 +86,9 @@ mod1 + Print
 shift + Print
     shot "$(pfw)"
 
-# screen
-{F22,F23,F24}
-    {bright min,bright,bright max}
-
 # misc
+mod1 + shift + b
+    doff
 mod1 + i
     invert lemonbar
 

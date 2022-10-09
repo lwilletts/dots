@@ -64,6 +64,14 @@ clock() {
     printf '%s\n' "c" > "$odclk"
 }
 
+offset() {
+    intCheck "$1"
+    checkroot
+
+    printf '%s\n' "vo ${1%*mv}" > "$odclk"
+    printf '%s\n' "c" > "$odclk"
+}
+
 memory() {
     intCheck "$1"
     checkroot
@@ -194,16 +202,18 @@ main() {
         }
 
         [ "$FAN_FLAG"    = true ] && fanCtrl "$arg" ; unset FAN_FLAG
+        [ "$VOLT_FLAG"   = true ] && offset "$arg"  ; unset VOLT_FLAG
         [ "$POWER_FLAG"  = true ] && power "$arg"   ; unset POWER_FLAG
         [ "$MEMORY_FLAG" = true ] && memory "$arg"  ; unset MEMORY_FLAG
 
         case "$arg" in
             -c|--clock)  count=0; CLOCK_FLAG=true ;;
-            -f|--fan)    FAN_FLAG=true    ;;
-            -p|--power)  POWER_FLAG=true  ;;
-            -m|--memory) MEMORY_FLAG=true ;;
-            -t|--temp)   fanCurve         ;;
-            -i|--info)   info             ;;
+            -v|--offset) VOLT_FLAG=true           ;;
+            -f|--fan)    FAN_FLAG=true            ;;
+            -p|--power)  POWER_FLAG=true          ;;
+            -m|--memory) MEMORY_FLAG=true         ;;
+            -t|--temp)   fanCurve                 ;;
+            -i|--info)   info                     ;;
             -d|--device) ;;
             -?) usage 1  ;;
         esac
@@ -211,13 +221,12 @@ main() {
 }
 
 for arg in "$@"; do
-    [ "$PCI_FLAG" = true ] && pci "$arg"; unset PCI_FLAG
-
     case $arg in
-        -d|--device)      PCI_FLAG=true ;;
         -h|--help|h|help) usage 0       ;;
     esac
 done
+
+pci
 
 if [ -z "$hwmon" ]; then
     usage 1
