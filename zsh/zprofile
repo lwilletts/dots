@@ -5,7 +5,7 @@
 
 if [ -z "$DISPLAY" ]; then
     if [ "$(tty)" = /dev/tty1 ]; then
-        sleep 3
+        sleep 2
         startx
     fi
 fi

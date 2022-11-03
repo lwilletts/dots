@@ -1,6 +1,6 @@
 #!/bin/sh
 
-wmp -a 2360 1008
+# wmp -a 0 0
 
 # x11 environment
 xset s off -dpms                                  # screen blanking
