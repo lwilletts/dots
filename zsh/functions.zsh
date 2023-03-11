@@ -6,9 +6,9 @@ chpwd() {
     R='[0m'
 
     [ $(ls -1 | wc -l) -gt 100 ] && {
-        files=$(find -maxdepth 1 -type f | wc -l)
-        links=$(find -maxdepth 1 -type l | wc -l)
-        dirts=$(find -maxdepth 1 -type d | sed '1d' | wc -l)
+        files=$(fd -t x --exact-depth 1 | wc -l)
+        dirts=$(fd -t d --exact-depth 1 | sed '1d' | wc -l)
+        links=$(fd -t l --exact-depth 1 | wc -l)
 
         printf '%s\n\n' "$f3$files files ${R}&& $f6$dirts directories ${R}&& $f5$links links${R}"
         return 0
@@ -31,21 +31,9 @@ chpwd() {
 }
 
 zshrc() {
-    $EDITOR $(find ~/.dots/zsh -maxdepth 1 -type f | sort)
+    $EDITOR $(fd . ~/.dots/zsh -t f --exact-depth 1)
 
     . ~/.zshrc
-}
-
-bin() {
-    $EDITOR $(find ~/.dots/bin -maxdepth 1 -type f | sort)
-}
-
-fe() {
-    find . -maxdepth 1 -type f -executable | sort
-}
-
-ee() {
-    $EDITOR $(fe) "$@"
 }
 
 usr() {
@@ -63,14 +51,6 @@ man() {
     command man "$@"
 }
 
-sigkill() {
+fkill() {
     kill -9 $(pgrep $1)
-}
-
-mpvv() {
-    mpvc "$@" -S "/tmp/vidsocket"
-}
-
-mpvi() {
-    mpv "$@" --pause &!
 }

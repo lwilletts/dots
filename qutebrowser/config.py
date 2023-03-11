@@ -11,19 +11,6 @@ from qutebrowser.api import cmdutils
 
 config.load_autoconfig()
 
-# youtube adblock
-def filter_yt(info: interceptor.Request):
-    url = info.request_url
-    if (
-        url.host() == 'www.youtube.com'
-        and url.path() == '/get_video_info'
-        and '&adformat=' in url.query()
-    ):
-        info.block()
-
-
-interceptor.register(filter_yt)
-
 c.content.blocking.adblock.lists = ['https://easylist.to/easylist/easylist.txt', 'https://easylist.to/easylist/easyprivacy.txt', 'https://easylist-downloads.adblockplus.org/easylistdutch.txt', 'https://easylist-downloads.adblockplus.org/abp-filters-anti-cv.txt', 'https://www.i-dont-care-about-cookies.eu/abp/', 'https://secure.fanboy.co.nz/fanboy-cookiemonster.txt']
 c.content.blocking.enabled = True
 config.bind('Ctrl-o', 'config-cycle content.blocking.enabled')
@@ -40,10 +27,7 @@ def read_xresources(prefix):
         props[prop] = value
     return props
 
-try:
-    xresources = read_xresources('*')
-except ValueError as error:
-    pass
+xresources = read_xresources('*')
 
 # list of user stylesheet filenames to use
 # c.content.user_stylesheets = ['']
@@ -65,8 +49,6 @@ c.input.forward_unbound_keys = 'auto'
 c.content.geolocation = False
 c.session.default_name = None
 
-c.window.title_format = '{current_title}'
-
 # c.fileselect.handler = 'externa'
 # c.fileselect.multiple_files.command = 'fff'
 # c.fileselect.single_file.command = 'fff'
@@ -77,6 +59,8 @@ c.aliases = {'h': 'help', 'q': 'close', 'x': 'quit --save'}
 # defaults
 config.bind('j', 'scroll-px 0 100')
 config.bind('k', 'scroll-px 0 -100')
+# config.bind('j', 'scroll down')
+# config.bind('k', 'scroll up')
 config.bind('b', 'set-cmd-text -s :tab-select ')
 config.bind('return', 'selection-follow')
 config.bind('cx', 'download-cancel')
@@ -187,8 +171,11 @@ c.tabs.max_width = 110
 c.tabs.min_width = 110
 c.tabs.padding = {'top': 5, 'bottom': 5, 'left': 10, 'right': 10}
 c.tabs.title.alignment = 'left'
-c.tabs.title.format_pinned = '{index}'
-c.tabs.title.format = '{audio}{current_title}'
+
+
+c.window.title_format = '{current_title}'
+c.tabs.title.format = '{audio} {current_title}'
+c.tabs.title.format_pinned = '{audio} {current_title}'
 
 # indicator
 c.tabs.favicons.show = 'always'
@@ -206,7 +193,7 @@ c.tabs.mousewheel_switching = True
 c.tabs.new_position.stacking = True
 c.tabs.new_position.related = 'next'
 c.tabs.new_position.unrelated = 'next'
-c.tabs.select_on_remove = 'prev'
+c.tabs.select_on_remove = 'next'
 c.tabs.pinned.frozen = True
 c.tabs.pinned.shrink = True
 c.tabs.tabs_are_windows = False
@@ -295,16 +282,17 @@ c.fonts.tabs.unselected = '8pt scientifica'
 # c.fonts.web.size.default_fixed
 
 # colors
+
 # dark mode
 c.colors.webpage.darkmode.enabled = True
+c.colors.webpage.preferred_color_scheme = "auto"
 c.colors.webpage.bg = 'black'
+c.colors.webpage.darkmode.contrast = 0.5
 
-# lightness-hsl brightness-rgb
+    # lightness-hsl brightness-rgb
 c.colors.webpage.darkmode.algorithm = 'lightness-cielab'
 c.colors.webpage.darkmode.grayscale.all = False
 c.colors.webpage.darkmode.grayscale.images = 0
-
-c.colors.webpage.preferred_color_scheme = "auto"
 
 # alwyas smart never
 c.colors.webpage.darkmode.policy.page = 'always'
@@ -314,6 +302,7 @@ c.colors.webpage.darkmode.policy.images = 'never'
 # 0 - 256
 # c.colors.webpage.darkmode.threshold.text = 256
 # c.colors.webpage.darkmode.threshold.background = 0
+
 
 # command bar
 c.colors.statusbar.command.bg = xresources['*color0']
@@ -363,8 +352,8 @@ c.colors.downloads.stop.fg = xresources['*color0']
 #   - hsv: Interpolate in the HSV color system.
 #   - hsl: Interpolate in the HSL color system.
 #   - none: Don't show a gradient.
-# c.colors.downloads.system.bg = 'rgb'
-# c.colors.downloads.system.fg = 'rgb'
+c.colors.downloads.system.bg = 'rgb'
+c.colors.downloads.system.fg = 'rgb'
 
 # completion
 c.colors.completion.category.bg = xresources['*color6']
@@ -431,6 +420,9 @@ c.colors.statusbar.passthrough.fg = xresources['*color0']
 
 # tab
 c.colors.tabs.bar.bg = xresources['*color0']
+c.colors.tabs.indicator.error = xresources['*color1']
+
+    # normal
 c.colors.tabs.odd.fg = xresources['*color7']
 c.colors.tabs.odd.bg = xresources['*color0']
 c.colors.tabs.even.fg = xresources['*color7']
@@ -439,7 +431,16 @@ c.colors.tabs.selected.odd.bg = xresources['*color7']
 c.colors.tabs.selected.odd.fg = xresources['*color0']
 c.colors.tabs.selected.even.bg = xresources['*color7']
 c.colors.tabs.selected.even.fg = xresources['*color0']
-c.colors.tabs.indicator.error = xresources['*color1']
+
+    # pinned
+c.colors.tabs.pinned.odd.fg = xresources['*color7']
+c.colors.tabs.pinned.odd.bg = xresources['*color0']
+c.colors.tabs.pinned.even.fg = xresources['*color7']
+c.colors.tabs.pinned.even.bg = xresources['*color0']
+c.colors.tabs.pinned.selected.odd.bg = xresources['*color7']
+c.colors.tabs.pinned.selected.odd.fg = xresources['*color0']
+c.colors.tabs.pinned.selected.even.bg = xresources['*color7']
+c.colors.tabs.pinned.selected.even.fg = xresources['*color0']
 
 # right-click menu
 c.colors.contextmenu.menu.bg = xresources['*color0']
@@ -796,7 +797,7 @@ c.prompt.radius = 10
 
     # scroll + search
 c.scrolling.bar = 'when-searching'
-c.scrolling.smooth = False
+c.scrolling.smooth = True
 c.search.ignore_case = 'smart'
 c.search.incremental = True
 

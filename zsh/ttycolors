@@ -2,7 +2,7 @@
 #
 # set colours for framebuffer
 
-test "$TERM" = "linux" && {
+if [ "$TERM" = "linux" ]; then
     echo -en "\e]P0101010"
     echo -en "\e]P8101010"
     echo -en "\e]P1CA3448"
@@ -19,4 +19,4 @@ test "$TERM" = "linux" && {
     echo -en "\e]PE9FB9A8"
     echo -en "\e]P7D9EAE2"
     echo -en "\e]PFD9EAE2"
-}
+fi

@@ -75,6 +75,15 @@ Plug 'dense-analysis/ale'
     " async
 Plug 'skywind3000/asyncrun.vim'
 
+    " bullets
+Plug 'dkarter/bullets.vim'
+    let g:bullets_enabled_file_types = [
+        \ 'markdown',
+        \ 'text',
+        \ 'gitcommit',
+        \ 'scratch'
+        \]
+
     "  intelligent tab
 Plug 'ervandew/supertab'
     let g:SuperTabDefaultCompletionType = "<c-n>"
@@ -251,7 +260,7 @@ endtry
 set colorcolumn=0
 
 " cursor always placed in middle
-set scrolloff=0
+set scrolloff=1000
 " cursor allowed to exist where there is no character in visual block mode
 set virtualedit=block
 

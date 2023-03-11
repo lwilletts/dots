@@ -37,15 +37,15 @@ img() {
     MW=$((FW * COLUMNS))
     MH=$((FH * (LINES - 2)))
 
-    test $W -gt $MW && {
+    if [ "$W" -gt "$MW" ]; then
         H=$((H * MW / W))
         W=$MW
-    }
+    fi
 
-    test $H -gt $MH && {
+    if [ "$H" -gt "$MH" ]; then
         W=$((W * MH / H))
         H=$MH
-    }
+    fi
 
     tput clear
     tput cup $((H/FH)) 0
@@ -62,7 +62,18 @@ main() {
     validateDeps
 
     # single fire if only one image is found
-    test $# -gt 1 && {
+    if [ $# -eq 1 ]; then
+        file="$*"
+        case "$file" in
+            *.mkv|*.mp4|*.gif|*.webm|*.avi)
+                mpv "$file"
+                ;;
+            *.tif|*.png|*.jpg|*.jpeg)
+                img "$file"
+                ;;
+        esac
+    else
+        exit
         for file in "$@"; do
             case "$file" in
                 *.mkv|*.mp4|*.gif|*.webm|*.avi)
@@ -87,7 +98,7 @@ main() {
                                     case $key in
                                         y)
                                             rm "$file"
-                                            break
+                                            continue
                                             ;;
                                         n)
                                             refresh
@@ -112,17 +123,10 @@ main() {
                     ;;
             esac
         done
-    } || {
-        file="$@"
-        case "$file" in
-            *.mkv|*.mp4|*.gif|*.webm|*.avi)
-                mpv "$file"
-                ;;
-            *.tif|*.png|*.jpg|*.jpeg)
-                img "$file"
-                ;;
-        esac
-    }
+    fi
+
+    # clean screen
+    clear
 }
 
 main "$@"

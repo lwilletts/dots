@@ -7,6 +7,7 @@ main() {
     wmgaps
 
     LAYOUTDIR="$HOME/.screenlayout"
+    pkill bars
 
     case "$1" in
         pri)
@@ -16,6 +17,20 @@ main() {
                 move center "$wid"
             done
             ;;
+        landscape)
+            case "$(hostname)" in
+                "fyriousa")
+                    "$LAYOUTDIR/landscape.sh"
+                    ;;
+            esac
+            ;;
+        potrait)
+            case "$(hostname)" in
+                "fyriousa")
+                    "$LAYOUTDIR/default.sh"
+                    ;;
+            esac
+            ;;
         *)
             case "$(hostname)" in
                 "fyriousa")
@@ -24,6 +39,8 @@ main() {
             esac
             ;;
     esac
+
+    bars &
 }
 
 main "$@"

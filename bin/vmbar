@@ -1,0 +1,42 @@
+#!/bin/sh
+#
+# vmbar
+
+main() {
+    battery > /dev/null && {
+        battery="$(battery)"
+
+        charging="$(printf '%s\n' "$battery" | cut -d\  -f 2)"
+        batvalue="$(printf '%s\n' "$battery" | cut -d% -f 1)"
+
+        if [ "$charging" = "/" ]; then
+            bar_text_highlight="%{F#$INACTIVE}"
+            bar_back_highlight="%{B#$ACTIVE}"
+        fi
+
+        if [ "$batvalue" -le 40 ]; then
+            bar_text_highlight="%{F#$ACTIVE}"
+            bar_back_highlight="%{B#$URGENT}"
+        fi
+
+        if [ "$batvalue" -eq 100 ]; then
+            bar_text_highlight="%{F#$ACTIVE}"
+            bar_back_highlight="%{B#$INACTIVE}"
+        fi
+
+        buf=""
+        buf="${buf} $bar_back_highlight$bar_text_highlight"
+        buf="${buf} $batvalue%"
+        buf="${buf} $bar_back_foreground$bar_text_foreground"
+
+        printf '%s\n' "$buf"
+    }
+}
+
+. fwmrc
+wmcolours
+
+bar_text_foreground="%{F#$ACTIVE}"
+bar_back_foreground="%{B#$INACTIVE}"
+
+main "$@"

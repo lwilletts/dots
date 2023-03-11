@@ -27,14 +27,12 @@ precmd() {
 zle-keymap-select() {
     PROMPT="%{$fg[white]%}|%{$reset_color%} "
 
-    [ "$KEYMAP" = "vicmd" ] && {
+    if [ "$KEYMAP" = "vicmd" ]; then
         PROMPT="%{$fg[red]%}|%{$reset_color%} "
-    }
+    fi
 
     zle reset-prompt
 }
-
-RPROMPT="%{$fg[cyan]%}%{$reset_color%}"
 
 # superglobs
 setopt extendedglob
@@ -42,32 +40,15 @@ unsetopt caseglob
 
 # ls colours
 hash busybox 2> /dev/null || {
-	hash dircolors 2> /dev/null && {
-	    eval "$(dircolors ~/.zsh/lscolours)"
-	    alias ls="ls -F -N --color=auto --group-directories-first"
-	} || {
-	    alias ls="ls -F -N --group-directories-first"
-	}
+    if hash dircolors 2> /dev/null; then
+        eval "$(dircolors ~/.zsh/lscolours)"
+        alias ls="ls -F -N --color=auto --group-directories-first"
+    else
+        alias ls="ls -F -N --group-directories-first"
+    fi
 } || {
     alias ls="ls -F --group-directories-first"
 }
 
 # load reporting
-REPORTTIME=120
-
-# function zle-line-init zle-keymap-select {
-# case "$KEYMAP" in
-# vicmd)
-# 	# block cursor
-# 	echo -en '\033[0 q'
-# 	;;
-# main|viins)
-# 	# line cursor
-# 	echo -en '\033[5 q'
-# 	;;
-# esac
-# }
-
-# zle -N zle-line-init
-# zle -N zle-keymap-select
-
+export REPORTTIME=120
