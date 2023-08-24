@@ -15,8 +15,7 @@ case "$mime_type" in
         mpv --loop-file --really-quiet "$1"
         ;;
     video/*|application/mxf*)
-        VIDSOCKET="/tmp/vidsocket"
-        mpvc playnext "$1" -S "$VIDSOCKET"
+        mpv --loop-file --really-quiet "$1"
         ;;
     audio/*)
         mpvc playnext "$1"

@@ -1,4 +1,8 @@
 chpwd() {
+    if [ "$(tty)" = /dev/tty1 ]; then
+        return
+    fi
+
     clear
 
     f0='[30m'; f1='[31m'; f2='[32m'; f3='[33m'

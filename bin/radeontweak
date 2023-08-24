@@ -57,10 +57,9 @@ power() {
 
 clock() {
     intCheck "$1"
-    intCheck "$2"
     checkroot
 
-    printf '%s\n' "vc 2 $1 $2" > "$odclk"
+    printf '%s\n' "s 1 $1" > "$odclk"
     printf '%s\n' "c" > "$odclk"
 }
 
@@ -186,34 +185,20 @@ main() {
 
     # GNU-style options
     for arg in "$@"; do
-        [ "$CLOCK_FLAG" = true ] && {
-            case "$count" in
-                0)
-                    clock="$arg"
-                    count=$((count + 1))
-                    ;;
-                1)
-                    voltage="$arg"
-
-                    clock "$clock" "$voltage"
-                    unset CLOCK_FLAG count
-                    ;;
-            esac
-        }
-
+        [ "$CLOCK_FLAG"  = true ] && clock "$arg"   ; unset CLOCK_FLAG
         [ "$FAN_FLAG"    = true ] && fanCtrl "$arg" ; unset FAN_FLAG
         [ "$VOLT_FLAG"   = true ] && offset "$arg"  ; unset VOLT_FLAG
         [ "$POWER_FLAG"  = true ] && power "$arg"   ; unset POWER_FLAG
         [ "$MEMORY_FLAG" = true ] && memory "$arg"  ; unset MEMORY_FLAG
 
         case "$arg" in
-            -c|--clock)  count=0; CLOCK_FLAG=true ;;
-            -v|--offset) VOLT_FLAG=true           ;;
-            -f|--fan)    FAN_FLAG=true            ;;
-            -p|--power)  POWER_FLAG=true          ;;
-            -m|--memory) MEMORY_FLAG=true         ;;
-            -t|--temp)   fanCurve                 ;;
-            -i|--info)   info                     ;;
+            -c|--clock)  CLOCK_FLAG=true  ;;
+            -v|--offset) VOLT_FLAG=true   ;;
+            -f|--fan)    FAN_FLAG=true    ;;
+            -p|--power)  POWER_FLAG=true  ;;
+            -m|--memory) MEMORY_FLAG=true ;;
+            -t|--temp)   fanCurve         ;;
+            -i|--info)   info             ;;
             -d|--device) ;;
             -?) usage 1  ;;
         esac

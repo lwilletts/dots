@@ -17,7 +17,7 @@ EOF
 main() {
     case "$1" in
         apex)     steam steam://rungameid/1172470  & ;;
-        aim)      steam steam://rungameid/714010   & ;;
+        aim)      steam steam://rungameid/824270   & ;;
         civ5)     steam steam://rungameid/8930     & ;;
         ftl)      steam steam://rungameid/212680   & ;;
         hades)    steam steam://rungameid/1145360  & ;;

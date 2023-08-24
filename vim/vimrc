@@ -31,6 +31,8 @@ Plug 'farmergreg/vim-lastplace'
     let g:lastplace_ignore = "gitcommit,gitrebase"
     let g:lastplace_ignore_buftype = "quickfix,nofile,help"
 
+Plug 'dense-analysis/ale'
+
 Plug 'tpope/vim-surround'
     nmap sl yss
     nmap sw ysiw
@@ -140,7 +142,7 @@ nmap <C-q> :qa!<CR>
 nmap <C-s> :silent w! !sudo tee % > /dev/null<CR>
 
 " replace word under cursor globally
-nnoremap <Leader>* :%s/\<<c-r><c-w>\>//g<left><left>
+noremap <Leader>* :%s/\<<c-r><c-w>\>//g<left><left>
 
 " manipulating text in normal mode
 noremap <Tab> i<Tab><ESC>l
@@ -329,7 +331,7 @@ set completeopt=menu,preview
 set clipboard=unnamedplus
 
 " defaults
-set tw=80
+set tw=120
 set fo+=t
 set ts=4 sw=4 sts=4
 set smarttab expandtab

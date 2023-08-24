@@ -2,13 +2,61 @@
 #
 # snap
 
-main() {
-    shotdir="$HOME/tmp/shots"
+wmenus() {
+    processes="delete
+keep"
+}
 
+menu() {
+    # menu geometry
+    X0="$(mattr x "$PFM")"
+    Y0="$(mattr y "$PFM")"
+
+    mouse="$(wmp)"
+    X=$((${mouse% *} - X0 - 20))
+    Y=$((${mouse#* } - Y0 - 20))
+}
+
+confirmbar() {
+    . fwmrc
+    wmenv
+    wmgaps
+    wmenus
+    dcolours
+
+    PFM="$(pfm)"
+    FONT=$(awk '/font/ {print $3}' < ~/.Xresources | cut -d',' -f 1)
+    FH="15"
+    W="100"
+    PROMPT=" Do >"
+
+    case "$1" in
+        -h|--help|help) usage 0 ;;
+        *)              menu    ;;
+    esac
+
+    L="$(printf '%s\n' "$processes" | wc -l)"
+
+    # unfocus from current window to add contrast
+    focus -u
+
+    # grab command to run
+    process=$(printf '%s\n' "$processes" | \
+dmenu -name "$(basename "$0")" -f -l "$L" -fn "$FONT" -p "$PROMPT" \
+-nf "#$NF" -sf "#$SF" -nb "#$NB" -sb "#$SB" -bc "#$BC" \
+-s "$(mattr d "$PFM")" -x "$X" -y "$Y" -w "$W" -h "$FH" -bw "$DBW")
+
+    case "$process" in
+        delete) rm "$file" ;;
+        keep)   exit 0 ;;
+    esac
+}
+
+main() {
     shot sel
     pkill -HUP -x picom
-    file="$(ls -t "$shotdir" | head -n 1)"
-    dragon -x "$shotdir/$file"
+    file="$(fd -a -d 1 -e png | tail -n 1)"
+    dragon -x "$file" && confirmbar "$@"
 }
 
 main "$@"

@@ -39,13 +39,11 @@ alias remote="mosh remote"
 
 # oneliners
 alias coin="curl -s rate.sx"
-alias eth="curl -s rate.sx/eth"
-alias bit="curl -s rate.sx/bitcoin"
 alias weather="curl -s wttr.in | tail -n 32 | head -n 30"
 
 # games
-alias cfg="vi /home/fyr/.steam/steam/steamapps/common/Midair\ Community\ Edition/MidairCE/Binaries/*.cfg"
-alias madir="/home/fyr/.steam/steam/steamapps/common/Midair\ Community\ Edition/MidairCE/"
+alias cfg="vi $GAME2/Midair\ Community\ Edition/Midair2/Binaries/*.cfg"
+alias madir="$GAME2/Midair\ Community\ Edition/Midair2/"
 alias medir="/mnt/spare/steam/steamapps/common/Mass\ Effect\ Legendary\ Edition/Game"
 
 # file handling

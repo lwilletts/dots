@@ -1,6 +1,7 @@
 # config.py
-#   qute://help/configuring.html
-#   qute://help/settings.html
+# pylint: disable=C0111
+# qute://help/configuring.html
+# qute://help/settings.html
 
 import os
 import subprocess
@@ -72,10 +73,10 @@ c.input.mouse.rocker_gestures = True
 c.input.mouse.back_forward_buttons = False
 
 # tab management
-config.bind('<Ctrl-k>', 'tab-move -')
-config.bind('<Ctrl-j>', 'tab-move +')
-config.bind('<Shift-k>', 'tab-prev')
-config.bind('<Shift-j>', 'tab-next')
+config.bind('<Ctrl-k>', 'tab-move +')
+config.bind('<Ctrl-j>', 'tab-move -')
+config.bind('<Shift-j>', 'tab-prev')
+config.bind('<Shift-k>', 'tab-next')
 config.bind('<Shift-d>', 'tab-clone')
 
 # quickmarks
@@ -165,11 +166,11 @@ c.completion.open_categories = ['bookmarks', 'quickmarks', 'history']
 
 # tabs
 # position
-c.tabs.position = 'left'
+c.tabs.position = 'top'
 c.tabs.width = 200
 c.tabs.max_width = 110
 c.tabs.min_width = 110
-c.tabs.padding = {'top': 5, 'bottom': 5, 'left': 10, 'right': 10}
+c.tabs.padding = {'top': 10, 'bottom': 10, 'left': 10, 'right': 10}
 c.tabs.title.alignment = 'left'
 
 
@@ -216,7 +217,7 @@ c.prompt.filebrowser = True
 c.downloads.open_dispatcher = None
 
 # privacy & content
-c.content.headers.user_agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36'
+# c.content.headers.user_agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36'
 c.content.headers.do_not_track = True
 # c.content.host_blocking.enabled = True
 
@@ -249,7 +250,7 @@ c.content.autoplay = False
 # javascript
 c.content.javascript.enabled = True
 c.content.javascript.can_open_tabs_automatically = False
-c.content.javascript.can_access_clipboard = False
+c.content.javascript.clipboard = 'none'
 c.content.javascript.alert = True
 c.content.javascript.prompt = True
 
@@ -600,7 +601,7 @@ c.content.notifications.show_origin = False
 # still be downloaded by clicking the download button in the pdf.js
 # viewer.
 # Type: Bool
-c.content.pdfjs = False
+c.content.pdfjs = True
 
 # Allow websites to request persistent storage quota via
 # `navigator.webkitPersistentStorage.requestQuota`.

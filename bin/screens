@@ -13,9 +13,9 @@ main() {
         pri)
             "$LAYOUTDIR/pri.sh"
 
-            for wid in $(lsw); do
-                move center "$wid"
-            done
+            # for wid in $(lsw); do
+            #     move center "$wid"
+            # done
             ;;
         landscape)
             case "$(hostname)" in

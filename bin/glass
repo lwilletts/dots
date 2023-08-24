@@ -20,10 +20,11 @@ main() {
         win:position=center \
         win:keepaspect \
         win:noScreensaver \
+        -m 59 \
         input:rawMouse \
         input:autoCapture=yes \
-        -m 59 \
         "$@"
 }
+
 
 main "$@"

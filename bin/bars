@@ -150,7 +150,7 @@ mainbar() {
         buf="${buf} %{r} "
         buf="${buf}%{F#$ACTIVE}"
         buf="${buf}$(gpu) "
-        buf="${buf}$(mpvbar /tmp/mpvsocket)"
+        buf="${buf}$(mpvbar $HOME/.config/mpvc/mpvsocket0)"
         buf="${buf}$(batbar)"
         buf="${buf}$(${volbar})"
 

@@ -9,7 +9,7 @@ case "$1" in
         ;;
     *)
         wid="$(lsw -r)"
-        file="$HOME/tmp/shots/$(date +%s)"
+        file="$HOME/$(date +%s)"
         ;;
 esac
 

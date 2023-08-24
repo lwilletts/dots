@@ -8,9 +8,9 @@ EXECPATHS="
 $HOME/.dots/bin
 $HOME/src/fwm
 /usr/local/bin
+/usr/bin
 /bin
 /sbin
-/usr/bin
 /usr/sbin
 $HOME/.fzf/bin
 $HOME/.local/bin"
@@ -37,6 +37,7 @@ export GNUPGHOME="$XDG_CONFIG_HOME"
 export XAUTHORITY="$XDG_CONFIG_HOME/xauth"
 
 export QT_QPA_PLATFORMTHEME="qt5ct"
+# export QT_QPA_PLATFORM="wayland"
 export BROWSER="/usr/bin/qutebrowser"
 
 export VISUAL="nvim"

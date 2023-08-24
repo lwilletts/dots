@@ -24,7 +24,7 @@ mod4 + ctrl + BackSpace
 mod1 + {_,shift + }q
     {killw $(pfw),kill -9 $(xprop -id $(pfw) | grep _NET_WM_PID | grep -v grep | cut -d' ' -f 3)}
 mod1 + {_,shift + }Tab
-    {focus cycle,focus swap}
+    {focus swap,focus cycle}
 mod1 + {h,j,k,l}
     closer {left,down -s,up -s,right}
 mod1 + shift + {h,j,k,l}

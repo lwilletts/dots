@@ -25,4 +25,13 @@ main() {
         -E 'tracks' | shuf | shuf | mpvc add -q
 }
 
-main "$@"
+temp() {
+    mpvc -a ~/usr/mus
+    mpvc pause
+    sleep 1
+    mpvc shuffle
+    mpvc next
+    mpvc play
+}
+
+temp "$@"

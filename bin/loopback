@@ -14,14 +14,34 @@ EOF
 }
 
 link() {
-    pw-link Game:monitor_FL alsa_output.usb-FiiO_DigiHug_USB_Audio-01.analog-stereo:playback_FL
-    pw-link Game:monitor_FR alsa_output.usb-FiiO_DigiHug_USB_Audio-01.analog-stereo:playback_FR
+    pw-link Game:monitor_FL "$frontleft"
+    pw-link Game:monitor_FR "$frontright"
 
-    pw-link Media:monitor_FL alsa_output.usb-FiiO_DigiHug_USB_Audio-01.analog-stereo:playback_FL
-    pw-link Media:monitor_FR alsa_output.usb-FiiO_DigiHug_USB_Audio-01.analog-stereo:playback_FR
+    pw-link Media:monitor_FL "$frontleft"
+    pw-link Media:monitor_FR "$frontright"
 
-    pw-link Discord:monitor_FL alsa_output.usb-FiiO_DigiHug_USB_Audio-01.analog-stereo:playback_FL
-    pw-link Discord:monitor_FR alsa_output.usb-FiiO_DigiHug_USB_Audio-01.analog-stereo:playback_FR
+    pw-link Comms:monitor_FL "$frontleft"
+    pw-link Comms:monitor_FR "$frontright"
 }
 
-pgrep pipewire 2>&1 /dev/null | link "$@"
+unlink() {
+    pw-link -d Game:monitor_FL "$frontleft"
+    pw-link -d Game:monitor_FR "$frontright"
+
+    pw-link -d Media:monitor_FL "$frontleft"
+    pw-link -d Media:monitor_FR "$frontright"
+
+    pw-link -d Comms:monitor_FL "$frontleft"
+    pw-link -d Comms:monitor_FR "$frontright"
+}
+
+systemctl --user is-active --quiet pipewire && {
+    frontleft="$(pw-link -i | grep -E 'alsa_output.*FL')"
+    frontright="$(pw-link -i | grep -E 'alsa_output.*FR')"
+
+    case "$@" in
+        -h) usage 0             ;;
+        u|unlink) unlink "$@"   ;;
+        *)        link "$@"     ;;
+    esac
+}
