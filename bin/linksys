@@ -23,12 +23,13 @@ headless() {
 
     ln $OPTIONS "$DOTFILEDIR/git/gitconfig" "$HOME/.gitconfig"
     ln $OPTIONS "$DOTFILEDIR/tmux/tmux.conf" "$HOME/.tmux.conf"
-}
 
-xorg() {
     ln $OPTIONS "$DOTFILEDIR/zsh" "$HOME/.zsh"
     ln $OPTIONS "$DOTFILEDIR/zsh/zshrc" "$HOME/.zshrc"
     ln $OPTIONS "$DOTFILEDIR/zsh/zprofile" "$HOME/.zprofile"
+}
+
+xorg() {
 
     ln $OPTIONS "$DOTFILEDIR/fonts" "$HOME/.local/share/fonts"
     ln $OPTIONS "$DOTFILEDIR/X11/xinitrc" "$HOME/.xinitrc"

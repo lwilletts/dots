@@ -42,7 +42,7 @@ Plug 'tpope/vim-surround'
 
     " file opener
 Plug 'srstevenson/vim-picker'
-    let g:picker_selector_executable = 'fzy'
+    let g:picker_selector_executable = 'fzf'
     let g:picker_selector_flags = ''
     let g:picker_height = 10
 
