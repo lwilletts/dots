@@ -1,0 +1,10 @@
+[Unit]
+Description=vm_off
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+ExecStop=/home/fyr/.dots/bin/vmoff
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,10 @@
+[Unit]
+Description=smbtimer
+
+[Timer]
+OnCalendar=*-*-* *:*:00
+Persistent=true
+Unit=smbcheck.service
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,1 @@
+ATTRS{idVendor}=="04d9", ATTRS{idProduct}=="0141", RUN+="/home/fyr/.dots/bin/setpoker"
