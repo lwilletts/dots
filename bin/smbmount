@@ -1,0 +1,24 @@
+#!/bin/sh
+#
+# smbmount
+
+usage() {
+    base=$(basename "$0")
+
+    cat >&2 << EOF
+Usage:
+    $base
+EOF
+
+    [ $# -eq 0 ] || exit "$1"
+}
+
+main() {
+    if [ -z "$(mount -t cifs)" ]; then
+        nc -z blaze 22 && {
+            mount /mnt/pool
+        }
+    fi
+}
+
+main "$@"

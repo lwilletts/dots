@@ -26,7 +26,7 @@ encode() {
     ffmpeg -hide_banner -loglevel info -i "$vid.$ext" \
            -max_muxing_queue_size 1024 \
            -sws_flags lanczos -vf "scale=-2:$RES" \
-           -c:v libx264 -crf 12 -preset fast \
+           -c:v libx264 -crf 24 -preset fast \
            -c:a aac -b:a 160k -f mp4 "$PWD/$vid$increment.mp4"
 }
 

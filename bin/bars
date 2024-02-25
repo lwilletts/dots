@@ -151,7 +151,6 @@ mainbar() {
         buf="${buf}%{F#$ACTIVE}"
         buf="${buf}$(gpu) "
         buf="${buf}$(mpvbar $HOME/.config/mpvc/mpvsocket0)"
-        buf="${buf}$(batbar)"
         buf="${buf}$(${volbar})"
 
         sleep 0.25
@@ -163,7 +162,7 @@ mainbar() {
 main() {
     barvar
 
-    case "$(hostname)" in
+    case "$(hostnamectl hostname)" in
         inferno)  volbar="volbaralsa"  ;;
         fyriousa) volbar="volbarpulse" ;;
     esac

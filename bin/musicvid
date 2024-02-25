@@ -1,0 +1,37 @@
+#!/bin/sh
+#
+# musicvid
+
+usage() {
+    base=$(basename "$0")
+
+    cat >&2 << EOF
+Usage:
+    $base
+EOF
+
+    [ $# -eq 0 ] || exit "$1"
+}
+
+main() {
+    fd . ~/usr/yt/music -L -t f \
+        -e mp3 \
+        -e m4a \
+        -e ogg \
+        -e wav \
+        -e flac \
+        -e opus \
+        -E 'soundtracks' \
+        -E 'tracks' | shuf | shuf | mpvc add -q
+}
+
+temp() {
+    mpvc -a ~/usr/yt/music
+    mpvc pause
+    sleep 1
+    mpvc shuffle
+    mpvc next
+    mpvc play
+}
+
+temp "$@"

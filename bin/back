@@ -14,7 +14,7 @@ EOF
 }
 
 main() {
-    case "$(hostname)" in
+    case "$(hostnamectl hostname)" in
         fyriousa)
             BACK="/home/fyr/usr/subtle/45degreee_fabric.png"
             if [ -e "$BACK" ]; then

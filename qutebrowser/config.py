@@ -69,7 +69,7 @@ config.bind('<Ctrl-s>', 'config-source ~/.config/qutebrowser/config.py')
 config.bind('<Ctrl-E>', 'config-edit', mode='normal')
 
 # mouse
-c.input.mouse.rocker_gestures = True
+c.input.mouse.rocker_gestures = False
 c.input.mouse.back_forward_buttons = False
 
 # tab management
@@ -147,7 +147,7 @@ c.zoom.mouse_divider = 512
 # statusbar
 c.statusbar.show = 'in-mode'
 c.statusbar.position = 'bottom'
-c.statusbar.widgets = ['url', 'scroll']
+# c.statusbar.widgets = ['url', 'scroll']
 c.statusbar.padding = {'top': 5, 'bottom': 5, 'left': 5, 'right': 5}
 
 # completion
@@ -292,8 +292,6 @@ c.colors.webpage.darkmode.contrast = 0.5
 
     # lightness-hsl brightness-rgb
 c.colors.webpage.darkmode.algorithm = 'lightness-cielab'
-c.colors.webpage.darkmode.grayscale.all = False
-c.colors.webpage.darkmode.grayscale.images = 0
 
 # alwyas smart never
 c.colors.webpage.darkmode.policy.page = 'always'
@@ -510,7 +508,7 @@ c.colors.contextmenu.selected.fg = xresources['*color0']
 # Expand each subframe to its contents. This will flatten all the frames
 # to become one scrollable page.
 # Type: Bool
-# c.content.frame_flattening = False
+c.content.frame_flattening = True
 
 
 # Value to send in the `Accept-Language` header. Note that the value
@@ -601,7 +599,7 @@ c.content.notifications.show_origin = False
 # still be downloaded by clicking the download button in the pdf.js
 # viewer.
 # Type: Bool
-c.content.pdfjs = True
+c.content.pdfjs = False
 
 # Allow websites to request persistent storage quota via
 # `navigator.webkitPersistentStorage.requestQuota`.

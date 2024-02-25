@@ -243,6 +243,10 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .diff                 48;5;197;30;5;232
 .patch                48;5;197;30;5;232;1
 #}}}
+# patch files {{{2
+.stl                 38;5;169
+.3mf                 38;5;169
+#}}}
 
 # graphics {{{1
 .bmp                  38;5;4

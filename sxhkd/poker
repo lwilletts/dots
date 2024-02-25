@@ -4,7 +4,7 @@
 {mod1, mod2} + shift + Return
     urxvtc -cd "$(mpvc -f "%path%" | rev | cut -d\/ -f 2- | rev)" -g 90x22
 mod1 + {d,s,w,shift + w}
-    {drun -c, sshmenu -c, wmenu -m, wmenu -b all}
+    {drun -m, sshmenu -c, wmenu -m, wmenu -b all}
 {mod1 + @button1, mod1 + @button3}
     wattr o $(pfw) || chwso -r $(pfw); {xmmv,xmrs}
 mod1 + {button4,button5}
@@ -24,7 +24,7 @@ mod4 + ctrl + BackSpace
 mod1 + {_,shift + }q
     {killw $(pfw),kill -9 $(xprop -id $(pfw) | grep _NET_WM_PID | grep -v grep | cut -d' ' -f 3)}
 mod1 + {_,shift + }Tab
-    {focus swap,focus cycle}
+    {focus cycle,focus swap}
 mod1 + {h,j,k,l}
     closer {left,down -s,up -s,right}
 mod1 + shift + {h,j,k,l}
@@ -62,7 +62,7 @@ mod4 + a
 
 # video
 mod1 + v
-    fd . ~/usr/vid/yt/music -t f | shuf | shuf | mpvc add -S /tmp/vidsocket -q
+    musicvid
 mod1 + {comma,period,space,slash}
     mpvc {prev,next,toggle,play $} -S /tmp/vidsocket -q
 mod1 + {bracketleft,bracketright,braceleft,braceright}

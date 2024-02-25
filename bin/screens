@@ -9,6 +9,8 @@ main() {
     LAYOUTDIR="$HOME/.screenlayout"
     pkill bars
 
+    hostname="$(hostnamectl hostname)"
+
     case "$1" in
         pri)
             "$LAYOUTDIR/pri.sh"
@@ -18,21 +20,21 @@ main() {
             # done
             ;;
         landscape)
-            case "$(hostname)" in
+            case "$hostname" in
                 "fyriousa")
                     "$LAYOUTDIR/landscape.sh"
                     ;;
             esac
             ;;
         potrait)
-            case "$(hostname)" in
+            case "$hostname" in
                 "fyriousa")
                     "$LAYOUTDIR/default.sh"
                     ;;
             esac
             ;;
         *)
-            case "$(hostname)" in
+            case "$hostname" in
                 "fyriousa")
                     "$LAYOUTDIR/default.sh"
                     ;;

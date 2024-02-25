@@ -8,15 +8,13 @@ while :; do
     radeonPCI="/sys/class/drm/card$i/device"
     uevent="$radeonPCI/uevent"
 
-    while :; do
-        test -e "$uevent" && break
-    done
-
-    driver="$(awk -F '=' '/DRIVER/ {print $2}' "$uevent")"
-    [ "$driver" = "amdgpu" ] && break
+    test -e "$uevent" && {
+        driver="$(awk -F '=' '/DRIVER/ {print $2}' "$uevent")"
+        [ "$driver" = "amdgpu" ] && break
+    }
 
     i="$((i + 1))"
-    [ "$i" -eq 4 ] && i=0
+    [ "$i" -eq 4 ] && exit
 done
 
 SCLK="$radeonPCI/pp_dpm_sclk"
