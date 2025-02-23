@@ -1,6 +1,6 @@
 # Dots
 
-My configuration files for my systems.
+now archived due to swapping to wayland
 
 ### X11 Environment
 
